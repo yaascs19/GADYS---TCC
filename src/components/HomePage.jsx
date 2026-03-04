@@ -94,7 +94,7 @@ function HomePage() {
       }}>
         <nav className="nav" style={{ display: 'contents' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <img src="/logo.png" alt="GADYS" className="logo" style={{height: '40px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px'}} />
+            <img src="/images/logos/logo.png" alt="GADYS" className="logo" style={{height: '40px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px'}} />
             <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: 'white' }}>GADYS</span>
           </div>
           <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
@@ -130,25 +130,28 @@ function HomePage() {
                 <a href="#">Mato Grosso</a>
                 <a href="#">Mato Grosso do Sul</a>
                 <a href="#">Minas Gerais</a>
-                <a href="#">Pará</a>
+                <Link to="/para" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Pará</Link>
                 <a href="#">Paraíba</a>
                 <a href="#">Paraná</a>
                 <a href="#">Pernambuco</a>
                 <a href="#">Piauí</a>
-                <a href="#">Rio de Janeiro</a>
+                <Link to="/rio-de-janeiro" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio de Janeiro</Link>
                 <a href="#">Rio Grande do Norte</a>
                 <a href="#">Rio Grande do Sul</a>
                 <a href="#">Rondônia</a>
                 <a href="#">Roraima</a>
                 <a href="#">Santa Catarina</a>
-                <a href="#">São Paulo</a>
+                <Link to="/sao-paulo" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>São Paulo</Link>
                 <a href="#">Sergipe</a>
                 <a href="#">Tocantins</a>
               </div>
             </li>
             <li><a href="#" onClick={() => {navigate('/lugares'); document.querySelector('.nav-links').classList.remove('active')}}>Lugares</a></li>
             <li><a href="#" onClick={() => {navigate('/mapa'); document.querySelector('.nav-links').classList.remove('active')}}>Mapa</a></li>
-            <li><a href="#" onClick={(e) => {e.preventDefault(); if (!localStorage.getItem('isLoggedIn')) navigate('/login'); else window.location.href='/adicionar-locais.html'; document.querySelector('.nav-links').classList.remove('active')}}>Adicionar Local</a></li>
+            <li><a href="#" onClick={() => {navigate('/adicionar-local'); document.querySelector('.nav-links').classList.remove('active')}}>Adicionar Local</a></li>
+            {localStorage.getItem('userType') === 'adm' && (
+              <li><a href="#" onClick={() => {navigate('/painel-adm'); document.querySelector('.nav-links').classList.remove('active')}}>Administração</a></li>
+            )}
             <li><a href="#" onClick={() => {navigate('/perfil'); document.querySelector('.nav-links').classList.remove('active')}}>Meu Perfil</a></li>
             <li><a href="#" onClick={() => {navigate('/sobre'); document.querySelector('.nav-links').classList.remove('active')}}>Sobre</a></li>
             <li><a href="#" onClick={() => {navigate('/contato'); document.querySelector('.nav-links').classList.remove('active')}}>Contato</a></li>

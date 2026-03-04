@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Gastronomia do Amazonas</title>
+    <link rel="icon" type="image/png" href="/images/logos/logo.png">
+    <link rel="stylesheet" href="/hamburger-nav-padronizado.css">
+    <link rel="stylesheet" href="/rating-styles.css">
+    <link rel="stylesheet" href="/comments-styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: #1a237e;
+            color: white;
+            padding: 1rem 0;
+        }
+        
+        .nav {
+            width: 100%;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            height: 40px;
+            background: lightblue;
+            border-radius: 50%;
+            padding: 8px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 5px;
+            top: 100%;
+            left: 0;
+        }
+        
+        .dropdown-content a {
+            color: #333 !important;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #1a237e !important;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(255, 140, 0, 0.8), rgba(255, 165, 0, 0.8)), url('/acai.jpeg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+            flex: 1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .card-info {
+            padding: 2rem;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+        
+        .cidade {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        .descricao {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .button {
+            background: #ff8c00;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+        
+        .button:hover {
+            background: #ffa500;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Modo Escuro */
+        .dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .header {
+            background: #0d1117;
+        }
+        
+        .dark-mode .section {
+            background: #0d1117;
+        }
+        
+        .dark-mode .card {
+            background: #21262d;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .card-title {
+            color: #f0f6fc;
+        }
+        
+        .dark-mode .cidade {
+            color: #8b949e;
+        }
+        
+        .dark-mode .descricao {
+            color: #8b949e;
+        }
+        
+        .dark-mode .footer {
+            background: #0d1117;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 5px;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .dropdown-content a {
+            color: #333 !important;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+            text-align: center;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+            color: #1a237e !important;
+        }
+        
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <nav class="nav">
+                <img src="../../images/logos/logo.png" alt="GADYS" class="logo" style="background: lightblue; border-radius: 50%; padding: 8px;" />
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    
+                <button onclick="toggleTheme()" id="themeToggle" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer;">🌙</button>
+                    
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="nav-overlay"></div>
+                <ul class="nav-links">
+                    <li><a href="/">Início</a></li>
+                    <li class="dropdown">
+                        <a href="#estados">Estados Brasileiros ▼</a>
+                        <div class="dropdown-content">
+                            <a href="#">Acre</a>
+                            <a href="#">Alagoas</a>
+                            <a href="#">Amapá</a>
+                            <a href="/amazonas.html">Amazonas</a>
+                            <a href="#">Bahia</a>
+                            <a href="#">Ceará</a>
+                            <a href="#">Distrito Federal</a>
+                            <a href="#">Espírito Santo</a>
+                            <a href="#">Goiás</a>
+                            <a href="#">Maranhão</a>
+                            <a href="#">Mato Grosso</a>
+                            <a href="#">Mato Grosso do Sul</a>
+                            <a href="#">Minas Gerais</a>
+                            <a href="#">Pará</a>
+                            <a href="#">Paraíba</a>
+                            <a href="#">Paraná</a>
+                            <a href="#">Pernambuco</a>
+                            <a href="#">Piauí</a>
+                            <a href="#">Rio de Janeiro</a>
+                            <a href="#">Rio Grande do Norte</a>
+                            <a href="#">Rio Grande do Sul</a>
+                            <a href="#">Rondônia</a>
+                            <a href="#">Roraima</a>
+                            <a href="#">Santa Catarina</a>
+                            <a href="#">São Paulo</a>
+                            <a href="#">Sergipe</a>
+                            <a href="#">Tocantins</a>
+                        </div>
+                    </li>
+                    <li><a href="#" onclick="if(localStorage.getItem('isLoggedIn')) window.location.href='/perfil.html'; else { alert('Faça login primeiro!'); window.location.href='/'; }">Meu Perfil</a></li>
+                    <li><a href="/mapa.html">Mapa</a></li>
+                    <li><a href="/mapa-real-api.html">Mapa</a></li>
+                    <li><a href="/sobre.html">Sobre</a></li>
+                    <li><a href="/contato.html">Contato</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div>
+                    <h1>🍽️ Gastronomia do Amazonas</h1>
+                    <p>Sabores únicos da Amazônia</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div class="grid">
+                        <div class="card">
+                            <img src="/acai.jpeg" alt="Açaí">
+                            <div class="card-info">
+                                <h3 class="card-title">Açaí</h3>
+                                <p class="cidade">Amazonas - AM</p>
+                                <p class="descricao">Fruto amazônico rico em nutrientes e sabor único</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-acai">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-acai">0.0</span>
+                                        <span class="rating-count" id="count-acai">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('acai', 1)">☆</span>
+                                        <span class="star" onclick="setRating('acai', 2)">☆</span>
+                                        <span class="star" onclick="setRating('acai', 3)">☆</span>
+                                        <span class="star" onclick="setRating('acai', 4)">☆</span>
+                                        <span class="star" onclick="setRating('acai', 5)">☆</span>
+                                    </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #ff8c00; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('acai', this)">Comentar</button>
+                                </div>
+                                <button class="button" onclick="window.location.href='/acai.html'">Experimentar</button>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <img src="/tucu.jpeg" alt="Tucumã">
+                            <div class="card-info">
+                                <h3 class="card-title">Tucumã</h3>
+                                <p class="cidade">Amazonas - AM</p>
+                                <p class="descricao">Fruto típico consumido com farinha de mandioca</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-tucuma">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-tucuma">0.0</span>
+                                        <span class="rating-count" id="count-tucuma">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('tucuma', 1)">☆</span>
+                                        <span class="star" onclick="setRating('tucuma', 2)">☆</span>
+                                        <span class="star" onclick="setRating('tucuma', 3)">☆</span>
+                                        <span class="star" onclick="setRating('tucuma', 4)">☆</span>
+                                        <span class="star" onclick="setRating('tucuma', 5)">☆</span>
+                                    </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #ff8c00; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('tucuma', this)">Comentar</button>
+                                </div>
+                                <button class="button" onclick="window.location.href='/tucuma.html'">Experimentar</button>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <img src="/pira.jpeg" alt="Pirarucu">
+                            <div class="card-info">
+                                <h3 class="card-title">Pirarucu</h3>
+                                <p class="cidade">Amazonas - AM</p>
+                                <p class="descricao">Peixe gigante da Amazônia preparado de diversas formas</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-pirarucu">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-pirarucu">0.0</span>
+                                        <span class="rating-count" id="count-pirarucu">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('pirarucu', 1)">☆</span>
+                                        <span class="star" onclick="setRating('pirarucu', 2)">☆</span>
+                                        <span class="star" onclick="setRating('pirarucu', 3)">☆</span>
+                                        <span class="star" onclick="setRating('pirarucu', 4)">☆</span>
+                                        <span class="star" onclick="setRating('pirarucu', 5)">☆</span>
+                                    </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #ff8c00; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('pirarucu', this)">Comentar</button>
+                                </div>
+                                <button class="button" onclick="window.location.href='/pirarucu.html'">Experimentar</button>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <img src="/cupu.jpeg" alt="Cupuaçu">
+                            <div class="card-info">
+                                <h3 class="card-title">Cupuaçu</h3>
+                                <p class="cidade">Amazonas - AM</p>
+                                <p class="descricao">Fruto amazônico usado em doces e sucos refrescantes</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-cupuacu">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-cupuacu">0.0</span>
+                                        <span class="rating-count" id="count-cupuacu">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('cupuacu', 1)">☆</span>
+                                        <span class="star" onclick="setRating('cupuacu', 2)">☆</span>
+                                        <span class="star" onclick="setRating('cupuacu', 3)">☆</span>
+                                        <span class="star" onclick="setRating('cupuacu', 4)">☆</span>
+                                        <span class="star" onclick="setRating('cupuacu', 5)">☆</span>
+                                    </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #ff8c00; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('cupuacu', this)">Comentar</button>
+                                </div>
+                                <button class="button" onclick="window.location.href='/cupuacu.html'">Experimentar</button>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <img src="/taca.jpeg" alt="Tacacá">
+                            <div class="card-info">
+                                <h3 class="card-title">Tacacá</h3>
+                                <p class="cidade">Amazonas - AM</p>
+                                <p class="descricao">Prato típico com tucumã, camarão seco e jambu</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-tacaca">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-tacaca">0.0</span>
+                                        <span class="rating-count" id="count-tacaca">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('tacaca', 1)">☆</span>
+                                        <span class="star" onclick="setRating('tacaca', 2)">☆</span>
+                                        <span class="star" onclick="setRating('tacaca', 3)">☆</span>
+                                        <span class="star" onclick="setRating('tacaca', 4)">☆</span>
+                                        <span class="star" onclick="setRating('tacaca', 5)">☆</span>
+                                    </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #ff8c00; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('tacaca', this)">Comentar</button>
+                                </div>
+                                <button class="button" onclick="window.location.href='/tacaca.html'">Experimentar</button>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <img src="/mand.jpeg" alt="Farinha de Mandioca">
+                            <div class="card-info">
+                                <h3 class="card-title">Farinha de Mandioca</h3>
+                                <p class="cidade">Amazonas - AM</p>
+                                <p class="descricao">Ingrediente essencial da culinária amazônica</p>
+                                <div class="rating-section">
+                                    <div class="rating-display">
+                                        <span class="stars" id="stars-farinha">☆☆☆☆☆</span>
+                                        <span class="rating-number" id="rating-farinha">0.0</span>
+                                        <span class="rating-count" id="count-farinha">(0)</span>
+                                    </div>
+                                    <div class="user-rating">
+                                        <span>Avaliar:</span>
+                                        <span class="star" onclick="setRating('farinha', 1)">☆</span>
+                                        <span class="star" onclick="setRating('farinha', 2)">☆</span>
+                                        <span class="star" onclick="setRating('farinha', 3)">☆</span>
+                                        <span class="star" onclick="setRating('farinha', 4)">☆</span>
+                                        <span class="star" onclick="setRating('farinha', 5)">☆</span>
+                                    </div>
+                                </div>
+                                <div class="comments-section" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e0e0e0;">
+                                    <h4 style="font-size: 1rem; margin-bottom: 0.5rem; color: #333;">Comentários:</h4>
+                                    <textarea placeholder="Deixe seu comentário..." style="width: 100%; padding: 0.5rem; border: 1px solid #ddd; border-radius: 5px; resize: vertical; min-height: 60px; font-size: 0.9rem;"></textarea>
+                                    <button style="background: #ff8c00; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px; margin-top: 0.5rem; cursor: pointer; font-size: 0.9rem;" onclick="addComment('farinha', this)">Comentar</button>
+                                </div>
+                                <button class="button" onclick="window.location.href='/farinha-mandioca.html'">Experimentar</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        function carregarGastronomiaAdicionada() {
+            const locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || [];
+            const gastronomiaAmazonas = locaisAdicionados.filter(local => 
+                local.categoria === 'gastronomia' && 
+                (local.estado.toLowerCase().includes('amazonas') || local.estado.toLowerCase().includes('am'))
+            );
+            
+            if (gastronomiaAmazonas.length > 0) {
+                const grid = document.querySelector('.grid');
+                
+                gastronomiaAmazonas.forEach(local => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <img src="${local.imagem}" alt="${local.nome}" onerror="this.src='/minha-imagem.jpg'">
+                        <div class="card-info">
+                            <h3 class="card-title">${local.nome}</h3>
+                            <p class="cidade">${local.cidade} - ${local.estado}</p>
+                            <p class="descricao">${local.descricao}</p>
+                            <button class="button" onclick="window.location.href='/detalhes-local.html?id=${local.id}'">Experimentar</button>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarGastronomiaAdicionada();
+            
+            // Mostrar link admin apenas para administradores
+            const userType = localStorage.getItem('userType');
+            if (userType === 'adm') {
+                document.getElementById('adminLink').style.display = 'block';
+            }
+        });
+    </script>
+    <script src="/hamburger-nav.js"></script>
+    <script src="/rating-system.js"></script>
+    <script src="/comments-system.js"></script>
+    <script src="/api-loader.js"></script>
+    <script src="/theme-manager.js"></script>
+    <script>
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        const originalToggle = toggleTheme;
+        toggleTheme = function() {
+            originalToggle();
+            updateThemeIcon();
+        };
+        
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
+    </script>
+    <script type="text/javascript">

@@ -5,7 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class GadysApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(GadysApplication.class, args);
-    }
+
+	public static void main(String[] args) {
+		SpringApplication.run(GadysApplication.class, args);
+
+		System.out.println("My project Spring boot Application");
+	}
+
 }

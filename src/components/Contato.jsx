@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import Navbar from './Navbar'
+import axios from 'axios'
 
 function Contato({ setCurrentPage }) {
   const [darkMode, setDarkMode] = useState(() => {
@@ -12,6 +13,7 @@ function Contato({ setCurrentPage }) {
     assunto: '',
     mensagem: ''
   })
+  const [loading, setLoading] = useState(false)
 
   const toggleTheme = () => {
     const newDarkMode = !darkMode
@@ -27,10 +29,24 @@ function Contato({ setCurrentPage }) {
     }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    alert('Mensagem enviada com sucesso! Entraremos em contato em breve.')
-    setFormData({ nome: '', email: '', assunto: '', mensagem: '' })
+    setLoading(true)
+    
+    try {
+      const response = await axios.post('https://glorious-tribble-pjqg5xgqg9rp36jvx-8080.app.github.dev/api/contato', formData)
+      
+      if (response.data.sucesso) {
+        alert('Mensagem enviada com sucesso! Entraremos em contato em breve.')
+        setFormData({ nome: '', email: '', assunto: '', mensagem: '' })
+      } else {
+        alert(response.data.mensagem || 'Erro ao enviar mensagem')
+      }
+    } catch (error) {
+      alert(error.response?.data?.mensagem || 'Erro de conexão com o servidor')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -255,21 +271,22 @@ function Contato({ setCurrentPage }) {
 
               <button
                 type="submit"
+                disabled={loading}
                 style={{
-                  background: '#1a237e',
+                  background: loading ? '#ccc' : '#1a237e',
                   color: 'white',
                   border: 'none',
                   padding: '1rem 2rem',
                   borderRadius: '25px',
-                  cursor: 'pointer',
+                  cursor: loading ? 'not-allowed' : 'pointer',
                   fontSize: '1rem',
                   transition: 'background 0.3s',
                   width: '100%'
                 }}
-                onMouseOver={(e) => e.target.style.background = '#0d1a5c'}
-                onMouseOut={(e) => e.target.style.background = '#1a237e'}
+                onMouseOver={(e) => !loading && (e.target.style.background = '#0d1a5c')}
+                onMouseOut={(e) => !loading && (e.target.style.background = '#1a237e')}
               >
-                Enviar Mensagem
+                {loading ? 'Enviando...' : 'Enviar Mensagem'}
               </button>
             </form>
           </div>

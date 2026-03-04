@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './Login.css'
+import axios from 'axios'
 
 function Login({ onLogin, isAdminAccess = false }) {
   const navigate = useNavigate()
@@ -10,70 +11,78 @@ function Login({ onLogin, isAdminAccess = false }) {
   const [isRegister, setIsRegister] = useState(false)
   const [confirmPassword, setConfirmPassword] = useState('')
   const [name, setName] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setLoading(true)
     
-    if (isRegister) {
-      if (email && password && password === confirmPassword && name) {
-        // Salvar dados do cadastro
-        const users = JSON.parse(localStorage.getItem('registeredUsers')) || []
-        users.push({ email, password, name, userType })
-        localStorage.setItem('registeredUsers', JSON.stringify(users))
-        
-        alert('Cadastro realizado com sucesso!')
-        setIsRegister(false)
-        // Limpar campos
-        setEmail('')
-        setPassword('')
-        setConfirmPassword('')
-        setName('')
-      } else if (password !== confirmPassword) {
-        alert('Senhas não coincidem!')
-      } else {
-        alert('Preencha todos os campos!')
-      }
-    } else {
-      if (email && password) {
-        // Verificar usuários cadastrados
-        const users = JSON.parse(localStorage.getItem('registeredUsers')) || []
-        const user = users.find(u => u.email === email && u.password === password)
-        
-        if (user) {
-          localStorage.setItem('isLoggedIn', 'true')
-          localStorage.setItem('userType', user.userType)
-          localStorage.setItem('userName', user.name)
-          localStorage.setItem('userEmail', user.email)
-          if (onLogin) onLogin(user.userType, user.name)
-          alert('Login realizado com sucesso!')
-          navigate('/perfil')
-        } else if (email === 'admin@gadys.com' && password === '123' && userType === 'adm') {
-          localStorage.setItem('isLoggedIn', 'true')
-          localStorage.setItem('userType', 'adm')
-          localStorage.setItem('userName', 'Admin')
-          localStorage.setItem('userEmail', email)
-          if (onLogin) onLogin('adm', 'Admin')
-          alert('Login realizado com sucesso!')
-          navigate('/perfil')
-        } else if (email === 'user@gadys.com' && password === '123') {
-          localStorage.setItem('isLoggedIn', 'true')
-          localStorage.setItem('userType', 'usuario')
-          localStorage.setItem('userName', 'Usuário')
-          localStorage.setItem('userEmail', email)
-          if (onLogin) onLogin('usuario', 'Usuário')
-          alert('Login realizado com sucesso!')
-          navigate('/perfil')
+    try {
+      if (isRegister) {
+        if (email && password && password === confirmPassword && name) {
+          const response = await axios.post('/api/auth/cadastrar', {
+            nome: name,
+            email,
+            senha: password,
+            tipoUsuario: userType === 'adm' ? 'ADMIN' : 'USUARIO'
+          })
+          
+          if (response.data.sucesso) {
+            alert('Cadastro realizado com sucesso!')
+            setIsRegister(false)
+            setEmail('')
+            setPassword('')
+            setConfirmPassword('')
+            setName('')
+          } else {
+            alert(response.data.mensagem || 'Erro no cadastro')
+          }
+        } else if (password !== confirmPassword) {
+          alert('Senhas não coincidem!')
         } else {
-          alert('Credenciais inválidas!')
+          alert('Preencha todos os campos!')
+        }
+      } else {
+        if (email && password) {
+          const response = await axios.post('/api/auth/login', {
+            email,
+            senha: password
+          })
+          
+          if (response.data.sucesso) {
+            const user = {
+              id: response.data.usuarioId,
+              nome: response.data.nome,
+              tipoUsuario: response.data.tipoUsuario
+            }
+            
+            if (response.data.token) {
+              localStorage.setItem('token', response.data.token)
+            }
+            localStorage.setItem('user', JSON.stringify(user))
+            localStorage.setItem('isLoggedIn', 'true')
+            localStorage.setItem('userType', response.data.tipoUsuario)
+            localStorage.setItem('userName', response.data.nome)
+            
+            if (onLogin) onLogin(response.data.tipoUsuario, response.data.nome)
+            alert('Login realizado com sucesso!')
+            navigate('/perfil')
+          } else {
+            alert(response.data.mensagem || 'Credenciais inválidas!')
+          }
         }
       }
+    } catch (error) {
+      alert(error.response?.data?.mensagem || 'Erro de conexão com o servidor')
+    } finally {
+      setLoading(false)
     }
   }
 
   return (
     <div className="login-container">
       <div className="login-form">
-        <img src="/logo.png" alt="GADYS" className="login-logo" />
+        <img src="/images/logos/logo.png" alt="GADYS" className="login-logo" />
         <h2>{isRegister ? 'Cadastrar' : 'Bem-vindo'}</h2>
         <form onSubmit={handleSubmit}>
           {isRegister && (
@@ -118,7 +127,9 @@ function Login({ onLogin, isAdminAccess = false }) {
               <option value="adm">Administrador</option>
             </select>
           )}
-          <button type="submit">{isRegister ? 'Cadastrar' : 'Entrar'}</button>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Carregando...' : (isRegister ? 'Cadastrar' : 'Entrar')}
+          </button>
         </form>
         {!isAdminAccess && (
           <p className="toggle-form">

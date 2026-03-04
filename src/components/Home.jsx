@@ -25,7 +25,7 @@ function Home() {
         padding: '3rem'
       }}>
         <img 
-          src="/logo.png" 
+          src="/images/logos/logo.png" 
           alt="GADYS" 
           style={{
             height: '80px',

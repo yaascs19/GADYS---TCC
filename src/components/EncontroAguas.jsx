@@ -64,7 +64,7 @@ function EncontroAguas() {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <img 
-            src="/logo.png" 
+            src="/images/logos/logo.png" 
             alt="GADYS" 
             style={{
               height: '45px',

@@ -1,0 +1,161 @@
+/* === ESTILO CARIOCA v1.0 === */
+
+/* --- Definições de Variáveis --- */
+:root {
+  --rj-bg: #f5f5f5;
+  --rj-text: #333333;
+  --rj-primary: #007a8d;
+  --rj-secondary: #ffc107;
+  --rj-accent: #d9534f;
+  --rj-surface: #ffffff;
+  --rj-shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* --- Animações --- */
+@keyframes card-load-in {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Estilos da Página --- */
+.rj-pontos-page {
+  font-family: 'Lato', sans-serif;
+  background-color: var(--rj-bg);
+  color: var(--rj-text);
+  min-height: 100vh;
+}
+
+/* --- Cabeçalho --- */
+.rj-header {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/copa2.webp');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+.rj-h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 7vw, 5rem);
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.rj-subheader {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 300;
+  margin-top: 1rem;
+}
+
+/* --- Controles --- */
+.rj-controls {
+  padding: 3rem 2rem;
+  background-color: var(--rj-primary);
+  color: white;
+}
+
+.rj-search-bar {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  margin: 0 auto;
+  display: block;
+}
+
+.rj-filter-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.rj-button {
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.rj-button.active {
+  background-color: white;
+  color: var(--rj-primary);
+}
+
+/* --- Grade e Cards --- */
+.rj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 3rem;
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.rj-card {
+  background-color: var(--rj-surface);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px var(--rj-shadow);
+  overflow: hidden;
+  animation: card-load-in 0.5s backwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.rj-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 25px var(--rj-shadow);
+}
+
+.rj-card-image-container {
+  height: 220px;
+  overflow: hidden;
+}
+
+.rj-card-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rj-card-content {
+  padding: 1.5rem;
+}
+
+.rj-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--rj-primary);
+  margin-bottom: 0.5rem;
+}
+
+.rj-card-category {
+  font-weight: 700;
+  color: var(--rj-accent);
+  margin-bottom: 1rem;
+}
+
+.rj-card-description {
+  line-height: 1.6;
+}
+
+/* --- Rodapé --- */
+.rj-footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+}

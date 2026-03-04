@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 
 function Navbar({ darkMode, toggleTheme, userType, setCurrentPage }) {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -21,7 +22,7 @@ function Navbar({ darkMode, toggleTheme, userType, setCurrentPage }) {
         alignItems: 'center'
       }}>
         <img 
-          src="/logo.png" 
+          src="/images/logos/logo.png" 
           alt="GADYS" 
           style={{
             height: '40px',
@@ -197,6 +198,24 @@ function Navbar({ darkMode, toggleTheme, userType, setCurrentPage }) {
             >
               Sobre
             </a>
+          </li>
+          
+          <li>
+            <Link 
+              to="/para"
+              style={{
+                color: 'white',
+                textDecoration: 'none',
+                padding: '0.5rem 1rem',
+                borderRadius: '5px',
+                transition: 'background 0.3s',
+                display: 'block'
+              }}
+              onMouseOver={(e) => e.target.style.background = 'rgba(255, 255, 255, 0.1)'}
+              onMouseOut={(e) => e.target.style.background = 'transparent'}
+            >
+              Pará
+            </Link>
           </li>
           
           <li>

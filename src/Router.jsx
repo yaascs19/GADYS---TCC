@@ -1,4 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
+import useImagePreload from './hooks/useImagePreload';
 import App from './App';
 import HomePage from './components/HomePage';
 import SobrePage from './components/SobrePage';
@@ -43,10 +45,58 @@ import Tucuma from './components/Tucuma';
 import FarinhaMandioca from './components/FarinhaMandioca';
 import ContatoPage from './components/ContatoPage';
 import Login from './Login';
-import MapaLeaflet from './components/MapaLeaflet';
+import MapaLeaflet from './components/MapaLeaflet'
+import AdicionarLocal from './components/AdicionarLocal'
+import AdminPanel from './AdminPanel';
+import SaoPaulo from './components/SaoPaulo';
+import MonumentosSaoPaulo from './components/MonumentosSaoPaulo';
+import RioDeJaneiro from './components/RioDeJaneiro';
+import Para from './components/Para';
+import ParaPitu from './components/ParaPitu';
+import DestinosPara from './components/DestinosPara';
+import RJPontos from './components/RJPontos';
 
 
 function Router() {
+  // Preload das imagens principais das páginas
+  const imagesToPreload = [
+    '/rj.jpeg',
+    '/ama.jpg',
+    '/sp.jpg',
+    'carnaval.jpg',
+    'samba.jpg',
+    'bossa.webp',
+    'maracatu.jpg',
+    'funk.jpg',
+    'rock.webp',
+    'feijoada.jpg',
+    'acairj2.jpg',
+    'caipira.jpeg',
+    'biscoito.webp',
+    'cha-mate-limao-hortela.webp'
+  ];
+  
+  useImagePreload(imagesToPreload);
+  
+  useEffect(() => {
+    // Cadastrar administrador padrão
+    const adminUser = {
+      email: "yasmincunegundes25@gmail.com",
+      password: "Cun*1925",
+      userType: "adm",
+      userName: "Yasmin Admin"
+    }
+    
+    let users = JSON.parse(localStorage.getItem('users')) || []
+    const adminExists = users.find(user => user.email === adminUser.email)
+    
+    if (!adminExists) {
+      users.push(adminUser)
+      localStorage.setItem('users', JSON.stringify(users))
+      console.log('Administrador cadastrado automaticamente!')
+    }
+  }, [])
+  
   return (
     <BrowserRouter>
       <Routes>
@@ -94,6 +144,15 @@ function Router() {
         <Route path="/contato" element={<ContatoPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/mapa" element={<MapaLeaflet />} />
+        <Route path="/adicionar-local" element={<AdicionarLocal />} />
+        <Route path="/painel-adm" element={<AdminPanel />} />
+        <Route path="/sao-paulo" element={<SaoPaulo />} />
+        <Route path="/monumentos-sao-paulo" element={<MonumentosSaoPaulo />} />
+        <Route path="/rio-de-janeiro" element={<RioDeJaneiro />} />
+        <Route path="/para" element={<Para />} />
+        <Route path="/parapitu" element={<ParaPitu />} />
+        <Route path="/destinos-para" element={<DestinosPara />} />
+        <Route path="/rj-pontos" element={<RJPontos />} />
 
       </Routes>
     </BrowserRouter>

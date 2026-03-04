@@ -1,0 +1,147 @@
+/* === ESTILO PARAENSE v1.0 === */
+
+/* --- Definições de Variáveis --- */
+:root {
+  --theme-bg: #f4efe6; /* Fundo mais quente */
+  --theme-text: #42382e; /* Texto mais escuro e terroso */
+  --theme-primary: #295c50; /* Verde floresta profundo */
+  --theme-secondary: #f5b700; /* Amarelo açaí/tucupi */
+  --theme-accent: #c24e3a; /* Vermelho urucum */
+  --theme-surface: #ffffff;
+  --theme-shadow: rgba(66, 56, 46, 0.1);
+}
+
+/* --- Animações --- */
+@keyframes card-load-in {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Estilos da Página --- */
+.theme-page {
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: var(--theme-bg);
+  color: var(--theme-text);
+  min-height: 100vh;
+}
+
+/* --- Cabeçalho --- */
+.theme-header {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/geral/para1.jpg'); /* Imagem atualizada conforme solicitado */
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+.theme-h1 {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(3rem, 7vw, 5rem);
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.theme-subheader {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 300;
+  margin-top: 1rem;
+}
+
+/* --- Controles --- */
+.theme-controls {
+  padding: 3rem 2rem;
+  background-color: var(--theme-primary);
+  color: white;
+}
+
+.theme-search-bar {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  margin: 0 auto;
+  display: block;
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.theme-search-bar::placeholder { color: rgba(255,255,255,0.7); }
+
+.theme-filter-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.theme-button {
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.theme-button.active {
+  background-color: white;
+  color: var(--theme-primary);
+}
+
+/* --- Grade e Cards --- */
+.theme-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 3rem;
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.theme-card {
+  background-color: var(--theme-surface);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px var(--theme-shadow);
+  overflow: hidden;
+  animation: card-load-in 0.5s backwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.theme-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 25px var(--theme-shadow);
+}
+
+.theme-card-image-container { height: 220px; overflow: hidden; }
+.theme-card-image { width: 100%; height: 100%; object-fit: cover; }
+
+.theme-card-content { padding: 1.5rem; }
+
+.theme-card-title {
+  font-family: 'Merriweather', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--theme-primary);
+  margin-bottom: 0.5rem;
+}
+
+.theme-card-category {
+  font-weight: 700;
+  color: var(--theme-accent);
+  margin-bottom: 1rem;
+}
+
+.theme-card-description { line-height: 1.6; }
+
+/* --- Rodapé --- */
+.theme-footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+}
