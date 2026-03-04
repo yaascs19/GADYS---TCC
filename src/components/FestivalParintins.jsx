@@ -64,7 +64,7 @@ function FestivalParintins() {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <img 
-            src="/logo.png" 
+            src="/images/logos/logo.png" 
             alt="GADYS" 
             style={{
               height: '45px',
@@ -224,7 +224,7 @@ function FestivalParintins() {
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
             <div>
               <img 
-                src="/festival.jpeg" 
+                src="/images/cultura/festival.jpeg" 
                 alt="Festival de Parintins"
                 style={{
                   width: '100%',

@@ -160,7 +160,7 @@ function Lugares() {
           alignItems: 'center'
         }}>
           <img 
-            src="/logo.png" 
+            src="/images/logos/logo.png" 
             alt="GADYS" 
             style={{ height: '40px' }}
           />

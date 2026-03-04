@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+import { updateFavicon } from './utils/favicon'
 import Login from './Login'
 import AdminPanel from './AdminPanel'
 import Home from './components/Home'
 import Amazonas from './components/Amazonas'
+import RioDeJaneiro from './components/RioDeJaneiro'
 import Lugares from './components/Lugares'
 import SobrePage from './components/SobrePage'
 import ContatoPage from './components/ContatoPage'
@@ -11,6 +13,8 @@ import PerfilPage from './components/PerfilPage'
 import MapaPage from './components/MapaPage'
 import LugaresPage from './components/LugaresPage'
 import CristoRedentor from './components/CristoRedentor'
+import Para from './components/Para'
+import DestinosPara from './components/DestinosPara'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
@@ -85,6 +89,7 @@ function App() {
   }
 
   useEffect(() => {
+    updateFavicon()
     if (currentPage === 'login') return
 
     const timer = setTimeout(() => {
@@ -167,6 +172,18 @@ function App() {
     return <CristoRedentor setCurrentPage={setCurrentPage} />
   }
   
+  if (currentPage === 'riodejaneiro') {
+    return <RioDeJaneiro setCurrentPage={setCurrentPage} />
+  }
+  
+  if (currentPage === 'para') {
+    return <Para setCurrentPage={setCurrentPage} />
+  }
+
+  if (currentPage === 'destinospara') {
+    return <DestinosPara />
+  }
+  
   if (currentPage === 'login') {
     return <Login onLogin={handleLogin} />
   }
@@ -193,7 +210,7 @@ function App() {
       }}>
         <nav className="nav" style={{ display: 'contents' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <img src="/logo.png" alt="GADYS" className="logo" style={{height: '40px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px'}} />
+            <img src="/images/logos/logo.png" alt="GADYS" className="logo" style={{height: '40px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px'}} />
             <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: 'white' }}>GADYS</span>
           </div>
           <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
@@ -217,7 +234,6 @@ function App() {
             <li><a href="#">Alagoas</a></li>
             <li><a href="#">Amapá</a></li>
             <li><a href="/amazonas.html">Amazonas</a></li>
-            <li><a href="#">Bahia</a></li>
             <li><a href="#">Ceará</a></li>
             <li><a href="#">Distrito Federal</a></li>
             <li><a href="#">Espírito Santo</a></li>
@@ -226,12 +242,13 @@ function App() {
             <li><a href="#">Mato Grosso</a></li>
             <li><a href="#">Mato Grosso do Sul</a></li>
             <li><a href="#">Minas Gerais</a></li>
-            <li><a href="#">Pará</a></li>
+            <li><a href="#" onClick={(e) => {e.preventDefault(); console.log('Clicou Pará'); setCurrentPage('para'); document.querySelector('.nav-links').classList.remove('active')}}>Pará</a></li>
+            <li><a href="#" onClick={(e) => {e.preventDefault(); console.log('Clicou Destinos Pará'); setCurrentPage('destinospara'); document.querySelector('.nav-links').classList.remove('active')}}>Destinos do Pará</a></li>
             <li><a href="#">Paraíba</a></li>
             <li><a href="#">Paraná</a></li>
             <li><a href="#">Pernambuco</a></li>
             <li><a href="#">Piauí</a></li>
-            <li><a href="#">Rio de Janeiro</a></li>
+            <li><a href="#" onClick={(e) => {e.preventDefault(); console.log('Clicou Rio de Janeiro'); setCurrentPage('riodejaneiro'); document.querySelector('.nav-links').classList.remove('active')}}>Rio de Janeiro</a></li>
             <li><a href="#">Rio Grande do Norte</a></li>
             <li><a href="#">Rio Grande do Sul</a></li>
             <li><a href="#">Rondônia</a></li>
@@ -240,6 +257,7 @@ function App() {
             <li><a href="#">São Paulo</a></li>
             <li><a href="#">Sergipe</a></li>
             <li><a href="#">Tocantins</a></li>
+            
             <li><a href="#" onClick={() => {setCurrentPage('lugarespage'); document.querySelector('.nav-links').classList.remove('active')}}>Lugares</a></li>
             <li><a href="#" onClick={() => {setCurrentPage('mapapage'); document.querySelector('.nav-links').classList.remove('active')}}>Mapa</a></li>
             <li><a href="#" onClick={(e) => {e.preventDefault(); if (!localStorage.getItem('isLoggedIn')) setCurrentPage('login'); else window.location.href='/adicionar-locais.html'; document.querySelector('.nav-links').classList.remove('active')}}>Adicionar Local</a></li>

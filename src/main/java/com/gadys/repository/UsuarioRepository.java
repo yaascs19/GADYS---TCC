@@ -1,6 +1,6 @@
 package com.gadys.repository;
 
-import com.gadys.model.Usuario;
+import com.gadys.gadys.model.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.Optional;

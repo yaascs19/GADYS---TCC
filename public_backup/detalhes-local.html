@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Detalhes do Local</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .header {
+            background: #1a237e;
+            color: white;
+            padding: 1rem 0;
+        }
+        
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            height: 40px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .local-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .local-title {
+            font-size: 2.5rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+        
+        .local-location {
+            color: #7f8c8d;
+            font-size: 1.2rem;
+        }
+        
+        .local-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .info-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #1a237e;
+        }
+        
+        .info-card h3 {
+            color: #1a237e;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .description-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .description-section h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        
+        .rating-summary {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .rating-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .rating-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #f39c12;
+        }
+        
+        .stars {
+            font-size: 1.5rem;
+            color: #f39c12;
+        }
+        
+        .rating-count {
+            color: #7f8c8d;
+        }
+        
+        .user-rating {
+            border-top: 1px solid #e0e0e0;
+            padding-top: 2rem;
+        }
+        
+        .rating-input {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .star {
+            font-size: 2rem;
+            cursor: pointer;
+            color: #ddd;
+            transition: color 0.3s;
+        }
+        
+        .star:hover, .star.active {
+            color: #f39c12;
+        }
+        
+        .rating-btn {
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .rating-btn:hover:not(:disabled) {
+            background: #3f51b5;
+        }
+        
+        .rating-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .back-btn {
+            background: #1a237e;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            margin-bottom: 2rem;
+        }
+        
+        .back-btn:hover {
+            background: #3f51b5;
+            transform: translateY(-2px);
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        /* Modo Escuro */
+        .dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .header {
+            background: #0d1117;
+        }
+        
+        .dark-mode .local-title {
+            color: #f0f6fc;
+        }
+        
+        .dark-mode .local-location {
+            color: #8b949e;
+        }
+        
+        .dark-mode .info-card {
+            background: #21262d;
+            color: #e0e0e0;
+            border-left: 4px solid #58a6ff;
+        }
+        
+        .dark-mode .info-card h3 {
+            color: #58a6ff;
+        }
+        
+        .dark-mode .description-section {
+            background: #21262d;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .description-section h2 {
+            color: #f0f6fc;
+        }
+        
+        .dark-mode .user-rating {
+            border-top: 1px solid #30363d;
+        }
+        
+        .dark-mode .footer {
+            background: #0d1117;
+        }
+        
+        @media (max-width: 768px) {
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .local-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <img src="/logo.png" alt="GADYS" class="logo" style="background: lightblue; border-radius: 50%; padding: 8px;" />
+            <ul class="nav-links">
+                <li><a href="/">Início</a></li>
+                <li><a href="/amazonas.html">Amazonas</a></li>
+                <li><a href="/mapa-real-api.html">Mapa</a></li>
+                    <li><a href="/sobre.html">Sobre</a></li>
+                <li><a href="/contato.html">Contato</a></li>
+                <li><a href="#" onclick="toggleTheme()" id="themeToggle">🌙</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            <button class="back-btn" onclick="history.back()">← Voltar</button>
+            
+            <div class="local-header">
+                <h1 class="local-title" id="localNome">Carregando...</h1>
+                <p class="local-location" id="localCidade">Carregando...</p>
+            </div>
+            
+            <img id="localImagem" class="local-image" src="/minha-imagem.jpg" alt="Local">
+            
+            <div class="info-grid">
+                <div class="info-card" id="localizacaoCard">
+                    <h3>📍 Localização</h3>
+                    <p id="localLocalizacao">Não informado</p>
+                </div>
+                
+                <div class="info-card" id="horarioCard">
+                    <h3>🕒 Horário</h3>
+                    <p id="localHorario">Não informado</p>
+                </div>
+                
+                <div class="info-card" id="precoCard">
+                    <h3>💰 Preço</h3>
+                    <p id="localPreco">Não informado</p>
+                </div>
+                
+                <div class="info-card">
+                    <h3>📋 Categoria</h3>
+                    <p id="localCategoria">Não informado</p>
+                </div>
+            </div>
+            
+            <div class="description-section">
+                <h2>📝 Descrição</h2>
+                <p id="localDescricao">Carregando descrição...</p>
+            </div>
+            
+            <div class="description-section" id="infoAdicionalSection">
+                <h2>ℹ️ Informações Adicionais</h2>
+                <p id="localInfoAdicional">Nenhuma informação adicional disponível.</p>
+            </div>
+            
+            <div class="description-section">
+                <h2>⭐ Avaliações</h2>
+                <div class="rating-summary" id="ratingSummary">
+                    <div class="rating-display">
+                        <span class="rating-number" id="ratingNumber">0.0</span>
+                        <div class="stars" id="averageStars">☆☆☆☆☆</div>
+                        <span class="rating-count" id="ratingCount">(0 avaliações)</span>
+                    </div>
+                </div>
+                
+                <div class="user-rating">
+                    <h3>Sua Avaliação:</h3>
+                    <div class="rating-input">
+                        <span class="star" data-rating="1" onclick="setRating(1)">☆</span>
+                        <span class="star" data-rating="2" onclick="setRating(2)">☆</span>
+                        <span class="star" data-rating="3" onclick="setRating(3)">☆</span>
+                        <span class="star" data-rating="4" onclick="setRating(4)">☆</span>
+                        <span class="star" data-rating="5" onclick="setRating(5)">☆</span>
+                    </div>
+                    <button class="rating-btn" id="ratingBtn" onclick="salvarAvaliacao()" disabled>Avaliar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        function carregarDetalhesLocal() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const localId = urlParams.get('id');
+            
+            if (!localId) {
+                alert('Local não encontrado!');
+                history.back();
+                return;
+            }
+            
+            // Busca nos locais adicionados
+            const locaisAdicionados = JSON.parse(localStorage.getItem('locaisAdicionados')) || [];
+            const local = locaisAdicionados.find(l => l.id == localId);
+            
+            if (!local) {
+                alert('Local não encontrado!');
+                history.back();
+                return;
+            }
+            
+            // Preenche os dados na página
+            document.getElementById('localNome').textContent = local.nome;
+            document.getElementById('localCidade').textContent = `${local.cidade} - ${local.estado}`;
+            document.getElementById('localImagem').src = local.imagem || '/minha-imagem.jpg';
+            document.getElementById('localImagem').alt = local.nome;
+            document.getElementById('localDescricao').textContent = local.descricao;
+            document.getElementById('localCategoria').textContent = local.categoria.charAt(0).toUpperCase() + local.categoria.slice(1);
+            
+            // Informações opcionais
+            if (local.localizacao) {
+                document.getElementById('localLocalizacao').textContent = local.localizacao;
+            } else {
+                document.getElementById('localizacaoCard').style.display = 'none';
+            }
+            
+            if (local.horario) {
+                document.getElementById('localHorario').textContent = local.horario;
+            } else {
+                document.getElementById('horarioCard').style.display = 'none';
+            }
+            
+            if (local.preco) {
+                document.getElementById('localPreco').textContent = local.preco;
+            } else {
+                document.getElementById('precoCard').style.display = 'none';
+            }
+            
+            if (local.infoAdicional) {
+                document.getElementById('localInfoAdicional').textContent = local.infoAdicional;
+            } else {
+                document.getElementById('infoAdicionalSection').style.display = 'none';
+            }
+            
+            // Atualiza o título da página
+            document.title = `GADYS - ${local.nome}`;
+            
+            // Carrega avaliações
+            carregarAvaliacoes(localId);
+        }
+        
+        let currentRating = 0;
+        let currentLocalId = null;
+        
+        function carregarAvaliacoes(localId) {
+            currentLocalId = localId;
+            const avaliacoes = JSON.parse(localStorage.getItem('avaliacoes')) || {};
+            const localAvaliacoes = avaliacoes[localId] || [];
+            
+            if (localAvaliacoes.length > 0) {
+                const media = localAvaliacoes.reduce((sum, rating) => sum + rating, 0) / localAvaliacoes.length;
+                document.getElementById('ratingNumber').textContent = media.toFixed(1);
+                document.getElementById('averageStars').textContent = getStarsDisplay(media);
+                document.getElementById('ratingCount').textContent = `(${localAvaliacoes.length} avaliações)`;
+            }
+            
+            // Verifica se usuário já avaliou
+            const userName = localStorage.getItem('userName');
+            const userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
+            const userKey = `${userName}_${localId}`;
+            
+            if (userRatings[userKey]) {
+                const userRating = userRatings[userKey];
+                setRating(userRating, false);
+                document.getElementById('ratingBtn').textContent = 'Atualizar Avaliação';
+            }
+        }
+        
+        function setRating(rating, enableButton = true) {
+            currentRating = rating;
+            const stars = document.querySelectorAll('.star');
+            
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.classList.add('active');
+                    star.textContent = '★';
+                } else {
+                    star.classList.remove('active');
+                    star.textContent = '☆';
+                }
+            });
+            
+            if (enableButton) {
+                document.getElementById('ratingBtn').disabled = false;
+            }
+        }
+        
+        function salvarAvaliacao() {
+            if (currentRating === 0 || !currentLocalId) return;
+            
+            const userName = localStorage.getItem('userName');
+            if (!userName) {
+                alert('Você precisa estar logado para avaliar!');
+                return;
+            }
+            
+            // Salva avaliação geral
+            let avaliacoes = JSON.parse(localStorage.getItem('avaliacoes')) || {};
+            if (!avaliacoes[currentLocalId]) {
+                avaliacoes[currentLocalId] = [];
+            }
+            
+            // Salva avaliação do usuário
+            let userRatings = JSON.parse(localStorage.getItem('userRatings')) || {};
+            const userKey = `${userName}_${currentLocalId}`;
+            
+            if (!userRatings[userKey]) {
+                avaliacoes[currentLocalId].push(currentRating);
+            } else {
+                // Atualiza avaliação existente
+                const oldRating = userRatings[userKey];
+                const index = avaliacoes[currentLocalId].indexOf(oldRating);
+                if (index > -1) {
+                    avaliacoes[currentLocalId][index] = currentRating;
+                }
+            }
+            
+            userRatings[userKey] = currentRating;
+            
+            localStorage.setItem('avaliacoes', JSON.stringify(avaliacoes));
+            localStorage.setItem('userRatings', JSON.stringify(userRatings));
+            
+            // Atualiza display
+            carregarAvaliacoes(currentLocalId);
+            document.getElementById('ratingBtn').textContent = 'Atualizar Avaliação';
+            
+            alert('Avaliação salva com sucesso!');
+        }
+        
+        function getStarsDisplay(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '★';
+            }
+            
+            if (hasHalfStar) {
+                stars += '★';
+            }
+            
+            while (stars.length < 5) {
+                stars += '☆';
+            }
+            
+            return stars;
+        }
+        
+        document.addEventListener('DOMContentLoaded', carregarDetalhesLocal);
+    </script>
+    <script src="/theme-manager.js"></script>
+    <script>
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        const originalToggle = toggleTheme;
+        toggleTheme = function() {
+            originalToggle();
+            updateThemeIcon();
+        };
+        
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
+    </script>
+<script type="text/javascript">

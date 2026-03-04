@@ -34,7 +34,7 @@ function Amazonas() {
       fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       lineHeight: 1.6,
       color: darkMode ? '#e0e0e0' : '#333',
-      background: darkMode ? '#1a1a1a' : '#fff'
+      background: darkMode ? '#1a1a1a' : `url('/floresta.webp') center/cover no-repeat, #fff`
     }}>
       <header style={{
         background: darkMode ? '#0d1117' : '#1a237e',
@@ -49,7 +49,7 @@ function Amazonas() {
           alignItems: 'center'
         }}>
           <img 
-            src="/logo.png" 
+            src="/images/logos/logo.png" 
             alt="GADYS" 
             style={{
               height: '40px',
@@ -134,6 +134,7 @@ function Amazonas() {
             border: '1px solid rgba(255,255,255,0.3)'
           }}>
             <span style={{
+            
               color: 'white',
               fontSize: '0.9rem',
               fontWeight: 500
@@ -156,10 +157,13 @@ function Amazonas() {
               fontSize: '4rem',
               marginBottom: '1rem',
               textShadow: '2px 2px 8px rgba(0,0,0,0.5)',
-              background: 'linear-gradient(45deg, #fff, #e8f5e8)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
+              backgroundImage: 'url(/floresta.webp)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              padding: '1rem 2rem',
+              borderRadius: '15px',
+              color: 'white'
             }}>
               Amazonas
             </h1>
@@ -183,6 +187,7 @@ function Amazonas() {
             maxWidth: '1200px',
             margin: '0 auto',
             padding: '0 2rem'
+
           }}>
             <div style={{
               background: darkMode ? '#21262d' : 'white',

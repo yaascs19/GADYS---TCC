@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 function PerfilPage() {
   const navigate = useNavigate()
@@ -30,11 +31,73 @@ function PerfilPage() {
   const [urlInput, setUrlInput] = useState('')
   const [showEditModal, setShowEditModal] = useState(false)
   const [tempProfileData, setTempProfileData] = useState(profileData)
+  const [loading, setLoading] = useState(false)
+  const [userStats, setUserStats] = useState({
+    locaisAdicionados: 0,
+    avaliacoes: 0,
+    comentarios: 0
+  })
 
   const toggleTheme = () => {
     const newDarkMode = !darkMode
     setDarkMode(newDarkMode)
     localStorage.setItem('darkMode', newDarkMode.toString())
+  }
+
+  const fetchUserProfile = async () => {
+    try {
+      setLoading(true)
+      const token = localStorage.getItem('token')
+      if (!token) return
+
+      const response = await axios.get('https://glorious-tribble-pjqg5xgqg9rp36jvx-8080.app.github.dev/api/auth/profile', {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+
+      if (response.data.sucesso) {
+        const userData = response.data.usuario
+        setProfileData({
+          nome: userData.nome,
+          email: userData.email,
+          telefone: userData.telefone || '(11) 99999-9999',
+          cidade: userData.cidade || 'São Paulo, SP',
+          foto: userData.foto || null
+        })
+      }
+    } catch (error) {
+      console.error('Erro ao buscar perfil:', error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const fetchUserStats = async () => {
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) return
+
+      const [locaisRes, avaliacoesRes, comentariosRes] = await Promise.all([
+        axios.get('https://glorious-tribble-pjqg5xgqg9rp36jvx-8080.app.github.dev/api/locais/usuario', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        }),
+        axios.get('https://glorious-tribble-pjqg5xgqg9rp36jvx-8080.app.github.dev/api/avaliacoes/usuario', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        }),
+        axios.get('https://glorious-tribble-pjqg5xgqg9rp36jvx-8080.app.github.dev/api/comentarios/usuario', {
+          headers: { 'Authorization': `Bearer ${token}` }
+        })
+      ])
+
+      setUserStats({
+        locaisAdicionados: locaisRes.data?.length || 0,
+        avaliacoes: avaliacoesRes.data?.length || 0,
+        comentarios: comentariosRes.data?.length || 0
+      })
+    } catch (error) {
+      console.error('Erro ao buscar estatísticas:', error)
+    }
   }
   
   const handlePhotoChange = (e) => {
@@ -99,6 +162,9 @@ function PerfilPage() {
   useEffect(() => {
     if (!isLoggedIn) {
       setShowLoginModal(true)
+    } else {
+      fetchUserProfile()
+      fetchUserStats()
     }
     
     const style = document.createElement('style')
@@ -215,7 +281,7 @@ function PerfilPage() {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <img 
-            src="/logo.png" 
+            src="/images/logos/logo.png" 
             alt="GADYS" 
             style={{
               height: '45px',
@@ -752,9 +818,9 @@ function PerfilPage() {
               {[
                 { titulo: 'Último Acesso:', valor: new Date().toLocaleString('pt-BR') },
                 { titulo: 'Total de Acessos:', valor: `${JSON.parse(localStorage.getItem('userAccess'))?.find(user => user.userName === localStorage.getItem('userName'))?.accessCount || 1} vezes` },
-                { titulo: 'Locais Adicionados:', valor: '0 locais' },
-                { titulo: 'Avaliações Feitas:', valor: '0 avaliações' },
-                { titulo: 'Comentários Feitos:', valor: '0 comentários' }
+                { titulo: 'Locais Adicionados:', valor: `${userStats.locaisAdicionados} locais` },
+                { titulo: 'Avaliações Feitas:', valor: `${userStats.avaliacoes} avaliações` },
+                { titulo: 'Comentários Feitos:', valor: `${userStats.comentarios} comentários` }
               ].map((item, index) => (
                 <div key={index} style={{
                   background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',

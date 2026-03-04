@@ -12,42 +12,42 @@ function MonumentosAmazonas2() {
       nome: 'Teatro Amazonas',
       desc: 'Majestoso teatro do período áureo da borracha, inaugurado em 1896',
       detalhes: 'Símbolo de Manaus, construído durante o ciclo da borracha com materiais europeus',
-      img: '/teatro-amazonas1.jpeg',
+      img: '/images/monumentos/teatro-amazonas1.jpeg',
       localizacao: 'Centro Histórico de Manaus'
     },
     {
       nome: 'Forte de São José',
       desc: 'Fortaleza histórica que marca o início da colonização portuguesa',
       detalhes: 'Construído em 1669 para defender a região dos invasores holandeses',
-      img: '/forte.jpeg',
+      img: '/images/monumentos/forte.jpeg',
       localizacao: 'Rio Negro, Manaus'
     },
     {
       nome: 'Palácio da Justiça',
       desc: 'Edifício histórico com arquitetura colonial preservada',
       detalhes: 'Sede do poder judiciário amazonense, exemplo da arquitetura do século XIX',
-      img: '/jus.jpeg',
+      img: '/images/monumentos/jus.jpeg',
       localizacao: 'Centro de Manaus'
     },
     {
       nome: 'Mercado Municipal',
       desc: 'Mercado histórico inspirado no mercado de Les Halles de Paris',
       detalhes: 'Construído em 1882, é um dos principais pontos turísticos de Manaus',
-      img: '/mer.jpeg',
+      img: '/images/monumentos/mer.jpeg',
       localizacao: 'Porto de Manaus'
     },
     {
       nome: 'Igreja de São Sebastião',
       desc: 'Igreja histórica do século XVIII no centro de Manaus',
       detalhes: 'Uma das igrejas mais antigas da cidade, marco da colonização religiosa',
-      img: '/sao.jpeg',
+      img: '/images/monumentos/sao.jpeg',
       localizacao: 'Centro Histórico de Manaus'
     },
     {
       nome: 'Palácio Rio Negro',
       desc: 'Antiga residência dos governadores, hoje centro cultural',
       detalhes: 'Construído em 1903, abriga exposições e eventos culturais',
-      img: '/pala.jpeg',
+      img: '/images/monumentos/pala.jpeg',
       localizacao: 'Centro de Manaus'
     }
   ]
@@ -60,6 +60,15 @@ function MonumentosAmazonas2() {
 
   useEffect(() => {
     window.scrollTo(0, 0)
+    
+    // Atualizar favicon
+    document.querySelectorAll('link[rel="icon"]').forEach(link => link.remove())
+    const favicon = document.createElement('link')
+    favicon.rel = 'icon'
+    favicon.type = 'image/png'
+    favicon.href = '/logo.png'
+    document.head.appendChild(favicon)
+    
     const style = document.createElement('style')
     style.textContent = `
       .nav-links.active {
@@ -110,7 +119,7 @@ function MonumentosAmazonas2() {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <img 
-            src="/logo.png" 
+            src="/images/logos/logo.png" 
             alt="GADYS" 
             style={{
               height: '45px',

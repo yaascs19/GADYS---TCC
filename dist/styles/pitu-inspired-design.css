@@ -1,0 +1,74 @@
+
+.pitu-body {
+  font-family: 'Roboto', sans-serif;
+  color: #fff;
+  overflow-x: hidden;
+}
+
+.pitu-section {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 5%;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.pitu-background {
+  display: none;
+}
+
+.pitu-overlay {
+  display: none;
+}
+
+.pitu-content {
+  max-width: 800px;
+  animation: fadeIn 2s ease-in-out;
+}
+
+.pitu-h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.pitu-p {
+  font-size: 1.4rem;
+  line-height: 1.6;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.pitu-floating-element {
+    display: none;
+}
+
+.top-left {
+    top: 10%;
+    left: 10%;
+}
+
+.bottom-right {
+    bottom: 10%;
+    right: 10%;
+}
+
+@keyframes float {
+    0% {
+        transform: translatey(0px);
+    }
+    50% {
+        transform: translatey(-20px);
+    }
+    100% {
+        transform: translatey(0px);
+    }
+}

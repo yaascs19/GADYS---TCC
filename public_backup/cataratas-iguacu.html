@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GADYS - Cataratas do Iguaçu</title>
+    <link rel="stylesheet" href="/hamburger-nav.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .page {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: #1a237e;
+            color: white;
+            padding: 1rem 0;
+        }
+        
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            position: relative;
+        }
+        
+        .nav .logo {
+            position: absolute;
+            top: 50%;
+            left: 2rem;
+            transform: translateY(-50%);
+            height: 40px;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .hero {
+            background: linear-gradient(rgba(34, 139, 34, 0.8), rgba(0, 128, 0, 0.8)), url('/cata.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .section {
+            padding: 5rem 0;
+            background: #f8f9fa;
+            flex: 1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .content-section {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem;
+        }
+        
+        .content-section h2 {
+            color: #228b22;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #228b22;
+            padding-bottom: 0.5rem;
+        }
+        
+        .content-section p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .info-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 10px;
+            border-left: 4px solid #228b22;
+        }
+        
+        .info-card h3 {
+            color: #228b22;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .info-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        /* Modo Escuro */
+        .dark-mode {
+            background: #1a1a1a;
+            color: #e0e0e0;
+        }
+        
+        .dark-mode .header {
+            background: #0d1117;
+        }
+        
+        .dark-mode .section {
+            background: #0d1117;
+        }
+        
+        .dark-mode .content-section {
+            background: #21262d;
+        }
+        
+        .dark-mode .content-section h2 {
+            color: #32cd32;
+            border-bottom: 3px solid #32cd32;
+        }
+        
+        .dark-mode .content-section p {
+            color: #8b949e;
+        }
+        
+        .dark-mode .info-card {
+            background: #161b22;
+            border-left: 4px solid #32cd32;
+        }
+        
+        .dark-mode .info-card h3 {
+            color: #32cd32;
+        }
+        
+        .dark-mode .info-card p {
+            color: #8b949e;
+        }
+        
+        .dark-mode .footer {
+            background: #0d1117;
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="header">
+            <nav class="nav">
+                <img src="/logo.png" alt="GADYS" class="logo" style="background: lightblue; border-radius: 50%; padding: 8px;" />
+                
+                
+                    <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <div class="nav-overlay"></div>
+                <ul class="nav-links">
+                    <li><a href="/">Início</a></li>
+                    <li><a href="/lugares.html">Lugares</a></li>
+                    <li><a href="/buscar.html">Buscar</a></li>
+                    <li><a href="/mapa-real-api.html">Mapa</a></li>
+                    <li><a href="#" onclick="toggleTheme()" id="themeToggle">🌙</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <section class="hero">
+                <div>
+                    <h1>🌳 Cataratas do Iguaçu</h1>
+                    <p>Uma das maiores quedas d'água do mundo</p>
+                </div>
+            </section>
+
+            <section class="section">
+                <div class="container">
+                    <div class="content-section">
+                        <h2>📖 História</h2>
+                        <p>
+                            As Cataratas do Iguaçu foram descobertas pelo explorador espanhol Álvar Núñez Cabeza de Vaca em 1541, que as batizou de "Saltos de Santa Maria". O nome atual deriva da palavra guarani "y guasu", que significa "água grande".
+                        </p>
+                        <p>
+                            Em 1986, foram declaradas Patrimônio Mundial da Humanidade pela UNESCO, reconhecendo sua importância natural e biodiversidade única. O Parque Nacional do Iguaçu foi criado em 1939 no Brasil e em 1934 na Argentina, protegendo este tesouro natural.
+                        </p>
+                        <p>
+                            As cataratas são formadas pelo Rio Iguaçu, que nasce na Serra do Mar no Paraná e percorre aproximadamente 1.320 km até encontrar o Rio Paraná, criando este espetáculo natural na fronteira entre Brasil e Argentina.
+                        </p>
+                    </div>
+                    
+                    <div class="content-section">
+                        <h2>🏗️ Estrutura</h2>
+                        <p>
+                            O complexo das Cataratas é formado por 275 quedas d'água que se estendem por 2,7 km de largura. A queda mais impressionante é a Garganta do Diabo, com 82 metros de altura, localizada no lado argentino.
+                        </p>
+                        <p>
+                            O lado brasileiro oferece uma vista panorâmica espetacular, enquanto o lado argentino permite maior proximidade das quedas. Trilhas, passarelas e mirantes foram construídos para proporcionar diferentes perspectivas deste fenômeno natural.
+                        </p>
+                        
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <h3>📏 Dimensões</h3>
+                                <p>275 quedas d'água<br>
+                                Largura: 2,7 km<br>
+                                Garganta do Diabo: 82m<br>
+                                Vazão: 1.756 m³/s (média)</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <h3>🎯 Localização</h3>
+                                <p>Foz do Iguaçu - PR<br>
+                                Fronteira Brasil-Argentina<br>
+                                Parque Nacional do Iguaçu<br>
+                                Patrimônio Mundial UNESCO</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <h3>🚌 Acesso</h3>
+                                <p>Ônibus do parque<br>
+                                Trilha da Garganta<br>
+                                Macuco Safari<br>
+                                Passeio de helicóptero</p>
+                            </div>
+                            
+                            <div class="info-card">
+                                <h3>🎫 Informações</h3>
+                                <p>Horário: 9h às 17h<br>
+                                Brasileiro: R$ 72,00<br>
+                                Estrangeiro: R$ 85,00<br>
+                                Melhor época: março a maio</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+
+    <script src="/hamburger-nav.js"></script>
+    <script src="/theme-manager.js"></script>
+    <script>
+        function updateThemeIcon() {
+            const isDark = document.body.classList.contains('dark-mode');
+            document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+        }
+        
+        const originalToggle = toggleTheme;
+        toggleTheme = function() {
+            originalToggle();
+            updateThemeIcon();
+        };
+        
+        document.addEventListener('DOMContentLoaded', updateThemeIcon);
+    </script>
+<script type="text/javascript">
