@@ -37,15 +37,15 @@ function Login({ onLogin, isAdminAccess = false }) {
             tipoUsuario: 'USUARIO'
           });
           
-          if (response.data.success) {
-            showAlert(response.data.message, 'Cadastro realizado com sucesso!');
+          if (response.data.sucesso) {
+            showAlert(response.data.mensagem, 'Cadastro realizado com sucesso!');
             setIsRegister(false);
             setEmail('');
             setPassword('');
             setConfirmPassword('');
             setName('');
           } else {
-            showAlert(response.data.error, 'Erro no cadastro.');
+            showAlert(response.data.mensagem, 'Erro no cadastro.');
           }
         } else if (password !== confirmPassword) {
           alert('Senhas não coincidem!');
@@ -60,24 +60,21 @@ function Login({ onLogin, isAdminAccess = false }) {
             tipoUsuario: userType === 'adm' ? 'ADMIN' : 'USUARIO'
           });
           
-          if (response.data.success) {
-            const user = response.data.user;
-            
-            localStorage.setItem('user', JSON.stringify(user));
+          if (response.data.sucesso) {
             localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userType', user.TipoUsuario);
-            localStorage.setItem('userName', user.Nome);
+            localStorage.setItem('userType', response.data.tipoUsuario);
+            localStorage.setItem('userName', response.data.nome);
+            localStorage.setItem('usuarioId', response.data.usuarioId);
             
-            if (onLogin) onLogin(user.TipoUsuario, user.Nome);
-            alert('Login realizado com sucesso!');
-            navigate('/perfil');
+            if (onLogin) onLogin(response.data.tipoUsuario, response.data.nome);
+            navigate('/');
           } else {
-            showAlert(response.data.error, 'Credenciais inválidas!');
+            showAlert(response.data.mensagem, 'Credenciais inválidas!');
           }
         }
       }
     } catch (error) {
-        showAlert(error.response?.data?.error, 'Erro de conexão com o servidor.');
+        showAlert(error.response?.data?.mensagem, 'Erro de conexão com o servidor.');
     } finally {
       setLoading(false);
     }
