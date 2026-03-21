@@ -120,9 +120,9 @@ function HomePage() {
                 <a href="#">Acre</a>
                 <a href="#">Alagoas</a>
                 <a href="#">Amapá</a>
-                <Link to="/amazonas" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amazonas</Link>
+                <Link to="/amazonas-estado" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amazonas</Link>
                 <a href="#">Bahia</a>
-                <a href="#">Ceará</a>
+                <Link to="/ceara" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Ceará</Link>
                 <a href="#">Distrito Federal</a>
                 <a href="#">Espírito Santo</a>
                 <a href="#">Goiás</a>

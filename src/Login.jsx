@@ -1,83 +1,80 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import './Login.css'
-import axios from 'axios'
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './Login.css';
+import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 function Login({ onLogin, isAdminAccess = false }) {
-  const navigate = useNavigate()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [userType, setUserType] = useState(isAdminAccess ? 'adm' : 'usuario')
-  const [isRegister, setIsRegister] = useState(false)
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [name, setName] = useState('')
-  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [userType, setUserType] = useState(isAdminAccess ? 'adm' : 'usuario');
+  const [isRegister, setIsRegister] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    setLoading(true)
+    e.preventDefault();
+    setLoading(true);
     
     try {
       if (isRegister) {
         if (email && password && password === confirmPassword && name) {
-          const response = await axios.post('/api/auth/cadastrar', {
+          const response = await axios.post(`${API_URL}/api/usuarios`, {
             nome: name,
             email,
             senha: password,
-            tipoUsuario: userType === 'adm' ? 'ADMIN' : 'USUARIO'
-          })
+            tipoUsuario: 'USUARIO' // Public registration always creates a 'USUARIO'
+          });
           
-          if (response.data.sucesso) {
-            alert('Cadastro realizado com sucesso!')
-            setIsRegister(false)
-            setEmail('')
-            setPassword('')
-            setConfirmPassword('')
-            setName('')
+          if (response.data.success) {
+            alert(response.data.message || 'Cadastro realizado com sucesso!');
+            setIsRegister(false);
+            setEmail('');
+            setPassword('');
+            setConfirmPassword('');
+            setName('');
           } else {
-            alert(response.data.mensagem || 'Erro no cadastro')
+            alert(response.data.error || 'Erro no cadastro');
           }
         } else if (password !== confirmPassword) {
-          alert('Senhas não coincidem!')
+          alert('Senhas não coincidem!');
         } else {
-          alert('Preencha todos os campos!')
+          alert('Preencha todos os campos!');
         }
       } else {
         if (email && password) {
-          const response = await axios.post('/api/auth/login', {
+          const response = await axios.post(`${API_URL}/api/login`, {
             email,
-            senha: password
-          })
+            senha: password,
+            tipoUsuario: userType === 'adm' ? 'ADMIN' : 'USUARIO'
+          });
           
-          if (response.data.sucesso) {
-            const user = {
-              id: response.data.usuarioId,
-              nome: response.data.nome,
-              tipoUsuario: response.data.tipoUsuario
-            }
+          if (response.data.success) {
+            const user = response.data.user;
             
-            if (response.data.token) {
-              localStorage.setItem('token', response.data.token)
-            }
-            localStorage.setItem('user', JSON.stringify(user))
-            localStorage.setItem('isLoggedIn', 'true')
-            localStorage.setItem('userType', response.data.tipoUsuario)
-            localStorage.setItem('userName', response.data.nome)
+            // The server does not send a token in the current implementation
+            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userType', user.TipoUsuario);
+            localStorage.setItem('userName', user.Nome);
             
-            if (onLogin) onLogin(response.data.tipoUsuario, response.data.nome)
-            alert('Login realizado com sucesso!')
-            navigate('/perfil')
+            if (onLogin) onLogin(user.TipoUsuario, user.Nome);
+            alert('Login realizado com sucesso!');
+            navigate('/perfil');
           } else {
-            alert(response.data.mensagem || 'Credenciais inválidas!')
+            alert(response.data.error || 'Credenciais inválidas!');
           }
         }
       }
     } catch (error) {
-      alert(error.response?.data?.mensagem || 'Erro de conexão com o servidor')
+      alert(error.response?.data?.error || 'Erro de conexão com o servidor');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="login-container">
@@ -117,6 +114,7 @@ function Login({ onLogin, isAdminAccess = false }) {
               required
             />
           )}
+
           {!isRegister && (
             <select
               value={userType}
@@ -141,7 +139,7 @@ function Login({ onLogin, isAdminAccess = false }) {
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default Login
+export default Login;
