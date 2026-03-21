@@ -15,6 +15,14 @@ function Login({ onLogin, isAdminAccess = false }) {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
 
+  const showAlert = (primaryMessage, fallbackMessage) => {
+    if (typeof primaryMessage === 'string' && primaryMessage) {
+        alert(primaryMessage);
+    } else {
+        alert(fallbackMessage);
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -30,14 +38,14 @@ function Login({ onLogin, isAdminAccess = false }) {
           });
           
           if (response.data.success) {
-            alert(response.data.message || 'Cadastro realizado com sucesso!');
+            showAlert(response.data.message, 'Cadastro realizado com sucesso!');
             setIsRegister(false);
             setEmail('');
             setPassword('');
             setConfirmPassword('');
             setName('');
           } else {
-            alert(response.data.error || 'Erro no cadastro');
+            showAlert(response.data.error, 'Erro no cadastro.');
           }
         } else if (password !== confirmPassword) {
           alert('Senhas não coincidem!');
@@ -55,7 +63,6 @@ function Login({ onLogin, isAdminAccess = false }) {
           if (response.data.success) {
             const user = response.data.user;
             
-            // The server does not send a token in the current implementation
             localStorage.setItem('user', JSON.stringify(user));
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('userType', user.TipoUsuario);
@@ -65,12 +72,12 @@ function Login({ onLogin, isAdminAccess = false }) {
             alert('Login realizado com sucesso!');
             navigate('/perfil');
           } else {
-            alert(response.data.error || 'Credenciais inválidas!');
+            showAlert(response.data.error, 'Credenciais inválidas!');
           }
         }
       }
     } catch (error) {
-      alert(error.response?.data?.error || 'Erro de conexão com o servidor');
+        showAlert(error.response?.data?.error, 'Erro de conexão com o servidor.');
     } finally {
       setLoading(false);
     }
