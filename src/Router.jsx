@@ -55,6 +55,10 @@ import Para from './components/Para';
 import ParaPitu from './components/ParaPitu';
 import DestinosPara from './components/DestinosPara';
 import RJPontos from './components/RJPontos';
+import Ceara from './components/Ceara';
+import DestinosAmazonas from './components/DestinosAmazonas';
+import CearaPontos from './components/CearaPontos';
+import Amazonas from './components/Amazonas';
 
 
 function Router() {
@@ -153,6 +157,10 @@ function Router() {
         <Route path="/parapitu" element={<ParaPitu />} />
         <Route path="/destinos-para" element={<DestinosPara />} />
         <Route path="/rj-pontos" element={<RJPontos />} />
+        <Route path="/ceara" element={<Ceara />} />
+        <Route path="/ceara-pontos" element={<CearaPontos />} />
+        <Route path="/destinos-amazonas" element={<DestinosAmazonas />} />
+        <Route path="/amazonas-estado" element={<Amazonas />} />
 
       </Routes>
     </BrowserRouter>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { destinosData } from '../data/destinosData';
-import './DestinosPara.css'; // Using the new theme-based CSS
+import './DestinosPara.css'; // O CSS com as classes renomeadas
 
 const DestinosPara = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -26,48 +26,48 @@ const DestinosPara = () => {
   }, [searchTerm, selectedCategory]);
 
   return (
-    <div className="theme-page">
-      <header className="theme-header">
-        <h1 className="theme-h1">Alma da Floresta</h1>
-        <p className="theme-subheader">Segredos e encantos da terra paraense</p>
+    <div className="para-destinos-page">
+      <header className="para-destinos-header">
+        <h1 className="para-destinos-h1">Alma da Floresta</h1>
+        <p className="para-destinos-subheader">Segredos e encantos da terra paraense</p>
       </header>
 
-      <div className="theme-controls">
+      <div className="para-destinos-controls">
         <input 
           type="text"
           placeholder="Qual segredo você quer desvendar?"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="theme-search-bar"
+          className="para-destinos-search-bar"
         />
-        <div className="theme-filter-buttons">
+        <div className="para-destinos-filter-buttons">
           {categories.map(category => (
             <button 
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`theme-button ${selectedCategory === category ? 'active' : ''}`}>
+              className={`para-destinos-button ${selectedCategory === category ? 'active' : ''}`}>
               {category}
             </button>
           ))}
         </div>
       </div>
 
-      <main className="theme-grid">
+      <main className="para-destinos-grid">
         {filteredDestinos.map(item => (
-          <div key={item.id} className="theme-card">
-            <div className="theme-card-image-container">
-              <img src={item.image} alt={item.name} className="theme-card-image" />
+          <div key={item.id} className="para-destinos-card">
+            <div className="para-destinos-card-image-container">
+              <img src={item.image} alt={item.name} className="para-destinos-card-image" />
             </div>
-            <div className="theme-card-content">
-              <h2 className="theme-card-title">{item.name}</h2>
-              <p className="theme-card-category">{item.category} • {item.location}</p>
-              <p className="theme-card-description">{item.description}</p>
+            <div className="para-destinos-card-content">
+              <h2 className="para-destinos-card-title">{item.name}</h2>
+              <p className="para-destinos-card-category">{item.category} • {item.location}</p>
+              <p className="para-destinos-card-description">{item.description}</p>
             </div>
           </div>
         ))}
       </main>
 
-      <footer className="theme-footer">
+      <footer className="para-destinos-footer">
         <p>GADYS © 2025</p>
       </footer>
     </div>

@@ -1,0 +1,129 @@
+/* === ESTILO PÁGINA DE DETALHES v1.0 === */
+
+:root {
+  --details-bg: #f4f7f9;
+  --details-text: #333;
+  --details-primary: #1976D2; /* Azul principal do tema */
+  --details-surface: #ffffff;
+  --details-shadow: rgba(0, 0, 0, 0.08);
+}
+
+.ponto-turistico-page {
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: var(--details-bg);
+  color: var(--details-text);
+}
+
+/* --- Cabeçalho --- */
+.ponto-header {
+  position: relative;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  background-size: cover;
+  background-position: center;
+}
+
+.ponto-title {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+  margin: 0;
+}
+
+.back-button {
+  position: absolute;
+  top: 2rem;
+  left: 2rem;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 0.8rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.back-button:hover {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--details-primary);
+}
+
+/* --- Conteúdo Principal --- */
+.ponto-content {
+  max-width: 1100px;
+  margin: -5rem auto 0 auto;
+  padding: 2rem;
+  position: relative;
+  z-index: 2;
+  background-color: transparent;
+}
+
+.ponto-main-info {
+  background-color: var(--details-surface);
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px var(--details-shadow);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.ponto-description {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* --- Cards de Informação --- */
+.info-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.info-card {
+  background-color: var(--details-surface);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 30px var(--details-shadow);
+  border-left: 5px solid var(--details-primary);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+}
+
+.info-card h3 {
+  font-family: 'Merriweather', serif;
+  font-size: 1.5rem;
+  color: var(--details-primary);
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.info-card p {
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.info-card p strong {
+    color: var(--details-primary);
+}
+
+/* --- Rodapé --- */
+.ponto-footer {
+  background-color: #222;
+  color: #aaa;
+  text-align: center;
+  padding: 2rem;
+  margin-top: 4rem;
+}
