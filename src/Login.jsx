@@ -54,7 +54,7 @@ function Login({ onLogin, isAdminAccess = false }) {
         }
       } else {
         if (email && password) {
-          const response = await axios.post(`${API_URL}/api/login`, { // Assuming this is correct, but let's check backend if it fails
+          const response = await axios.post(`${API_URL}/api/auth/login`, {
             email,
             senha: password,
             tipoUsuario: userType === 'adm' ? 'ADMIN' : 'USUARIO'
