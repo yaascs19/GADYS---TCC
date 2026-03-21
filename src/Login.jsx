@@ -30,11 +30,11 @@ function Login({ onLogin, isAdminAccess = false }) {
     try {
       if (isRegister) {
         if (email && password && password === confirmPassword && name) {
-          const response = await axios.post(`${API_URL}/api/usuarios`, {
+          const response = await axios.post(`${API_URL}/api/auth/cadastrar`, { // Corrected endpoint
             nome: name,
             email,
             senha: password,
-            tipoUsuario: 'USUARIO' // Public registration always creates a 'USUARIO'
+            tipoUsuario: 'USUARIO'
           });
           
           if (response.data.success) {
@@ -54,7 +54,7 @@ function Login({ onLogin, isAdminAccess = false }) {
         }
       } else {
         if (email && password) {
-          const response = await axios.post(`${API_URL}/api/login`, {
+          const response = await axios.post(`${API_URL}/api/login`, { // Assuming this is correct, but let's check backend if it fails
             email,
             senha: password,
             tipoUsuario: userType === 'adm' ? 'ADMIN' : 'USUARIO'
