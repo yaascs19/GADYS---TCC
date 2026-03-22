@@ -3,10 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://gadysback-eedzhme0g2ftg8c5.brazilsouth-01.azurewebsites.net';
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  'https://gadysback-eedzhme0g2ftg8c5.brazilsouth-01.azurewebsites.net';
+
+// 🔥 DEBUG — verificar qual URL está sendo usada na Vercel
+console.log("API_URL =", API_URL);
 
 function Login({ onLogin, isAdminAccess = false }) {
   const navigate = useNavigate();
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState(isAdminAccess ? 'adm' : 'usuario');
@@ -17,26 +23,29 @@ function Login({ onLogin, isAdminAccess = false }) {
 
   const showAlert = (primaryMessage, fallbackMessage) => {
     if (typeof primaryMessage === 'string' && primaryMessage) {
-        alert(primaryMessage);
+      alert(primaryMessage);
     } else {
-        alert(fallbackMessage);
+      alert(fallbackMessage);
     }
-  }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    
+
     try {
       if (isRegister) {
         if (email && password && password === confirmPassword && name) {
-          const response = await axios.post(`${API_URL}/api/auth/cadastrar`, { // Corrected endpoint
-            nome: name,
-            email,
-            senha: password,
-            tipoUsuario: 'USUARIO'
-          });
-          
+          const response = await axios.post(
+            `${API_URL}/api/auth/cadastrar`,
+            {
+              nome: name,
+              email,
+              senha: password,
+              tipoUsuario: 'USUARIO',
+            }
+          );
+
           if (response.data.sucesso) {
             showAlert(response.data.mensagem, 'Cadastro realizado com sucesso!');
             setIsRegister(false);
@@ -54,19 +63,24 @@ function Login({ onLogin, isAdminAccess = false }) {
         }
       } else {
         if (email && password) {
-          const response = await axios.post(`${API_URL}/api/auth/login`, {
-            email,
-            senha: password,
-            tipoUsuario: userType === 'adm' ? 'ADMIN' : 'USUARIO'
-          });
-          
+          const response = await axios.post(
+            `${API_URL}/api/auth/login`,
+            {
+              email,
+              senha: password,
+              tipoUsuario: userType === 'adm' ? 'ADMIN' : 'USUARIO',
+            }
+          );
+
           if (response.data.sucesso) {
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('userType', response.data.tipoUsuario);
             localStorage.setItem('userName', response.data.nome);
             localStorage.setItem('usuarioId', response.data.usuarioId);
-            
-            if (onLogin) onLogin(response.data.tipoUsuario, response.data.nome);
+
+            if (onLogin)
+              onLogin(response.data.tipoUsuario, response.data.nome);
+
             navigate('/');
           } else {
             showAlert(response.data.mensagem, 'Credenciais inválidas!');
@@ -74,7 +88,10 @@ function Login({ onLogin, isAdminAccess = false }) {
         }
       }
     } catch (error) {
-        showAlert(error.response?.data?.mensagem, 'Erro de conexão com o servidor.');
+      showAlert(
+        error.response?.data?.mensagem,
+        'Erro de conexão com o servidor.'
+      );
     } finally {
       setLoading(false);
     }
@@ -82,9 +99,10 @@ function Login({ onLogin, isAdminAccess = false }) {
 
   return (
     <div className="login-container">
-      <div className="login-form">
-        <img src="/images/logos/logo.png" alt="GADYS" className="login-logo" />
+      <div className="login-box">
+        <h1>GADYS</h1>
         <h2>{isRegister ? 'Cadastrar' : 'Bem-vindo'}</h2>
+
         <form onSubmit={handleSubmit}>
           {isRegister && (
             <input
@@ -95,6 +113,7 @@ function Login({ onLogin, isAdminAccess = false }) {
               required
             />
           )}
+
           <input
             type="email"
             placeholder="Digite seu email"
@@ -102,6 +121,7 @@ function Login({ onLogin, isAdminAccess = false }) {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
+
           <input
             type="password"
             placeholder="Digite sua senha"
@@ -109,6 +129,7 @@ function Login({ onLogin, isAdminAccess = false }) {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+
           {isRegister && (
             <input
               type="password"
@@ -125,14 +146,22 @@ function Login({ onLogin, isAdminAccess = false }) {
               onChange={(e) => setUserType(e.target.value)}
               className="user-type-select"
             >
-              {!isAdminAccess && <option value="usuario">Usuário</option>}
+              {!isAdminAccess && (
+                <option value="usuario">Usuário</option>
+              )}
               <option value="adm">Administrador</option>
             </select>
           )}
+
           <button type="submit" disabled={loading}>
-            {loading ? 'Carregando...' : (isRegister ? 'Cadastrar' : 'Entrar')}
+            {loading
+              ? 'Carregando...'
+              : isRegister
+              ? 'Cadastrar'
+              : 'Entrar'}
           </button>
         </form>
+
         {!isAdminAccess && (
           <p className="toggle-form">
             {isRegister ? 'Já tem conta?' : 'Não tem conta?'}
