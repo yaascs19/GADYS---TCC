@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import axios from 'axios';
 
-const API_URL =
+// 🔥 Remove barra final automaticamente se existir
+const RAW_API_URL =
   import.meta.env.VITE_API_URL ||
   'https://gadysback-eedzhme0g2ftg8c5.brazilsouth-01.azurewebsites.net';
 
-// 🔥 DEBUG — verificar qual URL está sendo usada na Vercel
+const API_URL = RAW_API_URL.replace(/\/$/, '');
+
 console.log("API_URL =", API_URL);
 
 function Login({ onLogin, isAdminAccess = false }) {
@@ -36,13 +38,14 @@ function Login({ onLogin, isAdminAccess = false }) {
     try {
       if (isRegister) {
         if (email && password && password === confirmPassword && name) {
+
           const response = await axios.post(
             `${API_URL}/api/auth/cadastrar`,
             {
               nome: name,
               email,
               senha: password,
-              tipoUsuario: 'USUARIO',
+              tipoUsuario: 'USUARIO'
             }
           );
 
@@ -56,19 +59,22 @@ function Login({ onLogin, isAdminAccess = false }) {
           } else {
             showAlert(response.data.mensagem, 'Erro no cadastro.');
           }
+
         } else if (password !== confirmPassword) {
           alert('Senhas não coincidem!');
         } else {
           alert('Preencha todos os campos!');
         }
+
       } else {
         if (email && password) {
+
           const response = await axios.post(
             `${API_URL}/api/auth/login`,
             {
               email,
               senha: password,
-              tipoUsuario: userType === 'adm' ? 'ADMIN' : 'USUARIO',
+              tipoUsuario: userType === 'adm' ? 'ADMIN' : 'USUARIO'
             }
           );
 
@@ -78,8 +84,9 @@ function Login({ onLogin, isAdminAccess = false }) {
             localStorage.setItem('userName', response.data.nome);
             localStorage.setItem('usuarioId', response.data.usuarioId);
 
-            if (onLogin)
+            if (onLogin) {
               onLogin(response.data.tipoUsuario, response.data.nome);
+            }
 
             navigate('/');
           } else {
@@ -87,11 +94,18 @@ function Login({ onLogin, isAdminAccess = false }) {
           }
         }
       }
+
     } catch (error) {
-      showAlert(
-        error.response?.data?.mensagem,
-        'Erro de conexão com o servidor.'
-      );
+      console.error("ERRO COMPLETO:", error);
+
+      if (error.response) {
+        alert(error.response.data?.mensagem || "Erro no servidor.");
+      } else if (error.request) {
+        alert("Servidor não respondeu. Pode ser CORS ou backend fora do ar.");
+      } else {
+        alert("Erro inesperado.");
+      }
+
     } finally {
       setLoading(false);
     }
@@ -99,8 +113,8 @@ function Login({ onLogin, isAdminAccess = false }) {
 
   return (
     <div className="login-container">
-      <div className="login-box">
-        <h1>GADYS</h1>
+      <div className="login-form">
+        <img src="/images/logos/logo.png" alt="GADYS" className="login-logo" />
         <h2>{isRegister ? 'Cadastrar' : 'Bem-vindo'}</h2>
 
         <form onSubmit={handleSubmit}>
@@ -146,19 +160,13 @@ function Login({ onLogin, isAdminAccess = false }) {
               onChange={(e) => setUserType(e.target.value)}
               className="user-type-select"
             >
-              {!isAdminAccess && (
-                <option value="usuario">Usuário</option>
-              )}
+              {!isAdminAccess && <option value="usuario">Usuário</option>}
               <option value="adm">Administrador</option>
             </select>
           )}
 
           <button type="submit" disabled={loading}>
-            {loading
-              ? 'Carregando...'
-              : isRegister
-              ? 'Cadastrar'
-              : 'Entrar'}
+            {loading ? 'Carregando...' : (isRegister ? 'Cadastrar' : 'Entrar')}
           </button>
         </form>
 
