@@ -17,11 +17,11 @@ export const destinosAmazonasData = [
   },
   {
     id: 3,
-    name: 'Restaurante Tacacá da Gisela',
+    name: 'Amazonico Peixaria Regional',
     category: 'Comida Típica',
     location: 'Largo de São Sebastião, Manaus',
-    image: '/images/gastronomia/tacaca.jpg',
-    description: 'Um dos locais mais tradicionais para provar o Tacacá em Manaus, localizado no coração do centro histórico, em frente ao Teatro Amazonas.'
+    image: '/images/geral/restama1.jpg',
+    description: 'Oferece uma experiência culinária singular, harmonizando peixes, frutas e temperos amazônicos.'
   },
   {
     id: 4,

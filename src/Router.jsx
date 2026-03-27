@@ -58,6 +58,7 @@ import RJPontos from './components/RJPontos';
 import Ceara from './components/Ceara';
 import DestinosAmazonas from './components/DestinosAmazonas';
 import CearaPontos from './components/CearaPontos';
+import SPPontos from './components/SPPontos';
 import Amazonas from './components/Amazonas';
 
 
@@ -159,6 +160,7 @@ function Router() {
         <Route path="/rj-pontos" element={<RJPontos />} />
         <Route path="/ceara" element={<Ceara />} />
         <Route path="/ceara-pontos" element={<CearaPontos />} />
+        <Route path="/sp-pontos" element={<SPPontos />} />
         <Route path="/destinos-amazonas" element={<DestinosAmazonas />} />
         <Route path="/amazonas-estado" element={<Amazonas />} />
 

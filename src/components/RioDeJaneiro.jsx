@@ -146,21 +146,11 @@ const RioDeJaneiro = () => {
         zIndex: 2,
     },
     h1: {
-      fontSize: 'clamp(3rem, 6vw, 5.5rem)',
-      fontWeight: 90,
-      color: '#fff',
-      textShadow: '0 4px 15px rgba(0,0,0,0.7)',
-      letterSpacing: '2px',
+      fontSize: 'clamp(2.5rem, 5vw, 4.5rem)',
+      fontWeight: 900,
+      textShadow: '0 4px 10px rgba(0,0,0,0.8)',
+      letterSpacing: '1px',
       marginBottom: '1rem',
-    },
-    subtitle: {
-        fontSize: 'clamp(1.8rem, 4.5vw, 2.8rem)',
-        fontWeight: 350,
-        color: '#f5f5f5',
-        textShadow: '0 3px 12px rgba(0,0,0,0.9)',
-        maxWidth: '600px',
-        margin: '0 auto 1.5rem auto',
-        opacity: 0.95,    
     },
     heroP: {
       fontSize: 'clamp(1.1rem, 2.5vw, 1.5rem)',
@@ -338,8 +328,7 @@ const RioDeJaneiro = () => {
             ))}
             <div style={styles.gradientOverlay}></div>
             <div style={styles.heroContent}>
-                <h1 style={styles.h1}>Rio de Janeiro</h1>
-                <p style={styles.subtitle}>A cidade maravilhosa</p>
+                <h1 style={styles.h1}>Rio de Janeiro: A Cidade Maravilhosa</h1>
                 <p style={styles.heroP}>Um estado brasileiro da Região Sudeste, conhecido por suas deslumbrantes paisagens, cultura vibrante e um espírito contagiante que encanta o mundo.</p>
             </div>
         </section>
