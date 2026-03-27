@@ -129,7 +129,7 @@
 
 .amazonas-destinos-card-title {
   font-family: 'Merriweather', serif;
-  font-size: 1.7rem;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
   font-weight: 700;
   color: var(--amazonas-primary);
   margin-bottom: 0.5rem;

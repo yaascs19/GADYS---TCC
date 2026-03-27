@@ -28,7 +28,7 @@ export const destinosAmazonasData = [
     name: 'Arquipélago de Anavilhanas',
     category: 'Lugar Paradisíaco',
     location: 'Rio Negro',
-    image: '/images/natureza/anavilhanas.jpeg',
+    image: '/images/geral/Ana-Am.jpg',
     description: 'Um dos maiores arquipélagos fluviais do mundo, com centenas de ilhas, lagos e igarapés, um santuário de biodiversidade.'
   },
   {
@@ -36,7 +36,7 @@ export const destinosAmazonasData = [
     name: 'Bumbódromo',
     category: 'Monumento',
     location: 'Parintins',
-    image: '/images/geral/pam.jpg',
+    image: '/images/geral/bum-Am.jpeg',
     description: 'O local da famosa disputa entre os bois Garantido e Caprichoso. Uma arena a céu aberto que vibra com a cultura amazônica durante o Festival de Parintins.'
   },
   {
@@ -44,23 +44,23 @@ export const destinosAmazonasData = [
     name: 'Cachoeira do Santuário',
     category: 'Lugar Paradisíaco',
     location: 'Presidente Figueiredo',
-    image: '/images/natureza/santuario.jpg',
+    image: '/images/geral/ca-Am.jpg',
     description: 'Uma das mais belas quedas d\'água da região, com piscinas naturais ideais para banho e relaxamento em meio à floresta.'
   },
   {
     id: 7,
-    name: 'Restaurante Tambaqui de Banda',
+    name: 'Coreto Peixaria & Café Regional',
     category: 'Comida Típica',
-    location: 'Vários endereços, Manaus',
-    image: '/images/gastronomia/tambaqui.jpg',
-    description: 'Rede de restaurantes famosa por servir o tradicional Tambaqui de Banda, assado na brasa, um prato imperdível da culinária local.'
+    location: 'Manaus',
+    image: '/images/geral/res-Am.jpg',
+    description: 'Com um menu repleto de pratos tradicionais e ingredientes frescos, cada refeição é uma celebração das riquezas da região. Desde o peixe fresco dos rios até as especiarias nativas.'
   },
     {
     id: 8,
     name: 'Ponte Rio Negro',
     category: 'Monumento',
     location: 'Manaus',
-    image: '/images/cultura/ponte.jpg',
+    image: '/images/geral/pn-Am.jpg',
     description: 'Uma impressionante obra da engenharia moderna, esta ponte estaiada se estende por 3.5 km sobre o Rio Negro, conectando Manaus a Iranduba.'
   }
 ];
