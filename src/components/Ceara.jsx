@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const Ceara = () => {
   const navigate = useNavigate();
-  const darkMode = localStorage.getItem('darkMode') === 'true';
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [isLoading, setIsLoading] = useState(true);
+
+  const toggleDarkMode = () => {
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', newDarkMode.toString());
+  };
 
   const images = [
     '/images/geral/Ceara3.jpg',
@@ -20,13 +26,10 @@ const Ceara = () => {
     firstImage.src = images[0];
     firstImage.onload = () => {
       setIsLoading(false);
-      images.slice(1).forEach(imageSrc => {
-        const img = new Image();
-        img.src = imageSrc;
-      });
+      images.slice(1).forEach(imageSrc => { const img = new Image(); img.src = imageSrc; });
     };
     firstImage.onerror = () => setIsLoading(false);
-  }, []);
+  }, [images]);
 
   useEffect(() => {
     if (isLoading) return;
@@ -34,18 +37,26 @@ const Ceara = () => {
       setCurrentImageIndex(prevIndex => (prevIndex + 1) % images.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [isLoading]);
+  }, [isLoading, images.length]);
 
   useEffect(() => {
     if (isLoading) return;
     const styleSheet = document.createElement('style');
+    styleSheet.type = 'text/css';
     styleSheet.innerText = `
+      .feature-section-animate { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
+      .feature-section-animate.is-visible { opacity: 1; transform: translateY(0); }
       .feature-image-container { overflow: hidden; border-radius: 15px; }
       .feature-image { transition: transform 0.4s ease; }
       .feature-image-container:hover .feature-image { transform: scale(1.05); }
     `;
     document.head.appendChild(styleSheet);
-    return () => document.head.removeChild(styleSheet);
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
+    }, { threshold: 0.2 });
+    const sections = document.querySelectorAll('.feature-section-animate');
+    sections.forEach(section => observer.observe(section));
+    return () => { document.head.removeChild(styleSheet); sections.forEach(section => observer.unobserve(section)); };
   }, [isLoading]);
 
   const styles = {
@@ -187,6 +198,80 @@ const Ceara = () => {
 
   return (
     <div style={styles.page}>
+      <header className="header" style={{
+        background: darkMode ? 'rgba(15, 12, 41, 0.8)' : '#FFFFFF',
+        backdropFilter: 'blur(30px)',
+        padding: '1rem 2rem',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        borderBottom: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid #e0e0e0'
+      }}>
+        <nav className="nav" style={{ display: 'contents' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <img src="/images/logos/logo.png" alt="GADYS" className="logo" style={{height: '40px'}} />
+            <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: darkMode ? 'white' : '#2c3e50' }}>GADYS</span>
+          </div>
+          <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
+            <button onClick={(e) => { e.preventDefault(); toggleDarkMode(); }} style={{background: 'none', border: 'none', color: darkMode ? 'white' : '#2c3e50', fontSize: '1.5rem', cursor: 'pointer'}}>
+              {darkMode ? '☀️' : '🌙'}
+            </button>
+            <div className="hamburger" onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
+              <span style={{backgroundColor: darkMode ? 'white' : '#667eea'}}></span>
+              <span style={{backgroundColor: darkMode ? 'white' : '#764ba2'}}></span>
+              <span style={{backgroundColor: darkMode ? 'white' : '#667eea'}}></span>
+            </div>
+          </div>
+          <div className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')}></div>
+          <ul className="nav-links" style={{background: darkMode ? 'rgba(15, 12, 41, 0.79)' : 'white', paddingTop: '5rem', justifyContent: 'flex-start', gap: '2rem'}}>
+            <li><a href="#" style={{color: darkMode ? '#888' : '#ccc', cursor: 'not-allowed'}} onClick={(e) => e.preventDefault()}>Início</a></li>
+            <li className="dropdown">
+              <a href="#" onClick={(e) => e.preventDefault()} style={{color: darkMode ? 'white' : '#2c3e50'}}>Estados Brasileiros ▼</a>
+              <div className="dropdown-content" style={{backgroundColor: darkMode ? 'rgb(252, 252, 252)' : '#f9f9f9', border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid #ddd'}}>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Acre</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Alagoas</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amapá</a>
+                <Link to="/amazonas" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amazonas</Link>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Bahia</a>
+                <Link to="/ceara" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Ceará</Link>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Distrito Federal</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Espírito Santo</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Goiás</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Maranhão</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Mato Grosso</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Mato Grosso do Sul</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Minas Gerais</a>
+                <Link to="/para" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Pará</Link>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Paraíba</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Paraná</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Pernambuco</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Piauí</a>
+                <Link to="/rio-de-janeiro" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio de Janeiro</Link>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio Grande do Norte</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio Grande do Sul</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rondônia</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Roraima</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Santa Catarina</a>
+                <Link to="/sao-paulo" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>São Paulo</Link>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Sergipe</a>
+                <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Tocantins</a>
+              </div>
+            </li>
+            <li><a href="#" onClick={() => { navigate('/lugares'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Lugares</a></li>
+            <li><a href="#" onClick={() => { navigate('/mapa'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Mapa</a></li>
+            <li><a href="#" onClick={() => { navigate('/adicionar-local'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Adicionar Local</a></li>
+            {localStorage.getItem('userType') === 'adm' && (
+              <li><a href="#" onClick={() => { navigate('/painel-adm'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Administração</a></li>
+            )}
+            <li><a href="#" onClick={() => { navigate('/perfil'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Meu Perfil</a></li>
+            <li><a href="#" onClick={() => { navigate('/sobre'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Sobre</a></li>
+            <li><a href="#" onClick={() => { navigate('/contato'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Contato</a></li>
+          </ul>
+        </nav>
+      </header>
       <main>
         <section style={styles.hero}>
             {images.map((img, index) => (
@@ -206,7 +291,7 @@ const Ceara = () => {
             </div>
         </section>
 
-        <section style={styles.featureSection}>
+        <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
             <img src="/images/geral/CearaInicio.jpg" alt="Ceará" style={styles.featureImage} className="feature-image" />
           </div>
@@ -216,7 +301,7 @@ const Ceara = () => {
           </div>
         </section>
 
-        <section style={{...styles.featureSection, flexDirection: 'row-reverse'}}>
+        <section style={{...styles.featureSection, flexDirection: 'row-reverse'}} className="feature-section-animate">
             <div style={styles.featureImageContainer} className="feature-image-container">
             <img src="/images/geral/baiao2.jpg" alt="Baião de dois" style={styles.featureImage} className="feature-image" />
             </div>
@@ -226,7 +311,7 @@ const Ceara = () => {
             </div>
         </section>
 
-        <section style={styles.featureSection}>
+        <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
             <img src="/images/geral/praiaEx.jpg" alt="Praia" style={styles.featureImage} className="feature-image" />
           </div>
