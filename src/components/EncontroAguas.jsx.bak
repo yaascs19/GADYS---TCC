@@ -10,57 +10,65 @@ const carouselImages = [
 const galleryImages = [
   { src: '/images/geral/en6-Am.jpg', alt: 'Encontro das Águas' },
   { src: '/images/geral/en7-Am.webp', alt: 'Encontro das Águas' },
-  { src: '/images/geral/en8-Am.webp', alt: 'Encontro das Águas' },
+  { src: '/images/geral/en8-Am.webp', alt: 'Encontro das Águas' }, // Imagem da galeria atualizada
   { src: '/images/geral/en5-Am.jpg', alt: 'Encontro das Águas' },
   { src: '/images/geral/en4-Am.webp', alt: 'Encontro das Águas' },
   { src: '/images/geral/en3-Am.jpg', alt: 'Encontro das Águas' } 
 ];
 
 const secoes = {
-  fenomeno: {
-    id: 'fenomeno',
-    label: 'O Fenômeno',
-    titulo: 'Um Balé de Águas no Coração do Mundo',
-    texto: 'Imagine estar no ponto exato onde dois gigantes se encontram. De um lado, o Rio Negro, com suas águas escuras e quentes. Do outro, o Rio Solimões, barrento e frio. Por mais de seis quilômetros, eles correm juntos, mas se recusam a misturar, criando uma linha divisória que desafia a lógica. Este não é apenas um fenômeno, é a força da Amazônia pulsando diante dos seus olhos.',
+  espetaculo: {
+    id: 'espetaculo',
+    label: 'Espetáculo',
+    titulo: 'Um Espetáculo da Natureza',
+    texto: 'No coração da Amazônia, um dos mais grandiosos fenômenos naturais do planeta acontece diariamente. O Rio Negro, com suas águas escuras como chá, encontra o Rio Solimões, de tom barrento e argiloso. Por mais de seis quilômetros, essas águas de cores, densidades e temperaturas distintas fluem lado a lado, sem se misturar, criando uma fronteira líquida perfeitamente visível. Este balé de águas não é apenas um deleite visual, mas um símbolo poderoso da complexidade e da força da naturezxa amazônica, atraindo olhares curiosos de todo o mundo.',
     imagem: '/images/geral/en9-Am.webp',
-    alt: 'Vista aérea do Encontro das Águas, um espetáculo da natureza',
+    alt: 'Vista aérea do Encontro das Águas',
+  },
+  curiosidade: {
+    id: 'curiosidade',
+    label: 'Curiosidade',
+    titulo: 'Por Trás da Magia',
+    texto: 'O que parece mágica é, na verdade, um fascinante fenômeno físico e químico. O Rio Negro nasce na Colômbia e percorre a planície, carregando grande quantidade de matéria orgânica em decomposição, o que torna suas águas ácidas (pH em torno de 4,5) e escuras. Já o Rio Solimões nasce nos Andes Peruanos, e sua correnteza veloz arrasta toneladas de sedimentos, resultando em águas mais densas, frias e de pH neutro. Essas diferenças drásticas impedem que a mistura seja imediata.',
+    imagem: '/images/geral/en10-Am.png',
+    alt: 'Detalhe do encontro das águas',
     lista: [
-      'Rio Negro: Quente (~28°C), lento (~2 km/h) e misteriosamente escuro.',
-      'Rio Solimões: Frio (~22°C), rápido (~6 km/h) e imponentemente barrento.',
+      'Rio Negro: Quente (~28°C), lento (~2 km/h), ácido e escuro.',
+      'Rio Solimões: Frio (~22°C), rápido (~6 km/h), denso e barrento.',
     ],
   },
-  experiencias: {
-    id: 'experiencias',
-    label: 'Experiências Únicas',
-    titulo: 'Sinta a Magia com Suas Próprias Mãos',
-    texto: 'Esta não é uma jornada para apenas observar. Navegue sobre a linha divisória e sinta a mudança abrupta de temperatura ao tocar as águas. Veja botos cor-de-rosa e tucuxis, os guardiões do rio, dançando ao redor do seu barco. A experiência vai além do visual: é sentir a energia do lugar que dá origem ao colossal Rio Amazonas, o maior do planeta. Uma memória que você levará para sempre.',
+  experiencia: {
+    id: 'experiencia',
+    label: 'Experiência',
+    titulo: 'Vivencie o Inesquecível',
+    texto: 'Navegar por esta fronteira natural é uma experiência sensorial única. Em passeios de barco, é possível sentir a nítida diferença de temperatura ao colocar as mãos na água, uma de cada lado da linha divisória. É comum ser acompanhado por botos-cor-de-rosa e tucuxis, que brincam na junção dos rios. A jornada revela a imensidão da paisagem e culmina na observação do ponto onde, finalmente, a força da natureza une as duas correntes, dando origem ao colossal Rio Amazonas, o maior rio do mundo em volume de água.',
     imagem: '/images/geral/en11-Am.jpg',
-    alt: 'Turista sentindo a diferença de temperatura das águas',
+    alt: 'Barco turístico navegando no encontro',
   },
   visita: {
       id: 'visita',
       label: 'Visite',
-      titulo: 'Sua Jornada Começa Agora',
-      texto: 'Transformar o sonho de conhecer o Encontro das Águas em realidade é mais fácil do que você imagina. Os passeios partem diariamente de Manaus, e há uma opção perfeita para cada estilo de viajante.',
-      imagem: '/images/geral/en12-Am.jpg',
-      alt: 'Barco partindo para o passeio no Encontro das Águas',
+      titulo: 'Planeje Sua Visita',
+      texto: 'Visitar o Encontro das Águas é uma atividade imperdível para quem está em Manaus. A principal forma de chegar ao local é através de passeios de barco, que partem de diferentes pontos da cidade.',
+      imagem: '/images/geral/en12-Am.jpg', // Imagem de um barco ou porto
+      alt: 'Barco partindo para o passeio',
       subsecoes: [
         {
-          titulo: 'Como Chegar ao Coração da Amazônia',
-          texto: 'O fenômeno está a apenas 10 km de Manaus. Agências de turismo locais oferecem passeios de lancha para uma aventura rápida e dinâmica, ou em barcos regionais para uma imersão completa, que podem incluir visitas a comunidades flutuantes e trilhas na selva.'
+          titulo: 'Localização e Passeios',
+          texto: 'O fenômeno ocorre a cerca de 10 km de Manaus, capital do Amazonas. Dezenas de agências de turismo oferecem passeios de lancha ou barco regional. Os passeios de dia inteiro costumam incluir outras atividades, como visita a comunidades flutuantes e trilhas na selva.'
         },
         {
-          titulo: 'Sua Aventura com o Melhor Custo-Benefício',
-          texto: 'Com opções que variam de R$ 90 a R$ 300 por pessoa, a experiência é acessível. O valor depende da duração e das atividades inclusas. A maioria dos barcos parte pela manhã (9h), retornando no fim da tarde. Reserve com antecedência, especialmente na alta temporada, para garantir seu lugar!'
+          titulo: 'Preços e Horários',
+          texto: 'O valor dos passeios pode variar de R$ 90 a R$ 300 por pessoa, dependendo da duração e das atividades inclusas. A maioria dos barcos parte pela manhã, por volta das 9h, com retorno no final da tarde. Recomenda-se reservar com antecedência, especialmente na alta temporada.'
         },
         {
-          titulo: 'Prepare-se para o Dia Perfeito',
-          texto: 'O essencial: protetor solar, chapéu, óculos de sol e repelente. Roupas leves são suas melhores amigas. Não se esqueça da câmera para capturar tudo e, se possível, leve dinheiro em espécie para adquirir artesanato local e apoiar as comunidades ribeirinhas.'
+          titulo: 'Dicas Essenciais',
+          texto: 'Leve protetor solar, chapéu, óculos de sol e repelente. Roupas leves e confortáveis são ideais. Não se esqueça da câmera para registrar os momentos e, se possível, leve dinheiro em espécie para comprar artesanato local nas comunidades ribeirinhas.'
         }
       ],
       recomendacoes: [
         {
-          titulo: "Agências Confiáveis para sua Aventura",
+          titulo: "Agências de Turismo",
           itens: [
             { nome: "Amazon Tour", nota: 4.8, contato: "(92) 9999-8888", site: "https://amazontourmanaus.com/" },
             { nome: "Manaus Jungle Tours", nota: 4.7, contato: "(92) 9888-7777", site: "https://www.manausjungletours.com/" },
@@ -68,7 +76,7 @@ const secoes = {
           ]
         },
         {
-          titulo: "Onde Recarregar as Energias",
+          titulo: "Hotéis",
           itens: [
             { nome: "Hotel Villa Amazônia", nota: 4.6, contato: "(92) 3306-4200", site: "https://villaamazonia.com/pt/" },
             { nome: "Juma Ópera Hotel", nota: 4.8, contato: "(92) 3212-3300", site: "https://www.jumaopera.com.br/" },
@@ -76,7 +84,7 @@ const secoes = {
           ]
         },
         {
-          titulo: "Hospedagem com Charme e Conforto",
+          titulo: "Pousadas",
           itens: [
             { nome: "Pousada Juma Lodge", nota: 4.9, contato: "(92) 9911-5544", site: "https://www.jumalodge.com.br/" },
             { nome: "Anavilhanas Jungle Lodge", nota: 4.8, contato: "(92) 3365-1180", site: "https://www.anavilhanaslodge.com/" },
@@ -113,7 +121,7 @@ const HeaderCarousel = () => {
           alt="Fundo dinâmico do Encontro das Águas"
           className={`header-carousel-image ${index === imagemAtivaIndex ? 'active' : ''}`}
         />
-      ))}
+      ))j}
       <div className="header-text-content">
         <h1>O Encontro das Águas</h1>
         <p>Onde dois rios se encontram, mas não se misturam.</p>
@@ -196,7 +204,7 @@ const GaleriaDeImagens = () => (
 );
 
 const EncontroDasAguas = () => {
-  const [abaAtiva, setAbaAtiva] = useState('fenomeno');
+  const [abaAtiva, setAbaAtiva] = useState('espetaculo');
 
   return (
     <div className="encontro-visual-container">

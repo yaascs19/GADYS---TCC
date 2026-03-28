@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { destinosAmazonasData } from '../data/destinosAmazonasData';
 import './DestinosAmazonas.css';
 
 const DestinosAmazonas = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredDestinos, setFilteredDestinos] = useState([]);
@@ -62,6 +64,11 @@ const DestinosAmazonas = () => {
               <h2 className="amazonas-destinos-card-title">{item.name}</h2>
               <p className="amazonas-destinos-card-category">{item.category} • {item.location}</p>
               <p className="amazonas-destinos-card-description">{item.description}</p>
+              <button 
+                className="amazonas-destinos-saibamais"
+                onClick={() => item.id === 1 ? navigate('/encontro-aguas') : null}
+                style={{ opacity: item.id === 1 ? 1 : 0.4, cursor: item.id === 1 ? 'pointer' : 'not-allowed' }}
+              >Saber mais</button>
             </div>
           </div>
         ))}
