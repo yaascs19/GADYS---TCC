@@ -85,9 +85,9 @@ const secoes = {
         }
       ]
     },
-    galeria: {
-      id: 'galeria',
-      label: 'Galeria'
+    fotos: {
+      id: 'fotos',
+      label: 'Fotos'
     }
 };
 
@@ -184,7 +184,7 @@ const ConteudoAba = ({ secao }) => (
 
 const GaleriaDeImagens = () => (
   <section className="galeria-container">
-    <h2>Galeria de Imagens</h2>
+    <h2>Fotos</h2>
     <div className="galeria-grid">
       {galleryImages.map((img, index) => (
         <div key={index} className="galeria-item">
@@ -216,7 +216,7 @@ const EncontroDasAguas = () => {
         </nav>
 
         <main className="encontro-main-content">
-          {abaAtiva === 'galeria' ? (
+          {abaAtiva === 'fotos' ? (
             <GaleriaDeImagens />
           ) : (
             <ConteudoAba secao={secoes[abaAtiva]} />
