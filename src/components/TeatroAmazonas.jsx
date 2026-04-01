@@ -1,433 +1,237 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import './TeatroAmazonas.css';
 
-function TeatroAmazonas() {
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem('darkMode') === 'true'
-  })
+// --- DADOS ---
+const carouselImages = [
+  '/images/geral/ta-am.jpg',
+  '/images/geral/tea-am1.jpg',
+];
 
-  const toggleTheme = () => {
-    const newDarkMode = !darkMode
-    setDarkMode(newDarkMode)
-    localStorage.setItem('darkMode', newDarkMode.toString())
-  }
+const galleryImages = [
+  { src: '/images/geral/ta-am.jpg', alt: 'Teatro Amazonas - fachada' },
+  { src: '/images/monumentos/teatro-amazonas1.jpeg', alt: 'Teatro Amazonas - interior' },
+];
+
+const secoes = {
+  historia: {
+    id: 'historia',
+    label: 'A História',
+    titulo: 'Um Palácio Erguido na Selva',
+    texto: 'No coração de Manaus, onde a floresta encontra a cidade, ergue-se uma das obras mais audaciosas da história brasileira. O Teatro Amazonas foi construído entre 1884 e 1896, no auge do ciclo da borracha, quando a Amazônia era o centro do mundo. Seus materiais vieram da Europa: mármore de Carrara, ferro da Escócia, cerâmica de Lisboa. Uma declaração de riqueza e poder que desafiou a lógica de seu tempo.',
+    imagem: '/images/geral/tea-am3.jpg',
+    lista: [
+      'Construção: Entre 1884 e 1896, durante o ciclo da borracha.',
+      'Cúpula: Revestida com 36.000 telhas nas cores da bandeira do Brasil.',
+      'Materiais: Importados da Europa — mármore, ferro, cerâmica e cristal.',
+    ],
+  },
+  arquitetura: {
+    id: 'arquitetura',
+    label: 'Arquitetura',
+    titulo: 'Detalhes que Contam uma Época',
+    texto: 'Cada centímetro do Teatro Amazonas é uma obra de arte. A cúpula, revestida com 36.000 telhas de cerâmica nas cores verde, ouro e azul da bandeira brasileira, domina o horizonte de Manaus. O interior revela um salão nobre com capacidade para 701 pessoas, decorado com pinturas alegóricas ao teto, lustres de cristal Murano e cadeiras de madeira nobre. O palco principal, com 859 m², já recebeu as maiores companhias de ópera do mundo.',
+    imagem: '/images/geral/tea-am4.jpg',
+    alt: 'Interior luxuoso do Teatro Amazonas com lustre de cristal',
+    subsecoes: [
+      {
+        titulo: 'A Cúpula Icônica',
+        texto: 'A cúpula é o símbolo máximo do teatro. Suas 36.000 telhas de cerâmica portuguesa formam um mosaico nas cores da bandeira brasileira, visível de vários pontos da cidade. À noite, iluminada, ela transforma o centro histórico de Manaus em um cenário de conto de fadas.',
+      },
+      {
+        titulo: 'O Salão Nobre',
+        texto: 'O coração do teatro é seu salão principal, decorado com pinturas do artista italiano Domenico De Angelis. O teto retrata a lenda de Iara, a sereia amazônica, em uma fusão única entre a cultura europeia e a mitologia local. Os lustres de cristal Murano completam o espetáculo visual.',
+      },
+      {
+        titulo: 'O Piso Flutuante',
+        texto: 'Uma das curiosidades mais fascinantes é o piso da plateia, construído com madeira de lei sobre uma estrutura que permite uma leve flutuação. Isso garante uma acústica excepcional, tornando o Teatro Amazonas um dos mais acusticamente perfeitos do mundo.',
+      },
+    ],
+  },
+  visita: {
+    id: 'visita',
+    label: 'Visite',
+    titulo: 'Viva a Experiência',
+    texto: 'Visitar o Teatro Amazonas é mergulhar em uma das histórias mais fascinantes do Brasil. Seja em uma visita guiada ou assistindo a um espetáculo ao vivo, a experiência é inesquecível.',
+    imagem: '/images/geral/ta-am.jpg',
+    alt: 'Vista noturna do Teatro Amazonas iluminado',
+    subsecoes: [
+      {
+        titulo: 'Visitas Guiadas',
+        texto: 'As visitas guiadas acontecem de terça a domingo, das 9h às 17h. Com duração de aproximadamente 45 minutos, os guias conduzem os visitantes pelos bastidores, camarins, salão nobre e palco. O ingresso custa R$ 50 (inteira) e R$ 25 (meia). Crianças até 5 anos não pagam.',
+      },
+      {
+        titulo: 'Espetáculos e Temporadas',
+        texto: 'O teatro mantém uma programação cultural intensa ao longo do ano, com óperas, balés, concertos sinfônicos e peças teatrais. O Festival Amazonas de Ópera, realizado anualmente em abril e maio, é o maior evento de ópera da América Latina e atrai artistas de todo o mundo.',
+      },
+      {
+        titulo: 'Como Chegar',
+        texto: 'O Teatro Amazonas está localizado na Praça São Sebastião, no centro histórico de Manaus. É facilmente acessível de táxi, aplicativo de transporte ou ônibus. Recomenda-se chegar com antecedência para espetáculos, pois o estacionamento na região é limitado.',
+      },
+    ],
+    recomendacoes: [
+      {
+        titulo: 'Restaurantes Próximos',
+        itens: [
+          { nome: 'Banzeiro Restaurante', nota: 4.8, contato: '(92) 3234-1621', site: 'https://www.restaurantebanzeiro.com.br/' },
+          { nome: 'Caxiri Restaurante', nota: 4.6, contato: '(92) 3307-1052', site: 'https://www.instagram.com/caxirirestaurante/' },
+          { nome: 'Choupana Restaurante', nota: 4.7, contato: '(92) 3633-2878', site: 'https://www.choupanarestaurante.com.br/' },
+        ],
+      },
+      {
+        titulo: 'Hotéis Recomendados',
+        itens: [
+          { nome: 'Juma Ópera Hotel', nota: 4.8, contato: '(92) 3212-3300', site: 'https://www.jumaopera.com.br/' },
+          { nome: 'Hotel Intercity Manaus', nota: 4.5, contato: '(92) 3303-5000', site: 'https://www.intercityhoteis.com.br/' },
+          { nome: 'Blue Tree Premium Manaus', nota: 4.5, contato: '(92) 3303-2000', site: 'https://www.bluetree.com.br/' },
+        ],
+      },
+    ],
+  },
+  fotos: {
+    id: 'fotos',
+    label: 'Fotos',
+  },
+};
+
+// --- COMPONENTES ---
+
+const HeaderCarousel = () => {
+  const [imagemAtivaIndex, setImagemAtivaIndex] = useState(0);
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-    const style = document.createElement('style')
-    style.textContent = `
-      .nav-links.active {
-        right: 0 !important;
-      }
-      .nav-overlay.active {
-        opacity: 1 !important;
-        visibility: visible !important;
-      }
-      .nav-links li:hover .dropdown-content {
-        display: block !important;
-      }
-    `
-    document.head.appendChild(style)
-    return () => document.head.removeChild(style)
-  }, [])
+    const timer = setTimeout(() => {
+      setImagemAtivaIndex((prev) => (prev + 1) % carouselImages.length);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [imagemAtivaIndex]);
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: darkMode ? 'linear-gradient(135deg, #0d2818 0%, #1a4d2e 50%, #2d5a3d 100%)' : 'linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%)',
-      color: darkMode ? '#e8f5e8' : '#1b5e20',
-      fontFamily: "'Inter', 'Segoe UI', sans-serif",
-      position: 'relative',
-      overflowX: 'hidden'
-    }}>
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: darkMode ? 'radial-gradient(circle at 20% 80%, rgba(76, 175, 80, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(139, 195, 74, 0.15) 0%, transparent 50%)' : 'radial-gradient(circle at 20% 80%, rgba(76, 175, 80, 0.1) 0%, transparent 50%)',
-        zIndex: 1
-      }} />
-
-      <header style={{
-        background: darkMode ? 'rgba(13, 40, 24, 0.8)' : '#2e7d32',
-        backdropFilter: 'blur(30px)',
-        padding: '1rem 2rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        borderBottom: '1px solid rgba(76, 175, 80, 0.3)'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <img 
-            src="/images/logos/logo.png" 
-            alt="GADYS" 
-            style={{
-              height: '45px',
-              background: 'linear-gradient(135deg, #4caf50, #8bc34a)',
-              borderRadius: '50%',
-              padding: '8px'
-            }}
-          />
-          <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: 'white' }}>GADYS</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <button 
-            onClick={toggleTheme}
-            style={{
-              background: 'rgba(255,255,255,0.1)',
-              border: '1px solid rgba(255,255,255,0.2)',
-              color: 'white',
-              fontSize: '1.2rem',
-              cursor: 'pointer',
-              padding: '0.5rem',
-              borderRadius: '10px',
-              transition: 'all 0.3s'
-            }}
-          >
-            {darkMode ? '☀️' : '🌙'}
-          </button>
-          <div 
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              cursor: 'pointer',
-              zIndex: 1002
-            }}
-            onClick={() => document.querySelector('.nav-links').classList.toggle('active')}
-          >
-            <span style={{
-              width: '25px',
-              height: '3px',
-              background: 'white',
-              margin: '3px 0',
-              transition: '0.3s'
-            }} />
-            <span style={{
-              width: '25px',
-              height: '3px',
-              background: 'white',
-              margin: '3px 0',
-              transition: '0.3s'
-            }} />
-            <span style={{
-              width: '25px',
-              height: '3px',
-              background: 'white',
-              margin: '3px 0',
-              transition: '0.3s'
-            }} />
-          </div>
-        </div>
-        <div 
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            background: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 1000,
-            opacity: 0,
-            visibility: 'hidden',
-            transition: 'all 0.3s ease'
-          }}
-          className="nav-overlay"
-          onClick={() => document.querySelector('.nav-links').classList.remove('active')}
+    <header className="ta-header">
+      {carouselImages.map((img, index) => (
+        <img
+          key={img}
+          src={img}
+          alt="Teatro Amazonas"
+          className={`ta-header-carousel-image ${index === imagemAtivaIndex ? 'active' : ''}`}
         />
-        <ul 
-          className="nav-links"
-          style={{
-            position: 'fixed',
-            top: 0,
-            right: '-100%',
-            width: '300px',
-            height: '100vh',
-            background: '#2e7d32',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            gap: '2rem',
-            margin: 0,
-            padding: '4rem 0',
-            listStyle: 'none',
-            transition: 'right 0.3s ease',
-            zIndex: 1001,
-            overflowY: 'scroll',
-            boxShadow: '-5px 0 15px rgba(0,0,0,0.1)'
-          }}
-        >
-          <li><Link to="/" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</Link></li>
-          <li><Link to="/amazonas" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Amazonas</Link></li>
-          <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Teatro Amazonas (atual)</a></li>
-          <li><Link to="/lugares" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Lugares</Link></li>
-          <li><Link to="/mapa" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Mapa</Link></li>
-          <li><Link to="/perfil" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Meu Perfil</Link></li>
-          <li><Link to="/sobre" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Sobre</Link></li>
-          <li><Link to="/contato" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Contato</Link></li>
-        </ul>
-      </header>
+      ))}
+      <div className="ta-header-text">
+        <h1>Teatro Amazonas</h1>
+        <p>Um palácio de arte erguido no coração da floresta.</p>
+      </div>
+    </header>
+  );
+};
 
-      <main style={{
-        maxWidth: '1400px',
-        margin: '0 auto',
-        padding: '0 2rem',
-        position: 'relative',
-        zIndex: 10
-      }}>
-        <section style={{
-          textAlign: 'center',
-          padding: '8rem 0 6rem',
-          background: darkMode ? 'linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(139, 195, 74, 0.05) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%)',
-          borderRadius: '0 0 50px 50px',
-          marginBottom: '6rem'
-        }}>
-          <h1 style={{
-            fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-            fontWeight: '900',
-            background: 'linear-gradient(135deg, #4caf50 0%, #8bc34a 50%, #cddc39 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            marginBottom: '2rem',
-            letterSpacing: '-3px',
-            lineHeight: '1.1'
-          }}>
-            Teatro Amazonas
-          </h1>
-          
-          <p style={{
-            fontSize: '1.4rem',
-            opacity: 0.8,
-            maxWidth: '700px',
-            margin: '0 auto',
-            lineHeight: '1.6',
-            fontWeight: '300'
-          }}>
-            Símbolo do período áureo da borracha<br />
-            <span style={{ color: '#4caf50', fontWeight: '500' }}>Manaus - AM</span>
-          </p>
-        </section>
-
-        <section style={{
-          background: 'linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(139, 195, 74, 0.1) 100%)',
-          padding: '5rem 4rem',
-          borderRadius: '30px',
-          marginBottom: '6rem',
-          border: '1px solid rgba(76, 175, 80, 0.2)',
-          boxShadow: '0 30px 60px rgba(76, 175, 80, 0.1)'
-        }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
-            <div>
-              <img 
-                src="/teatro-amazonas1.jpeg" 
-                alt="Teatro Amazonas"
-                style={{
-                  width: '100%',
-                  height: '400px',
-                  objectFit: 'cover',
-                  objectPosition: 'center',
-                  borderRadius: '20px',
-                  boxShadow: '0 20px 40px rgba(76, 175, 80, 0.2)'
-                }}
-              />
-            </div>
-            <div>
-              <h2 style={{ fontSize: '2.5rem', marginBottom: '2rem', fontWeight: '700' }}>Sobre o Local</h2>
-              <p style={{ fontSize: '1.2rem', lineHeight: 1.8, opacity: 0.9, marginBottom: '2rem' }}>
-                O Teatro Amazonas é um teatro brasileiro localizado no centro de Manaus, capital do Amazonas. 
-                Inaugurado em 1896, durante o auge do ciclo da borracha, é considerado o símbolo cultural mais 
-                importante da cidade e um dos principais cartões-postais do estado do Amazonas.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <section style={{
-          background: darkMode ? 'linear-gradient(135deg, rgba(76, 175, 80, 0.06) 0%, rgba(139, 195, 74, 0.02) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 100%)',
-          padding: '5rem 4rem',
-          borderRadius: '30px',
-          marginBottom: '6rem',
-          border: darkMode ? '1px solid rgba(76, 175, 80, 0.1)' : '1px solid rgba(76, 175, 80, 0.2)'
-        }}>
-          <h2 style={{ fontSize: '3rem', marginBottom: '3rem', textAlign: 'center', fontWeight: '700' }}>História</h2>
-          <p style={{ fontSize: '1.2rem', lineHeight: 1.8, opacity: 0.9, marginBottom: '2rem', textAlign: 'center', maxWidth: '900px', margin: '0 auto 2rem' }}>
-            Construído durante o período áureo da exploração da borracha na Amazônia, o Teatro Amazonas foi inaugurado 
-            em 31 de dezembro de 1896. O projeto arquitetônico foi do engenheiro português Celestial Sacardim, 
-            e a construção utilizou materiais vindos da Europa, como o ferro das escadas da Escócia, 
-            mármore de Carrara da Itália e cristais da França.
-          </p>
-        </section>
-
-        <section style={{
-          background: 'linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(139, 195, 74, 0.1) 100%)',
-          padding: '5rem 4rem',
-          borderRadius: '30px',
-          marginBottom: '6rem',
-          border: '1px solid rgba(76, 175, 80, 0.2)',
-          boxShadow: '0 30px 60px rgba(76, 175, 80, 0.1)'
-        }}>
-          <h2 style={{ fontSize: '3rem', marginBottom: '4rem', textAlign: 'center', fontWeight: '700' }}>Informações Práticas</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '3rem' }}>
-            <div style={{
-              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-              padding: '2rem',
-              borderRadius: '20px'
-            }}>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#4caf50', fontWeight: '600' }}>Como Chegar</h3>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Centro de Manaus</li>
-                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Ônibus urbano</li>
-                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Táxi ou aplicativo</li>
-              </ul>
-            </div>
-            <div style={{
-              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-              padding: '2rem',
-              borderRadius: '20px'
-            }}>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#4caf50', fontWeight: '600' }}>Preços</h3>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Visitação: R$ 20,00</li>
-                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Estudante: R$ 10,00</li>
-                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Idoso: Gratuito</li>
-              </ul>
-            </div>
-            <div style={{
-              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-              padding: '2rem',
-              borderRadius: '20px'
-            }}>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#4caf50', fontWeight: '600' }}>Horários</h3>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Terça a Sábado: 9h às 17h</li>
-                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Domingo: 9h às 15h</li>
-                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Segunda: Fechado</li>
-              </ul>
-            </div>
-            <div style={{
-              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-              padding: '2rem',
-              borderRadius: '20px'
-            }}>
-              <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem', color: '#4caf50', fontWeight: '600' }}>Dicas</h3>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Visite durante espetáculos</li>
-                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Tour guiado disponível</li>
-                <li style={{ marginBottom: '1rem', fontSize: '1.1rem' }}>Fotografias permitidas</li>
-              </ul>
-            </div>
-          </div>
-        </section>
-
-        <section style={{
-          background: darkMode ? 'linear-gradient(135deg, rgba(76, 175, 80, 0.06) 0%, rgba(139, 195, 74, 0.02) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 100%)',
-          padding: '5rem 4rem',
-          borderRadius: '30px',
-          marginBottom: '6rem',
-          border: darkMode ? '1px solid rgba(76, 175, 80, 0.1)' : '1px solid rgba(76, 175, 80, 0.2)'
-        }}>
-          <h2 style={{ fontSize: '3rem', marginBottom: '3rem', textAlign: 'center', fontWeight: '700' }}>Curiosidades</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
-            {[
-              { title: 'Cúpula', desc: 'Inspirada na Ópera de Paris com 36 mil peças de cerâmica' },
-              { title: 'Acústica', desc: 'Considerada uma das melhores acústicas do mundo' },
-              { title: 'Materiais', desc: 'Construído com materiais importados da Europa' },
-              { title: 'Festival', desc: 'Sede do Festival de Ópera de Manaus desde 1997' },
-              { title: 'Restauração', desc: 'Passou por grande restauração entre 1974-1990' },
-              { title: 'Capacidade', desc: 'Comporta 701 espectadores em seus três níveis' }
-            ].map((item, index) => (
-              <div key={index} style={{
-                background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                padding: '2rem',
-                borderRadius: '20px',
-                textAlign: 'center',
-                transition: 'all 0.3s'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.transform = 'translateY(-5px)'
-                e.currentTarget.style.boxShadow = '0 15px 30px rgba(76, 175, 80, 0.2)'
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)'
-                e.currentTarget.style.boxShadow = 'none'
-              }}>
-                <h3 style={{ fontSize: '1.3rem', marginBottom: '1rem', color: '#4caf50', fontWeight: '600' }}>{item.title}</h3>
-                <p style={{ fontSize: '1rem', opacity: 0.8, lineHeight: 1.5 }}>{item.desc}</p>
+const ConteudoAba = ({ secao }) => (
+  <section className="ta-section">
+    <div className="ta-text-image-split">
+      <div className="ta-text">
+        <h2>{secao.titulo}</h2>
+        <p>{secao.texto}</p>
+        {secao.lista && (
+          <ul className="ta-facts-list">
+            {secao.lista.map((item, i) => (
+              <li key={i}><strong>{item.split(':')[0]}:</strong>{item.split(':').slice(1).join(':')}</li>
+            ))}
+          </ul>
+        )}
+        {secao.subsecoes && (
+          <div className="ta-subsecoes">
+            {secao.subsecoes.map((sub, i) => (
+              <div key={i} className="ta-subsecao-item">
+                <h3>{sub.titulo}</h3>
+                <p>{sub.texto}</p>
               </div>
             ))}
           </div>
-        </section>
-
-        <section style={{
-          textAlign: 'center',
-          padding: '4rem 0 6rem'
-        }}>
-          <div style={{
-            display: 'flex',
-            gap: '2rem',
-            justifyContent: 'center',
-            flexWrap: 'wrap'
-          }}>
-            <Link 
-              to="/amazonas/monumentos"
-              style={{
-                background: 'linear-gradient(135deg, #4caf50 0%, #8bc34a 100%)',
-                color: 'white',
-                border: 'none',
-                padding: '1.5rem 3rem',
-                borderRadius: '50px',
-                cursor: 'pointer',
-                fontSize: '1.1rem',
-                fontWeight: '600',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 15px 35px rgba(76, 175, 80, 0.4)',
-                letterSpacing: '0.5px',
-                textDecoration: 'none'
-              }}
-            >
-              Voltar aos Monumentos
-            </Link>
-            
-            <Link 
-              to="/mapa"
-              style={{
-                background: 'transparent',
-                color: darkMode ? '#e8f5e8' : '#1b5e20',
-                border: darkMode ? '2px solid rgba(76, 175, 80, 0.5)' : '2px solid rgba(76, 175, 80, 0.7)',
-                padding: '1.5rem 3rem',
-                borderRadius: '50px',
-                cursor: 'pointer',
-                fontSize: '1.1rem',
-                fontWeight: '600',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                backdropFilter: 'blur(10px)',
-                letterSpacing: '0.5px',
-                textDecoration: 'none'
-              }}
-            >
-              Ver no Mapa
-            </Link>
-          </div>
-        </section>
-      </main>
-
-      <footer style={{
-        background: darkMode ? 'rgba(13, 40, 24, 0.9)' : 'rgba(46, 125, 50, 0.9)',
-        textAlign: 'center',
-        padding: '3rem',
-        borderTop: '1px solid rgba(76, 175, 80, 0.3)',
-        position: 'relative',
-        zIndex: 10
-      }}>
-        <p style={{ opacity: 0.7, fontSize: '1rem', color: 'white' }}>&copy; 2025 GADYS. Todos os direitos reservados.</p>
-      </footer>
+        )}
+      </div>
+      <div className="ta-image-wrapper">
+        <img src={secao.imagem} alt={secao.alt} className="ta-image" />
+        {secao.id === 'arquitetura' && (
+          <img src="/images/geral/tea-am5.jpg" alt="Teatro Amazonas" className="ta-image" style={{ marginTop: '1rem' }} />
+        )}
+      </div>
     </div>
-  )
-}
 
-export default TeatroAmazonas
+    {secao.recomendacoes && (
+      <div className="ta-recomendacoes-container">
+        {secao.recomendacoes.map((rec, i) => (
+          <div key={i} className="ta-recomendacao-categoria">
+            <h3>{rec.titulo}</h3>
+            <div className="ta-recomendacao-cards">
+              {rec.itens.map((item, j) => (
+                <div key={j} className="ta-recomendacao-card">
+                  <div className="ta-card-header">
+                    <a href={item.site} target="_blank" rel="noopener noreferrer" className="ta-card-nome">
+                      {item.nome}
+                    </a>
+                    <span className="ta-card-nota">{item.nota} ★</span>
+                  </div>
+                  <span className="ta-card-contato">{item.contato}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </section>
+);
+
+const Galeria = () => (
+  <section className="ta-galeria-container">
+    <h2>Fotos</h2>
+    <div className="ta-galeria-grid">
+      {galleryImages.map((img, i) => (
+        <div key={i} className="ta-galeria-item">
+          <img src={img.src} alt={img.alt} />
+        </div>
+      ))}
+    </div>
+  </section>
+);
+
+const TeatroAmazonas = () => {
+  const [abaAtiva, setAbaAtiva] = useState('historia');
+  const navigate = useNavigate();
+
+  return (
+    <div className="ta-container">
+      <div style={{ position: 'relative' }}>
+        <HeaderCarousel />
+        <button
+          onClick={() => navigate('/destinos-amazonas')}
+          style={{
+            position: 'absolute', top: '2rem', left: '2rem', zIndex: 10,
+            background: 'rgba(255,255,255,0.2)', border: '2px solid white',
+            color: 'white', padding: '0.7rem 1.5rem', borderRadius: '50px',
+            cursor: 'pointer', fontWeight: '600', fontSize: '0.95rem'
+          }}
+        >
+          ← Voltar
+        </button>
+      </div>
+      <div className="ta-content-wrapper">
+        <nav className="ta-nav">
+          {Object.keys(secoes).map((key) => (
+            <button
+              key={key}
+              onClick={() => setAbaAtiva(key)}
+              className={abaAtiva === key ? 'active' : ''}
+            >
+              {secoes[key].label}
+            </button>
+          ))}
+        </nav>
+        <main className="ta-main">
+          {abaAtiva === 'fotos' ? <Galeria /> : <ConteudoAba secao={secoes[abaAtiva]} />}
+        </main>
+      </div>
+    </div>
+  );
+};
+
+export default TeatroAmazonas;

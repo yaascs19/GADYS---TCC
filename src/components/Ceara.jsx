@@ -234,7 +234,7 @@ const Ceara = () => {
                 <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Acre</a>
                 <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Alagoas</a>
                 <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amapá</a>
-                <Link to="/amazonas" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amazonas</Link>
+                <Link to="/amazonas-estado" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amazonas</Link>
                 <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Bahia</a>
                 <Link to="/ceara" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Ceará</Link>
                 <a href="#" style={{ color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Distrito Federal</a>

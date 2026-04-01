@@ -18,7 +18,7 @@ export const destinosAmazonasData = [
   {
     id: 3,
     name: 'Amazonico Peixaria Regional',
-    category: 'Comida Típica',
+    category: 'Restaurantes',
     location: 'Largo de São Sebastião, Manaus',
     image: '/images/geral/restama1.jpg',
     description: 'Oferece uma experiência culinária singular, harmonizando peixes, frutas e temperos amazônicos.'
@@ -50,7 +50,7 @@ export const destinosAmazonasData = [
   {
     id: 7,
     name: 'Coreto Peixaria & Café Regional',
-    category: 'Comida Típica',
+    category: 'Restaurantes',
     location: 'Manaus',
     image: '/images/geral/res-Am.jpg',
     description: 'Com um menu repleto de pratos tradicionais e ingredientes frescos, cada refeição é uma celebração das riquezas da região. Desde o peixe fresco dos rios até as especiarias nativas.'

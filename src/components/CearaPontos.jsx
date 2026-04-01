@@ -7,67 +7,70 @@ const pontosTuristicos = [
     id: 'jericoacoara',
     nome: 'Jericoacoara',
     cidade: 'Jijoca de Jericoacoara - CE',
-    categoria: 'Praia',
-    descricao: 'Vila paradisíaca com dunas, lagoas e pôr do sol considerado um dos mais bonitos do mundo.',
+    categoria: 'Lugar Paradisíaco',
     imagem: '/images/geral/Ceara1.webp',
   },
   {
     id: 'canoa-quebrada',
     nome: 'Canoa Quebrada',
     cidade: 'Aracati - CE',
-    categoria: 'Praia',
-    descricao: 'Famosa pelas falésias vermelhas, praias de areia branca e vida noturna animada.',
+    categoria: 'Lugar Paradisíaco',
     imagem: '/images/geral/Ceara2.webp',
   },
   {
     id: 'dragao-do-mar',
     nome: 'Centro Dragão do Mar',
     cidade: 'Fortaleza - CE',
-    categoria: 'Cultura',
-    descricao: 'Centro cultural com museus, teatro, planetário e espaços de arte e entretenimento.',
+    categoria: 'Costume Cultural',
     imagem: '/images/geral/CearaInicio.jpg',
   },
   {
     id: 'beach-park',
     nome: 'Beach Park',
     cidade: 'Aquiraz - CE',
-    categoria: 'Lazer',
-    descricao: 'Um dos maiores parques aquáticos da América Latina, com toboáguas e atrações para toda a família.',
+    categoria: 'Restaurantes',
     imagem: '/images/geral/ceara.webp',
   },
   {
     id: 'praia-do-futuro',
     nome: 'Praia do Futuro',
     cidade: 'Fortaleza - CE',
-    categoria: 'Praia',
-    descricao: 'A praia mais popular de Fortaleza, famosa pelas barracas de frutos do mar e águas mornas.',
+    categoria: 'Lugar Paradisíaco',
     imagem: '/images/geral/Ceara3.jpg',
   },
   {
     id: 'serra-de-baturite',
     nome: 'Serra de Baturité',
     cidade: 'Baturité - CE',
-    categoria: 'Natureza',
-    descricao: 'Região serrana com clima ameno, cachoeiras, trilhas e plantações de café e banana.',
+    categoria: 'Lugar Paradisíaco',
     imagem: '/images/geral/Ceara1.webp',
   },
   {
     id: 'chapada-do-araripe',
     nome: 'Chapada do Araripe',
     cidade: 'Crato - CE',
-    categoria: 'Natureza',
-    descricao: 'Patrimônio natural com fontes de água cristalina, fósseis e rica biodiversidade.',
+    categoria: 'Lugar Paradisíaco',
     imagem: '/images/geral/Ceara2.webp',
   },
   {
     id: 'fortaleza-centro',
     nome: 'Centro Histórico de Fortaleza',
     cidade: 'Fortaleza - CE',
-    categoria: 'Cultura',
-    descricao: 'Conjunto de edificações históricas com o Mercado Central, Catedral e Theatro José de Alencar.',
+    categoria: 'Monumentos',
     imagem: '/images/geral/ceara.webp',
   },
 ];
+
+const rotas = {
+  'jericoacoara': '/ceara/jericoacoara',
+  'canoa-quebrada': '/ceara/canoa-quebrada',
+  'dragao-do-mar': '/ceara/dragao-do-mar',
+  'beach-park': '/ceara/beach-park',
+  'praia-do-futuro': '/ceara/praia-do-futuro',
+  'serra-de-baturite': '/ceara/serra-de-baturite',
+  'chapada-do-araripe': '/ceara/chapada-do-araripe',
+  'fortaleza-centro': '/ceara/centro-historico-fortaleza',
+};
 
 const CearaPontos = () => {
   const navigate = useNavigate();
@@ -75,7 +78,7 @@ const CearaPontos = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
 
-  const categories = ['Todos', ...new Set(pontosTuristicos.map(p => p.categoria))];
+  const categories = ['Todos', 'Lugar Paradisíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
 
   useEffect(() => {
     let result = pontosTuristicos;
@@ -137,7 +140,8 @@ const CearaPontos = () => {
               <h2 className="ce-pontos-card-title">{ponto.nome}</h2>
               <p className="ce-pontos-card-category">{ponto.categoria} • {ponto.cidade}</p>
               <p className="ce-pontos-card-description">{ponto.descricao}</p>
-              <button className="ce-pontos-button" onClick={() => alert('Página em breve!')}>
+              <button className="ce-pontos-button" onClick={() => rotas[ponto.id] ? navigate(rotas[ponto.id]) : null}
+                style={{ opacity: rotas[ponto.id] ? 1 : 0.4, cursor: rotas[ponto.id] ? 'pointer' : 'not-allowed' }}>
                 Saiba mais
               </button>
             </div>
