@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './EncontroAguas-Visual.css';
 
 // --- DADOS ---
@@ -197,10 +198,24 @@ const GaleriaDeImagens = () => (
 
 const EncontroDasAguas = () => {
   const [abaAtiva, setAbaAtiva] = useState('fenomeno');
+  const navigate = useNavigate();
 
   return (
     <div className="encontro-visual-container">
-      <HeaderCarousel />
+      <div style={{ position: 'relative' }}>
+        <HeaderCarousel />
+        <button
+          onClick={() => navigate('/destinos-amazonas')}
+          style={{
+            position: 'absolute', top: '2rem', left: '2rem', zIndex: 10,
+            background: 'rgba(255,255,255,0.2)', border: '2px solid white',
+            color: 'white', padding: '0.7rem 1.5rem', borderRadius: '50px',
+            cursor: 'pointer', fontWeight: '600', fontSize: '0.95rem'
+          }}
+        >
+          ← Voltar
+        </button>
+      </div>
 
       <div className="page-content-wrapper">
         <nav className="encontro-nav">

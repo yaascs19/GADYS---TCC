@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useEffect } from 'react';
+import { LanguageProvider } from './context/LanguageContext';
 import useImagePreload from './hooks/useImagePreload';
 import App from './App';
 import HomePage from './components/HomePage';
@@ -13,7 +14,7 @@ import CataratasIguacu from './components/CataratasIguacu';
 import Pelourinho from './components/Pelourinho';
 import FernandoNoronha from './components/FernandoNoronha';
 import Pantanal from './components/Pantanal';
-import AmazonasPage from './components/AmazonasPage'
+
 import MonumentosAmazonas from './components/MonumentosAmazonas'
 import MonumentosAmazonas2 from './components/MonumentosAmazonas2'
 import TeatroAmazonas from './components/TeatroAmazonas'
@@ -60,6 +61,31 @@ import DestinosAmazonas from './components/DestinosAmazonas';
 import CearaPontos from './components/CearaPontos';
 import SPPontos from './components/SPPontos';
 import Amazonas from './components/Amazonas';
+import TranslateButton from './components/TranslateButton';
+import Acre from './components/Acre';
+import AcrePontos from './components/AcrePontos';
+import Amapa from './components/Amapa';
+import AmapaPontos from './components/AmapaPontos';
+import Rondonia from './components/Rondonia';
+import RondoniaPontos from './components/RondoniaPontos';
+import Roraima from './components/Roraima';
+import RoraimaPontos from './components/RoraimaPontos';
+import Tocantins from './components/Tocantins';
+import TocantinsPontos from './components/TocantinsPontos';
+import ParqueChandless from './components/norte/acre/ParqueChandless';
+import CentroHistoricoRioBranco from './components/norte/acre/CentroHistoricoRioBranco';
+import FortalezaSaoJoseMacapa from './components/norte/amapa/FortalezaSaoJoseMacapa';
+import FerroviaMadeiraMamore from './components/norte/rondonia/FerroviaMadeiraMamore';
+import MonteRoraima from './components/norte/roraima/MonteRoraima';
+import Jalapao from './components/norte/tocantins/Jalapao';
+import Jericoacoara from './components/ceara/Jericoacoara';
+import CanoaQuebrada from './components/ceara/CanoaQuebrada';
+import DragaoDoMar from './components/ceara/DragaoDoMar';
+import BeachPark from './components/ceara/BeachPark';
+import PraiaDoFuturo from './components/ceara/PraiaDoFuturo';
+import SerraDeBaturite from './components/ceara/SerraDeBaturite';
+import ChapadaDoAraripe from './components/ceara/ChapadaDoAraripe';
+import CentroHistoricoFortaleza from './components/ceara/CentroHistoricoFortaleza';
 
 
 function Router() {
@@ -103,7 +129,9 @@ function Router() {
   }, [])
   
   return (
+    <LanguageProvider>
     <BrowserRouter>
+      <TranslateButton />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/sobre" element={<SobrePage />} />
@@ -116,7 +144,7 @@ function Router() {
         <Route path="/pelourinho" element={<Pelourinho />} />
         <Route path="/fernando-noronha" element={<FernandoNoronha />} />
         <Route path="/pantanal" element={<Pantanal />} />
-        <Route path="/amazonas" element={<AmazonasPage />} />
+        <Route path="/amazonas" element={<Amazonas />} />
         <Route path="/amazonas/monumentos" element={<MonumentosAmazonas2 />} />
         <Route path="/amazonas/monumentos2" element={<MonumentosAmazonas2 />} />
         <Route path="/teatro-amazonas" element={<TeatroAmazonas />} />
@@ -163,9 +191,34 @@ function Router() {
         <Route path="/sp-pontos" element={<SPPontos />} />
         <Route path="/destinos-amazonas" element={<DestinosAmazonas />} />
         <Route path="/amazonas-estado" element={<Amazonas />} />
+        <Route path="/ceara/jericoacoara" element={<Jericoacoara />} />
+        <Route path="/ceara/canoa-quebrada" element={<CanoaQuebrada />} />
+        <Route path="/ceara/dragao-do-mar" element={<DragaoDoMar />} />
+        <Route path="/ceara/beach-park" element={<BeachPark />} />
+        <Route path="/ceara/praia-do-futuro" element={<PraiaDoFuturo />} />
+        <Route path="/ceara/serra-de-baturite" element={<SerraDeBaturite />} />
+        <Route path="/ceara/chapada-do-araripe" element={<ChapadaDoAraripe />} />
+        <Route path="/ceara/centro-historico-fortaleza" element={<CentroHistoricoFortaleza />} />
+        <Route path="/acre" element={<Acre />} />
+        <Route path="/acre-pontos" element={<AcrePontos />} />
+        <Route path="/acre/parque-chandless" element={<ParqueChandless />} />
+        <Route path="/acre/centro-historico" element={<CentroHistoricoRioBranco />} />
+        <Route path="/amapa" element={<Amapa />} />
+        <Route path="/amapa-pontos" element={<AmapaPontos />} />
+        <Route path="/amapa/fortaleza-sao-jose" element={<FortalezaSaoJoseMacapa />} />
+        <Route path="/rondonia" element={<Rondonia />} />
+        <Route path="/rondonia-pontos" element={<RondoniaPontos />} />
+        <Route path="/rondonia/ferrovia-madeira-mamore" element={<FerroviaMadeiraMamore />} />
+        <Route path="/roraima" element={<Roraima />} />
+        <Route path="/roraima-pontos" element={<RoraimaPontos />} />
+        <Route path="/roraima/monte-roraima" element={<MonteRoraima />} />
+        <Route path="/tocantins" element={<Tocantins />} />
+        <Route path="/tocantins-pontos" element={<TocantinsPontos />} />
+        <Route path="/tocantins/jalapao" element={<Jalapao />} />
 
       </Routes>
     </BrowserRouter>
+    </LanguageProvider>
   );
 }
 

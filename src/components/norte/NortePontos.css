@@ -1,0 +1,171 @@
+/* === NORTE PONTOS - CSS COMPARTILHADO === */
+
+.norte-pontos-page {
+  --norte-bg: #D0E9D1;
+  --norte-text: #003300;
+  --norte-primary: #2E7D32;
+  --norte-secondary: #66BB6A;
+  --norte-accent: #A5D6A7;
+  --norte-surface: #ffffff;
+  --norte-shadow: rgba(0, 51, 0, 0.2);
+
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: var(--norte-bg);
+  color: var(--norte-text);
+  min-height: 100vh;
+}
+
+.norte-pontos-header {
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 6rem 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.norte-pontos-h1 {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(3rem, 7vw, 5rem);
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.norte-pontos-subheader {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 300;
+  margin-top: 1rem;
+}
+
+.norte-pontos-controls {
+  padding: 3rem 2rem;
+  background-color: var(--norte-primary);
+  color: white;
+}
+
+.norte-pontos-search-bar {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  margin: 0 auto;
+  display: block;
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.norte-pontos-search-bar::placeholder { color: rgba(255,255,255,0.7); }
+
+.norte-pontos-filter-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.norte-pontos-button {
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.norte-pontos-button.active {
+  background-color: white;
+  color: var(--norte-primary);
+  font-weight: 700;
+}
+
+.norte-pontos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 3rem;
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@keyframes norte-card-load-in {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.norte-pontos-card {
+  background-color: var(--norte-surface);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px var(--norte-shadow);
+  overflow: hidden;
+  animation: norte-card-load-in 0.5s backwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.norte-pontos-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 25px var(--norte-shadow);
+}
+
+.norte-pontos-card-image-container { height: 220px; overflow: hidden; }
+.norte-pontos-card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.norte-pontos-card-image-container:hover .norte-pontos-card-image { transform: scale(1.05); }
+
+.norte-pontos-card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.norte-pontos-card-title {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700;
+  color: var(--norte-primary);
+  margin-bottom: 0.5rem;
+}
+
+.norte-pontos-card-category {
+  font-weight: 700;
+  color: var(--norte-secondary);
+  margin-bottom: 1rem;
+}
+
+.norte-pontos-card-description {
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.norte-pontos-saibamais {
+  margin-top: 1.5rem;
+  align-self: flex-start;
+  background: linear-gradient(45deg, #2E7D32, #66BB6A);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(46,125,50,0.3);
+}
+
+.norte-pontos-saibamais:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(46,125,50,0.5);
+}
+
+.norte-pontos-footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+}

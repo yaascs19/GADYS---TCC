@@ -6,6 +6,7 @@ const pontosTuristicos = [
     id: 'alter-do-chao',
     nome: 'Alter do Chão',
     cidade: 'Santarém - PA',
+    categoria: 'Lugar Paradísíaco',
     descricao: 'Conhecida como o Caribe Amazônico, esta vila balneária é famosa por suas praias de areia branca e águas cristalinas do Rio Tapajós.',
     imagem: '/images/natureza/alter-do-chao.jpg', 
   },
@@ -13,6 +14,7 @@ const pontosTuristicos = [
     id: 'ver-o-peso',
     nome: 'Mercado Ver-o-Peso',
     cidade: 'Belém - PA',
+    categoria: 'Restaurantes',
     descricao: 'Um dos mercados públicos mais antigos do Brasil, uma explosão de cores, cheiros e sabores da Amazônia.',
     imagem: '/images/monumentos/mercadaosp.jpg', 
   },
@@ -20,6 +22,7 @@ const pontosTuristicos = [
     id: 'feliz-lusitania',
     nome: 'Feliz Lusitânia',
     cidade: 'Belém - PA',
+    categoria: 'Monumentos',
     descricao: 'O marco inicial de Belém, um complexo histórico que abriga o Forte do Presépio e a Casa das Onze Janelas.',
     imagem: '/images/monumentos/forte.jpeg', 
   },
@@ -27,6 +30,7 @@ const pontosTuristicos = [
     id: 'marajo',
     nome: 'Ilha de Marajó',
     cidade: 'Arquipélago de Marajó - PA',
+    categoria: 'Lugar Paradísíaco',
     descricao: 'A maior ilha fluviomarinha do mundo, um santuário de búfalos, com praias selvagens e cultura marajoara única.',
     imagem: '/images/natureza/noronha.jpeg', 
   },
@@ -34,6 +38,7 @@ const pontosTuristicos = [
     id: 'mangal',
     nome: 'Mangal das Garças',
     cidade: 'Belém - PA',
+    categoria: 'Lugar Paradísíaco',
     descricao: 'Um parque naturalístico no coração de Belém, com um borboletário, viveiro de aves e um mirante com vista para o rio.',
     imagem: '/images/natureza/anavilhanas.jpeg', 
   },
@@ -41,6 +46,16 @@ const pontosTuristicos = [
 
 const ParaPontos = () => {
   const darkMode = localStorage.getItem('darkMode') === 'true';
+  const [searchTerm, setSearchTerm] = React.useState('');
+  const [selectedCategory, setSelectedCategory] = React.useState('Todos');
+
+  const categories = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
+
+  const filteredPontos = pontosTuristicos.filter(p => {
+    const matchCat = selectedCategory === 'Todos' || p.categoria === selectedCategory;
+    const matchSearch = p.nome.toLowerCase().includes(searchTerm.toLowerCase()) || p.descricao.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchCat && matchSearch;
+  });
 
   const styles = {
     page: {
@@ -144,11 +159,30 @@ const ParaPontos = () => {
       <main>
         <section style={styles.hero}>
           <h1 style={styles.h1}>Explore os Tesouros do Pará</h1>
+          <div style={{ marginTop: '2rem', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.8rem' }}>
+            <input
+              type="text"
+              placeholder="Buscar..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              style={{ padding: '0.7rem 1.2rem', borderRadius: '50px', border: 'none', fontSize: '1rem', minWidth: '220px' }}
+            />
+          </div>
+          <div style={{ marginTop: '1rem', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.8rem' }}>
+            {categories.map(cat => (
+              <button key={cat} onClick={() => setSelectedCategory(cat)} style={{
+                background: selectedCategory === cat ? 'white' : 'rgba(255,255,255,0.2)',
+                color: selectedCategory === cat ? '#4a148c' : 'white',
+                border: '2px solid white', borderRadius: '50px',
+                padding: '0.5rem 1.2rem', cursor: 'pointer', fontWeight: '600'
+              }}>{cat}</button>
+            ))}
+          </div>
         </section>
 
         <section style={styles.gridSection}>
           <div style={styles.grid}>
-            {pontosTuristicos.map((ponto) => (
+            {filteredPontos.map((ponto) => (
               <div 
                 key={ponto.id}
                 style={styles.card}

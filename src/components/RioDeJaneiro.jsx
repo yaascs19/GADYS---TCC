@@ -269,7 +269,7 @@ const RioDeJaneiro = () => {
           </div>
           <div className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')}></div>
           <ul className="nav-links" style={{background: darkMode ? 'rgba(15, 12, 41, 0.79)' : 'white', paddingTop: '5rem', justifyContent: 'flex-start', gap: '2rem'}}>
-            <li><a href="#" style={{color: darkMode ? '#888' : '#ccc', cursor: 'not-allowed'}} onClick={(e) => e.preventDefault()}>Início</a></li>
+            <li><Link to="/" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{color: darkMode ? 'white' : '#2c3e50'}}>Início</Link></li>
             <li className="dropdown">
               <a href="#features" onClick={(e) => {e.preventDefault();}} style={{color: darkMode ? 'white' : '#2c3e50'}}>Estados Brasileiros ▼</a>
               <div className="dropdown-content" style={{backgroundColor: darkMode ? 'rgb(252, 252, 252)' : '#f9f9f9', border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid #ddd'}}>

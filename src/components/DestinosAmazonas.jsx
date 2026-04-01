@@ -9,7 +9,7 @@ const DestinosAmazonas = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredDestinos, setFilteredDestinos] = useState([]);
 
-  const categories = ['Todos', 'Lugar Paradisíaco', 'Comida Típica', 'Costume Cultural', 'Monumento'];
+  const categories = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
 
   useEffect(() => {
     let result = destinosAmazonasData;
@@ -30,6 +30,17 @@ const DestinosAmazonas = () => {
   return (
     <div className="amazonas-destinos-page">
       <header className="amazonas-destinos-header">
+        <button
+          onClick={() => navigate('/amazonas-estado')}
+          style={{
+            position: 'absolute', top: '2rem', left: '2rem', zIndex: 10,
+            background: 'rgba(255,255,255,0.2)', border: '2px solid white',
+            color: 'white', padding: '0.7rem 1.5rem', borderRadius: '50px',
+            cursor: 'pointer', fontWeight: '600', fontSize: '0.95rem'
+          }}
+        >
+          ← Voltar
+        </button>
         <h1 className="amazonas-destinos-h1">Coração da Floresta</h1>
         <p className="amazonas-destinos-subheader">Descubra os tesouros do Amazonas</p>
       </header>
@@ -66,8 +77,8 @@ const DestinosAmazonas = () => {
               <p className="amazonas-destinos-card-description">{item.description}</p>
               <button 
                 className="amazonas-destinos-saibamais"
-                onClick={() => item.id === 1 ? navigate('/encontro-aguas') : null}
-                style={{ opacity: item.id === 1 ? 1 : 0.4, cursor: item.id === 1 ? 'pointer' : 'not-allowed' }}
+                onClick={() => item.id === 1 ? navigate('/encontro-aguas') : item.id === 2 ? navigate('/teatro-amazonas') : null}
+                style={{ opacity: item.id === 1 || item.id === 2 ? 1 : 0.4, cursor: item.id === 1 || item.id === 2 ? 'pointer' : 'not-allowed' }}
               >Saber mais</button>
             </div>
           </div>

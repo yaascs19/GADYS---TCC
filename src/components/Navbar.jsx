@@ -1,8 +1,9 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 function Navbar({ darkMode, toggleTheme, userType, setCurrentPage }) {
   const [menuOpen, setMenuOpen] = useState(false)
+  const navigate = useNavigate()
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen)
@@ -116,7 +117,7 @@ function Navbar({ darkMode, toggleTheme, userType, setCurrentPage }) {
           <li>
             <a 
               href="#" 
-              onClick={(e) => {e.preventDefault(); setCurrentPage('home')}} 
+              onClick={(e) => { e.preventDefault(); navigate('/'); setMenuOpen(false); }} 
               style={{
                 color: 'white',
                 textDecoration: 'none',

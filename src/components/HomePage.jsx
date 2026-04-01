@@ -117,9 +117,9 @@ function HomePage() {
             <li className="dropdown">
               <a href="#features" onClick={(e) => {e.preventDefault(); document.getElementById('features')?.scrollIntoView({behavior: 'smooth'})}}>Estados Brasileiros ▼</a>
               <div className="dropdown-content">
-                <a href="#">Acre</a>
+                <Link to="/acre" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Acre</Link>
                 <a href="#">Alagoas</a>
-                <a href="#">Amapá</a>
+                <Link to="/amapa" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amapá</Link>
                 <Link to="/amazonas-estado" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amazonas</Link>
                 <a href="#">Bahia</a>
                 <Link to="/ceara" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Ceará</Link>
@@ -138,12 +138,12 @@ function HomePage() {
                 <Link to="/rio-de-janeiro" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio de Janeiro</Link>
                 <a href="#">Rio Grande do Norte</a>
                 <a href="#">Rio Grande do Sul</a>
-                <a href="#">Rondônia</a>
-                <a href="#">Roraima</a>
+                <Link to="/rondonia" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rondônia</Link>
+                <Link to="/roraima" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Roraima</Link>
                 <a href="#">Santa Catarina</a>
                 <Link to="/sao-paulo" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>São Paulo</Link>
                 <a href="#">Sergipe</a>
-                <a href="#">Tocantins</a>
+                <Link to="/tocantins" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Tocantins</Link>
               </div>
             </li>
             <li><a href="#" onClick={() => {navigate('/lugares'); document.querySelector('.nav-links').classList.remove('active')}}>Lugares</a></li>
