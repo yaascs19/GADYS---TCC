@@ -1,9 +1,9 @@
 package com.gadys.controller;
 
-import com.gadys.gadys.dto.LoginRequest;
-import com.gadys.gadys.dto.LoginResponse;
-import com.gadys.gadys.model.entity.Usuario;
-import com.gadys.gadys.service.AuthService;
+import com.gadys.dto.LoginRequest;
+import com.gadys.dto.LoginResponse;
+import com.gadys.model.Usuario;
+import com.gadys.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

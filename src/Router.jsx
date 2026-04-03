@@ -1,5 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { LanguageProvider } from './context/LanguageContext';
 import useImagePreload from './hooks/useImagePreload';
 import App from './App';
@@ -48,7 +48,6 @@ import Tucuma from './components/Tucuma';
 import FarinhaMandioca from './components/FarinhaMandioca';
 import ContatoPage from './components/ContatoPage';
 import Login from './Login';
-import { Navigate } from 'react-router-dom';
 import MapaLeaflet from './components/MapaLeaflet'
 import AdicionarLocal from './components/AdicionarLocal'
 import AdminPanel from './AdminPanel';
@@ -100,6 +99,13 @@ import CentroHistoricoFortaleza from './components/ceara/CentroHistoricoFortalez
 
 
 function Router() {
+  const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem('isLoggedIn') === 'true')
+  const [userType, setUserType] = useState(() => localStorage.getItem('userType') || '')
+
+  const handleLogin = () => {
+    setIsLoggedIn(true)
+    setUserType(localStorage.getItem('userType') || '')
+  }
   // Preload das imagens principais das páginas
   const imagesToPreload = [
     '/rj.jpeg',
@@ -188,13 +194,20 @@ function Router() {
         <Route path="/tucuma" element={<Tucuma />} />
         <Route path="/farinha-mandioca" element={<FarinhaMandioca />} />
         <Route path="/contato" element={<ContatoPage />} />
-        <Route path="/login" element={<Login onLogin={() => {}} />} />
+        <Route
+          path="/login"
+          element={
+            isLoggedIn
+              ? <Navigate to="/" replace />
+              : <Login onLogin={handleLogin} />
+          }
+        />
         <Route path="/mapa" element={<MapaLeaflet />} />
         <Route path="/adicionar-local" element={<AdicionarLocal />} />
         <Route
           path="/painel-adm"
           element={
-            localStorage.getItem('userType') === 'ADM'
+            userType === 'ADM'
               ? <AdminPanel />
               : <Navigate to="/login" replace />
           }
