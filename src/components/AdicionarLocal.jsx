@@ -68,47 +68,44 @@ function AdicionarLocal() {
     }
   }
 
+  const API_URL = import.meta.env.VITE_API_URL || 'https://gadys-backend.onrender.com'
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
     
     try {
-      const token = localStorage.getItem('token')
+      const usuarioId = localStorage.getItem('usuarioId')
       const userName = localStorage.getItem('userName') || 'Usuário Anônimo'
       
       const localData = {
-        ...formData,
-        submittedBy: userName,
-        status: 'pendente'
+        nome: formData.nome,
+        descricao: formData.descricao,
+        categoria: formData.categoria,
+        subcategoria: formData.subcategoria,
+        cidade: formData.cidade,
+        estado: formData.estado,
+        coordenadas: formData.coordenadas,
+        horarioFuncionamento: formData.horario,
+        preco: formData.preco,
+        imagemUrl: formData.imagem,
+        informacoesAdicionais: formData.infoAdicional,
+        enviadoPor: userName
       }
       
-      const response = await axios.post('https://glorious-tribble-pjqg5xgqg9rp36jvx-8080.app.github.dev/api/locais', localData, {
-        headers: {
-          'Authorization': token ? `Bearer ${token}` : '',
-          'Content-Type': 'application/json'
-        }
+      const url = usuarioId
+        ? `${API_URL}/api/locais?usuarioId=${usuarioId}`
+        : `${API_URL}/api/locais`
+
+      await axios.post(url, localData)
+      
+      setShowSuccess(true)
+      setFormData({
+        nome: '', categoria: '', subcategoria: '', cidade: '', estado: '',
+        descricao: '', imagem: '', localizacao: '', coordenadas: '',
+        horario: '', preco: '', infoAdicional: ''
       })
-      
-      if (response.data.sucesso) {
-        setShowSuccess(true)
-        setFormData({
-          nome: '',
-          categoria: '',
-          subcategoria: '',
-          cidade: '',
-          estado: '',
-          descricao: '',
-          imagem: '',
-          localizacao: '',
-          coordenadas: '',
-          horario: '',
-          preco: '',
-          infoAdicional: ''
-        })
-        setTimeout(() => setShowSuccess(false), 5000)
-      } else {
-        alert(response.data.mensagem || 'Erro ao adicionar local')
-      }
+      setTimeout(() => setShowSuccess(false), 5000)
     } catch (error) {
       alert(error.response?.data?.mensagem || 'Erro de conexão com o servidor')
     } finally {
