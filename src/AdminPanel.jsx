@@ -4,6 +4,12 @@ import './AdminPanel.css'
 
 function AdminPanel() {
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (localStorage.getItem('userType') !== 'ADM') {
+      navigate('/', { replace: true })
+    }
+  }, [])
   const [activeTab, setActiveTab] = useState('pending')
   const [allLocais, setAllLocais] = useState([])
   const [users, setUsers] = useState([])

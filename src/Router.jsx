@@ -202,14 +202,7 @@ function Router() {
         />
         <Route path="/mapa" element={<MapaLeaflet />} />
         <Route path="/adicionar-local" element={<AdicionarLocal />} />
-        <Route
-          path="/painel-adm"
-          element={
-            localStorage.getItem('userType') === 'ADM'
-              ? <AdminPanel />
-              : <Navigate to="/" replace />
-          }
-        />
+        <Route path="/painel-adm" element={<AdminPanel />} />
         <Route path="/sao-paulo" element={<SaoPaulo />} />
         <Route path="/monumentos-sao-paulo" element={<MonumentosSaoPaulo />} />
         <Route path="/rio-de-janeiro" element={<RioDeJaneiro />} />
