@@ -48,6 +48,7 @@ import Tucuma from './components/Tucuma';
 import FarinhaMandioca from './components/FarinhaMandioca';
 import ContatoPage from './components/ContatoPage';
 import Login from './Login';
+import { Navigate } from 'react-router-dom';
 import MapaLeaflet from './components/MapaLeaflet'
 import AdicionarLocal from './components/AdicionarLocal'
 import AdminPanel from './AdminPanel';
@@ -187,10 +188,17 @@ function Router() {
         <Route path="/tucuma" element={<Tucuma />} />
         <Route path="/farinha-mandioca" element={<FarinhaMandioca />} />
         <Route path="/contato" element={<ContatoPage />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login onLogin={() => {}} />} />
         <Route path="/mapa" element={<MapaLeaflet />} />
         <Route path="/adicionar-local" element={<AdicionarLocal />} />
-        <Route path="/painel-adm" element={<AdminPanel />} />
+        <Route
+          path="/painel-adm"
+          element={
+            localStorage.getItem('userType') === 'ADM'
+              ? <AdminPanel />
+              : <Navigate to="/login" replace />
+          }
+        />
         <Route path="/sao-paulo" element={<SaoPaulo />} />
         <Route path="/monumentos-sao-paulo" element={<MonumentosSaoPaulo />} />
         <Route path="/rio-de-janeiro" element={<RioDeJaneiro />} />

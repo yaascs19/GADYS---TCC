@@ -3,14 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import axios from 'axios';
 
-// 🔥 Remove barra final automaticamente se existir
-const RAW_API_URL =
-  import.meta.env.VITE_API_URL ||
-  'https://gadysback-eedzhme0g2ftg8c5.brazilsouth-01.azurewebsites.net';
-
+const RAW_API_URL = import.meta.env.VITE_API_URL;
 const API_URL = RAW_API_URL.replace(/\/$/, '');
-
-console.log("API_URL =", API_URL);
 
 function Login({ onLogin, isAdminAccess = false }) {
   const navigate = useNavigate();
