@@ -88,7 +88,11 @@ function Login({ onLogin, isAdminAccess = false }) {
               onLogin(response.data.tipoUsuario, response.data.nome);
             }
 
-            navigate('/');
+            if (response.data.tipoUsuario === 'ADM') {
+              navigate('/painel-adm');
+            } else {
+              navigate('/');
+            }
           } else {
             showAlert(response.data.mensagem, 'Credenciais inválidas!');
           }
