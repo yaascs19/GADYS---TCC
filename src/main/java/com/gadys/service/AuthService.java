@@ -1,9 +1,9 @@
 package com.gadys.service;
 
-import com.gadys.gadys.dto.LoginRequest;
-import com.gadys.gadys.dto.LoginResponse;
-import com.gadys.gadys.model.entity.Usuario;
-import com.gadys.gadys.repository.UsuarioRepository;
+import com.gadys.dto.LoginRequest;
+import com.gadys.dto.LoginResponse;
+import com.gadys.model.Usuario;
+import com.gadys.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
