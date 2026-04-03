@@ -115,7 +115,14 @@ GO
 
 -- =============================================
 -- ADMIN PADRÃO
+-- Senha gerada com bcrypt (hash de 'Cun*1925')
+-- Para gerar outro hash: node -e "require('bcryptjs').hash('SUA_SENHA', 10).then(console.log)"
 -- =============================================
 INSERT INTO Usuario (nome, email, senha, tipo_usuario)
-VALUES ('Yasmin Admin', 'yasmincunegundes25@gmail.com', 'Cun*1925', 'ADM');
+VALUES (
+    'Yasmin Admin',
+    'yasmincunegundes25@gmail.com',
+    '$2a$10$EPxngSRv2NohULodCHRo7eklYXm3B7HFLOSzaR99VQqqGSfAdM92.',
+    'ADM'
+);
 GO
