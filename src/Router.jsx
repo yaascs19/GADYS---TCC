@@ -192,14 +192,7 @@ function Router() {
         <Route path="/tucuma" element={<Tucuma />} />
         <Route path="/farinha-mandioca" element={<FarinhaMandioca />} />
         <Route path="/contato" element={<ContatoPage />} />
-        <Route
-          path="/login"
-          element={
-            isLoggedIn
-              ? <Navigate to="/" replace />
-              : <Login onLogin={handleLogin} />
-          }
-        />
+        <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/mapa" element={<MapaLeaflet />} />
         <Route path="/adicionar-local" element={<AdicionarLocal />} />
         <Route path="/painel-adm" element={<AdminPanel />} />
