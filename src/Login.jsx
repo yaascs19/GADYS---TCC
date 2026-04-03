@@ -73,7 +73,6 @@ function Login({ onLogin, isAdminAccess = false }) {
           );
 
           if (response.data.sucesso) {
-            console.log('RESPOSTA LOGIN:', response.data)
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('userType', response.data.tipoUsuario);
             localStorage.setItem('userName', response.data.nome);
