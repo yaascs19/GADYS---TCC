@@ -232,8 +232,7 @@ const Amazonas = () => {
             onClick={() => navigate('/destinos-amazonas')}
             onMouseOver={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(27, 94, 32, 0.6)'; }}
             onMouseOut={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 5px 20px rgba(27, 94, 32, 0.4)'; }}
-          >
-            Explore o Amazonas
+          > Explore o Amazonas
           </button>
         </section>
       </main>

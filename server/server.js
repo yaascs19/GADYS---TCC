@@ -6,425 +6,284 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
 app.use(cors());
 app.use(express.json());
 
-// Configuração do banco SQL Server
 const config = {
     server: process.env.DB_SERVER || 'localhost',
     database: process.env.DB_NAME || 'GADYS_DB',
     user: process.env.DB_USER || 'sa',
     password: process.env.DB_PASSWORD || 'sua_senha',
-    options: {
-        encrypt: false,
-        trustServerCertificate: true,
-        enableArithAbort: true
-    },
-    pool: {
-        max: 10,
-        min: 0,
-        idleTimeoutMillis: 30000
-    }
+    options: { encrypt: false, trustServerCertificate: true },
+    pool: { max: 10, min: 0, idleTimeoutMillis: 30000 }
 };
 
-// Conectar ao banco
-sql.connect(config).then(() => {
-    console.log('✅ Conectado ao SQL Server');
-}).catch(err => {
-    console.error('❌ Erro ao conectar:', err);
-});
+sql.connect(config)
+    .then(() => console.log('✅ Conectado ao SQL Server'))
+    .catch(err => console.error('❌ Erro ao conectar:', err));
 
 // =============================================
-// ROTAS DE USUÁRIOS
+// USUÁRIOS
 // =============================================
 
-// Listar usuários
 app.get('/api/usuarios', async (req, res) => {
     try {
         const result = await sql.query`
-            SELECT ID, Nome, Email, TipoUsuario, UltimoAcesso, TotalAcessos, IPAcesso, DataCadastro 
-            FROM Usuarios ORDER BY DataCadastro DESC
+            SELECT id, nome, email, tipo_usuario, ultimo_acesso, total_acesso, ip_acesso, data_cadastro
+            FROM Usuario ORDER BY data_cadastro DESC
         `;
         res.json(result.recordset);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// Adicionar usuário
 app.post('/api/usuarios', async (req, res) => {
     try {
         const { nome, email, senha, tipoUsuario } = req.body;
-        
-        const result = await sql.query`
-            INSERT INTO Usuarios (Nome, Email, Senha, TipoUsuario) 
-            VALUES (${nome}, ${email}, ${senha}, ${tipoUsuario})
+        await sql.query`
+            INSERT INTO Usuario (nome, email, senha, tipo_usuario)
+            VALUES (${nome}, ${email}, ${senha}, ${tipoUsuario || 'USUARIO'})
         `;
-        
         res.json({ success: true, message: 'Usuário cadastrado com sucesso!' });
     } catch (err) {
-        if (err.number === 2627) { // Duplicate key error
-            res.status(400).json({ error: 'Email já cadastrado!' });
-        } else {
-            res.status(500).json({ error: err.message });
-        }
-    }
-});
-
-// Registrar acesso de usuário
-app.post('/api/usuarios/acesso', async (req, res) => {
-    try {
-        const { nome, tipoUsuario } = req.body;
-        
-        await sql.query`
-            UPDATE Usuarios 
-            SET UltimoAcesso = GETDATE(), TotalAcessos = TotalAcessos + 1
-            WHERE Nome = ${nome} AND TipoUsuario = ${tipoUsuario}
-        `;
-        
-        res.json({ success: true });
-    } catch (err) {
+        if (err.number === 2627) return res.status(400).json({ error: 'Email já cadastrado!' });
         res.status(500).json({ error: err.message });
     }
 });
 
-// Login
+app.delete('/api/usuarios/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        await sql.query`DELETE FROM Usuario WHERE id = ${id}`;
+        res.json({ success: true });
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 app.post('/api/login', async (req, res) => {
     try {
-        const { email, senha, tipoUsuario } = req.body;
-        
+        const { email, senha } = req.body;
         const result = await sql.query`
-            SELECT ID, Nome, Email, TipoUsuario 
-            FROM Usuarios 
-            WHERE Email = ${email} AND Senha = ${senha} AND TipoUsuario = ${tipoUsuario}
+            SELECT id, nome, email, tipo_usuario
+            FROM Usuario WHERE email = ${email} AND senha = ${senha}
         `;
-        
-        if (result.recordset.length > 0) {
-            const user = result.recordset[0];
-            
-            // Atualizar último acesso
-            await sql.query`
-                UPDATE Usuarios 
-                SET UltimoAcesso = GETDATE(), TotalAcessos = TotalAcessos + 1 
-                WHERE ID = ${user.ID}
-            `;
-            
-            res.json({ success: true, user });
-        } else {
-            res.status(401).json({ error: 'Credenciais inválidas!' });
-        }
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+        if (!result.recordset.length) return res.status(401).json({ error: 'Credenciais inválidas!' });
+
+        const user = result.recordset[0];
+        await sql.query`
+            UPDATE Usuario SET ultimo_acesso = GETDATE(), total_acesso = total_acesso + 1
+            WHERE id = ${user.id}
+        `;
+        res.json({ success: true, user });
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 // =============================================
-// ROTAS DE LOCAIS
+// LOCAIS
 // =============================================
 
-// Listar locais
 app.get('/api/locais', async (req, res) => {
     try {
         const result = await sql.query`
-            SELECT * FROM vw_LocaisCompletos 
-            WHERE Status = 'ativo' 
-            ORDER BY Nome
+            SELECT * FROM vw_Locais WHERE status = 'ATIVO' ORDER BY nome
         `;
         res.json(result.recordset);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// Listar locais por categoria
-app.get('/api/locais/categoria/:categoria', async (req, res) => {
-    try {
-        const { categoria } = req.params;
-        const result = await sql.query`
-            SELECT l.*, c.Nome as Categoria, cid.Nome as Cidade, e.Sigla as EstadoSigla
-            FROM Locais l
-            JOIN Categorias c ON l.CategoriaID = c.ID
-            JOIN Cidades cid ON l.CidadeID = cid.ID
-            JOIN Estados e ON cid.EstadoID = e.ID
-            WHERE c.Nome = ${categoria} AND l.Status = 'ativo'
-            ORDER BY l.Nome
-        `;
-        res.json(result.recordset);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// Adicionar local
-app.post('/api/locais', async (req, res) => {
-    try {
-        const { nome, descricao, cidadeId, categoriaId, criadoPor } = req.body;
-        
-        const result = await sql.query`
-            INSERT INTO Locais (Nome, Descricao, CidadeID, CategoriaID, CriadoPor) 
-            VALUES (${nome}, ${descricao}, ${cidadeId}, ${categoriaId}, ${criadoPor})
-        `;
-        
-        res.json({ success: true, message: 'Local cadastrado com sucesso!' });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// Listar locais pendentes
 app.get('/api/locais/pendentes', async (req, res) => {
     try {
         const result = await sql.query`
-            SELECT * FROM LocaisPendentes 
-            WHERE Status = 'pendente'
-            ORDER BY DataEnvio DESC
+            SELECT * FROM Localizacao WHERE status = 'PENDENTE' ORDER BY data_criacao DESC
         `;
         res.json(result.recordset);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// Listar locais aprovados
 app.get('/api/locais/aprovados', async (req, res) => {
     try {
         const result = await sql.query`
-            SELECT * FROM LocaisPendentes 
-            WHERE Status = 'aprovado'
-            ORDER BY DataEnvio DESC
+            SELECT * FROM Localizacao WHERE status = 'ATIVO' ORDER BY data_aprovacao DESC
         `;
         res.json(result.recordset);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// Aprovar local pendente
-app.post('/api/locais/aprovar/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        
-        await sql.query`
-            UPDATE LocaisPendentes 
-            SET Status = 'aprovado'
-            WHERE ID = ${id}
-        `;
-        
-        res.json({ success: true, message: 'Local aprovado com sucesso!' });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// Rejeitar local pendente
-app.post('/api/locais/rejeitar/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        
-        await sql.query`
-            UPDATE LocaisPendentes 
-            SET Status = 'rejeitado'
-            WHERE ID = ${id}
-        `;
-        
-        res.json({ success: true, message: 'Local rejeitado!' });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// Excluir local (mover para lixeira)
-app.post('/api/locais/excluir/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        
-        await sql.query`
-            UPDATE Locais 
-            SET Status = 'inativo'
-            WHERE ID = ${id}
-        `;
-        
-        res.json({ success: true, message: 'Local movido para lixeira!' });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// Restaurar local da lixeira
-app.post('/api/locais/restaurar/:id', async (req, res) => {
-    try {
-        const { id } = req.params;
-        
-        await sql.query`
-            UPDATE Locais 
-            SET Status = 'ativo'
-            WHERE ID = ${id}
-        `;
-        
-        res.json({ success: true, message: 'Local restaurado!' });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
-});
-
-// Listar locais da lixeira
 app.get('/api/locais/lixeira', async (req, res) => {
     try {
         const result = await sql.query`
-            SELECT * FROM vw_LocaisCompletos 
-            WHERE Status = 'inativo'
-            ORDER BY DataCriacao DESC
+            SELECT * FROM Localizacao WHERE status = 'INATIVO' ORDER BY data_criacao DESC
         `;
         res.json(result.recordset);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// Excluir usuário
-app.delete('/api/usuarios/:id', async (req, res) => {
+app.post('/api/locais', async (req, res) => {
     try {
-        const { id } = req.params;
-        
+        const { nome, descricao, categoria, subcategoria, cidade, estado,
+                coordenadas, horario, preco, imagem, infoAdicional, submittedBy } = req.body;
         await sql.query`
-            DELETE FROM Usuarios WHERE ID = ${id}
+            INSERT INTO Localizacao
+                (nome, descricao, categoria, subcategoria, cidade, estado,
+                 coordenadas, horario_funcionamento, preco, imagem_url,
+                 informacoes_adicionais, enviado_por, status)
+            VALUES
+                (${nome}, ${descricao}, ${categoria}, ${subcategoria}, ${cidade}, ${estado},
+                 ${coordenadas}, ${horario}, ${preco}, ${imagem},
+                 ${infoAdicional}, ${submittedBy || 'Anônimo'}, 'PENDENTE')
         `;
-        
-        res.json({ success: true, message: 'Usuário excluído!' });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+        res.json({ sucesso: true, mensagem: 'Local enviado para aprovação!' });
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/locais/aprovar/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        await sql.query`
+            UPDATE Localizacao
+            SET status = 'ATIVO', data_aprovacao = GETDATE()
+            WHERE id = ${id}
+        `;
+        res.json({ success: true });
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/locais/rejeitar/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        await sql.query`UPDATE Localizacao SET status = 'INATIVO' WHERE id = ${id}`;
+        res.json({ success: true });
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/locais/excluir/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        await sql.query`UPDATE Localizacao SET status = 'INATIVO' WHERE id = ${id}`;
+        res.json({ success: true });
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/locais/restaurar/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        await sql.query`UPDATE Localizacao SET status = 'ATIVO' WHERE id = ${id}`;
+        res.json({ success: true });
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 // =============================================
-// ROTAS DE AVALIAÇÕES
+// AVALIAÇÕES
 // =============================================
 
-// Adicionar avaliação
 app.post('/api/avaliacoes', async (req, res) => {
     try {
         const { localId, usuarioId, nota } = req.body;
-        
-        const result = await sql.query`
-            INSERT INTO Avaliacoes (LocalID, UsuarioID, Nota) 
+        await sql.query`
+            INSERT INTO Avaliacao (localizacao_id, usuario_id, nota)
             VALUES (${localId}, ${usuarioId}, ${nota})
         `;
-        
-        res.json({ success: true, message: 'Avaliação registrada!' });
+        res.json({ success: true });
     } catch (err) {
-        if (err.number === 2627) { // Duplicate key error
-            res.status(400).json({ error: 'Você já avaliou este local!' });
-        } else {
-            res.status(500).json({ error: err.message });
-        }
-    }
-});
-
-// =============================================
-// ROTAS DE COMENTÁRIOS
-// =============================================
-
-// Listar comentários de um local
-app.get('/api/comentarios/:localId', async (req, res) => {
-    try {
-        const { localId } = req.params;
-        
-        const result = await sql.query`
-            SELECT c.Texto, c.DataComentario, u.Nome as Usuario
-            FROM Comentarios c
-            JOIN Usuarios u ON c.UsuarioID = u.ID
-            WHERE c.LocalID = ${localId}
-            ORDER BY c.DataComentario DESC
-        `;
-        
-        res.json(result.recordset);
-    } catch (err) {
+        if (err.number === 2627) return res.status(400).json({ error: 'Você já avaliou este local!' });
         res.status(500).json({ error: err.message });
     }
 });
 
-// Listar todos os comentários agrupados por local
+// =============================================
+// COMENTÁRIOS
+// =============================================
+
+app.get('/api/comentarios/:localId', async (req, res) => {
+    try {
+        const localId = parseInt(req.params.localId);
+        const result = await sql.query`
+            SELECT c.texto, c.data_comentario, u.nome AS usuario
+            FROM Comentario c
+            JOIN Usuario u ON c.usuario_id = u.id
+            WHERE c.localizacao_id = ${localId}
+            ORDER BY c.data_comentario DESC
+        `;
+        res.json(result.recordset);
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 app.get('/api/comentarios/all', async (req, res) => {
     try {
         const result = await sql.query`
-            SELECT 
-                l.Nome as LocalNome,
-                c.Texto,
-                c.DataComentario,
-                u.Nome as Usuario
-            FROM Comentarios c
-            JOIN Usuarios u ON c.UsuarioID = u.ID
-            JOIN Locais l ON c.LocalID = l.ID
-            ORDER BY l.Nome, c.DataComentario DESC
+            SELECT l.nome AS localNome, c.texto, c.data_comentario, u.nome AS usuario
+            FROM Comentario c
+            JOIN Usuario u ON c.usuario_id = u.id
+            JOIN Localizacao l ON c.localizacao_id = l.id
+            ORDER BY l.nome, c.data_comentario DESC
         `;
-        
-        // Agrupar comentários por local
-        const commentsByLocal = {};
-        result.recordset.forEach(comment => {
-            if (!commentsByLocal[comment.LocalNome]) {
-                commentsByLocal[comment.LocalNome] = [];
-            }
-            commentsByLocal[comment.LocalNome].push({
-                userName: comment.Usuario,
-                text: comment.Texto,
-                date: comment.DataComentario
-            });
+        const grouped = {};
+        result.recordset.forEach(({ localNome, usuario, texto, data_comentario }) => {
+            if (!grouped[localNome]) grouped[localNome] = [];
+            grouped[localNome].push({ userName: usuario, text: texto, date: data_comentario });
         });
-        
-        res.json(commentsByLocal);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+        res.json(grouped);
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// Adicionar comentário
 app.post('/api/comentarios', async (req, res) => {
     try {
         const { localId, usuarioId, texto } = req.body;
-        
-        const result = await sql.query`
-            INSERT INTO Comentarios (LocalID, UsuarioID, Texto) 
+        await sql.query`
+            INSERT INTO Comentario (localizacao_id, usuario_id, texto)
             VALUES (${localId}, ${usuarioId}, ${texto})
         `;
-        
-        res.json({ success: true, message: 'Comentário adicionado!' });
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+        res.json({ success: true });
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 // =============================================
-// ROTAS DE RANKING
+// RANKING
 // =============================================
 
-// Ranking de locais
 app.get('/api/ranking', async (req, res) => {
     try {
         const result = await sql.query`
-            SELECT TOP 20 * FROM vw_RankingLocais 
-            ORDER BY MediaAvaliacoes DESC, TotalAvaliacoes DESC
+            SELECT TOP 20 nome, subcategoria, cidade, estado, media_avaliacoes, total_avaliacoes
+            FROM vw_Locais
+            WHERE status = 'ATIVO' AND total_avaliacoes > 0
+            ORDER BY media_avaliacoes DESC, total_avaliacoes DESC
         `;
         res.json(result.recordset);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 // =============================================
-// ROTA DE ESTATÍSTICAS
+// MENSAGENS DE CONTATO
 // =============================================
 
-app.get('/api/estatisticas', async (req, res) => {
+app.get('/api/mensagens', async (req, res) => {
     try {
-        const result = await sql.query`EXEC sp_EstatisticasSistema`;
+        const result = await sql.query`SELECT * FROM MensagemContato ORDER BY data DESC`;
         res.json(result.recordset);
-    } catch (err) {
-        res.status(500).json({ error: err.message });
-    }
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-// Iniciar servidor
+app.post('/api/mensagens', async (req, res) => {
+    try {
+        const { nome, email, assunto, mensagem } = req.body;
+        await sql.query`
+            INSERT INTO MensagemContato (nome, email, assunto, mensagem)
+            VALUES (${nome}, ${email}, ${assunto}, ${mensagem})
+        `;
+        res.json({ success: true });
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.post('/api/mensagens/responder/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        const { resposta } = req.body;
+        await sql.query`
+            UPDATE MensagemContato SET resposta = ${resposta}, status = 'respondida' WHERE id = ${id}
+        `;
+        res.json({ success: true });
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 app.listen(PORT, () => {
     console.log(`🚀 Servidor rodando na porta ${PORT}`);
     console.log(`📡 API disponível em http://localhost:${PORT}`);

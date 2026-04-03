@@ -18,6 +18,8 @@ import Pantanal from './components/Pantanal';
 import MonumentosAmazonas from './components/MonumentosAmazonas'
 import MonumentosAmazonas2 from './components/MonumentosAmazonas2'
 import TeatroAmazonas from './components/TeatroAmazonas'
+import AmazonicoPeixaria from './components/AmazonicoPeixaria';
+import ArquipelagoAnavilhanas from './components/ArquipelagoAnavilhanas';
 import ForteSaoJose from './components/ForteSaoJose'
 import PalacioJustica from './components/PalacioJustica'
 import MercadoMunicipal from './components/MercadoMunicipal'
@@ -78,6 +80,14 @@ import FortalezaSaoJoseMacapa from './components/norte/amapa/FortalezaSaoJoseMac
 import FerroviaMadeiraMamore from './components/norte/rondonia/FerroviaMadeiraMamore';
 import MonteRoraima from './components/norte/roraima/MonteRoraima';
 import Jalapao from './components/norte/tocantins/Jalapao';
+import MinasGerais from './components/MinasGerais';
+import MGPontos from './components/MGPontos';
+import EspiritoSanto from './components/EspiritoSanto';
+import ESPontos from './components/ESPontos';
+import OuroPreto from './components/sudeste/mg/OuroPreto';
+import Inhotim from './components/sudeste/mg/Inhotim';
+import PedraAzulES from './components/sudeste/es/PedraAzulES';
+import Guarapari from './components/sudeste/es/Guarapari';
 import Jericoacoara from './components/ceara/Jericoacoara';
 import CanoaQuebrada from './components/ceara/CanoaQuebrada';
 import DragaoDoMar from './components/ceara/DragaoDoMar';
@@ -148,6 +158,8 @@ function Router() {
         <Route path="/amazonas/monumentos" element={<MonumentosAmazonas2 />} />
         <Route path="/amazonas/monumentos2" element={<MonumentosAmazonas2 />} />
         <Route path="/teatro-amazonas" element={<TeatroAmazonas />} />
+        <Route path="/amazonico-peixaria" element={<AmazonicoPeixaria />} />
+        <Route path="/arquipelago-anavilhanas" element={<ArquipelagoAnavilhanas />} />
         <Route path="/forte-sao-jose" element={<ForteSaoJose />} />
         <Route path="/palacio-justica" element={<PalacioJustica />} />
         <Route path="/mercado-municipal" element={<MercadoMunicipal />} />
@@ -215,6 +227,14 @@ function Router() {
         <Route path="/tocantins" element={<Tocantins />} />
         <Route path="/tocantins-pontos" element={<TocantinsPontos />} />
         <Route path="/tocantins/jalapao" element={<Jalapao />} />
+        <Route path="/minas-gerais" element={<MinasGerais />} />
+        <Route path="/mg-pontos" element={<MGPontos />} />
+        <Route path="/mg/ouro-preto" element={<OuroPreto />} />
+        <Route path="/mg/inhotim" element={<Inhotim />} />
+        <Route path="/espirito-santo" element={<EspiritoSanto />} />
+        <Route path="/es-pontos" element={<ESPontos />} />
+        <Route path="/es/pedra-azul" element={<PedraAzulES />} />
+        <Route path="/es/guarapari" element={<Guarapari />} />
 
       </Routes>
     </BrowserRouter>
