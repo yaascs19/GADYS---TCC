@@ -47,7 +47,7 @@ const NorteEstadoBase = ({ config }) => {
       entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
     }, { threshold: 0.2 });
     const sections = document.querySelectorAll('.feature-section-animate');
-    sections.forEach(section => observer.observe(section));
+    sections.forEach(s => observer.observe(s));
     return () => { document.head.removeChild(styleSheet); sections.forEach(s => observer.unobserve(s)); };
   }, [isLoading]);
 
@@ -71,6 +71,8 @@ const NorteEstadoBase = ({ config }) => {
     footer: { background: '#0d1117', color: '#8b949e', textAlign: 'center', padding: '2.5rem' },
   };
 
+  const nl = (c) => ({ color: c, textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' });
+
   if (isLoading) return <div style={{...styles.page, ...styles.loadingContainer}}>Carregando...</div>;
 
   return (
@@ -82,9 +84,7 @@ const NorteEstadoBase = ({ config }) => {
             <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: darkMode ? 'white' : '#2c3e50' }}>GADYS</span>
           </div>
           <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
-            <button onClick={(e) => { e.preventDefault(); toggleDarkMode(); }} style={{background: 'none', border: 'none', color: darkMode ? 'white' : '#2c3e50', fontSize: '1.5rem', cursor: 'pointer'}}>
-              {darkMode ? '☀️' : '🌙'}
-            </button>
+            <button onClick={(e) => { e.preventDefault(); toggleDarkMode(); }} style={{background: 'none', border: 'none', color: darkMode ? 'white' : '#2c3e50', fontSize: '1.5rem', cursor: 'pointer'}}>{darkMode ? '☀️' : '🌙'}</button>
             <div className="hamburger" onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
               <span style={{backgroundColor: darkMode ? 'white' : '#667eea'}}></span>
               <span style={{backgroundColor: darkMode ? 'white' : '#764ba2'}}></span>
@@ -97,24 +97,24 @@ const NorteEstadoBase = ({ config }) => {
             <li className="dropdown">
               <a href="#" onClick={(e) => e.preventDefault()} style={{color: darkMode ? 'white' : '#2c3e50'}}>Estados Brasileiros ▼</a>
               <div className="dropdown-content" style={{backgroundColor: darkMode ? 'rgb(252,252,252)' : '#f9f9f9', border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid #ddd'}}>
-                <Link to="/acre" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block'}}>Acre</Link>
-                <Link to="/amapa" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block'}}>Amapá</Link>
-                <Link to="/amazonas-estado" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block'}}>Amazonas</Link>
-                <Link to="/ceara" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block'}}>Ceará</Link>
-                <Link to="/para" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block'}}>Pará</Link>
-                <Link to="/rio-de-janeiro" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block'}}>Rio de Janeiro</Link>
-                <Link to="/rondonia" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block'}}>Rondônia</Link>
-                <Link to="/roraima" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block'}}>Roraima</Link>
-                <Link to="/sao-paulo" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block'}}>São Paulo</Link>
-                <Link to="/tocantins" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{color: darkMode ? 'white' : 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block'}}>Tocantins</Link>
+                <Link to="/acre" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={nl(darkMode ? 'white' : 'black')}>Acre</Link>
+                <Link to="/amapa" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={nl(darkMode ? 'white' : 'black')}>Amapá</Link>
+                <Link to="/amazonas-estado" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={nl(darkMode ? 'white' : 'black')}>Amazonas</Link>
+                <Link to="/ceara" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={nl(darkMode ? 'white' : 'black')}>Ceará</Link>
+                <Link to="/espirito-santo" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={nl(darkMode ? 'white' : 'black')}>Espírito Santo</Link>
+                <Link to="/minas-gerais" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={nl(darkMode ? 'white' : 'black')}>Minas Gerais</Link>
+                <Link to="/para" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={nl(darkMode ? 'white' : 'black')}>Pará</Link>
+                <Link to="/rio-de-janeiro" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={nl(darkMode ? 'white' : 'black')}>Rio de Janeiro</Link>
+                <Link to="/rondonia" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={nl(darkMode ? 'white' : 'black')}>Rondônia</Link>
+                <Link to="/roraima" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={nl(darkMode ? 'white' : 'black')}>Roraima</Link>
+                <Link to="/sao-paulo" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={nl(darkMode ? 'white' : 'black')}>São Paulo</Link>
+                <Link to="/tocantins" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={nl(darkMode ? 'white' : 'black')}>Tocantins</Link>
               </div>
             </li>
             <li><a href="#" onClick={() => { navigate('/lugares'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Lugares</a></li>
             <li><a href="#" onClick={() => { navigate('/mapa'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Mapa</a></li>
             <li><a href="#" onClick={() => { navigate('/adicionar-local'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Adicionar Local</a></li>
-            {localStorage.getItem('userType') === 'adm' && (
-              <li><a href="#" onClick={() => { navigate('/painel-adm'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Administração</a></li>
-            )}
+            {localStorage.getItem('userType') === 'adm' && (<li><a href="#" onClick={() => { navigate('/painel-adm'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Administração</a></li>)}
             <li><a href="#" onClick={() => { navigate('/perfil'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Meu Perfil</a></li>
             <li><a href="#" onClick={() => { navigate('/sobre'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Sobre</a></li>
             <li><a href="#" onClick={() => { navigate('/contato'); document.querySelector('.nav-links').classList.remove('active'); }} style={{color: darkMode ? 'white' : '#2c3e50'}}>Contato</a></li>
@@ -147,12 +147,9 @@ const NorteEstadoBase = ({ config }) => {
         ))}
 
         <section style={styles.ctaContainer}>
-          <button
-            style={styles.ctaButton}
-            onClick={() => navigate(config.ctaRota)}
+          <button style={styles.ctaButton} onClick={() => navigate(config.ctaRota)}
             onMouseOver={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(27,94,32,0.6)'; }}
-            onMouseOut={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 5px 20px rgba(27,94,32,0.4)'; }}
-          >
+            onMouseOut={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 5px 20px rgba(27,94,32,0.4)'; }}>
             {config.ctaTexto}
           </button>
         </section>

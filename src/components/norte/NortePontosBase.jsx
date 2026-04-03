@@ -24,11 +24,8 @@ const NortePontosBase = ({ config }) => {
   return (
     <div className="norte-pontos-page">
       <header className="norte-pontos-header" style={{ background: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${config.headerImage}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <button
-          onClick={() => navigate(config.voltarRota)}
-          className="norte-pontos-button"
-          style={{ position: 'absolute', top: '2rem', left: '2rem', backgroundColor: 'rgba(255,255,255,0.2)', borderColor: 'white' }}
-        >
+        <button onClick={() => navigate(config.voltarRota)} className="norte-pontos-button"
+          style={{ position: 'absolute', top: '2rem', left: '2rem', backgroundColor: 'rgba(255,255,255,0.2)', borderColor: 'white' }}>
           ← Voltar
         </button>
         <h1 className="norte-pontos-h1">{config.titulo}</h1>
@@ -36,13 +33,8 @@ const NortePontosBase = ({ config }) => {
       </header>
 
       <div className="norte-pontos-controls">
-        <input
-          type="text"
-          placeholder={config.placeholder}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="norte-pontos-search-bar"
-        />
+        <input type="text" placeholder={config.placeholder} value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)} className="norte-pontos-search-bar" />
         <div className="norte-pontos-filter-buttons">
           {CATEGORIES.map(cat => (
             <button key={cat} onClick={() => setSelectedCategory(cat)}
@@ -63,11 +55,9 @@ const NortePontosBase = ({ config }) => {
               <h2 className="norte-pontos-card-title">{ponto.nome}</h2>
               <p className="norte-pontos-card-category">{ponto.categoria} • {ponto.cidade}</p>
               <p className="norte-pontos-card-description">{ponto.descricao}</p>
-              <button
-                className="norte-pontos-saibamais"
+              <button className="norte-pontos-saibamais"
                 onClick={() => ponto.rota ? navigate(ponto.rota) : null}
-                style={{ opacity: ponto.rota ? 1 : 0.4, cursor: ponto.rota ? 'pointer' : 'not-allowed' }}
-              >
+                style={{ opacity: ponto.rota ? 1 : 0.4, cursor: ponto.rota ? 'pointer' : 'not-allowed' }}>
                 Saiba mais
               </button>
             </div>
