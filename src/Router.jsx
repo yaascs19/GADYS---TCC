@@ -102,9 +102,9 @@ function Router() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem('isLoggedIn') === 'true')
   const [userType, setUserType] = useState(() => localStorage.getItem('userType') || '')
 
-  const handleLogin = () => {
+  const handleLogin = (tipo) => {
     setIsLoggedIn(true)
-    setUserType(localStorage.getItem('userType') || '')
+    setUserType(tipo || localStorage.getItem('userType') || '')
   }
   // Preload das imagens principais das páginas
   const imagesToPreload = [
