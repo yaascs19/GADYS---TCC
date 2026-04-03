@@ -100,11 +100,9 @@ import CentroHistoricoFortaleza from './components/ceara/CentroHistoricoFortalez
 
 function Router() {
   const [isLoggedIn, setIsLoggedIn] = useState(() => localStorage.getItem('isLoggedIn') === 'true')
-  const [userType, setUserType] = useState(() => localStorage.getItem('userType') || '')
 
   const handleLogin = (tipo) => {
     setIsLoggedIn(true)
-    setUserType(tipo || localStorage.getItem('userType') || '')
   }
   // Preload das imagens principais das páginas
   const imagesToPreload = [
@@ -207,9 +205,9 @@ function Router() {
         <Route
           path="/painel-adm"
           element={
-            userType === 'ADM'
+            localStorage.getItem('userType') === 'ADM'
               ? <AdminPanel />
-              : <Navigate to="/login" replace />
+              : <Navigate to="/" replace />
           }
         />
         <Route path="/sao-paulo" element={<SaoPaulo />} />
