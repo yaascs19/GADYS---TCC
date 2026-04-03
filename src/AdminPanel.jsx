@@ -1,412 +1,797 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import './AdminPanel.css'
 
 function AdminPanel() {
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    if (localStorage.getItem('userType') !== 'ADM') {
-      navigate('/', { replace: true })
-    }
-  }, [])
-  const [activeTab, setActiveTab] = useState('pending')
-  const [allLocais, setAllLocais] = useState([])
-  const [users, setUsers] = useState([])
-  const [rankings, setRankings] = useState([])
-  const [contactMessages, setContactMessages] = useState([])
   const [expandedCard, setExpandedCard] = useState(null)
+  const [pendingLocations, setPendingLocations] = useState([])
+  const [approvedLocations, setApprovedLocations] = useState([])
+  const [activeTab, setActiveTab] = useState('pending')
+  const [userAccess, setUserAccess] = useState([])
+  const [rankings, setRankings] = useState([])
+  const [comments, setComments] = useState({})
   const [showAddUserModal, setShowAddUserModal] = useState(false)
   const [newUser, setNewUser] = useState({ userName: '', email: '', senha: '', userType: 'usuario' })
+  const [siteLocations, setSiteLocations] = useState([])
+  const [trashedLocations, setTrashedLocations] = useState([])
+  const [contactMessages, setContactMessages] = useState([])
+  const [locationFilter, setLocationFilter] = useState('')
   const [editingLocation, setEditingLocation] = useState(null)
   const [showEditModal, setShowEditModal] = useState(false)
-
-  const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
-  const adminId = localStorage.getItem('usuarioId')
-
-  const pendingLocations = allLocais.filter(l => l.status === 'PENDENTE')
-  const approvedLocations = allLocais.filter(l => l.status === 'ATIVO')
-  const rejectedLocations = allLocais.filter(l => l.status === 'INATIVO')
-
-  const loadLocais = async () => {
-    try {
-      const res = await fetch(`${API_URL}/api/locais`)
-      if (res.ok) setAllLocais(await res.json())
-    } catch (e) { console.error(e) }
-  }
+  
+  const API_URL = import.meta.env.VITE_API_URL;
 
   const loadUsers = async () => {
     try {
-      const res = await fetch(`${API_URL}/api/usuarios`)
-      if (res.ok) setUsers(await res.json())
-    } catch (e) { console.error(e) }
+      const response = await fetch(`${API_URL}/api/usuarios`)
+      if (response.ok) {
+        const users = await response.json()
+        setUserAccess(users)
+      } else {
+        console.error('Erro ao carregar usuários do servidor')
+        setUserAccess([])
+      }
+    } catch (error) {
+      console.error('Erro de conexão ao carregar usuários:', error)
+      setUserAccess([])
+    }
   }
 
   const loadRanking = async () => {
     try {
-      const res = await fetch(`${API_URL}/api/ranking`)
-      if (res.ok) setRankings(await res.json())
-    } catch (e) { console.error(e) }
+      const response = await fetch(`${API_URL}/api/ranking`)
+      if (response.ok) {
+        const ranking = await response.json()
+        setRankings(ranking)
+      } else {
+        console.error('Erro ao carregar ranking do servidor')
+      }
+    } catch (error) {
+      console.error('Erro de conexão ao carregar ranking:', error)
+    }
+  }
+
+  const loadComments = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/comentarios/all`)
+      if (response.ok) {
+        const commentsData = await response.json()
+        setComments(commentsData)
+      } else {
+        console.error('Erro ao carregar comentários do servidor')
+      }
+    } catch (error) {
+      console.error('Erro de conexão ao carregar comentários:', error)
+    }
+  }
+
+  const loadPendingLocations = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/locais/pendentes`)
+      if (response.ok) {
+        const pending = await response.json()
+        setPendingLocations(pending)
+      } else {
+        console.error('Erro ao carregar locais pendentes do servidor')
+        setPendingLocations([])
+      }
+    } catch (error) {
+      console.error('Erro de conexão ao carregar locais pendentes:', error)
+      setPendingLocations([])
+    }
+  }
+
+  const loadApprovedLocations = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/locais/aprovados`)
+      if (response.ok) {
+        const approved = await response.json()
+        setApprovedLocations(approved)
+      } else {
+        console.error('Erro ao carregar locais aprovados do servidor')
+        setApprovedLocations([])
+      }
+    } catch (error) {
+      console.error('Erro de conexão ao carregar locais aprovados:', error)
+      setApprovedLocations([])
+    }
+  }
+
+  const loadSiteLocations = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/locais`)
+      if (response.ok) {
+        const locais = await response.json()
+        setSiteLocations(locais)
+      } else {
+        console.error('Erro ao carregar locais do site do servidor')
+        setSiteLocations([])
+      }
+    } catch (error) {
+      console.error('Erro de conexão ao carregar locais do site:', error)
+      setSiteLocations([])
+    }
+  }
+
+  const loadTrashedLocations = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/locais/lixeira`)
+      if (response.ok) {
+        const lixeira = await response.json()
+        setTrashedLocations(lixeira)
+      } else {
+        console.error('Erro ao carregar lixeira do servidor')
+        setTrashedLocations([])
+      }
+    } catch (error) {
+      console.error('Erro de conexão ao carregar lixeira:', error)
+      setTrashedLocations([])
+    }
   }
 
   const loadContactMessages = async () => {
     try {
-      const res = await fetch(`${API_URL}/api/mensagens`)
-      if (res.ok) setContactMessages(await res.json())
-    } catch (e) { console.error(e) }
+        const response = await fetch(`${API_URL}/api/mensagens`);
+        if(response.ok) {
+            const messages = await response.json();
+            setContactMessages(messages);
+        } else {
+            console.error("Erro ao carregar mensagens de contato");
+            setContactMessages([]);
+        }
+    } catch (error) {
+        console.error('Erro de conexão ao carregar mensagens:', error)
+        setContactMessages([]);
+    }
   }
 
   useEffect(() => {
-    loadLocais()
+    loadPendingLocations()
+    loadApprovedLocations()
     loadUsers()
     loadRanking()
+    loadComments()
+    loadSiteLocations()
+    loadTrashedLocations()
     loadContactMessages()
   }, [])
 
   const handleApprove = async (id) => {
     try {
-      const res = await fetch(`${API_URL}/api/locais/${id}/aprovar?adminId=${adminId}`, { method: 'PUT' })
-      if (res.ok) { alert('Local aprovado!'); loadLocais() }
-      else alert('Erro ao aprovar local')
-    } catch (e) { alert('Erro de conexão') }
+      const response = await fetch(`${API_URL}/api/locais/aprovar/${id}`, {
+        method: 'POST'
+      })
+      
+      if (response.ok) {
+        alert('Local aprovado com sucesso!')
+        loadPendingLocations()
+        loadApprovedLocations()
+        loadSiteLocations()
+      } else {
+        alert('Erro ao aprovar local')
+      }
+    } catch (error) {
+      console.error('Erro de conexão ao aprovar local:', error)
+      alert('Erro de conexão. Tente novamente.')
+    }
   }
 
   const handleReject = async (id) => {
     try {
-      const res = await fetch(`${API_URL}/api/locais/${id}/rejeitar?adminId=${adminId}`, { method: 'PUT' })
-      if (res.ok) { alert('Local rejeitado!'); loadLocais() }
-      else alert('Erro ao rejeitar local')
-    } catch (e) { alert('Erro de conexão') }
+      const response = await fetch(`${API_URL}/api/locais/rejeitar/${id}`, {
+        method: 'POST'
+      })
+      
+      if (response.ok) {
+        alert('Local rejeitado!')
+        loadPendingLocations()
+        loadTrashedLocations()
+      } else {
+        alert('Erro ao rejeitar local')
+      }
+    } catch (error) {
+      console.error('Erro de conexão ao rejeitar local:', error)
+      alert('Erro de conexão. Tente novamente.')
+    }
   }
 
-  const handleDelete = async (id) => {
-    if (!confirm('Tem certeza que deseja excluir permanentemente este local?')) return
-    try {
-      const res = await fetch(`${API_URL}/api/locais/${id}`, { method: 'DELETE' })
-      if (res.ok) { alert('Local excluído!'); loadLocais() }
-      else alert('Erro ao excluir local')
-    } catch (e) { alert('Erro de conexão') }
+  const handleRemoveLocation = async (id) => {
+    if (confirm('Tem certeza que deseja mover este local para a lixeira?')) {
+      try {
+        const response = await fetch(`${API_URL}/api/locais/excluir/${id}`, {
+          method: 'POST'
+        })
+        
+        if (response.ok) {
+          alert('Local movido para a lixeira!')
+          loadSiteLocations()
+          loadTrashedLocations()
+          loadApprovedLocations()
+        } else {
+          alert('Erro ao mover local para lixeira')
+        }
+      } catch (error) {
+        console.error('Erro de conexão ao mover local para a lixeira:', error)
+        alert('Erro de conexão. Tente novamente.')
+      }
+    }
+  }
+
+  const toggleExpand = (id) => {
+    setExpandedCard(expandedCard === id ? null : id)
   }
 
   const handleRemoveUser = async (userId) => {
-    if (!confirm('Tem certeza que deseja excluir este usuário?')) return
-    try {
-      const res = await fetch(`${API_URL}/api/usuarios/${userId}`, { method: 'DELETE' })
-      if (res.ok) { alert('Usuário excluído!'); loadUsers() }
-      else alert('Erro ao excluir usuário')
-    } catch (e) { alert('Erro de conexão') }
+    if (confirm('Tem certeza que deseja excluir este usuário?')) {
+      try {
+        const response = await fetch(`${API_URL}/api/usuarios/${userId}`, {
+          method: 'DELETE'
+        })
+        
+        if (response.ok) {
+          alert('Usuário excluído com sucesso!')
+          loadUsers()
+        } else {
+          alert('Erro ao excluir usuário')
+        }
+      } catch (error) {
+        console.error('Erro de conexão ao excluir usuário:', error)
+        alert('Erro de conexão. Tente novamente.')
+      }
+    }
   }
 
   const handleAddUser = async (e) => {
     e.preventDefault()
-    if (!newUser.userName.trim() || !newUser.email.trim() || !newUser.senha.trim()) {
-      alert('Preencha todos os campos!')
-      return
-    }
-    try {
-      const res = await fetch(`${API_URL}/api/usuarios`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nome: newUser.userName, email: newUser.email, senha: newUser.senha, tipoUsuario: newUser.userType })
-      })
-      if (res.ok) {
-        setNewUser({ userName: '', email: '', senha: '', userType: 'usuario' })
-        setShowAddUserModal(false)
-        alert('Usuário cadastrado!')
-        loadUsers()
-      } else {
-        const err = await res.json()
-        alert(err.error || 'Erro ao cadastrar usuário')
+    if (newUser.userName.trim() && newUser.email.trim() && newUser.senha.trim()) {
+      try {
+        const response = await fetch(`${API_URL}/api/usuarios`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nome: newUser.userName,
+            email: newUser.email,
+            senha: newUser.senha,
+            tipoUsuario: newUser.userType
+          })
+        })
+        
+        if (response.ok) {
+          setNewUser({ userName: '', email: '', senha: '', userType: 'usuario' })
+          setShowAddUserModal(false)
+          alert('Usuário cadastrado com sucesso!')
+          loadUsers()
+        } else {
+          const error = await response.json()
+          alert(error.error || 'Erro ao cadastrar usuário')
+        }
+      } catch (error) {
+        alert('Erro de conexão com o servidor')
       }
-    } catch (e) { alert('Erro de conexão') }
+    } else {
+      alert('Por favor, preencha todos os campos obrigatórios (Nome, Email e Senha)!')
+    }
+  }
+
+  const handleRestoreLocation = async (id) => {
+    if (confirm('Tem certeza que deseja restaurar este local?')) {
+      try {
+        const response = await fetch(`${API_URL}/api/locais/restaurar/${id}`, {
+          method: 'POST'
+        });
+        if (response.ok) {
+          alert('Local restaurado com sucesso!');
+          loadTrashedLocations();
+          loadSiteLocations();
+          loadApprovedLocations();
+        } else {
+          alert('Erro ao restaurar o local.');
+        }
+      } catch (error) {
+        console.error('Erro de conexão ao restaurar local:', error)
+        alert('Erro de conexão. Tente novamente.')
+      }
+    }
+  }
+
+  const handlePermanentDelete = async (id) => {
+    if (confirm('Tem certeza que deseja excluir permanentemente este local? Esta ação não pode ser desfeita!')) {
+      try {
+        const response = await fetch(`${API_URL}/api/locais/lixeira/${id}`, {
+          method: 'DELETE'
+        });
+        if (response.ok) {
+          alert('Local excluído permanentemente!');
+          loadTrashedLocations();
+        } else {
+          alert('Erro ao excluir o local permanentemente.');
+        }
+      } catch (error) {
+        console.error('Erro de conexão ao excluir local permanentemente:', error)
+        alert('Erro de conexão. Tente novamente.')
+      }
+    }
+  }
+
+  const handleEdit = (id) => {
+    const locationToEdit = pendingLocations.find(location => location.id === id)
+    setEditingLocation({...locationToEdit})
+    setShowEditModal(true)
   }
 
   const handleSaveEdit = async () => {
-    if (!editingLocation) return
-    try {
-      const res = await fetch(`${API_URL}/api/locais/${editingLocation.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(editingLocation)
-      })
-      if (res.ok) {
-        setShowEditModal(false)
-        setEditingLocation(null)
-        alert('Local editado!')
-        loadLocais()
-      } else alert('Erro ao salvar edição')
-    } catch (e) { alert('Erro de conexão') }
+    if (editingLocation) {
+        try {
+            const response = await fetch(`${API_URL}/api/locais/pendentes/${editingLocation.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(editingLocation)
+            });
+
+            if (response.ok) {
+                setShowEditModal(false)
+                setEditingLocation(null)
+                alert('Local editado com sucesso! Agora você pode aprová-lo.')
+                loadPendingLocations();
+            } else {
+                alert('Erro ao salvar edição do local.');
+            }
+        } catch (error) {
+            console.error('Erro de conexão ao salvar edição:', error);
+            alert('Erro de conexão. Tente novamente.');
+        }
+    }
+  }
+  
+  const handleSaveAndApprove = async () => {
+    await handleSaveEdit();
+    if (editingLocation) {
+      handleApprove(editingLocation.id);
+    }
   }
 
   const responderMensagem = async (id) => {
     const resposta = prompt('Digite sua resposta:')
-    if (!resposta?.trim()) return
-    try {
-      const res = await fetch(`${API_URL}/api/mensagens/responder/${id}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ resposta: resposta.trim() })
-      })
-      if (res.ok) { alert('Resposta enviada!'); loadContactMessages() }
-      else alert('Erro ao enviar resposta')
-    } catch (e) { alert('Erro de conexão') }
+    if (resposta && resposta.trim()) {
+        try {
+            const response = await fetch(`${API_URL}/api/mensagens/responder/${id}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ resposta: resposta.trim() })
+            });
+            if (response.ok) {
+                alert('Resposta enviada com sucesso!');
+                loadContactMessages();
+            } else {
+                alert('Erro ao enviar resposta.');
+            }
+        } catch (error) {
+            console.error('Erro de conexão ao responder mensagem:', error);
+            alert('Erro de conexão. Tente novamente.');
+        }
+    }
   }
-
-  const toggleExpand = (id) => setExpandedCard(expandedCard === id ? null : id)
-
-  const LocationCard = ({ location, cardKey, actions }) => (
-    <div className={`admin-card ${expandedCard === cardKey ? 'expanded' : ''}`}>
-      <div className="card-header">
-        <h3>{location.nome}</h3>
-        <span className={`category-badge ${location.status === 'ATIVO' ? 'approved' : location.status === 'PENDENTE' ? 'pending' : ''}`}>
-          {location.status}
-        </span>
-      </div>
-      <div className="card-info">
-        <p><strong>Cidade:</strong> {location.cidade}</p>
-        <p><strong>Estado:</strong> {location.estado}</p>
-        <p><strong>Categoria:</strong> {location.categoria} / {location.subcategoria}</p>
-        <p><strong>Enviado por:</strong> {location.enviadoPor || 'N/A'}</p>
-        <p><strong>Data:</strong> {location.dataCriacao ? new Date(location.dataCriacao).toLocaleDateString('pt-BR') : 'N/A'}</p>
-      </div>
-      {expandedCard === cardKey && (
-        <div className="card-details">
-          <p><strong>Descrição:</strong> {location.descricao}</p>
-          <p><strong>Horário:</strong> {location.horarioFuncionamento || 'N/A'}</p>
-          <p><strong>Preço:</strong> {location.preco || 'N/A'}</p>
-          <p><strong>Coordenadas:</strong> {location.coordenadas || 'N/A'}</p>
-          {location.imagemUrl && <img src={location.imagemUrl} alt={location.nome} style={{width:'100%', borderRadius:'8px', marginTop:'0.5rem'}} />}
-        </div>
-      )}
-      <div className="card-actions">
-        <button className="expand-btn" onClick={() => toggleExpand(cardKey)}>
-          {expandedCard === cardKey ? 'Recolher' : 'Expandir'}
-        </button>
-        {actions}
-      </div>
-    </div>
-  )
 
   return (
     <div className="admin-panel">
       <div className="admin-header">
         <h1>Painel Administrativo</h1>
         <div className="admin-tabs">
-          <button className={`tab-btn ${activeTab === 'pending' ? 'active' : ''}`} onClick={() => setActiveTab('pending')}>
+          <button 
+            className={`tab-btn ${activeTab === 'pending' ? 'active' : ''}`}
+            onClick={() => setActiveTab('pending')}
+          >
             Pendentes ({pendingLocations.length})
           </button>
-          <button className={`tab-btn ${activeTab === 'approved' ? 'active' : ''}`} onClick={() => setActiveTab('approved')}>
+          <button 
+            className={`tab-btn ${activeTab === 'approved' ? 'active' : ''}`}
+            onClick={() => setActiveTab('approved')}
+          >
             Aprovados ({approvedLocations.length})
           </button>
-          <button className={`tab-btn ${activeTab === 'rejected' ? 'active' : ''}`} onClick={() => setActiveTab('rejected')}>
-            Rejeitados ({rejectedLocations.length})
+          <button 
+            className={`tab-btn ${activeTab === 'users' ? 'active' : ''}`}
+            onClick={() => setActiveTab('users')}
+          >
+            Usuários ({userAccess.length})
           </button>
-          <button className={`tab-btn ${activeTab === 'users' ? 'active' : ''}`} onClick={() => setActiveTab('users')}>
-            Usuários ({users.length})
+          <button 
+            className={`tab-btn ${activeTab === 'ranking' ? 'active' : ''}`}
+            onClick={() => setActiveTab('ranking')}
+          >
+            Ranking de Locais
           </button>
-          <button className={`tab-btn ${activeTab === 'ranking' ? 'active' : ''}`} onClick={() => setActiveTab('ranking')}>
-            Ranking
-          </button>
-          <button className={`tab-btn ${activeTab === 'addLocal' ? 'active' : ''}`} onClick={() => setActiveTab('addLocal')}>
+          <button 
+            className={`tab-btn ${activeTab === 'addLocal' ? 'active' : ''}`}
+            onClick={() => setActiveTab('addLocal')}
+          >
             Adicionar Local
           </button>
-          <button className={`tab-btn ${activeTab === 'messages' ? 'active' : ''}`} onClick={() => setActiveTab('messages')}>
+          <button 
+            className={`tab-btn ${activeTab === 'locations' ? 'active' : ''}`}
+            onClick={() => setActiveTab('locations')}
+          >
+            Locais do Site ({siteLocations.length})
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'trash' ? 'active' : ''}`}
+            onClick={() => setActiveTab('trash')}
+          >
+            Lixeira ({trashedLocations.length})
+          </button>
+          <button 
+            className={`tab-btn ${activeTab === 'messages' ? 'active' : ''}`}
+            onClick={() => setActiveTab('messages')}
+          >
             Mensagens ({contactMessages.filter(m => m.status === 'nova').length})
           </button>
         </div>
       </div>
-
+      
       {activeTab === 'users' && (
-        <div style={{textAlign: 'center', marginBottom: '2rem'}}>
-          <button onClick={() => setShowAddUserModal(true)} style={{background: '#28a745', color: 'white', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '8px', cursor: 'pointer', fontSize: '1rem'}}>
+        <div className="action-button-container">
+          <button 
+            onClick={() => setShowAddUserModal(true)}
+            className="primary-action-btn"
+          >
             + Cadastrar Usuário
           </button>
         </div>
       )}
-
+      
+      {activeTab === 'locations' && (
+        <div className="filter-container">
+          <select 
+            value={locationFilter}
+            onChange={(e) => setLocationFilter(e.target.value)}
+            className="filter-select"
+          >
+            <option value="">Visite Lugares</option>
+            <option value="monumentos">🏛️ Monumentos</option>
+            <option value="natureza">🌳 Natureza</option>
+          </select>
+          <select 
+            value={locationFilter}
+            onChange={(e) => setLocationFilter(e.target.value)}
+            className="filter-select"
+          >
+            <option value="">Curiosidades</option>
+            <option value="gastronomia">🍽️ Gastronomia</option>
+            <option value="cultura">🎨 Cultura</option>
+          </select>
+        </div>
+      )}
+      
       <div className="admin-grid">
         {activeTab === 'addLocal' && (
-          <div style={{textAlign: 'center'}}>
-            <button onClick={() => navigate('/adicionar-local')} style={{background: '#28a745', color: 'white', border: 'none', padding: '0.8rem 1.5rem', borderRadius: '8px', cursor: 'pointer', fontSize: '1rem'}}>
+          <div className="action-button-container">
+            <button 
+              onClick={() => window.open('/adicionar-locais.html', '_blank')}
+              className="primary-action-btn"
+            >
               + Adicionar Local
             </button>
           </div>
         )}
-
-        {activeTab === 'ranking' && (rankings.length === 0
-          ? <p style={{textAlign:'center', color:'#666'}}>Nenhuma avaliação encontrada.</p>
-          : rankings.map((local, index) => (
-            <div key={index} className="admin-card">
-              <div className="card-header">
-                <h3>#{index + 1} {local.nome}</h3>
-                <span className={`category-badge ${index === 0 ? 'approved' : 'pending'}`}>
-                  {index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : `${index+1}º`}
-                </span>
-              </div>
-              <div className="card-info">
-                <p><strong>Média:</strong> {local.media} ({'★'.repeat(Math.floor(local.media))}{'☆'.repeat(5 - Math.floor(local.media))})</p>
-                <p><strong>Total de Avaliações:</strong> {local.totalAvaliacoes}</p>
-              </div>
+        
+        {activeTab === 'ranking' && (rankings.length === 0 ? (
+            <div className="empty-state-message">
+              <p>Nenhuma avaliação encontrada ainda.</p>
             </div>
-          ))
-        )}
+          ) : (
+            rankings.map((local, index) => (
+              <div key={index} className="admin-card">
+                <div className="card-header">
+                  <h3>#{index + 1} {local.nome}</h3>
+                  <span className={`category-badge ${index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : ''}`}>
+                    {index === 0 ? '🥇 1º Lugar' : index === 1 ? '🥈 2º Lugar' : index === 2 ? '🥉 3º Lugar' : `${index + 1}º Lugar`}
+                  </span>
+                </div>
+                
+                <div className="card-info">
+                  <p><strong>Média:</strong> {local.media} ({'★'.repeat(Math.floor(local.media)) + '☆'.repeat(5 - Math.floor(local.media))})</p>
+                  <p><strong>Total de Avaliações:</strong> {local.totalAvaliacoes}</p>
+                </div>
+              </div>
+            ))
+          ))}
 
-        {activeTab === 'pending' && (pendingLocations.length === 0
-          ? <p style={{textAlign:'center', color:'#666'}}>Nenhum local pendente.</p>
-          : pendingLocations.map(location => (
-            <LocationCard
-              key={location.id}
-              location={location}
-              cardKey={location.id}
-              actions={<>
-                <button className="expand-btn" onClick={() => { setEditingLocation({...location}); setShowEditModal(true) }}>Editar</button>
-                <button className="approve-btn" onClick={() => handleApprove(location.id)}>Aprovar</button>
-                <button className="reject-btn" onClick={() => handleReject(location.id)}>Rejeitar</button>
-              </>}
-            />
-          ))
-        )}
-
-        {activeTab === 'approved' && (approvedLocations.length === 0
-          ? <p style={{textAlign:'center', color:'#666'}}>Nenhum local aprovado.</p>
-          : approvedLocations.map(location => (
-            <LocationCard
-              key={location.id}
-              location={location}
-              cardKey={`approved-${location.id}`}
-              actions={<>
-                <button className="reject-btn" onClick={() => handleDelete(location.id)}>Excluir</button>
-              </>}
-            />
-          ))
-        )}
-
-        {activeTab === 'rejected' && (rejectedLocations.length === 0
-          ? <p style={{textAlign:'center', color:'#666'}}>Nenhum local rejeitado.</p>
-          : rejectedLocations.map(location => (
-            <LocationCard
-              key={location.id}
-              location={location}
-              cardKey={`rejected-${location.id}`}
-              actions={<>
-                <button className="approve-btn" onClick={() => handleApprove(location.id)}>Reativar</button>
-                <button className="reject-btn" onClick={() => handleDelete(location.id)}>Excluir</button>
-              </>}
-            />
-          ))
-        )}
-
-        {activeTab === 'users' && users.map((user, index) => (
-          <div key={user.id || index} className="admin-card">
+        {activeTab === 'approved' && approvedLocations.map((location, index) => (
+          <div key={location.id || index} className={`admin-card ${expandedCard === `approved-${location.id}` ? 'expanded' : ''}`}>
             <div className="card-header">
-              <h3>{user.nome || 'Usuário'}</h3>
-              <span className={`category-badge ${user.tipoUsuario === 'ADM' ? 'approved' : 'pending'}`}>
-                {user.tipoUsuario === 'ADM' ? 'Admin' : 'Usuário'}
-              </span>
+              <h3>{location.name || location.nome}</h3>
+              <span className="category-badge ATIVO">{location.category || location.categoria}</span>
             </div>
+            
             <div className="card-info">
-              <p><strong>Email:</strong> {user.email}</p>
-              <p><strong>Cadastrado:</strong> {user.dataCadastro || 'N/A'}</p>
+              <p><strong>Cidade:</strong> {location.city || location.cidade}</p>
+              <p><strong>Aprovado em:</strong> {location.approvedAt || 'N/A'}</p>
+              <p><strong>Categoria:</strong> {location.category || location.categoria}</p>
             </div>
+
+            {expandedCard === `approved-${location.id}` && (
+              <div className="card-details">
+                <p><strong>Descrição:</strong> {location.description || location.descricao}</p>
+                <p><strong>Localização:</strong> {location.localizacao || 'N/A'}</p>
+              </div>
+            )}
+
             <div className="card-actions">
-              <button className="reject-btn" onClick={() => handleRemoveUser(user.id)}>Excluir</button>
+              <button 
+                className="expand-btn"
+                onClick={() => toggleExpand(`approved-${location.id}`)}
+              >
+                {expandedCard === `approved-${location.id}` ? 'Recolher' : 'Expandir'}
+              </button>
+              <button 
+                className="reject-btn"
+                onClick={() => handleRemoveLocation(location.id)}
+              >
+                Remover
+              </button>
             </div>
           </div>
         ))}
+        
+        {activeTab === 'pending' && pendingLocations.map(location => (
+          <div key={location.id} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
+            <div className="card-header">
+              <h3>{location.name}</h3>
+              <span className="category-badge PENDENTE">{location.category}</span>
+            </div>
+            
+            <div className="card-info">
+              <p><strong>Cidade:</strong> {location.city}</p>
+              <p><strong>Enviado por:</strong> {location.submittedBy}</p>
+              <p><strong>Data:</strong> {location.date}</p>
+            </div>
 
-        {activeTab === 'messages' && contactMessages.filter(m => m.status === 'nova').map(message => (
+            {expandedCard === location.id && (
+              <div className="card-details">
+                <p><strong>Descrição:</strong> {location.description}</p>
+                <p><strong>Coordenadas:</strong> {location.coordinates}</p>
+              </div>
+            )}
+
+            <div className="card-actions">
+              <button 
+                className="expand-btn"
+                onClick={() => toggleExpand(location.id)}
+              >
+                {expandedCard === location.id ? 'Recolher' : 'Expandir'}
+              </button>
+              <button 
+                className="expand-btn"
+                onClick={() => handleEdit(location.id)}
+              >
+                Editar
+              </button>
+              <button 
+                className="approve-btn"
+                onClick={() => handleApprove(location.id)}
+              >
+                Aprovar
+              </button>
+              <button 
+                className="reject-btn"
+                onClick={() => handleReject(location.id)}
+              >
+                Rejeitar
+              </button>
+            </div>
+          </div>
+        ))}
+        
+        {activeTab === 'locations' && siteLocations
+          .filter(location => {
+            if (!locationFilter) return true;
+            const categoria = location.categoria || location.category;
+            return categoria === locationFilter;
+          })
+          .map((location, index) => (
+          <div key={location.id || index} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
+            <div className="card-header">
+              <h3>{location.nome || location.name}</h3>
+              <span className="category-badge">{location.categoria || location.category}</span>
+            </div>
+            
+            <div className="card-info">
+              <p><strong>Cidade:</strong> {location.cidade || location.city}</p>
+              <p><strong>Estado:</strong> {location.estado}</p>
+              <p><strong>Categoria:</strong> {location.categoria || location.category}</p>
+            </div>
+
+            {expandedCard === location.id && (
+              <div className="card-details">
+                <p><strong>Descrição:</strong> {location.descricao || location.description}</p>
+                <p><strong>Localização:</strong> {location.localizacao || 'N/A'}</p>
+                <p><strong>Horário:</strong> {location.horario || 'N/A'}</p>
+                <p><strong>Preço:</strong> {location.preco || 'N/A'}</p>
+              </div>
+            )}
+
+            <div className="card-actions">
+              <button 
+                className="expand-btn"
+                onClick={() => toggleExpand(location.id)}
+              >
+                {expandedCard === location.id ? 'Recolher' : 'Expandir'}
+              </button>
+              <button 
+                className="reject-btn"
+                onClick={() => handleRemoveLocation(location.id)}
+              >
+                Excluir Local
+              </button>
+            </div>
+          </div>
+        ))}
+        
+        {activeTab === 'users' && userAccess.map((user, index) => (
+          <div key={index} className={`admin-card ${expandedCard === `user-${index}` ? 'expanded' : ''}`}>
+            <div className="card-header">
+              <h3>{user.nome || user.userName || 'Usuário'}</h3>
+              <span className={`category-badge ${user.tipoUsuario === 'adm' ? 'ADM' : 'USUARIO'}`}>
+                {user.tipoUsuario === 'adm' ? 'Admin' : 'Usuário'}
+              </span>
+            </div>
+            
+            <div className="card-info">
+              <p><strong>Email:</strong> {user.email}</p>
+              <p><strong>Tipo:</strong> {user.tipoUsuario || user.userType}</p>
+              <p><strong>Cadastrado:</strong> {user.dataCadastro || 'N/A'}</p>
+            </div>
+
+            <div className="card-actions">
+              <button 
+                className="reject-btn"
+                onClick={() => handleRemoveUser(user.id, index)}
+              >
+                Excluir
+              </button>
+            </div>
+          </div>
+        ))}
+        
+        {activeTab === 'trash' && trashedLocations.map((location, index) => (
+          <div key={location.id || index} className={`admin-card ${expandedCard === `trash-${location.id}` ? 'expanded' : ''}`}>
+            <div className="card-header">
+              <h3>{location.nome || location.name}</h3>
+              <span className="category-badge INATIVO">{location.categoria || location.category}</span>
+            </div>
+            
+            <div className="card-info">
+              <p><strong>Cidade:</strong> {location.cidade || location.city}</p>
+              <p><strong>Excluído em:</strong> {location.trashedAt}</p>
+              <p><strong>Categoria:</strong> {location.categoria || location.category}</p>
+            </div>
+
+            {expandedCard === `trash-${location.id}` && (
+              <div className="card-details">
+                <p><strong>Descrição:</strong> {location.descricao || location.description}</p>
+                <p><strong>Localização:</strong> {location.localizacao || 'N/A'}</p>
+              </div>
+            )}
+
+            <div className="card-actions">
+              <button 
+                className="expand-btn"
+                onClick={() => toggleExpand(`trash-${location.id}`)}
+              >
+                {expandedCard === `trash-${location.id}` ? 'Recolher' : 'Expandir'}
+              </button>
+              <button 
+                className="approve-btn"
+                onClick={() => handleRestoreLocation(location.id)}
+              >
+                Restaurar
+              </button>
+              <button 
+                className="reject-btn"
+                onClick={() => handlePermanentDelete(location.id)}
+              >
+                Excluir Permanentemente
+              </button>
+            </div>
+          </div>
+        ))}
+        
+        {activeTab === 'messages' && contactMessages.filter(message => message.status === 'nova').map((message) => (
           <div key={message.id} className={`admin-card ${expandedCard === message.id ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{message.nome}</h3>
-              <span className="category-badge pending">{message.status}</span>
+              <span className={`category-badge ${message.status === 'nova' ? 'nova' : ''}`}>{message.status}</span>
             </div>
+            
             <div className="card-info">
               <p><strong>Email:</strong> {message.email}</p>
               <p><strong>Assunto:</strong> {message.assunto}</p>
               <p><strong>Data:</strong> {message.data}</p>
             </div>
+
             {expandedCard === message.id && (
               <div className="card-details">
                 <p><strong>Mensagem:</strong></p>
-                <div style={{background:'#f8f9fa', padding:'1rem', borderRadius:'8px', marginTop:'0.5rem'}}>{message.mensagem}</div>
+                <div className="message-content-box">
+                  {message.mensagem}
+                </div>
               </div>
             )}
+
             <div className="card-actions">
-              <button className="expand-btn" onClick={() => toggleExpand(message.id)}>
+              <button 
+                className="expand-btn"
+                onClick={() => toggleExpand(message.id)}
+              >
                 {expandedCard === message.id ? 'Recolher' : 'Ver Mensagem'}
               </button>
-              <button className="approve-btn" onClick={() => responderMensagem(message.id)}>Responder</button>
+              <button 
+                className="approve-btn"
+                onClick={() => responderMensagem(message.id)}
+              >
+                Responder
+              </button>
             </div>
           </div>
         ))}
       </div>
-
+      
       {showEditModal && editingLocation && (
         <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <h2>Editar Local</h2>
             <div className="edit-form">
-              {[
-                { label: 'Nome', field: 'nome', type: 'input' },
-                { label: 'Cidade', field: 'cidade', type: 'input' },
-                { label: 'Estado', field: 'estado', type: 'input' },
-                { label: 'Horário', field: 'horarioFuncionamento', type: 'input' },
-                { label: 'Preço', field: 'preco', type: 'input' },
-                { label: 'Descrição', field: 'descricao', type: 'textarea' },
-              ].map(({ label, field, type }) => (
-                <div className="form-group" key={field}>
-                  <label>{label}:</label>
-                  {type === 'textarea'
-                    ? <textarea value={editingLocation[field] || ''} onChange={e => setEditingLocation({...editingLocation, [field]: e.target.value})} rows="4" />
-                    : <input type="text" value={editingLocation[field] || ''} onChange={e => setEditingLocation({...editingLocation, [field]: e.target.value})} />
-                  }
-                </div>
-              ))}
+              <div className="form-group">
+                <label>Nome:</label>
+                <input 
+                  type="text" 
+                  value={editingLocation.name} 
+                  onChange={(e) => setEditingLocation({...editingLocation, name: e.target.value})}
+                />
+              </div>
+              <div className="form-group">
+                <label>Cidade:</label>
+                <input 
+                  type="text" 
+                  value={editingLocation.city} 
+                  onChange={(e) => setEditingLocation({...editingLocation, city: e.target.value})}
+                />
+              </div>
               <div className="form-group">
                 <label>Categoria:</label>
-                <select value={editingLocation.categoria || ''} onChange={e => setEditingLocation({...editingLocation, categoria: e.target.value})}>
-                  <option value="curiosidades">Curiosidades</option>
-                  <option value="lugares-visitar">Lugares para Visitar</option>
+                <select 
+                  value={editingLocation.category} 
+                  onChange={(e) => setEditingLocation({...editingLocation, category: e.target.value})}
+                >
+                  <option value="monumentos">Monumentos</option>
+                  <option value="natureza">Natureza</option>
+                  <option value="gastronomia">Gastronomia</option>
+                  <option value="cultura">Cultura</option>
                 </select>
               </div>
+              <div className="form-group">
+                <label>Descrição:</label>
+                <textarea 
+                  value={editingLocation.description} 
+                  onChange={(e) => setEditingLocation({...editingLocation, description: e.target.value})}
+                  rows="4"
+                />
+              </div>
+              <div className="form-group">
+                <label>Localização:</label>
+                <input 
+                  type="text" 
+                  value={editingLocation.localizacao || ''} 
+                  onChange={(e) => setEditingLocation({...editingLocation, localizacao: e.target.value})}
+                />
+              </div>
               <div className="modal-actions">
-                <button className="approve-btn" onClick={handleSaveEdit}>Salvar</button>
+                <button className="approve-btn" onClick={() => {
+                  handleSaveEdit()
+                  handleApprove(editingLocation.id)
+                }}>Salvar e Aprovar</button>
                 <button className="reject-btn" onClick={() => setShowEditModal(false)}>Cancelar</button>
               </div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {showAddUserModal && (
-        <div className="modal-overlay" onClick={() => setShowAddUserModal(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h2>Cadastrar Usuário</h2>
-            <form onSubmit={handleAddUser} className="edit-form">
-              <div className="form-group">
-                <label>Nome:</label>
-                <input type="text" value={newUser.userName} onChange={e => setNewUser({...newUser, userName: e.target.value})} required />
-              </div>
-              <div className="form-group">
-                <label>Email:</label>
-                <input type="email" value={newUser.email} onChange={e => setNewUser({...newUser, email: e.target.value})} required />
-              </div>
-              <div className="form-group">
-                <label>Senha:</label>
-                <input type="password" value={newUser.senha} onChange={e => setNewUser({...newUser, senha: e.target.value})} required />
-              </div>
-              <div className="form-group">
-                <label>Tipo:</label>
-                <select value={newUser.userType} onChange={e => setNewUser({...newUser, userType: e.target.value})}>
-                  <option value="usuario">Usuário</option>
-                  <option value="adm">Administrador</option>
-                </select>
-              </div>
-              <div className="modal-actions">
-                <button type="submit" className="approve-btn">Cadastrar</button>
-                <button type="button" className="reject-btn" onClick={() => setShowAddUserModal(false)}>Cancelar</button>
-              </div>
-            </form>
           </div>
         </div>
       )}
