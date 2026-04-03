@@ -6,7 +6,7 @@ function AdminPanel() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    if (localStorage.getItem('userType') !== 'adm') {
+    if (localStorage.getItem('userType') !== 'ADM') {
       navigate('/', { replace: true })
     }
   }, [])
