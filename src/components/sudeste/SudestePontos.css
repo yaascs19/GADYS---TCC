@@ -1,0 +1,177 @@
+/* === SUDESTE PONTOS - CSS COMPARTILHADO === */
+
+.sudeste-pontos-page {
+  --sudeste-bg: #FFF3E0;
+  --sudeste-text: #4a1f00;
+  --sudeste-primary: #E65100;
+  --sudeste-secondary: #FF8C00;
+  --sudeste-accent: #FFCC80;
+  --sudeste-surface: #ffffff;
+  --sudeste-shadow: rgba(230, 81, 0, 0.2);
+
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: var(--sudeste-bg);
+  color: var(--sudeste-text);
+  min-height: 100vh;
+}
+
+.sudeste-pontos-header {
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 6rem 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.sudeste-pontos-h1 {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(3rem, 7vw, 5rem);
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.sudeste-pontos-subheader {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 300;
+  margin-top: 1rem;
+}
+
+.sudeste-pontos-controls {
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #E65100, #FF8C00);
+  color: white;
+}
+
+.sudeste-pontos-search-bar {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem 1.5rem;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  margin: 0 auto;
+  display: block;
+  background-color: rgba(255,255,255,0.2);
+  color: white;
+}
+
+.sudeste-pontos-search-bar::placeholder { color: rgba(255,255,255,0.7); }
+
+.sudeste-pontos-filter-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.sudeste-pontos-button {
+  background-color: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.sudeste-pontos-button.active {
+  background-color: white;
+  color: var(--sudeste-primary);
+  font-weight: 700;
+}
+
+.sudeste-pontos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 3rem;
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@keyframes sudeste-card-load-in {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.sudeste-pontos-card {
+  background-color: var(--sudeste-surface);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px var(--sudeste-shadow);
+  overflow: hidden;
+  animation: sudeste-card-load-in 0.5s backwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  border-top: 4px solid transparent;
+  border-image: linear-gradient(90deg, #E65100, #FF8C00) 1;
+}
+
+.sudeste-pontos-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 30px rgba(230, 81, 0, 0.3);
+}
+
+.sudeste-pontos-card-image-container { height: 220px; overflow: hidden; }
+.sudeste-pontos-card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.sudeste-pontos-card-image-container:hover .sudeste-pontos-card-image { transform: scale(1.05); }
+
+.sudeste-pontos-card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.sudeste-pontos-card-title {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  font-weight: 700;
+  background: linear-gradient(90deg, #E65100, #FF8C00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.sudeste-pontos-card-category {
+  font-weight: 700;
+  color: var(--sudeste-secondary);
+  margin-bottom: 1rem;
+}
+
+.sudeste-pontos-card-description {
+  line-height: 1.6;
+  flex-grow: 1;
+  color: var(--sudeste-text);
+}
+
+.sudeste-pontos-saibamais {
+  margin-top: 1.5rem;
+  align-self: flex-start;
+  background: linear-gradient(45deg, #E65100, #FF8C00);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(230,81,0,0.3);
+}
+
+.sudeste-pontos-saibamais:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(230,81,0,0.5);
+}
+
+.sudeste-pontos-footer {
+  background: linear-gradient(135deg, #4a1f00, #7a3500);
+  color: #FFE0B2;
+  text-align: center;
+  padding: 2rem;
+}

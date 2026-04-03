@@ -10,7 +10,14 @@ const carouselImages = [
 
 const galleryImages = [
   { src: '/images/geral/ta-am.jpg', alt: 'Teatro Amazonas - fachada' },
-  { src: '/images/monumentos/teatro-amazonas1.jpeg', alt: 'Teatro Amazonas - interior' },
+  { src: '/images/geral/tea-am1.jpg', alt: 'Teatro Amazonas' },
+  { src: '/images/geral/tea-am3.jpg', alt: 'Teatro Amazonas' },
+  { src: '/images/geral/tea-am4.jpg', alt: 'Teatro Amazonas - interior' },
+  { src: '/images/geral/tea-am5.jpg', alt: 'Teatro Amazonas' },
+  { src: '/images/geral/tea-am8.jpg', alt: 'Teatro Amazonas' },
+  { src: '/images/geral/tea-am9.jpg', alt: 'Teatro Amazonas' },
+  { src: '/images/geral/tea-am10.jpg', alt: 'Teatro Amazonas' },
+  { src: '/images/geral/tea-am11.jpg', alt: 'Teatro Amazonas' },
 ];
 
 const secoes = {
@@ -53,8 +60,7 @@ const secoes = {
     label: 'Visite',
     titulo: 'Viva a Experiência',
     texto: 'Visitar o Teatro Amazonas é mergulhar em uma das histórias mais fascinantes do Brasil. Seja em uma visita guiada ou assistindo a um espetáculo ao vivo, a experiência é inesquecível.',
-    imagem: '/images/geral/ta-am.jpg',
-    alt: 'Vista noturna do Teatro Amazonas iluminado',
+    imagem: '/images/geral/tea-am9.jpg',
     subsecoes: [
       {
         titulo: 'Visitas Guiadas',
@@ -151,7 +157,16 @@ const ConteudoAba = ({ secao }) => (
       <div className="ta-image-wrapper">
         <img src={secao.imagem} alt={secao.alt} className="ta-image" />
         {secao.id === 'arquitetura' && (
-          <img src="/images/geral/tea-am5.jpg" alt="Teatro Amazonas" className="ta-image" style={{ marginTop: '1rem' }} />
+          <>
+            <img src="/images/geral/tea-am5.jpg" alt="Teatro Amazonas" className="ta-image" style={{ marginTop: '1rem' }} />
+            <img src="/images/geral/tea-am8.jpg" alt="Teatro Amazonas" className="ta-image" style={{ marginTop: '1rem' }} />
+          </>
+        )}
+        {secao.id === 'visita' && (
+          <>
+            <img src="/images/geral/tea-am10.jpg" alt="Teatro Amazonas" className="ta-image" style={{ marginTop: '1rem' }} />
+            <img src="/images/geral/tea-am11.jpg" alt="Teatro Amazonas" className="ta-image" style={{ marginTop: '1rem' }} />
+          </>
         )}
       </div>
     </div>

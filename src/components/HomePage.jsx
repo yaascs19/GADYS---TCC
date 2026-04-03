@@ -124,12 +124,12 @@ function HomePage() {
                 <a href="#">Bahia</a>
                 <Link to="/ceara" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Ceará</Link>
                 <a href="#">Distrito Federal</a>
-                <a href="#">Espírito Santo</a>
+                <Link to="/espirito-santo" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Espírito Santo</Link>
                 <a href="#">Goiás</a>
                 <a href="#">Maranhão</a>
                 <a href="#">Mato Grosso</a>
                 <a href="#">Mato Grosso do Sul</a>
-                <a href="#">Minas Gerais</a>
+                <Link to="/minas-gerais" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Minas Gerais</Link>
                 <Link to="/para" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Pará</Link>
                 <a href="#">Paraíba</a>
                 <a href="#">Paraná</a>
