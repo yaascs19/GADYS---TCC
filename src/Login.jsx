@@ -74,7 +74,7 @@ function Login({ onLogin, isAdminAccess = false }) {
             {
               email,
               senha: password,
-              tipoUsuario: userType === 'adm' ? 'ADMIN' : 'USUARIO'
+              tipoUsuario: userType === 'adm' ? 'ADM' : 'USUARIO'
             }
           );
 

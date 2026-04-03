@@ -63,8 +63,8 @@ const requireAdmin = (req, res, next) => {
 // ROTAS DE AUTENTICAÇÃO
 // =============================================
 
-// POST /api/auth/register - Registrar usuário
-app.post('/api/auth/register', async (req, res) => {
+// POST /api/auth/cadastrar - Registrar usuário
+app.post('/api/auth/cadastrar', async (req, res) => {
     try {
         const { nome, email, senha, tipoUsuario = 'usuario' } = req.body;
 
@@ -72,28 +72,19 @@ app.post('/api/auth/register', async (req, res) => {
             return res.status(400).json({ error: 'Nome, email e senha são obrigatórios' });
         }
 
-        const existingUser = await sql.query`SELECT ID FROM Usuarios WHERE Email = ${email}`;
+        const existingUser = await sql.query`SELECT id FROM Usuario WHERE email = ${email}`;
         if (existingUser.recordset.length > 0) {
-            return res.status(400).json({ error: 'Email já cadastrado' });
+            return res.status(400).json({ sucesso: false, mensagem: 'Email já cadastrado' });
         }
 
         const hashedPassword = await bcrypt.hash(senha, 10);
 
-        const result = await sql.query`
-            INSERT INTO Usuarios (Nome, Email, Senha, TipoUsuario, DataCadastro, TotalAcessos)
-            OUTPUT INSERTED.ID, INSERTED.Nome, INSERTED.Email, INSERTED.TipoUsuario
-            VALUES (${nome}, ${email}, ${hashedPassword}, ${tipoUsuario}, GETDATE(), 0)
+        await sql.query`
+            INSERT INTO Usuario (nome, email, senha, tipo_usuario)
+            VALUES (${nome}, ${email}, ${hashedPassword}, ${tipoUsuario || 'USUARIO'})
         `;
 
-        const newUser = result.recordset[0];
-        const token = jwt.sign({ id: newUser.ID, email: newUser.Email, tipoUsuario: newUser.TipoUsuario }, JWT_SECRET, { expiresIn: '24h' });
-
-        res.status(201).json({
-            success: true,
-            message: 'Usuário cadastrado com sucesso',
-            user: { id: newUser.ID, nome: newUser.Nome, email: newUser.Email, tipoUsuario: newUser.TipoUsuario },
-            token
-        });
+        res.status(201).json({ sucesso: true, mensagem: 'Cadastro realizado com sucesso!' });
 
     } catch (err) {
         console.error('Erro no registro:', err);
@@ -104,46 +95,42 @@ app.post('/api/auth/register', async (req, res) => {
 // POST /api/auth/login - Login
 app.post('/api/auth/login', async (req, res) => {
     try {
-        const { email, senha } = req.body;
+        const { email, senha, tipoUsuario } = req.body;
 
         if (!email || !senha) {
-            return res.status(400).json({ error: 'Email e senha são obrigatórios' });
+            return res.status(400).json({ sucesso: false, mensagem: 'Email e senha são obrigatórios' });
         }
 
         const result = await sql.query`
-            SELECT ID, Nome, Email, Senha, TipoUsuario, TotalAcessos
-            FROM Usuarios WHERE Email = ${email}
+            SELECT id, nome, email, senha, tipo_usuario, total_acesso
+            FROM Usuario WHERE email = ${email}
         `;
 
         if (result.recordset.length === 0) {
-            return res.status(401).json({ error: 'Credenciais inválidas' });
+            return res.status(401).json({ sucesso: false, mensagem: 'Credenciais inválidas' });
         }
 
         const user = result.recordset[0];
-        const isValidPassword = await bcrypt.compare(senha, user.Senha);
+        const isValidPassword = await bcrypt.compare(senha, user.senha);
         if (!isValidPassword) {
-            return res.status(401).json({ error: 'Credenciais inválidas' });
+            return res.status(401).json({ sucesso: false, mensagem: 'Credenciais inválidas' });
+        }
+
+        if (tipoUsuario && user.tipo_usuario !== tipoUsuario) {
+            return res.status(401).json({ sucesso: false, mensagem: 'Tipo de usuário incorreto' });
         }
 
         await sql.query`
-            UPDATE Usuarios 
-            SET UltimoAcesso = GETDATE(), TotalAcessos = TotalAcessos + 1
-            WHERE ID = ${user.ID}
+            UPDATE Usuario
+            SET ultimo_acesso = GETDATE(), total_acesso = total_acesso + 1
+            WHERE id = ${user.id}
         `;
 
-        const token = jwt.sign({ id: user.ID, email: user.Email, tipoUsuario: user.TipoUsuario }, JWT_SECRET, { expiresIn: '24h' });
-
         res.json({
-            success: true,
-            message: 'Login realizado com sucesso',
-            user: {
-                id: user.ID,
-                nome: user.Nome,
-                email: user.Email,
-                tipoUsuario: user.TipoUsuario,
-                totalAcessos: user.TotalAcessos + 1
-            },
-            token
+            sucesso: true,
+            nome: user.nome,
+            tipoUsuario: user.tipo_usuario,
+            usuarioId: user.id
         });
 
     } catch (err) {
