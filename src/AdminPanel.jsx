@@ -439,7 +439,7 @@ function AdminPanel() {
       )}
       
       {activeTab === 'locations' && (
-        <div className="filter-container">
+        <div className="action-button-container">
           <select 
             value={locationFilter}
             onChange={(e) => setLocationFilter(e.target.value)}
@@ -584,7 +584,7 @@ function AdminPanel() {
           <div key={location.id || index} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{location.nome || location.name}</h3>
-              <span className="category-badge">{location.categoria || location.category}</span>
+              <span className="category-badge ATIVO">{location.categoria || location.category}</span>
             </div>
             
             <div className="card-info">
@@ -727,6 +727,39 @@ function AdminPanel() {
           </div>
         ))}
       </div>
+      
+      {showAddUserModal && (
+        <div className="modal-overlay" onClick={() => setShowAddUserModal(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>Cadastrar Novo Usuário</h2>
+            <form onSubmit={handleAddUser} className="add-user-form">
+                <div className="form-group">
+                    <label>Nome:</label>
+                    <input type="text" value={newUser.userName} onChange={e => setNewUser({...newUser, userName: e.target.value})} required />
+                </div>
+                <div className="form-group">
+                    <label>Email:</label>
+                    <input type="email" value={newUser.email} onChange={e => setNewUser({...newUser, email: e.target.value})} required />
+                </div>
+                <div className="form-group">
+                    <label>Senha:</label>
+                    <input type="password" value={newUser.senha} onChange={e => setNewUser({...newUser, senha: e.target.value})} required />
+                </div>
+                <div className="form-group">
+                    <label>Tipo:</label>
+                    <select value={newUser.userType} onChange={e => setNewUser({...newUser, userType: e.target.value})}>
+                        <option value="usuario">Usuário</option>
+                        <option value="adm">Administrador</option>
+                    </select>
+                </div>
+                <div className="modal-actions">
+                    <button type="submit" className="approve-btn">Cadastrar</button>
+                    <button type="button" className="reject-btn" onClick={() => setShowAddUserModal(false)}>Cancelar</button>
+                </div>
+            </form>
+          </div>
+        </div>
+      )}
       
       {showEditModal && editingLocation && (
         <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
