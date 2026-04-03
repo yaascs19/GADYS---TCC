@@ -445,18 +445,11 @@ function AdminPanel() {
             onChange={(e) => setLocationFilter(e.target.value)}
             className="filter-select"
           >
-            <option value="">Visite Lugares</option>
-            <option value="monumentos">🏛️ Monumentos</option>
-            <option value="natureza">🌳 Natureza</option>
-          </select>
-          <select 
-            value={locationFilter}
-            onChange={(e) => setLocationFilter(e.target.value)}
-            className="filter-select"
-          >
-            <option value="">Curiosidades</option>
-            <option value="gastronomia">🍽️ Gastronomia</option>
-            <option value="cultura">🎨 Cultura</option>
+            <option value="">Todas as categorias</option>
+            <option value="Monumentos">Monumentos</option>
+            <option value="Lugar Paradísíaco">Lugar Paradísíaco</option>
+            <option value="Restaurantes">Restaurantes</option>
+            <option value="Costume Cultural">Costume Cultural</option>
           </select>
         </div>
       )}
@@ -762,10 +755,10 @@ function AdminPanel() {
                   value={editingLocation.category} 
                   onChange={(e) => setEditingLocation({...editingLocation, category: e.target.value})}
                 >
-                  <option value="monumentos">Monumentos</option>
-                  <option value="natureza">Natureza</option>
-                  <option value="gastronomia">Gastronomia</option>
-                  <option value="cultura">Cultura</option>
+                  <option value="Monumentos">Monumentos</option>
+                  <option value="Lugar Paradísíaco">Lugar Paradísíaco</option>
+                  <option value="Restaurantes">Restaurantes</option>
+                  <option value="Costume Cultural">Costume Cultural</option>
                 </select>
               </div>
               <div className="form-group">
