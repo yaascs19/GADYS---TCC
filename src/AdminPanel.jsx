@@ -6,6 +6,7 @@ function AdminPanel() {
   const navigate = useNavigate()
 
   useEffect(() => {
+    console.log('userType no AdminPanel:', localStorage.getItem('userType'))
     if (localStorage.getItem('userType') !== 'ADM') {
       navigate('/', { replace: true })
     }
