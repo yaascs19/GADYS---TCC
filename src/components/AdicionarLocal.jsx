@@ -9,23 +9,19 @@ function AdicionarLocal() {
   
   const [formData, setFormData] = useState({
     nome: '',
-    categoria: '',
     subcategoria: '',
     cidade: '',
     estado: '',
+    endereco: '',
     descricao: '',
     imagem: '',
-    localizacao: '',
     coordenadas: '',
     horario: '',
     preco: '',
     infoAdicional: ''
   })
   
-  const [showSubcategoria, setShowSubcategoria] = useState(false)
-  
   const [showSuccess, setShowSuccess] = useState(false)
-  const [tipoImagem, setTipoImagem] = useState('url')
   const [loading, setLoading] = useState(false)
 
   const toggleTheme = () => {
@@ -54,18 +50,7 @@ function AdicionarLocal() {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }))
-    
-    if (name === 'categoria') {
-      setShowSubcategoria(value !== '')
-      setFormData(prev => ({
-        ...prev,
-        subcategoria: '' // Reset subcategoria quando categoria muda
-      }))
-    }
+    setFormData(prev => ({ ...prev, [name]: value }))
   }
 
   const API_URL = import.meta.env.VITE_API_URL || 'https://gadys-backend.onrender.com'
@@ -81,11 +66,12 @@ function AdicionarLocal() {
       const localData = {
         nome: formData.nome,
         descricao: formData.descricao,
-        categoria: formData.categoria,
+        categoria: 'lugares-visitar',
         subcategoria: formData.subcategoria,
         cidade: formData.cidade,
         estado: formData.estado,
         coordenadas: formData.coordenadas,
+        endereco: formData.endereco,
         horarioFuncionamento: formData.horario,
         preco: formData.preco,
         imagemUrl: formData.imagem,
@@ -101,8 +87,8 @@ function AdicionarLocal() {
       
       setShowSuccess(true)
       setFormData({
-        nome: '', categoria: '', subcategoria: '', cidade: '', estado: '',
-        descricao: '', imagem: '', localizacao: '', coordenadas: '',
+        nome: '', subcategoria: '', cidade: '', estado: '', endereco: '',
+        descricao: '', imagem: '', coordenadas: '',
         horario: '', preco: '', infoAdicional: ''
       })
       setTimeout(() => setShowSuccess(false), 5000)
@@ -333,11 +319,11 @@ function AdicionarLocal() {
 
             <div style={{ marginBottom: '2rem' }}>
               <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#667eea' }}>
-                Categoria Principal:
+                Tipo de Local:
               </label>
               <select
-                name="categoria"
-                value={formData.categoria}
+                name="subcategoria"
+                value={formData.subcategoria}
                 onChange={handleInputChange}
                 required
                 style={{
@@ -350,48 +336,12 @@ function AdicionarLocal() {
                   fontSize: '1rem'
                 }}
               >
-                <option value="">Selecione uma categoria</option>
-                <option value="curiosidades">Curiosidades</option>
-                <option value="lugares-visitar">Lugares para Visitar</option>
+                <option value="">Selecione o tipo</option>
+                <option value="monumentos">Monumentos</option>
+                <option value="natureza">Lugar Paradísíaco</option>
+                <option value="restaurantes">Restaurantes</option>
               </select>
             </div>
-
-            {showSubcategoria && (
-              <div style={{ marginBottom: '2rem' }}>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#667eea' }}>
-                  Subcategoria:
-                </label>
-                <select
-                  name="subcategoria"
-                  value={formData.subcategoria}
-                  onChange={handleInputChange}
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '1rem',
-                    borderRadius: '15px',
-                    border: '2px solid rgba(102, 126, 234, 0.3)',
-                    background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                    color: darkMode ? 'white' : '#333',
-                    fontSize: '1rem'
-                  }}
-                >
-                  <option value="">Selecione uma subcategoria</option>
-                  {formData.categoria === 'curiosidades' && (
-                    <>
-                      <option value="gastronomia">Gastronomia</option>
-                      <option value="cultura">Cultura</option>
-                    </>
-                  )}
-                  {formData.categoria === 'lugares-visitar' && (
-                    <>
-                      <option value="natureza">Natureza</option>
-                      <option value="monumentos">Monumentos</option>
-                    </>
-                  )}
-                </select>
-              </div>
-            )}
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
               <div>
@@ -436,6 +386,28 @@ function AdicionarLocal() {
                   }}
                 />
               </div>
+            </div>
+
+            <div style={{ marginBottom: '2rem' }}>
+              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#667eea' }}>
+                Endereço:
+              </label>
+              <input
+                type="text"
+                name="endereco"
+                value={formData.endereco}
+                onChange={handleInputChange}
+                placeholder="Ex: Rua das Flores, 123 - Centro"
+                style={{
+                  width: '100%',
+                  padding: '1rem',
+                  borderRadius: '15px',
+                  border: '2px solid rgba(102, 126, 234, 0.3)',
+                  background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+                  color: darkMode ? 'white' : '#333',
+                  fontSize: '1rem'
+                }}
+              />
             </div>
 
             <div style={{ marginBottom: '2rem' }}>

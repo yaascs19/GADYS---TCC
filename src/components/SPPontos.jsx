@@ -7,23 +7,21 @@ const pontosTuristicos = [
     id: 'masp',
     nome: 'MASP',
     cidade: 'São Paulo - SP',
-    categoria: 'Cultura',
-    descricao: 'Museu de Arte de São Paulo, um dos mais importantes do hemisfério sul, suspenso sobre a Avenida Paulista.',
+    categoria: 'Costume Cultural',
     imagem: '/sp.jpg',
   },
   {
     id: 'teatro-municipal',
     nome: 'Teatro Municipal',
     cidade: 'São Paulo - SP',
-    categoria: 'Cultura',
-    descricao: 'Majestoso teatro inaugurado em 1911, com arquitetura inspirada na Ópera de Paris.',
+    categoria: 'Costume Cultural',
     imagem: '/images/geral/Teatro_Municipal_de_São_Paulo_8.jpg',
   },
   {
     id: 'mercadao',
     nome: 'Mercadão',
     cidade: 'São Paulo - SP',
-    categoria: 'Gastronomia',
+    categoria: 'Restaurantes',
     descricao: 'O Mercado Municipal de São Paulo, famoso pelo sanduíche de mortadela e pela variedade de produtos.',
     imagem: '/images/monumentos/mercadaosp.jpg',
   },
@@ -31,15 +29,14 @@ const pontosTuristicos = [
     id: 'copan',
     nome: 'Edifício Copan',
     cidade: 'São Paulo - SP',
-    categoria: 'Monumento',
-    descricao: 'Ícone da arquitetura moderna brasileira projetado por Oscar Niemeyer, com sua curva característica.',
+    categoria: 'Monumentos',
     imagem: '/images/monumentos/copan.webp',
   },
   {
     id: 'ibirapuera',
     nome: 'Parque Ibirapuera',
     cidade: 'São Paulo - SP',
-    categoria: 'Natureza',
+    categoria: 'Lugar Paradísíaco',
     descricao: 'O Central Park paulistano, com museus, lagos e espaços de lazer no coração da cidade.',
     imagem: '/sp.jpg',
   },
@@ -47,23 +44,21 @@ const pontosTuristicos = [
     id: 'pinacoteca',
     nome: 'Pinacoteca',
     cidade: 'São Paulo - SP',
-    categoria: 'Cultura',
-    descricao: 'O museu de artes visuais mais antigo de São Paulo, com acervo de arte brasileira do século XIX ao contemporâneo.',
+    categoria: 'Costume Cultural',
     imagem: '/sp.jpg',
   },
   {
     id: 'avenida-paulista',
     nome: 'Avenida Paulista',
     cidade: 'São Paulo - SP',
-    categoria: 'Monumento',
-    descricao: 'O coração financeiro e cultural de São Paulo, com museus, centros culturais e vida urbana intensa.',
+    categoria: 'Monumentos',
     imagem: '/sp.jpg',
   },
   {
     id: 'beco-batman',
     nome: 'Beco do Batman',
     cidade: 'Vila Madalena - SP',
-    categoria: 'Arte Urbana',
+    categoria: 'Costume Cultural',
     descricao: 'Famoso beco coberto de grafites e arte urbana, símbolo da cena artística alternativa paulistana.',
     imagem: '/sp.jpg',
   },
@@ -75,7 +70,7 @@ const SPPontos = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
 
-  const categories = ['Todos', ...new Set(pontosTuristicos.map(p => p.categoria))];
+  const categories = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
 
   useEffect(() => {
     let result = pontosTuristicos;

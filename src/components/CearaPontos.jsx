@@ -7,14 +7,14 @@ const pontosTuristicos = [
     id: 'jericoacoara',
     nome: 'Jericoacoara',
     cidade: 'Jijoca de Jericoacoara - CE',
-    categoria: 'Lugar Paradisíaco',
+    categoria: 'Lugar Paradísíaco',
     imagem: '/images/geral/Ceara1.webp',
   },
   {
     id: 'canoa-quebrada',
     nome: 'Canoa Quebrada',
     cidade: 'Aracati - CE',
-    categoria: 'Lugar Paradisíaco',
+    categoria: 'Lugar Paradísíaco',
     imagem: '/images/geral/Ceara2.webp',
   },
   {
@@ -35,21 +35,21 @@ const pontosTuristicos = [
     id: 'praia-do-futuro',
     nome: 'Praia do Futuro',
     cidade: 'Fortaleza - CE',
-    categoria: 'Lugar Paradisíaco',
+    categoria: 'Lugar Paradísíaco',
     imagem: '/images/geral/Ceara3.jpg',
   },
   {
     id: 'serra-de-baturite',
     nome: 'Serra de Baturité',
     cidade: 'Baturité - CE',
-    categoria: 'Lugar Paradisíaco',
+    categoria: 'Lugar Paradísíaco',
     imagem: '/images/geral/Ceara1.webp',
   },
   {
     id: 'chapada-do-araripe',
     nome: 'Chapada do Araripe',
     cidade: 'Crato - CE',
-    categoria: 'Lugar Paradisíaco',
+    categoria: 'Lugar Paradísíaco',
     imagem: '/images/geral/Ceara2.webp',
   },
   {
@@ -78,7 +78,7 @@ const CearaPontos = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
 
-  const categories = ['Todos', 'Lugar Paradisíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
+  const categories = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
 
   useEffect(() => {
     let result = pontosTuristicos;

@@ -14,7 +14,7 @@ const pontosTuristicos = [
         id: 'pao-de-acucar',
         nome: 'Pão de Açúcar',
         cidade: 'Rio de Janeiro - RJ',
-        categoria: 'Lugar Paradisíaco',
+        categoria: 'Lugar Paradísíaco',
         imagem: '/pao-rj.jpg',
       },
         {
@@ -49,42 +49,42 @@ const pontosTuristicos = [
         id: 'praia-de-copacabana',
         nome: 'Praia de Copacabana',
         cidade: 'Rio de Janeiro - RJ',
-        categoria: 'Lugar Paradisíaco',
+        categoria: 'Lugar Paradísíaco',
         imagem: '/copa2.webp',
       },
       {
         id: 'praia-de-ipanema',
         nome: 'Praia de Ipanema',
         cidade: 'Rio de Janeiro - RJ',
-        categoria: 'Lugar Paradisíaco',
+        categoria: 'Lugar Paradísíaco',
         imagem: '/ipa.webp',
       },
         {
         id: 'floresta-da-tijuca',
         nome: 'Floresta da Tijuca',
         cidade: 'Rio de Janeiro - RJ',
-        categoria: 'Lugar Paradisíaco',
+        categoria: 'Lugar Paradísíaco',
         imagem: '/tiju.jpg',
       },
         {
         id: 'lagoa-rodrigo-de-freitas',
         nome: 'Lagoa Rodrigo de Freitas',
         cidade: 'Rio de Janeiro - RJ',
-        categoria: 'Lugar Paradisíaco',
+        categoria: 'Lugar Paradísíaco',
         imagem: '/lagoa.webp',
       },
       {
         id: 'jardim-botanico',
         nome: 'Jardim Botânico',
         cidade: 'Rio de Janeiro - RJ',
-        categoria: 'Lugar Paradisíaco',
+        categoria: 'Lugar Paradísíaco',
         imagem: '/bota.jpg',
       },
       {
         id: 'parque-lage',
         nome: 'Parque Lage',
         cidade: 'Rio de Janeiro - RJ',
-        categoria: 'Lugar Paradisíaco',
+        categoria: 'Lugar Paradísíaco',
         imagem: '/parque.jpg',
       },
 ];
@@ -95,7 +95,7 @@ const RJPontos = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
 
-  const categories = ['Todos', 'Lugar Paradisíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
+  const categories = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
 
   useEffect(() => {
     let result = pontosTuristicos;
