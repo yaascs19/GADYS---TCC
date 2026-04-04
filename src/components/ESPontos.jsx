@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './sudeste/SudestePontos.css';
+import { useLocaisAtivos } from '../hooks/useLocaisAtivos';
 
 const pontos = [
   { id: 'pedra-azul-es', nome: 'Pedra Azul', cidade: 'Domingos Martins - ES', categoria: 'Lugar Paradísíaco', descricao: 'Uma das formações rochosas mais belas do Brasil, com 1.822 metros de altitude e trilhas que revelam vistas deslumbrantes da Serra Capixaba.', imagem: '/images/natureza/veadeiros.jpeg', rota: '/es/pedra-azul' },
@@ -20,9 +21,10 @@ const ESPontos = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
+  const pontosAtivos = useLocaisAtivos('Espírito Santo', pontos);
 
   useEffect(() => {
-    let result = pontos;
+    let result = pontosAtivos;
     if (selectedCategory !== 'Todos') result = result.filter(p => p.categoria === selectedCategory);
     if (searchTerm) result = result.filter(p =>
       p.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -30,7 +32,7 @@ const ESPontos = () => {
     );
     setFilteredPontos([]);
     setTimeout(() => setFilteredPontos(result), 50);
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, pontosAtivos]);
 
   return (
     <div className="sudeste-pontos-page">

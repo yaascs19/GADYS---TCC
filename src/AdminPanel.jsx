@@ -86,10 +86,10 @@ function AdminPanel() {
 
   const loadSiteLocations = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/locais/aprovados`)
+      const response = await fetch(`${API_URL}/api/locais`)
       if (response.ok) {
         const locais = await response.json()
-        setSiteLocations(locais)
+        setSiteLocations(locais.filter(l => l.status !== 'PENDENTE' && l.status !== 'LIXEIRA'))
       } else {
         console.error('Erro ao carregar locais do site do servidor')
         setSiteLocations([])
@@ -611,7 +611,7 @@ function AdminPanel() {
           <div key={location.id || index} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{location.nome || location.name}</h3>
-              <span className="category-badge ATIVO">{location.subcategoria || location.category}</span>
+              <span className={`category-badge ${location.status}`}>{location.status}</span>
             </div>
             
             <div className="card-info">
