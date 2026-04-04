@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './AdminPanel.css'
-import AdminNavbar from './AdminNavbar'
 
 function AdminPanel() {
+  const navigate = useNavigate()
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
+  const [menuOpen, setMenuOpen] = useState(false)
   const [expandedCard, setExpandedCard] = useState(null)
   const [pendingLocations, setPendingLocations] = useState([])
   const [approvedLocations, setApprovedLocations] = useState([])
@@ -374,7 +377,63 @@ function AdminPanel() {
 
   return (
     <div>
-      <AdminNavbar />
+      <header style={{
+        background: darkMode ? 'rgba(15, 12, 41, 0.8)' : '#1a237e',
+        backdropFilter: 'blur(30px)',
+        padding: '1rem 2rem',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        borderBottom: '1px solid rgba(255,255,255,0.1)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <img src="/images/logos/logo.png" alt="GADYS" style={{ height: '40px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px' }} />
+          <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: 'white' }}>GADYS</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <button onClick={() => { const n = !darkMode; setDarkMode(n); localStorage.setItem('darkMode', n) }} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>
+            {darkMode ? '☀️' : '🌙'}
+          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', zIndex: 1002 }} onClick={() => setMenuOpen(!menuOpen)}>
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
+          </div>
+        </div>
+        {menuOpen && <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000 }} onClick={() => setMenuOpen(false)} />}
+        <ul style={{
+          position: 'fixed', top: 0, right: menuOpen ? 0 : '-100%', width: '300px', height: '100vh',
+          background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem',
+          margin: 0, padding: '5rem 0', listStyle: 'none', transition: 'right 0.3s ease', zIndex: 1001, overflowY: 'auto'
+        }}>
+          {[
+            { label: 'Início', path: '/' },
+            { label: 'Lugares', path: '/lugares' },
+            { label: 'Mapa', path: '/mapa' },
+            { label: 'Adicionar Local', path: '/adicionar-local' },
+            { label: 'Meu Perfil', path: '/perfil' },
+            { label: 'Sobre', path: '/sobre' },
+            { label: 'Contato', path: '/contato' },
+          ].map(({ label, path }) => (
+            <li key={path}>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate(path); setMenuOpen(false) }}
+                style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '5px' }}>
+                {label}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href="#" onClick={(e) => { e.preventDefault(); setMenuOpen(false) }}
+              style={{ color: '#ffd700', textDecoration: 'none', padding: '0.5rem 1rem', fontWeight: '700' }}>
+              ⚙️ Painel Admin (atual)
+            </a>
+          </li>
+        </ul>
+      </header>
     <div className="admin-panel">
       <div className="admin-header">
         <h1>Painel Administrativo</h1>
