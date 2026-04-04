@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './AdminPanel.css'
+import AdminNavbar from './AdminNavbar'
 
 function AdminPanel() {
   const [expandedCard, setExpandedCard] = useState(null)
@@ -372,6 +373,8 @@ function AdminPanel() {
   }
 
   return (
+    <div>
+      <AdminNavbar />
     <div className="admin-panel">
       <div className="admin-header">
         <h1>Painel Administrativo</h1>
@@ -823,6 +826,7 @@ function AdminPanel() {
           </div>
         </div>
       )}
+    </div>
     </div>
   )
 }
