@@ -149,7 +149,7 @@ function HomePage() {
             <li><a href="#" onClick={() => {navigate('/lugares'); document.querySelector('.nav-links').classList.remove('active')}}>Lugares</a></li>
             <li><a href="#" onClick={() => {navigate('/mapa'); document.querySelector('.nav-links').classList.remove('active')}}>Mapa</a></li>
             <li><a href="#" onClick={() => {navigate('/adicionar-local'); document.querySelector('.nav-links').classList.remove('active')}}>Adicionar Local</a></li>
-            {localStorage.getItem('userType') === 'adm' && (
+            {(localStorage.getItem('userType') || '').toUpperCase() === 'ADM' && (
               <li><a href="#" onClick={() => {navigate('/painel-adm'); document.querySelector('.nav-links').classList.remove('active')}}>Administração</a></li>
             )}
             <li><a href="#" onClick={() => {navigate('/perfil'); document.querySelector('.nav-links').classList.remove('active')}}>Meu Perfil</a></li>
