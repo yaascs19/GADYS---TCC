@@ -24,7 +24,7 @@ CREATE TABLE Localizacao (
     nome                   NVARCHAR(200)  NOT NULL,
     descricao              VARCHAR(MAX),
     categoria              VARCHAR(20)    NOT NULL CHECK (categoria IN ('curiosidades', 'lugares-visitar')),
-    subcategoria           VARCHAR(20)    NOT NULL CHECK (subcategoria IN ('gastronomia', 'cultura', 'natureza', 'monumentos')),
+    subcategoria           VARCHAR(20)    NOT NULL CHECK (subcategoria IN ('monumentos', 'lugares-paradisiacos', 'restaurantes', 'costume-cultural')),
     cidade                 NVARCHAR(100),
     estado                 NVARCHAR(100),
     endereco               VARCHAR(MAX),

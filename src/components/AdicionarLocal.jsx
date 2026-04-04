@@ -337,9 +337,10 @@ function AdicionarLocal() {
                 }}
               >
                 <option value="">Selecione o tipo</option>
-                <option value="monumentos">Monumentos</option>
-                <option value="natureza">Lugar Paradísíaco</option>
-                <option value="restaurantes">Restaurantes</option>
+                <option value="Monumentos">Monumentos</option>
+                <option value="Lugar Paradísíaco">Lugar Paradísíaco</option>
+                <option value="Restaurantes">Restaurantes</option>
+                <option value="Costume Cultural">Costume Cultural</option>
               </select>
             </div>
 

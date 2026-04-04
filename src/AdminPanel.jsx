@@ -440,10 +440,10 @@ function AdminPanel() {
             className="filter-select"
           >
             <option value="">Todas as categorias</option>
-            <option value="Monumentos">Monumentos</option>
-            <option value="Lugar Paradísíaco">Lugar Paradísíaco</option>
-            <option value="Restaurantes">Restaurantes</option>
-            <option value="Costume Cultural">Costume Cultural</option>
+            <option value="Monumentos">🏛️ Monumentos</option>
+            <option value="Lugar Paradísíaco">🌳 Lugar Paradísíaco</option>
+            <option value="Restaurantes">🍽️ Restaurantes</option>
+            <option value="Costume Cultural">🎨 Costume Cultural</option>
           </select>
         </div>
       )}
@@ -488,13 +488,13 @@ function AdminPanel() {
           <div key={location.id || index} className={`admin-card ${expandedCard === `approved-${location.id}` ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{location.name || location.nome}</h3>
-              <span className="category-badge ATIVO">{location.category || location.categoria}</span>
+              <span className="category-badge ATIVO">{location.subcategoria || location.category}</span>
             </div>
             
             <div className="card-info">
               <p><strong>Cidade:</strong> {location.city || location.cidade}</p>
               <p><strong>Aprovado em:</strong> {new Date(location.approvedAt).toLocaleDateString() || 'N/A'}</p>
-              <p><strong>Categoria:</strong> {location.category || location.categoria}</p>
+              <p><strong>Categoria:</strong> {location.subcategoria || location.category}</p>
             </div>
 
             {expandedCard === `approved-${location.id}` && (
@@ -527,7 +527,7 @@ function AdminPanel() {
           <div key={location.id} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{location.name}</h3>
-              <span className="category-badge PENDENTE">{location.category}</span>
+              <span className="category-badge PENDENTE">{location.subcategoria || location.category}</span>
             </div>
             
             <div className="card-info">
@@ -577,19 +577,19 @@ function AdminPanel() {
         ) : siteLocations
           .filter(location => {
             if (!locationFilter) return true;
-            const categoria = location.categoria || location.category;
+            const categoria = location.subcategoria || location.category;
             return categoria === locationFilter;
           })
           .map((location, index) => (
           <div key={location.id || index} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{location.nome || location.name}</h3>
-              <span className="category-badge ATIVO">{location.categoria || location.category}</span>
+              <span className="category-badge ATIVO">{location.subcategoria || location.category}</span>
             </div>
             
             <div className="card-info">
               <p><strong>Cidade:</strong> {location.cidade || location.city}, {location.estado}</p>
-              <p><strong>Categoria:</strong> {location.categoria || location.category}</p>
+              <p><strong>Categoria:</strong> {location.subcategoria || location.category}</p>
             </div>
 
             {expandedCard === location.id && (
@@ -651,7 +651,7 @@ function AdminPanel() {
           <div key={location.id || index} className={`admin-card ${expandedCard === `trash-${location.id}` ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{location.nome || location.name}</h3>
-              <span className="category-badge INATIVO">{location.categoria || location.category}</span>
+              <span className="category-badge INATIVO">{location.subcategoria || location.category}</span>
             </div>
             
             <div className="card-info">
