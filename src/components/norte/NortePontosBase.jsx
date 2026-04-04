@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './NortePontos.css';
+import { useLocaisAtivos } from '../../hooks/useLocaisAtivos';
 
 const CATEGORIES = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
 
@@ -9,9 +10,10 @@ const NortePontosBase = ({ config }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
+  const pontosAtivos = useLocaisAtivos(config.estado, config.pontos);
 
   useEffect(() => {
-    let result = config.pontos;
+    let result = pontosAtivos;
     if (selectedCategory !== 'Todos') result = result.filter(p => p.categoria === selectedCategory);
     if (searchTerm) result = result.filter(p =>
       p.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -19,7 +21,7 @@ const NortePontosBase = ({ config }) => {
     );
     setFilteredPontos([]);
     setTimeout(() => setFilteredPontos(result), 50);
-  }, [searchTerm, selectedCategory, config.pontos]);
+  }, [searchTerm, selectedCategory, pontosAtivos]);
 
   return (
     <div className="norte-pontos-page">

@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { destinosAmazonasData } from '../data/destinosAmazonasData';
 import './DestinosAmazonas.css';
+import { useLocaisAtivos } from '../hooks/useLocaisAtivos';
 
 const DestinosAmazonas = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredDestinos, setFilteredDestinos] = useState([]);
+  const pontosAtivos = useLocaisAtivos('Amazonas', destinosAmazonasData);
 
   const categories = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
 
   useEffect(() => {
-    let result = destinosAmazonasData;
+    let result = pontosAtivos;
     if (selectedCategory !== 'Todos') {
       result = result.filter(item => item.category === selectedCategory);
     }
@@ -25,7 +27,7 @@ const DestinosAmazonas = () => {
     setFilteredDestinos([]); 
     setTimeout(() => setFilteredDestinos(result), 50);
 
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, pontosAtivos]);
 
   return (
     <div className="amazonas-destinos-page">

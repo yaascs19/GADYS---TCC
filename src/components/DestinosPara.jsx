@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { destinosData } from '../data/destinosData';
-import './DestinosPara.css'; // O CSS com as classes renomeadas
+import './DestinosPara.css';
+import { useLocaisAtivos } from '../hooks/useLocaisAtivos';
 
 const DestinosPara = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredDestinos, setFilteredDestinos] = useState([]);
+  const pontosAtivos = useLocaisAtivos('Pará', destinosData);
 
   const categories = ['Todos', 'Lugar Paradisíaco', 'Comida Típica', 'Costume Cultural', 'Monumento'];
 
   useEffect(() => {
-    let result = destinosData;
+    let result = pontosAtivos;
     if (selectedCategory !== 'Todos') {
       result = result.filter(item => item.category === selectedCategory);
     }
@@ -23,7 +25,7 @@ const DestinosPara = () => {
     setFilteredDestinos([]); 
     setTimeout(() => setFilteredDestinos(result), 50);
 
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, pontosAtivos]);
 
   return (
     <div className="para-destinos-page">

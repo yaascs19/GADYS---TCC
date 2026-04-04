@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './sudeste/SudestePontos.css';
+import { useLocaisAtivos } from '../hooks/useLocaisAtivos';
 
 const pontos = [
   { id: 'ouro-preto', nome: 'Ouro Preto', cidade: 'Ouro Preto - MG', categoria: 'Monumentos', descricao: 'Patrimônio Mundial da UNESCO, a cidade mais bem preservada do barroco brasileiro, com igrejas douradas, museus e a história da Inconfidência Mineira.', imagem: '/images/monumentos/ouro.jpeg', rota: '/mg/ouro-preto' },
@@ -20,9 +21,10 @@ const MGPontos = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
+  const pontosAtivos = useLocaisAtivos('Minas Gerais', pontos);
 
   useEffect(() => {
-    let result = pontos;
+    let result = pontosAtivos;
     if (selectedCategory !== 'Todos') result = result.filter(p => p.categoria === selectedCategory);
     if (searchTerm) result = result.filter(p =>
       p.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -30,7 +32,7 @@ const MGPontos = () => {
     );
     setFilteredPontos([]);
     setTimeout(() => setFilteredPontos(result), 50);
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, pontosAtivos]);
 
   return (
     <div className="sudeste-pontos-page">

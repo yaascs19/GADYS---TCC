@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './RJPontos.css'; // O CSS com as classes renomeadas
+import './RJPontos.css';
+import { useLocaisAtivos } from '../hooks/useLocaisAtivos';
 
 const pontosTuristicos = [
     {
@@ -94,11 +95,12 @@ const RJPontos = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
+  const pontosAtivos = useLocaisAtivos('Rio de Janeiro', pontosTuristicos);
 
   const categories = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
 
   useEffect(() => {
-    let result = pontosTuristicos;
+    let result = pontosAtivos;
     if (selectedCategory !== 'Todos') {
       result = result.filter(item => item.categoria === selectedCategory);
     }
@@ -110,7 +112,7 @@ const RJPontos = () => {
     }
     setFilteredPontos([]); 
     setTimeout(() => setFilteredPontos(result), 50);
-  }, [searchTerm, selectedCategory]);
+  }, [searchTerm, selectedCategory, pontosAtivos]);
 
   const handleSaibaMaisClick = (pontoId) => {
     if (pontoId === 'cristo-redentor') {
