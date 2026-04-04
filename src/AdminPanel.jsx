@@ -225,6 +225,32 @@ function AdminPanel() {
     }
   }
 
+  const handleToggleUsuario = async (id) => {
+    try {
+      const response = await fetch(`${API_URL}/api/usuarios/${id}/inativar`, { method: 'POST' })
+      if (response.ok) {
+        loadUsers()
+      } else {
+        alert('Erro ao alterar status do usuário')
+      }
+    } catch (error) {
+      alert('Erro de conexão. Tente novamente.')
+    }
+  }
+
+  const handleToggleLocal = async (location) => {
+    try {
+      const response = await fetch(`${API_URL}/api/locais/${location.id}/inativar`, { method: 'POST' })
+      if (response.ok) {
+        loadSiteLocations()
+      } else {
+        alert('Erro ao alterar status do local')
+      }
+    } catch (error) {
+      alert('Erro de conexão. Tente novamente.')
+    }
+  }
+
   const handleAddUser = async (e) => {
     e.preventDefault()
     if (newUser.userName.trim() && newUser.email.trim() && newUser.senha.trim()) {
@@ -604,10 +630,10 @@ function AdminPanel() {
 
             <div className="card-actions">
               <button 
-                className="expand-btn"
-                onClick={() => toggleExpand(location.id)}
+                className={location.status === 'INATIVO' ? 'approve-btn' : 'expand-btn'}
+                onClick={() => handleToggleLocal(location)}
               >
-                {expandedCard === location.id ? 'Recolher' : 'Expandir'}
+                {location.status === 'INATIVO' ? 'Ativar' : 'Inativar'}
               </button>
               <button 
                 className="reject-btn"
@@ -636,6 +662,12 @@ function AdminPanel() {
             </div>
 
             <div className="card-actions">
+              <button 
+                className={user.ativo === false ? 'approve-btn' : 'expand-btn'}
+                onClick={() => handleToggleUsuario(user.id)}
+              >
+                {user.ativo === false ? 'Ativar' : 'Inativar'}
+              </button>
               <button 
                 className="reject-btn"
                 onClick={() => handleRemoveUser(user.id, index)}
