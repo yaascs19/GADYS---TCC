@@ -439,7 +439,7 @@ function AdminPanel() {
           </li>
         </ul>
       </header>
-    <div className="admin-panel">
+    <div className={`admin-panel ${darkMode ? '' : 'light-mode'}`}>
       <div className="admin-header">
         <h1>Painel Administrativo</h1>
         <div className="admin-tabs">

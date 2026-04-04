@@ -361,3 +361,92 @@ body {
 ::-webkit-scrollbar-track { background: #0f172a; }
 ::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* --- Light Mode --- */
+.light-mode {
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  min-height: 100vh;
+}
+
+.light-mode .admin-header h1 {
+  background: linear-gradient(to right, #1e293b, #475569);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.light-mode .admin-tabs {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.light-mode .tab-btn {
+  color: #475569;
+}
+
+.light-mode .tab-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #1e293b;
+}
+
+.light-mode .admin-card {
+  background: rgba(255, 255, 255, 0.85);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.light-mode .admin-card:hover {
+  border-color: rgba(129, 140, 248, 0.5);
+}
+
+.light-mode .card-header h3 {
+  color: #1e293b;
+}
+
+.light-mode .card-info p {
+  color: #475569;
+}
+
+.light-mode .card-info p strong {
+  color: #1e293b;
+}
+
+.light-mode .card-details {
+  color: #475569;
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+
+.light-mode .message-content-box {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.light-mode .filter-select {
+  background: rgba(255, 255, 255, 0.9);
+  color: #1e293b;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+.light-mode .empty-state-message {
+  background: rgba(255, 255, 255, 0.7);
+  color: #475569;
+}
+
+.light-mode .modal-content {
+  background: #f8fafc;
+}
+
+.light-mode .modal-content h2 {
+  color: #1e293b;
+}
+
+.light-mode .form-group label {
+  color: #475569;
+}
+
+.light-mode .form-group input,
+.light-mode .form-group select,
+.light-mode .form-group textarea {
+  background: #fff;
+  color: #1e293b;
+  border-color: rgba(0, 0, 0, 0.15);
+}
