@@ -398,19 +398,13 @@ function AdminPanel() {
             className={`tab-btn ${activeTab === 'ranking' ? 'active' : ''}`}
             onClick={() => setActiveTab('ranking')}
           >
-            Ranking de Locais
-          </button>
-          <button 
-            className={`tab-btn ${activeTab === 'addLocal' ? 'active' : ''}`}
-            onClick={() => setActiveTab('addLocal')}
-          >
-            Adicionar Local
+            Ranking
           </button>
           <button 
             className={`tab-btn ${activeTab === 'locations' ? 'active' : ''}`}
             onClick={() => setActiveTab('locations')}
           >
-            Locais do Site ({siteLocations.length})
+            Locais ({siteLocations.length})
           </button>
           <button 
             className={`tab-btn ${activeTab === 'trash' ? 'active' : ''}`}
@@ -439,7 +433,7 @@ function AdminPanel() {
       )}
       
       {activeTab === 'locations' && (
-        <div className="action-button-container">
+        <div className="filter-container">
           <select 
             value={locationFilter}
             onChange={(e) => setLocationFilter(e.target.value)}
@@ -476,19 +470,21 @@ function AdminPanel() {
                 <div className="card-header">
                   <h3>#{index + 1} {local.nome}</h3>
                   <span className={`category-badge ${index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : ''}`}>
-                    {index === 0 ? '🥇 1º Lugar' : index === 1 ? '🥈 2º Lugar' : index === 2 ? '🥉 3º Lugar' : `${index + 1}º Lugar`}
+                    {index === 0 ? '🥇 1º Lugar' : index === 1 ? '🥈 2º Lugar' : index === 2 ? '🥉 3º Lugar' : `${index + 1}º`}
                   </span>
                 </div>
                 
                 <div className="card-info">
-                  <p><strong>Média:</strong> {local.media} ({'★'.repeat(Math.floor(local.media)) + '☆'.repeat(5 - Math.floor(local.media))})</p>
+                  <p><strong>Média:</strong> {local.media.toFixed(1)} ({'★'.repeat(Math.floor(local.media)) + '☆'.repeat(5 - Math.floor(local.media))})</p>
                   <p><strong>Total de Avaliações:</strong> {local.totalAvaliacoes}</p>
                 </div>
               </div>
             ))
           ))}
 
-        {activeTab === 'approved' && approvedLocations.map((location, index) => (
+        {activeTab === 'approved' && (approvedLocations.length === 0 ? (
+          <div className="empty-state-message"><p>Nenhum local aprovado.</p></div>
+        ) : approvedLocations.map((location, index) => (
           <div key={location.id || index} className={`admin-card ${expandedCard === `approved-${location.id}` ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{location.name || location.nome}</h3>
@@ -497,7 +493,7 @@ function AdminPanel() {
             
             <div className="card-info">
               <p><strong>Cidade:</strong> {location.city || location.cidade}</p>
-              <p><strong>Aprovado em:</strong> {location.approvedAt || 'N/A'}</p>
+              <p><strong>Aprovado em:</strong> {new Date(location.approvedAt).toLocaleDateString() || 'N/A'}</p>
               <p><strong>Categoria:</strong> {location.category || location.categoria}</p>
             </div>
 
@@ -523,9 +519,11 @@ function AdminPanel() {
               </button>
             </div>
           </div>
-        ))}
+        )))}
         
-        {activeTab === 'pending' && pendingLocations.map(location => (
+        {activeTab === 'pending' && (pendingLocations.length === 0 ? (
+            <div className="empty-state-message"><p>Nenhum local pendente.</p></div>
+        ) : pendingLocations.map(location => (
           <div key={location.id} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{location.name}</h3>
@@ -535,7 +533,7 @@ function AdminPanel() {
             <div className="card-info">
               <p><strong>Cidade:</strong> {location.city}</p>
               <p><strong>Enviado por:</strong> {location.submittedBy}</p>
-              <p><strong>Data:</strong> {location.date}</p>
+              <p><strong>Data:</strong> {new Date(location.date).toLocaleDateString()}</p>
             </div>
 
             {expandedCard === location.id && (
@@ -572,9 +570,11 @@ function AdminPanel() {
               </button>
             </div>
           </div>
-        ))}
+        )))}
         
-        {activeTab === 'locations' && siteLocations
+        {activeTab === 'locations' && (siteLocations.length === 0 ? (
+          <div className="empty-state-message"><p>Nenhum local cadastrado no site.</p></div>
+        ) : siteLocations
           .filter(location => {
             if (!locationFilter) return true;
             const categoria = location.categoria || location.category;
@@ -588,8 +588,7 @@ function AdminPanel() {
             </div>
             
             <div className="card-info">
-              <p><strong>Cidade:</strong> {location.cidade || location.city}</p>
-              <p><strong>Estado:</strong> {location.estado}</p>
+              <p><strong>Cidade:</strong> {location.cidade || location.city}, {location.estado}</p>
               <p><strong>Categoria:</strong> {location.categoria || location.category}</p>
             </div>
 
@@ -617,9 +616,11 @@ function AdminPanel() {
               </button>
             </div>
           </div>
-        ))}
+        )))}
         
-        {activeTab === 'users' && userAccess.map((user, index) => (
+        {activeTab === 'users' && (userAccess.length === 0 ? (
+            <div className="empty-state-message"><p>Nenhum usuário cadastrado.</p></div>
+        ) : userAccess.map((user, index) => (
           <div key={index} className={`admin-card ${expandedCard === `user-${index}` ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{user.nome || user.userName || 'Usuário'}</h3>
@@ -630,8 +631,7 @@ function AdminPanel() {
             
             <div className="card-info">
               <p><strong>Email:</strong> {user.email}</p>
-              <p><strong>Tipo:</strong> {user.tipoUsuario || user.userType}</p>
-              <p><strong>Cadastrado:</strong> {user.dataCadastro || 'N/A'}</p>
+              <p><strong>Cadastrado em:</strong> {new Date(user.dataCadastro).toLocaleDateString() || 'N/A'}</p>
             </div>
 
             <div className="card-actions">
@@ -643,9 +643,11 @@ function AdminPanel() {
               </button>
             </div>
           </div>
-        ))}
+        )))}
         
-        {activeTab === 'trash' && trashedLocations.map((location, index) => (
+        {activeTab === 'trash' && (trashedLocations.length === 0 ? (
+            <div className="empty-state-message"><p>A lixeira está vazia.</p></div>
+        ) : trashedLocations.map((location, index) => (
           <div key={location.id || index} className={`admin-card ${expandedCard === `trash-${location.id}` ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{location.nome || location.name}</h3>
@@ -654,14 +656,12 @@ function AdminPanel() {
             
             <div className="card-info">
               <p><strong>Cidade:</strong> {location.cidade || location.city}</p>
-              <p><strong>Excluído em:</strong> {location.trashedAt}</p>
-              <p><strong>Categoria:</strong> {location.categoria || location.category}</p>
+              <p><strong>Excluído em:</strong> {new Date(location.trashedAt).toLocaleDateString()}</p>
             </div>
 
             {expandedCard === `trash-${location.id}` && (
               <div className="card-details">
                 <p><strong>Descrição:</strong> {location.descricao || location.description}</p>
-                <p><strong>Localização:</strong> {location.localizacao || 'N/A'}</p>
               </div>
             )}
 
@@ -686,9 +686,11 @@ function AdminPanel() {
               </button>
             </div>
           </div>
-        ))}
+        )))}
         
-        {activeTab === 'messages' && contactMessages.filter(message => message.status === 'nova').map((message) => (
+        {activeTab === 'messages' && (contactMessages.filter(message => message.status === 'nova').length === 0 ? (
+          <div className="empty-state-message"><p>Nenhuma mensagem nova.</p></div>
+        ) : contactMessages.filter(message => message.status === 'nova').map((message) => (
           <div key={message.id} className={`admin-card ${expandedCard === message.id ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{message.nome}</h3>
@@ -698,7 +700,7 @@ function AdminPanel() {
             <div className="card-info">
               <p><strong>Email:</strong> {message.email}</p>
               <p><strong>Assunto:</strong> {message.assunto}</p>
-              <p><strong>Data:</strong> {message.data}</p>
+              <p><strong>Data:</strong> {new Date(message.data).toLocaleString()}</p>
             </div>
 
             {expandedCard === message.id && (
@@ -725,7 +727,7 @@ function AdminPanel() {
               </button>
             </div>
           </div>
-        ))}
+        )))}
       </div>
       
       {showAddUserModal && (
