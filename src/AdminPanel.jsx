@@ -421,14 +421,18 @@ function AdminPanel() {
           ].map(({ label, path }) => (
             <li key={path}>
               <a href="#" onClick={(e) => { e.preventDefault(); navigate(path); setMenuOpen(false) }}
-                style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '5px' }}>
+                onMouseOver={(e) => e.target.style.background = 'rgba(255,255,255,0.1)'}
+                onMouseOut={(e) => e.target.style.background = 'transparent'}
+                style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '5px', display: 'block' }}>
                 {label}
               </a>
             </li>
           ))}
           <li>
             <a href="#" onClick={(e) => { e.preventDefault(); setMenuOpen(false) }}
-              style={{ color: '#ffd700', textDecoration: 'none', padding: '0.5rem 1rem', fontWeight: '700' }}>
+              onMouseOver={(e) => e.target.style.background = 'rgba(255,215,0,0.15)'}
+              onMouseOut={(e) => e.target.style.background = 'transparent'}
+              style={{ color: '#ffd700', textDecoration: 'none', padding: '0.5rem 1rem', fontWeight: '700', borderRadius: '5px', display: 'block' }}>
               ⚙️ Painel Admin (atual)
             </a>
           </li>
