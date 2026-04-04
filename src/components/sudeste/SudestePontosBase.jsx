@@ -19,8 +19,7 @@ const SudestePontosBase = ({ config }) => {
       p.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
       p.descricao.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    setFilteredPontos([]);
-    setTimeout(() => setFilteredPontos(result), 50);
+    setFilteredPontos(result);
   }, [searchTerm, selectedCategory, pontosAtivos]);
 
   return (
