@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { LanguageProvider } from './context/LanguageContext';
 import useImagePreload from './hooks/useImagePreload';
@@ -64,6 +64,12 @@ import Inhotim from './components/sudeste/mg/Inhotim';
 import PedraAzulES from './components/sudeste/es/PedraAzulES';
 import Guarapari from './components/sudeste/es/Guarapari';
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
 function Router() {
   useImagePreload(['/rj.jpeg', '/ama.jpg', '/sp.jpg']);
 
@@ -84,6 +90,7 @@ function Router() {
   return (
     <LanguageProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <TranslateButton />
         <Routes>
           <Route path="/" element={<HomePage />} />
