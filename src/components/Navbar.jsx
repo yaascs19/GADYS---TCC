@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 function Navbar({ darkMode, toggleTheme, userType, setCurrentPage }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate()
+  const isAdmin = localStorage.getItem('userType') === 'ADM'
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen)
@@ -236,6 +237,27 @@ function Navbar({ darkMode, toggleTheme, userType, setCurrentPage }) {
               Contato (atual)
             </a>
           </li>
+
+          {isAdmin && (
+            <li>
+              <a
+                href="#"
+                onClick={(e) => { e.preventDefault(); navigate('/painel-adm'); setMenuOpen(false); }}
+                style={{
+                  color: '#ffd700',
+                  textDecoration: 'none',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '5px',
+                  fontWeight: '700',
+                  transition: 'background 0.3s'
+                }}
+                onMouseOver={(e) => e.target.style.background = 'rgba(255, 215, 0, 0.15)'}
+                onMouseOut={(e) => e.target.style.background = 'transparent'}
+              >
+                ⚙️ Painel Admin
+              </a>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

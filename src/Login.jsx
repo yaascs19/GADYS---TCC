@@ -83,7 +83,7 @@ function Login({ onLogin, isAdminAccess = false }) {
             }
 
             if (response.data.tipoUsuario === 'ADM') {
-              navigate('/painel-adm');
+              navigate('/');
             } else {
               navigate('/');
             }
