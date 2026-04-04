@@ -440,10 +440,10 @@ function AdminPanel() {
             className="filter-select"
           >
             <option value="">Todas as categorias</option>
-            <option value="Monumentos">🏛️ Monumentos</option>
-            <option value="Lugar Paradísíaco">🌳 Lugar Paradísíaco</option>
-            <option value="Restaurantes">🍽️ Restaurantes</option>
-            <option value="Costume Cultural">🎨 Costume Cultural</option>
+            <option value="Monumentos">Monumentos</option>
+            <option value="Lugar Paradísíaco">Lugar Paradísíaco</option>
+            <option value="Restaurantes">Restaurantes</option>
+            <option value="Costume Cultural">Costume Cultural</option>
           </select>
         </div>
       )}
