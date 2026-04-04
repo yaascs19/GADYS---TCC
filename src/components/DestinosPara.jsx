@@ -22,8 +22,7 @@ const DestinosPara = () => {
         item.description.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
-    setFilteredDestinos([]); 
-    setTimeout(() => setFilteredDestinos(result), 50);
+    setFilteredDestinos(result);
 
   }, [searchTerm, selectedCategory, pontosAtivos]);
 
