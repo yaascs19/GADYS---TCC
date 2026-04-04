@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './AdminPanel.css'
+import '../App.css'
 
 function AdminPanel() {
   const navigate = useNavigate()
@@ -404,7 +405,7 @@ function AdminPanel() {
           </div>
         </div>
         {menuOpen && <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000 }} onClick={() => setMenuOpen(false)} />}
-        <ul style={{
+        <ul className="nav-links" style={{
           position: 'fixed', top: 0, right: menuOpen ? 0 : '-100%', width: '300px', height: '100vh',
           background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem',
