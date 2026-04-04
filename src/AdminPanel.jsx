@@ -326,7 +326,7 @@ function AdminPanel() {
   const handleSaveEdit = async () => {
     if (editingLocation) {
         try {
-            const response = await fetch(`${API_URL}/api/locais/pendentes/${editingLocation.id}`, {
+            const response = await fetch(`${API_URL}/api/locais/${editingLocation.id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(editingLocation)
