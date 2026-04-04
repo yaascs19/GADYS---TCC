@@ -730,29 +730,11 @@ function PerfilPage() {
                       </div>
                       
                       <div>
-                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Telefone:</label>
+                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Nova Senha (deixe vazio para não alterar):</label>
                         <input 
-                          type="text" 
-                          value={tempProfileData.telefone}
-                          onChange={(e) => setTempProfileData({...tempProfileData, telefone: e.target.value})}
-                          style={{
-                            width: '100%',
-                            padding: '0.75rem',
-                            borderRadius: '10px',
-                            border: '1px solid #ccc',
-                            background: darkMode ? '#444' : 'white',
-                            color: darkMode ? 'white' : '#333',
-                            fontSize: '1rem'
-                          }}
-                        />
-                      </div>
-                      
-                      <div>
-                        <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>Cidade:</label>
-                        <input 
-                          type="text" 
-                          value={tempProfileData.cidade}
-                          onChange={(e) => setTempProfileData({...tempProfileData, cidade: e.target.value})}
+                          type="password" 
+                          value={tempProfileData.novaSenha || ''}
+                          onChange={(e) => setTempProfileData({...tempProfileData, novaSenha: e.target.value})}
                           style={{
                             width: '100%',
                             padding: '0.75rem',
@@ -777,7 +759,7 @@ function PerfilPage() {
                             await axios.put(`${API_URL}/api/usuarios/${usuarioId}`, {
                               nome: tempProfileData.nome,
                               email: tempProfileData.email,
-                              senha: usuarioAtual.senha
+                              senha: tempProfileData.novaSenha?.trim() ? tempProfileData.novaSenha : usuarioAtual.senha
                             })
                             setProfileData(tempProfileData)
                             localStorage.setItem('profileData', JSON.stringify(tempProfileData))
