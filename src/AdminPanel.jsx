@@ -387,7 +387,7 @@ function AdminPanel() {
         <ul className="nav-links" style={{
           position: 'fixed', top: 0, right: menuOpen ? 0 : '-100%', width: '300px', height: '100vh',
           background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem', justifyContent: 'flex-start',
           margin: 0, padding: '5rem 0', listStyle: 'none', transition: 'right 0.3s ease', zIndex: 1001, overflowY: 'auto'
         }}>
           {[
