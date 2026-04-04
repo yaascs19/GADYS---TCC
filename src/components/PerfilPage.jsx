@@ -666,8 +666,6 @@ function PerfilPage() {
               </div>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', fontWeight: '600' }}>{profileData.nome}</h3>
               <p style={{ opacity: 0.7, fontSize: '1rem', marginBottom: '0.5rem' }}>{profileData.email}</p>
-              <p style={{ opacity: 0.7, fontSize: '1rem', marginBottom: '0.5rem' }}>{profileData.telefone}</p>
-              <p style={{ opacity: 0.7, fontSize: '1rem' }}>{profileData.cidade}</p>
               
               {showEditModal && (
                 <div style={{
