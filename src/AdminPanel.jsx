@@ -238,8 +238,11 @@ function AdminPanel() {
     }
   }
 
+  const [togglingLocal, setTogglingLocal] = useState(null)
+
   const handleToggleLocal = async (location) => {
     try {
+      setTogglingLocal(location.id)
       const response = await fetch(`${API_URL}/api/locais/${location.id}/inativar`, { method: 'POST' })
       if (response.ok) {
         loadSiteLocations()
@@ -248,6 +251,8 @@ function AdminPanel() {
       }
     } catch (error) {
       alert('Erro de conexão. Tente novamente.')
+    } finally {
+      setTogglingLocal(null)
     }
   }
 
@@ -632,8 +637,9 @@ function AdminPanel() {
               <button 
                 className={location.status === 'INATIVO' ? 'approve-btn' : 'expand-btn'}
                 onClick={() => handleToggleLocal(location)}
+                disabled={togglingLocal === location.id}
               >
-                {location.status === 'INATIVO' ? 'Ativar' : 'Inativar'}
+                {togglingLocal === location.id ? '...' : location.status === 'INATIVO' ? 'Ativar' : 'Inativar'}
               </button>
               <button 
                 className="reject-btn"
