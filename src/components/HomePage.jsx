@@ -167,7 +167,7 @@ function HomePage() {
                 {isLoggedIn && localStorage.getItem('userName') && (
                   <div className="welcome-box">
                     <h3>Bem-vindo(a), {localStorage.getItem('userName') || 'Usuário'}!</h3>
-                    <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
+                    <p>Tipo de acesso: {(localStorage.getItem('userType') || '').toUpperCase() === 'ADM' ? 'Administrador' : 'Usuário'}</p>
                   </div>
                 )}
                 <h2>Descubra Lugares Incríveis</h2>
@@ -185,7 +185,7 @@ function HomePage() {
                 {isLoggedIn && localStorage.getItem('userName') && (
                   <div className="welcome-box">
                     <h3>Bem-vindo(a), {localStorage.getItem('userName') || 'Usuário'}!</h3>
-                    <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
+                    <p>Tipo de acesso: {(localStorage.getItem('userType') || '').toUpperCase() === 'ADM' ? 'Administrador' : 'Usuário'}</p>
                   </div>
                 )}
                 <h2>Descubra Lugares Incríveis</h2>
@@ -203,7 +203,7 @@ function HomePage() {
                 {isLoggedIn && localStorage.getItem('userName') && (
                   <div className="welcome-box">
                     <h3>Bem-vindo(a), {localStorage.getItem('userName') || 'Usuário'}!</h3>
-                    <p>Tipo de acesso: {localStorage.getItem('userType') === 'adm' ? 'Administrador' : 'Usuário'}</p>
+                    <p>Tipo de acesso: {(localStorage.getItem('userType') || '').toUpperCase() === 'ADM' ? 'Administrador' : 'Usuário'}</p>
                   </div>
                 )}
                 <h2>Descubra Lugares Incríveis</h2>
