@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 function Navbar({ darkMode, toggleTheme, userType, setCurrentPage }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const navigate = useNavigate()
-  const isAdmin = localStorage.getItem('userType') === 'ADM'
+  const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen)
