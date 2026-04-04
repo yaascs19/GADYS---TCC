@@ -768,11 +768,26 @@ function PerfilPage() {
                     
                     <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
                       <button 
-                        onClick={() => {
-                          setProfileData(tempProfileData)
-                          localStorage.setItem('profileData', JSON.stringify(tempProfileData))
-                          setShowEditModal(false)
-                          alert('Dados salvos com sucesso!')
+                        onClick={async () => {
+                          try {
+                            const usuarioId = localStorage.getItem('usuarioId')
+                            const RAW_API_URL = import.meta.env.VITE_API_URL
+                            const API_URL = RAW_API_URL.replace(/\/$/, '')
+                            const { data: usuarioAtual } = await axios.get(`${API_URL}/api/usuarios/${usuarioId}`)
+                            await axios.put(`${API_URL}/api/usuarios/${usuarioId}`, {
+                              nome: tempProfileData.nome,
+                              email: tempProfileData.email,
+                              senha: usuarioAtual.senha
+                            })
+                            setProfileData(tempProfileData)
+                            localStorage.setItem('profileData', JSON.stringify(tempProfileData))
+                            localStorage.setItem('userName', tempProfileData.nome)
+                            setShowEditModal(false)
+                            alert('Dados salvos com sucesso!')
+                          } catch (error) {
+                            alert('Erro ao salvar. Tente novamente.')
+                            console.error(error)
+                          }
                         }}
                         style={{
                           flex: 1,
