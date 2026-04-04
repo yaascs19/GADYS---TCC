@@ -9,7 +9,6 @@ function AdminPanel() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [expandedCard, setExpandedCard] = useState(null)
   const [pendingLocations, setPendingLocations] = useState([])
-  const [approvedLocations, setApprovedLocations] = useState([])
   const [activeTab, setActiveTab] = useState('pending')
   const [userAccess, setUserAccess] = useState([])
   const [rankings, setRankings] = useState([])
@@ -85,25 +84,9 @@ function AdminPanel() {
     }
   }
 
-  const loadApprovedLocations = async () => {
-    try {
-      const response = await fetch(`${API_URL}/api/locais/aprovados`)
-      if (response.ok) {
-        const approved = await response.json()
-        setApprovedLocations(approved)
-      } else {
-        console.error('Erro ao carregar locais aprovados do servidor')
-        setApprovedLocations([])
-      }
-    } catch (error) {
-      console.error('Erro de conexão ao carregar locais aprovados:', error)
-      setApprovedLocations([])
-    }
-  }
-
   const loadSiteLocations = async () => {
     try {
-      const response = await fetch(`${API_URL}/api/locais`)
+      const response = await fetch(`${API_URL}/api/locais/aprovados`)
       if (response.ok) {
         const locais = await response.json()
         setSiteLocations(locais)
@@ -151,7 +134,6 @@ function AdminPanel() {
 
   useEffect(() => {
     loadPendingLocations()
-    loadApprovedLocations()
     loadUsers()
     loadRanking()
     loadComments()
@@ -169,7 +151,6 @@ function AdminPanel() {
       if (response.ok) {
         alert('Local aprovado com sucesso!')
         loadPendingLocations()
-        loadApprovedLocations()
         loadSiteLocations()
       } else {
         alert('Erro ao aprovar local')
@@ -210,7 +191,6 @@ function AdminPanel() {
           alert('Local movido para a lixeira!')
           loadSiteLocations()
           loadTrashedLocations()
-          loadApprovedLocations()
         } else {
           alert('Erro ao mover local para lixeira')
         }
@@ -287,7 +267,6 @@ function AdminPanel() {
           alert('Local restaurado com sucesso!');
           loadTrashedLocations();
           loadSiteLocations();
-          loadApprovedLocations();
         } else {
           alert('Erro ao restaurar o local.');
         }
@@ -450,12 +429,6 @@ function AdminPanel() {
             Pendentes ({pendingLocations.length})
           </button>
           <button 
-            className={`tab-btn ${activeTab === 'approved' ? 'active' : ''}`}
-            onClick={() => setActiveTab('approved')}
-          >
-            Aprovados ({approvedLocations.length})
-          </button>
-          <button 
             className={`tab-btn ${activeTab === 'users' ? 'active' : ''}`}
             onClick={() => setActiveTab('users')}
           >
@@ -549,45 +522,6 @@ function AdminPanel() {
             ))
           ))}
 
-        {activeTab === 'approved' && (approvedLocations.length === 0 ? (
-          <div className="empty-state-message"><p>Nenhum local aprovado.</p></div>
-        ) : approvedLocations.map((location, index) => (
-          <div key={location.id || index} className={`admin-card ${expandedCard === `approved-${location.id}` ? 'expanded' : ''}`}>
-            <div className="card-header">
-              <h3>{location.name || location.nome}</h3>
-              <span className="category-badge ATIVO">{location.subcategoria || location.category}</span>
-            </div>
-            
-            <div className="card-info">
-              <p><strong>Cidade:</strong> {location.city || location.cidade}</p>
-              <p><strong>Aprovado em:</strong> {new Date(location.approvedAt).toLocaleDateString() || 'N/A'}</p>
-              <p><strong>Categoria:</strong> {location.subcategoria || location.category}</p>
-            </div>
-
-            {expandedCard === `approved-${location.id}` && (
-              <div className="card-details">
-                <p><strong>Descrição:</strong> {location.description || location.descricao}</p>
-                <p><strong>Localização:</strong> {location.localizacao || 'N/A'}</p>
-              </div>
-            )}
-
-            <div className="card-actions">
-              <button 
-                className="expand-btn"
-                onClick={() => toggleExpand(`approved-${location.id}`)}
-              >
-                {expandedCard === `approved-${location.id}` ? 'Recolher' : 'Expandir'}
-              </button>
-              <button 
-                className="reject-btn"
-                onClick={() => handleRemoveLocation(location.id)}
-              >
-                Remover
-              </button>
-            </div>
-          </div>
-        )))}
-        
         {activeTab === 'pending' && (pendingLocations.length === 0 ? (
             <div className="empty-state-message"><p>Nenhum local pendente.</p></div>
         ) : pendingLocations.map(location => (
