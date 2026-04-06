@@ -657,9 +657,14 @@ function AdminPanel() {
           <div key={index} className={`admin-card ${expandedCard === `user-${index}` ? 'expanded' : ''}`}>
             <div className="card-header">
               <h3>{user.nome || user.userName || 'Usuário'}</h3>
-              <span className={`category-badge ${user.tipoUsuario === 'adm' ? 'ADM' : 'USUARIO'}`}>
-                {user.tipoUsuario === 'adm' ? 'Admin' : 'Usuário'}
-              </span>
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <span className={`category-badge ${user.tipoUsuario === 'adm' ? 'ADM' : 'USUARIO'}`}>
+                  {user.tipoUsuario === 'adm' ? 'Admin' : 'Usuário'}
+                </span>
+                <span className={`category-badge ${user.ativo === false ? 'INATIVO' : 'ATIVO'}`}>
+                  {user.ativo === false ? 'Inativo' : 'Ativo'}
+                </span>
+              </div>
             </div>
             
             <div className="card-info">
