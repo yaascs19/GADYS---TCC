@@ -1,234 +1,301 @@
-/* --- AdicionarLocal.css --- */
+/* --- AdicionarLocal.css - Repaginação Visual --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
+/* --- Base & Dark Mode --- */
 .adicionar-local-page {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    color: #2c3e50;
-    font-family: 'Inter', 'Segoe UI', sans-serif;
-    position: relative;
-    overflow-x: hidden;
+    font-family: 'Poppins', sans-serif;
+    background: #f0f2f5;
+    color: #333;
+    transition: background 0.4s ease, color 0.4s ease;
+    padding: 2rem 0;
 }
 
 .adicionar-local-page.dark {
-    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-    color: white;
+    background: #121212;
+    color: #e0e0e0;
 }
 
-.adicionar-local-header {
-    background: #1a237e;
-    backdrop-filter: blur(30px);
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.adicionar-local-page.dark .adicionar-local-header {
-    background: rgba(15, 12, 41, 0.8);
-}
-
-.adicionar-local-logo-container {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.adicionar-local-logo {
-    height: 45px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    border-radius: 50%;
-    padding: 8px;
-}
-
-.adicionar-local-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-    color: white;
-}
-
+/* --- Main Container --- */
 .adicionar-local-main {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 2rem;
-    position: relative;
-    z-index: 10;
+    padding: 0 1rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
 }
 
-.adicionar-local-hero {
-    text-align: center;
-    padding: 6rem 0 4rem;
-    background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%);
-    border-radius: 0 0 50px 50px;
-    margin-bottom: 4rem;
+/* --- Coluna Esquerda (Formulário Principal) --- */
+.form-column-main {
+    flex: 2;
+    background: #fff;
+    padding: 2.5rem 3rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
-.adicionar-local-page.dark .adicionar-local-hero {
-    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+.adicionar-local-page.dark .form-column-main {
+    background: #1e1e1e;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
-.adicionar-local-h1 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 900;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 1rem;
-    letter-spacing: -2px;
-    line-height: 1.1;
+.form-column-main h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+.adicionar-local-page.dark .form-column-main h1 {
+    color: #fff;
+}
+.form-column-main .form-intro {
+    font-size: 1rem;
+    color: #666;
+    margin-bottom: 2.5rem;
+}
+.adicionar-local-page.dark .form-column-main .form-intro {
+    color: #aaa;
 }
 
-.adicionar-local-p {
-    font-size: 1.2rem;
-    opacity: 0.8;
-    max-width: 600px;
-    margin: 0 auto;
-    line-height: 1.6;
-    font-weight: 300;
+
+/* --- Coluna Direita (Imagens e Detalhes) --- */
+.form-column-aside {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: sticky;
+    top: 2rem;
 }
 
-.adicionar-local-span {
-    color: #667eea;
-    font-weight: 500;
+.image-upload-section, .details-section {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
 }
 
-.adicionar-local-form-section {
-    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
-    padding: 3rem;
-    border-radius: 30px;
-    margin-bottom: 4rem;
-    border: 1px solid rgba(102, 126, 234, 0.2);
-    box-shadow: 0 30px 60px rgba(102, 126, 234, 0.1);
+.adicionar-local-page.dark .image-upload-section, 
+.adicionar-local-page.dark .details-section {
+    background: #1e1e1e;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
-.success-message {
-    background: #d4edda;
-    border: 1px solid #c3e6cb;
-    color: #155724;
-    padding: 1rem;
-    border-radius: 15px;
-    margin-bottom: 2rem;
-    text-align: center;
+.image-upload-section h2, .details-section h2 {
+    font-size: 1.3rem;
     font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    color: #2c3e50;
+}
+.adicionar-local-page.dark .image-upload-section h2, 
+.adicionar-local-page.dark .details-section h2 {
+    color: #fff;
 }
 
+
+/* --- Campos de Formulário Estilizados --- */
 .form-group {
-    margin-bottom: 2rem;
+    margin-bottom: 1.8rem;
+    position: relative;
 }
 
 .form-label {
-    display: block;
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #555;
     margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: #667eea;
+    display: block;
+}
+.adicionar-local-page.dark .form-label {
+    color: #bbb;
 }
 
-.form-input,
-.form-select,
-.form-textarea {
+.form-input, .form-select, .form-textarea {
     width: 100%;
-    padding: 1rem;
-    border-radius: 15px;
-    border: 2px solid rgba(102, 126, 234, 0.3);
-    background: rgba(255,255,255,0.8);
-    color: #333;
+    padding: 0.9rem 1rem;
     font-size: 1rem;
-    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+    border: 1px solid #dcdcdc;
+    border-radius: 10px;
+    background: #fdfdfd;
+    color: #333;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
 .adicionar-local-page.dark .form-input,
 .adicionar-local-page.dark .form-select,
 .adicionar-local-page.dark .form-textarea {
-    background: rgba(255,255,255,0.05);
-    color: white;
+    background: #2a2a2a;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+    outline: none;
+    border-color: #764ba2;
+    box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.15);
+    background: #fff;
+}
+
+.adicionar-local-page.dark .form-input:focus,
+.adicionar-local-page.dark .form-select:focus,
+.adicionar-local-page.dark .form-textarea:focus {
+    background: #1e1e1e;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 120px;
 }
 
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+
+/* --- Upload de Imagem --- */
+.image-upload-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
-    margin-bottom: 2rem;
 }
 
-.image-upload-label {
-    display: block;
-    margin-bottom: 0.3rem;
-    font-size: 0.9rem;
-    opacity: 0.8;
+.image-upload-placeholder {
+    aspect-ratio: 16 / 10;
+    border: 2px dashed #dcdcdc;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+    position: relative;
+    overflow: hidden;
+    background-size: cover;
+    background-position: center;
 }
 
-.image-upload-input {
-    width: 100%;
-    padding: 0.8rem;
-    border-radius: 15px;
-    border: 2px solid rgba(102, 126, 234, 0.3);
-    background: rgba(255,255,255,0.8);
-    color: #333;
-    font-size: 0.9rem;
+.adicionar-local-page.dark .image-upload-placeholder {
+    border-color: #444;
 }
 
-.adicionar-local-page.dark .image-upload-input {
-    background: rgba(255,255,255,0.05);
-    color: white;
+.image-upload-placeholder:hover {
+    border-color: #764ba2;
+    background-color: #f9f9f9;
+}
+.adicionar-local-page.dark .image-upload-placeholder:hover {
+    background-color: #2a2a2a;
 }
 
+.image-upload-placeholder.has-image {
+    border-style: solid;
+    border-color: #764ba2;
+}
+
+.image-upload-placeholder .upload-text {
+    font-size: 0.8rem;
+    color: #888;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 2px 8px;
+    border-radius: 5px;
+}
+.adicionar-local-page.dark .image-upload-placeholder .upload-text {
+    color: #ccc;
+    background: rgba(0,0,0,0.5);
+}
+
+.image-upload-placeholder input[type="file"] {
+    display: none;
+}
+.uploading-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    z-index: 2;
+}
+.adicionar-local-page.dark .uploading-overlay {
+    background: rgba(0,0,0,0.7);
+}
+
+/* --- Botão de Envio --- */
 .submit-button {
     width: 100%;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
-    border: none;
-    padding: 1.5rem;
-    border-radius: 25px;
-    font-size: 1.2rem;
+    padding: 1rem;
+    font-size: 1.1rem;
     font-weight: 600;
+    color: #fff;
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 12px;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
-    letter-spacing: 0.5px;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    margin-top: 1rem;
+}
+
+.submit-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(118, 75, 162, 0.3);
 }
 
 .submit-button:disabled {
     background: #ccc;
+    box-shadow: none;
+    transform: none;
     cursor: not-allowed;
 }
 
-.back-link-section {
+.adicionar-local-page.dark .submit-button:disabled {
+    background: #555;
+    color: #999;
+}
+
+/* --- Mensagem de sucesso --- */
+.success-message {
+    background: #e6f9f0;
+    border: 1px solid #b6e9d1;
+    color: #0d6a37;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-bottom: 2rem;
     text-align: center;
-    padding: 2rem 0 4rem;
+    font-weight: 500;
+}
+.adicionar-local-page.dark .success-message {
+    background: #1c3b2a;
+    border-color: #2f684a;
+    color: #a6f2c9;
 }
 
-.back-link {
-    background: transparent;
-    color: #2c3e50;
-    border: 2px solid rgba(44, 62, 80, 0.3);
-    padding: 1rem 2rem;
-    border-radius: 25px;
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+
+/* --- Media Queries for Responsiveness --- */
+@media (max-width: 992px) {
+    .adicionar-local-main {
+        flex-direction: column;
+    }
+    .form-column-aside {
+        position: static;
+        width: 100%;
+    }
 }
 
-.adicionar-local-page.dark .back-link {
-    color: white;
-    border: 2px solid rgba(255,255,255,0.3);
-}
-
-.adicionar-local-footer {
-    background: rgba(255, 255, 255, 0.9);
-    text-align: center;
-    padding: 2rem;
-    border-top: 1px solid rgba(0,0,0,0.1);
-    position: relative;
-    z-index: 10;
-}
-
-.adicionar-local-page.dark .adicionar-local-footer {
-    background: rgba(15, 12, 41, 0.9);
-    border-top: 1px solid rgba(255,255,255,0.1);
+@media (max-width: 768px) {
+    .form-column-main {
+        padding: 2rem 1.5rem;
+    }
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+     .form-grid .form-group {
+        margin-bottom: 1.8rem;
+    }
 }
