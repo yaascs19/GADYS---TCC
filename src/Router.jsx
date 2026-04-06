@@ -13,6 +13,8 @@ import AdicionarLocal from './components/AdicionarLocal';
 import AdminPanel from './AdminPanel';
 import TranslateButton from './components/TranslateButton';
 
+import LocalDetalhe from './components/LocalDetalhe';
+
 import Para from './components/Para';
 import DestinosPara from './components/DestinosPara';
 import RioDeJaneiro from './components/RioDeJaneiro';
@@ -102,6 +104,8 @@ function Router() {
           <Route path="/mapa" element={<MapaLeaflet />} />
           <Route path="/adicionar-local" element={<AdicionarLocal />} />
           <Route path="/painel-adm" element={<AdminPanel />} />
+
+          <Route path="/local/:id" element={<LocalDetalhe />} />
 
           <Route path="/para" element={<Para />} />
           <Route path="/destinos-para" element={<DestinosPara />} />

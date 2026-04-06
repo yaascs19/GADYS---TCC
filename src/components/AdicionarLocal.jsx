@@ -14,15 +14,38 @@ function AdicionarLocal() {
     estado: '',
     endereco: '',
     descricao: '',
-    imagem: '',
     coordenadas: '',
     horario: '',
     preco: '',
     infoAdicional: ''
   })
-  
+  const [imagens, setImagens] = useState(['', '', '', '', ''])
+  const [uploadingIndex, setUploadingIndex] = useState(null)
   const [showSuccess, setShowSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+
+  const CLOUD_NAME = 'dybpie9a'
+  const UPLOAD_PRESET = 'gadys_tcc'
+
+  const handleImageUpload = async (e, index) => {
+    const file = e.target.files[0]
+    if (!file) return
+    setUploadingIndex(index)
+    const data = new FormData()
+    data.append('file', file)
+    data.append('upload_preset', UPLOAD_PRESET)
+    try {
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: data })
+      const json = await res.json()
+      const novas = [...imagens]
+      novas[index] = json.secure_url
+      setImagens(novas)
+    } catch {
+      alert('Erro ao fazer upload da imagem')
+    } finally {
+      setUploadingIndex(null)
+    }
+  }
 
   const toggleTheme = () => {
     const newDarkMode = !darkMode
@@ -74,7 +97,7 @@ function AdicionarLocal() {
         endereco: formData.endereco,
         horarioFuncionamento: formData.horario,
         preco: formData.preco,
-        imagemUrl: formData.imagem,
+        imagemUrl: imagens.filter(Boolean).join(','),
         informacoesAdicionais: formData.infoAdicional,
         enviadoPor: userName
       }
@@ -88,9 +111,9 @@ function AdicionarLocal() {
       setShowSuccess(true)
       setFormData({
         nome: '', subcategoria: '', cidade: '', estado: '', endereco: '',
-        descricao: '', imagem: '', coordenadas: '',
-        horario: '', preco: '', infoAdicional: ''
+        descricao: '', coordenadas: '', horario: '', preco: '', infoAdicional: ''
       })
+      setImagens(['', '', '', '', ''])
       setTimeout(() => setShowSuccess(false), 5000)
     } catch (error) {
       alert(error.response?.data?.mensagem || 'Erro de conexão com o servidor')
@@ -437,24 +460,31 @@ function AdicionarLocal() {
 
             <div style={{ marginBottom: '2rem' }}>
               <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#667eea' }}>
-                URL da Imagem:
+                Fotos do Local (até 5 imagens):
               </label>
-              <input
-                type="url"
-                name="imagem"
-                value={formData.imagem}
-                onChange={handleInputChange}
-                placeholder="https://exemplo.com/imagem.jpg"
-                style={{
-                  width: '100%',
-                  padding: '1rem',
-                  borderRadius: '15px',
-                  border: '2px solid rgba(102, 126, 234, 0.3)',
-                  background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                  color: darkMode ? 'white' : '#333',
-                  fontSize: '1rem'
-                }}
-              />
+              <p style={{ fontSize: '0.85rem', opacity: 0.7, marginBottom: '1rem' }}>
+                Foto 1 e 2: carrossel do topo | Foto 3: seção Sobre | Fotos 4 e 5: seção Visite
+              </p>
+              {imagens.map((url, index) => (
+                <div key={index} style={{ marginBottom: '1rem' }}>
+                  <label style={{ display: 'block', marginBottom: '0.3rem', fontSize: '0.9rem', opacity: 0.8 }}>
+                    Foto {index + 1} {index < 2 ? '(carrossel)' : index === 2 ? '(sobre)' : '(visite)'}
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => handleImageUpload(e, index)}
+                    style={{
+                      width: '100%', padding: '0.8rem', borderRadius: '15px',
+                      border: '2px solid rgba(102, 126, 234, 0.3)',
+                      background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
+                      color: darkMode ? 'white' : '#333', fontSize: '0.9rem'
+                    }}
+                  />
+                  {uploadingIndex === index && <p style={{ color: '#667eea', fontSize: '0.85rem', marginTop: '0.3rem' }}>Enviando...</p>}
+                  {url && <p style={{ color: '#4caf50', fontSize: '0.85rem', marginTop: '0.3rem' }}>✓ Imagem enviada</p>}
+                </div>
+              ))}
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
