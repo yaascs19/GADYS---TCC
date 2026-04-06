@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+import './AdicionarLocal.css'
 
 function AdicionarLocal() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -123,38 +124,15 @@ function AdicionarLocal() {
   }
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: darkMode ? 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' : 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-      color: darkMode ? 'white' : '#2c3e50',
-      fontFamily: "'Inter', 'Segoe UI', sans-serif",
-      position: 'relative',
-      overflowX: 'hidden'
-    }}>
-      <header style={{
-        background: darkMode ? 'rgba(15, 12, 41, 0.8)' : '#1a237e',
-        backdropFilter: 'blur(30px)',
-        padding: '1rem 2rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        borderBottom: '1px solid rgba(255,255,255,0.1)'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+    <div className={`adicionar-local-page ${darkMode ? 'dark' : ''}`}>
+      <header className="adicionar-local-header">
+        <div className="adicionar-local-logo-container">
           <img 
             src="/images/logos/logo.png" 
             alt="GADYS" 
-            style={{
-              height: '45px',
-              background: 'linear-gradient(135deg, #667eea, #764ba2)',
-              borderRadius: '50%',
-              padding: '8px'
-            }}
+            className="adicionar-local-logo"
           />
-          <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: 'white' }}>GADYS</span>
+          <span className="adicionar-local-title">GADYS</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <button 
@@ -181,67 +159,19 @@ function AdicionarLocal() {
             }}
             onClick={() => document.querySelector('.nav-links').classList.toggle('active')}
           >
-            <span style={{
-              width: '25px',
-              height: '3px',
-              background: 'white',
-              margin: '3px 0',
-              transition: '0.3s'
-            }} />
-            <span style={{
-              width: '25px',
-              height: '3px',
-              background: 'white',
-              margin: '3px 0',
-              transition: '0.3s'
-            }} />
-            <span style={{
-              width: '25px',
-              height: '3px',
-              background: 'white',
-              margin: '3px 0',
-              transition: '0.3s'
-            }} />
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0', transition: '0.3s' }} />
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0', transition: '0.3s' }} />
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0', transition: '0.3s' }} />
           </div>
         </div>
         <div 
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            background: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 1000,
-            opacity: 0,
-            visibility: 'hidden',
-            transition: 'all 0.3s ease'
-          }}
           className="nav-overlay"
+          style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0, 0, 0, 0.5)', zIndex: 1000, opacity: 0, visibility: 'hidden', transition: 'all 0.3s ease' }}
           onClick={() => document.querySelector('.nav-links').classList.remove('active')}
         />
         <ul 
           className="nav-links"
-          style={{
-            position: 'fixed',
-            top: 0,
-            right: '-100%',
-            width: '300px',
-            height: '100vh',
-            background: darkMode ? '#1a237e' : '#1a237e',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            gap: '2rem',
-            margin: 0,
-            padding: '4rem 0',
-            listStyle: 'none',
-            transition: 'right 0.3s ease',
-            zIndex: 1001,
-            overflowY: 'scroll',
-            boxShadow: '-5px 0 15px rgba(0,0,0,0.1)'
-          }}
+          style={{ position: 'fixed', top: 0, right: '-100%', width: '300px', height: '100vh', background: darkMode ? '#1a237e' : '#1a237e', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: '2rem', margin: 0, padding: '4rem 0', listStyle: 'none', transition: 'right 0.3s ease', zIndex: 1001, overflowY: 'scroll', boxShadow: '-5px 0 15px rgba(0,0,0,0.1)' }}
         >
           <li><Link to="/" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</Link></li>
           <li><Link to="/lugares" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Lugares</Link></li>
@@ -253,112 +183,24 @@ function AdicionarLocal() {
         </ul>
       </header>
 
-      <main style={{
-        maxWidth: '800px',
-        margin: '0 auto',
-        padding: '0 2rem',
-        position: 'relative',
-        zIndex: 10
-      }}>
-        <section style={{
-          textAlign: 'center',
-          padding: '6rem 0 4rem',
-          background: darkMode ? 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%)',
-          borderRadius: '0 0 50px 50px',
-          marginBottom: '4rem'
-        }}>
-          <h1 style={{
-            fontSize: 'clamp(2rem, 5vw, 3.5rem)',
-            fontWeight: '900',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            marginBottom: '1rem',
-            letterSpacing: '-2px',
-            lineHeight: '1.1'
-          }}>
-            Adicionar Novo Local
-          </h1>
-          
-          <p style={{
-            fontSize: '1.2rem',
-            opacity: 0.8,
-            maxWidth: '600px',
-            margin: '0 auto',
-            lineHeight: '1.6',
-            fontWeight: '300'
-          }}>
-            Compartilhe lugares incríveis do Brasil<br />
-            <span style={{ color: '#667eea', fontWeight: '500' }}>Ajude outros viajantes a descobrir novos destinos</span>
-          </p>
+      <main className="adicionar-local-main">
+        <section className="adicionar-local-hero">
+          <h1 className="adicionar-local-h1">Adicionar Novo Local</h1>
+          <p className="adicionar-local-p">Compartilhe lugares incríveis do Brasil<br /><span className="adicionar-local-span">Ajude outros viajantes a descobrir novos destinos</span></p>
         </section>
 
-        <section style={{
-          background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
-          padding: '3rem',
-          borderRadius: '30px',
-          marginBottom: '4rem',
-          border: '1px solid rgba(102, 126, 234, 0.2)',
-          boxShadow: '0 30px 60px rgba(102, 126, 234, 0.1)'
-        }}>
-          {showSuccess && (
-            <div style={{
-              background: '#d4edda',
-              border: '1px solid #c3e6cb',
-              color: '#155724',
-              padding: '1rem',
-              borderRadius: '15px',
-              marginBottom: '2rem',
-              textAlign: 'center',
-              fontWeight: '600'
-            }}>
-              Local enviado com sucesso! Aguarde a aprovação.
-            </div>
-          )}
+        <section className="adicionar-local-form-section">
+          {showSuccess && <div className="success-message">Local enviado com sucesso! Aguarde a aprovação.</div>}
 
           <form onSubmit={handleSubmit}>
-            <div style={{ marginBottom: '2rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#667eea' }}>
-                Nome do Local:
-              </label>
-              <input
-                type="text"
-                name="nome"
-                value={formData.nome}
-                onChange={handleInputChange}
-                required
-                style={{
-                  width: '100%',
-                  padding: '1rem',
-                  borderRadius: '15px',
-                  border: '2px solid rgba(102, 126, 234, 0.3)',
-                  background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                  color: darkMode ? 'white' : '#333',
-                  fontSize: '1rem',
-                  transition: 'all 0.3s ease'
-                }}
-              />
+            <div className="form-group">
+              <label className="form-label">Nome do Local:</label>
+              <input type="text" name="nome" value={formData.nome} onChange={handleInputChange} required className="form-input" />
             </div>
 
-            <div style={{ marginBottom: '2rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#667eea' }}>
-                Tipo de Local:
-              </label>
-              <select
-                name="subcategoria"
-                value={formData.subcategoria}
-                onChange={handleInputChange}
-                required
-                style={{
-                  width: '100%',
-                  padding: '1rem',
-                  borderRadius: '15px',
-                  border: '2px solid rgba(102, 126, 234, 0.3)',
-                  background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                  color: darkMode ? 'white' : '#333',
-                  fontSize: '1rem'
-                }}
-              >
+            <div className="form-group">
+              <label className="form-label">Tipo de Local:</label>
+              <select name="subcategoria" value={formData.subcategoria} onChange={handleInputChange} required className="form-select">
                 <option value="">Selecione o tipo</option>
                 <option value="Monumentos">Monumentos</option>
                 <option value="Lugar Paradísíaco">Lugar Paradísíaco</option>
@@ -367,226 +209,61 @@ function AdicionarLocal() {
               </select>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
+            <div className="form-grid">
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#667eea' }}>
-                  Cidade:
-                </label>
-                <input
-                  type="text"
-                  name="cidade"
-                  value={formData.cidade}
-                  onChange={handleInputChange}
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '1rem',
-                    borderRadius: '15px',
-                    border: '2px solid rgba(102, 126, 234, 0.3)',
-                    background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                    color: darkMode ? 'white' : '#333',
-                    fontSize: '1rem'
-                  }}
-                />
+                <label className="form-label">Cidade:</label>
+                <input type="text" name="cidade" value={formData.cidade} onChange={handleInputChange} required className="form-input" />
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#667eea' }}>
-                  Estado:
-                </label>
-                <input
-                  type="text"
-                  name="estado"
-                  value={formData.estado}
-                  onChange={handleInputChange}
-                  required
-                  style={{
-                    width: '100%',
-                    padding: '1rem',
-                    borderRadius: '15px',
-                    border: '2px solid rgba(102, 126, 234, 0.3)',
-                    background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                    color: darkMode ? 'white' : '#333',
-                    fontSize: '1rem'
-                  }}
-                />
+                <label className="form-label">Estado:</label>
+                <input type="text" name="estado" value={formData.estado} onChange={handleInputChange} required className="form-input" />
               </div>
             </div>
 
-            <div style={{ marginBottom: '2rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#667eea' }}>
-                Endereço:
-              </label>
-              <input
-                type="text"
-                name="endereco"
-                value={formData.endereco}
-                onChange={handleInputChange}
-                placeholder="Ex: Rua das Flores, 123 - Centro"
-                style={{
-                  width: '100%',
-                  padding: '1rem',
-                  borderRadius: '15px',
-                  border: '2px solid rgba(102, 126, 234, 0.3)',
-                  background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                  color: darkMode ? 'white' : '#333',
-                  fontSize: '1rem'
-                }}
-              />
+            <div className="form-group">
+              <label className="form-label">Endereço:</label>
+              <input type="text" name="endereco" value={formData.endereco} onChange={handleInputChange} placeholder="Ex: Rua das Flores, 123 - Centro" className="form-input" />
             </div>
 
-            <div style={{ marginBottom: '2rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#667eea' }}>
-                Descrição:
-              </label>
-              <textarea
-                name="descricao"
-                value={formData.descricao}
-                onChange={handleInputChange}
-                required
-                rows="4"
-                placeholder="Descreva o local, suas características e o que o torna especial..."
-                style={{
-                  width: '100%',
-                  padding: '1rem',
-                  borderRadius: '15px',
-                  border: '2px solid rgba(102, 126, 234, 0.3)',
-                  background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                  color: darkMode ? 'white' : '#333',
-                  fontSize: '1rem',
-                  resize: 'vertical'
-                }}
-              />
+            <div className="form-group">
+              <label className="form-label">Descrição:</label>
+              <textarea name="descricao" value={formData.descricao} onChange={handleInputChange} required rows="4" placeholder="Descreva o local, suas características e o que o torna especial..." className="form-textarea" />
             </div>
 
-            <div style={{ marginBottom: '2rem' }}>
-              <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#667eea' }}>
-                Fotos do Local (até 5 imagens):
-              </label>
-              <p style={{ fontSize: '0.85rem', opacity: 0.7, marginBottom: '1rem' }}>
-                Foto 1 e 2: carrossel do topo | Foto 3: seção Sobre | Fotos 4 e 5: seção Visite
-              </p>
+            <div className="form-group">
+              <label className="form-label">Fotos do Local (até 5 imagens):</label>
+              <p style={{ fontSize: '0.85rem', opacity: 0.7, marginBottom: '1rem' }}>Foto 1 e 2: carrossel do topo | Foto 3: seção Sobre | Fotos 4 e 5: seção Visite</p>
               {imagens.map((url, index) => (
                 <div key={index} style={{ marginBottom: '1rem' }}>
-                  <label style={{ display: 'block', marginBottom: '0.3rem', fontSize: '0.9rem', opacity: 0.8 }}>
-                    Foto {index + 1} {index < 2 ? '(carrossel)' : index === 2 ? '(sobre)' : '(visite)'}
-                  </label>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => handleImageUpload(e, index)}
-                    style={{
-                      width: '100%', padding: '0.8rem', borderRadius: '15px',
-                      border: '2px solid rgba(102, 126, 234, 0.3)',
-                      background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                      color: darkMode ? 'white' : '#333', fontSize: '0.9rem'
-                    }}
-                  />
+                  <label className="image-upload-label">Foto {index + 1} {index < 2 ? '(carrossel)' : index === 2 ? '(sobre)' : '(visite)'}</label>
+                  <input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, index)} className="image-upload-input" />
                   {uploadingIndex === index && <p style={{ color: '#667eea', fontSize: '0.85rem', marginTop: '0.3rem' }}>Enviando...</p>}
                   {url && <p style={{ color: '#4caf50', fontSize: '0.85rem', marginTop: '0.3rem' }}>✓ Imagem enviada</p>}
                 </div>
               ))}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '2rem' }}>
+            <div className="form-grid">
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#667eea' }}>
-                  Horário:
-                </label>
-                <input
-                  type="text"
-                  name="horario"
-                  value={formData.horario}
-                  onChange={handleInputChange}
-                  placeholder="Ex: 8h às 18h"
-                  style={{
-                    width: '100%',
-                    padding: '1rem',
-                    borderRadius: '15px',
-                    border: '2px solid rgba(102, 126, 234, 0.3)',
-                    background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                    color: darkMode ? 'white' : '#333',
-                    fontSize: '1rem'
-                  }}
-                />
+                <label className="form-label">Horário:</label>
+                <input type="text" name="horario" value={formData.horario} onChange={handleInputChange} placeholder="Ex: 8h às 18h" className="form-input" />
               </div>
               <div>
-                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '600', color: '#667eea' }}>
-                  Preço:
-                </label>
-                <input
-                  type="text"
-                  name="preco"
-                  value={formData.preco}
-                  onChange={handleInputChange}
-                  placeholder="Ex: Gratuito, R$ 10,00"
-                  style={{
-                    width: '100%',
-                    padding: '1rem',
-                    borderRadius: '15px',
-                    border: '2px solid rgba(102, 126, 234, 0.3)',
-                    background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                    color: darkMode ? 'white' : '#333',
-                    fontSize: '1rem'
-                  }}
-                />
+                <label className="form-label">Preço:</label>
+                <input type="text" name="preco" value={formData.preco} onChange={handleInputChange} placeholder="Ex: Gratuito, R$ 10,00" className="form-input" />
               </div>
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              style={{
-                width: '100%',
-                background: loading ? '#ccc' : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                border: 'none',
-                padding: '1.5rem',
-                borderRadius: '25px',
-                fontSize: '1.2rem',
-                fontWeight: '600',
-                cursor: loading ? 'not-allowed' : 'pointer',
-                transition: 'all 0.3s ease',
-                boxShadow: '0 15px 35px rgba(102, 126, 234, 0.4)',
-                letterSpacing: '0.5px'
-              }}
-            >
-              {loading ? 'Adicionando...' : 'Adicionar Local'}
-            </button>
+            <button type="submit" disabled={loading} className="submit-button">{loading ? 'Adicionando...' : 'Adicionar Local'}</button>
           </form>
         </section>
 
-        <section style={{
-          textAlign: 'center',
-          padding: '2rem 0 4rem'
-        }}>
-          <Link 
-            to="/"
-            style={{
-              background: 'transparent',
-              color: darkMode ? 'white' : '#2c3e50',
-              border: darkMode ? '2px solid rgba(255,255,255,0.3)' : '2px solid rgba(44, 62, 80, 0.3)',
-              padding: '1rem 2rem',
-              borderRadius: '25px',
-              textDecoration: 'none',
-              fontSize: '1rem',
-              fontWeight: '600',
-              transition: 'all 0.3s ease',
-              backdropFilter: 'blur(10px)'
-            }}
-          >
-            Voltar ao Início
-          </Link>
+        <section className="back-link-section">
+          <Link to="/" className="back-link">Voltar ao Início</Link>
         </section>
       </main>
 
-      <footer style={{
-        background: darkMode ? 'rgba(15, 12, 41, 0.9)' : 'rgba(255, 255, 255, 0.9)',
-        textAlign: 'center',
-        padding: '2rem',
-        borderTop: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.1)',
-        position: 'relative',
-        zIndex: 10
-      }}>
+      <footer className="adicionar-local-footer">
         <p style={{ opacity: 0.7, fontSize: '1rem' }}>&copy; 2025 GADYS. Todos os direitos reservados.</p>
       </footer>
     </div>
