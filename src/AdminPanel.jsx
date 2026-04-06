@@ -229,7 +229,7 @@ function AdminPanel() {
     try {
       const response = await fetch(`${API_URL}/api/usuarios/${id}/inativar`, { method: 'POST' })
       if (response.ok) {
-        loadUsers()
+        setUserAccess(prev => prev.map(u => u.id === id ? { ...u, ativo: !u.ativo } : u))
       } else {
         alert('Erro ao alterar status do usuário')
       }
