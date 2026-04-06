@@ -267,7 +267,7 @@ function AdminPanel() {
             nome: newUser.userName,
             email: newUser.email,
             senha: newUser.senha,
-            tipoUsuario: newUser.userType
+            tipoUsuario: newUser.userType.toUpperCase()
           })
         })
         
