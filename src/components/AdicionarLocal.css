@@ -118,7 +118,7 @@
     font-family: 'Poppins', sans-serif;
     border: 1px solid #dcdcdc;
     border-radius: 10px;
-    background: #fdfdfd;
+    background: #fff;
     color: #333;
     transition: border-color 0.3s, box-shadow 0.3s;
 }
