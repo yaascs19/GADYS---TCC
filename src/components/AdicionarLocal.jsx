@@ -17,7 +17,7 @@ function AdicionarLocal() {
   const [showSuccess, setShowSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
 
-  const CLOUD_NAME = 'dybpie9a'
+  const CLOUD_NAME = 'dybpie9aa'
   const UPLOAD_PRESET = 'gadys_tcc'
 
   // Functions remain the same
@@ -209,11 +209,10 @@ function AdicionarLocal() {
               <label className="form-label">Categoria</label>
               <select name="subcategoria" value={formData.subcategoria} onChange={handleInputChange} required className="form-select">
                 <option value="">Selecione uma categoria</option>
-                <option value="Monumento">Monumento</option>
-                <option value="Natureza">Natureza e Parques</option>
-                <option value="Restaurante">Gastronomia</option>
-                <option value="Cultural">Ponto Cultural</option>
-                 <option value="Praia">Praia</option>
+                <option value="Monumentos">Monumentos</option>
+                <option value="Lugar Paradísíaco">Lugar Paradísíaco</option>
+                <option value="Restaurantes">Restaurantes</option>
+                <option value="Costume Cultural">Costume Cultural</option>
               </select>
             </div>
             <div className="form-grid">
