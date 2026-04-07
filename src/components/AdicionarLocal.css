@@ -132,7 +132,7 @@
 .adicionar-local-page.dark .form-input,
 .adicionar-local-page.dark .form-select,
 .adicionar-local-page.dark .form-textarea {
-    background: #2a2a2a;
+    background: #2a2a2a !important;
     border-color: #444;
     color: #e0e0e0;
 }
