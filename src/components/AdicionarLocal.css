@@ -299,3 +299,10 @@
         margin-bottom: 1.8rem;
     }
 }
+
+/* --- Fix Placeholder Color in Dark Mode --- */
+.adicionar-local-page.dark .form-input::placeholder,
+.adicionar-local-page.dark .form-textarea::placeholder {
+    color: #6a6a6a; /* A lighter gray color */
+    opacity: 1; /* Ensures the color is not faded */
+}
