@@ -333,6 +333,7 @@ function AdminPanel() {
     setShowEditModal(true)
   }
 
+
   const handleSaveEdit = async () => {
     if (editingLocation) {
         try {
@@ -558,20 +559,20 @@ function AdminPanel() {
         ) : pendingLocations.map(location => (
           <div key={location.id} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
             <div className="card-header">
-              <h3>{location.name}</h3>
-              <span className="category-badge PENDENTE">{location.subcategoria || location.category}</span>
+              <h3>{location.nome}</h3>
+              <span className="category-badge PENDENTE">{location.subcategoria}</span>
             </div>
             
             <div className="card-info">
-              <p><strong>Cidade:</strong> {location.city}</p>
-              <p><strong>Enviado por:</strong> {location.submittedBy}</p>
-              <p><strong>Data:</strong> {new Date(location.date).toLocaleDateString()}</p>
+              <p><strong>Cidade:</strong> {location.cidade}{location.estado ? `, ${location.estado}` : ''}</p>
+              <p><strong>Enviado por:</strong> {location.enviadoPor || 'Anônimo'}</p>
+              <p><strong>Data:</strong> {location.dataCriacao ? new Date(location.dataCriacao).toLocaleDateString('pt-BR') : 'N/A'}</p>
             </div>
 
             {expandedCard === location.id && (
               <div className="card-details">
-                <p><strong>Descrição:</strong> {location.description}</p>
-                <p><strong>Coordenadas:</strong> {location.coordinates}</p>
+                <p><strong>Descrição:</strong> {location.descricao}</p>
+                <p><strong>Coordenadas:</strong> {location.coordenadas}</p>
               </div>
             )}
 
@@ -816,23 +817,23 @@ function AdminPanel() {
                 <label>Nome:</label>
                 <input 
                   type="text" 
-                  value={editingLocation.name} 
-                  onChange={(e) => setEditingLocation({...editingLocation, name: e.target.value})}
+                  value={editingLocation.nome || ''} 
+                  onChange={(e) => setEditingLocation({...editingLocation, nome: e.target.value})}
                 />
               </div>
               <div className="form-group">
                 <label>Cidade:</label>
                 <input 
                   type="text" 
-                  value={editingLocation.city} 
-                  onChange={(e) => setEditingLocation({...editingLocation, city: e.target.value})}
+                  value={editingLocation.cidade || ''} 
+                  onChange={(e) => setEditingLocation({...editingLocation, cidade: e.target.value})}
                 />
               </div>
               <div className="form-group">
                 <label>Categoria:</label>
                 <select 
-                  value={editingLocation.category} 
-                  onChange={(e) => setEditingLocation({...editingLocation, category: e.target.value})}
+                  value={editingLocation.subcategoria || ''} 
+                  onChange={(e) => setEditingLocation({...editingLocation, subcategoria: e.target.value})}
                 >
                   <option value="Monumentos">Monumentos</option>
                   <option value="Lugar Paradísíaco">Lugar Paradísíaco</option>
@@ -843,8 +844,8 @@ function AdminPanel() {
               <div className="form-group">
                 <label>Descrição:</label>
                 <textarea 
-                  value={editingLocation.description} 
-                  onChange={(e) => setEditingLocation({...editingLocation, description: e.target.value})}
+                  value={editingLocation.descricao || ''} 
+                  onChange={(e) => setEditingLocation({...editingLocation, descricao: e.target.value})}
                   rows="4"
                 />
               </div>
