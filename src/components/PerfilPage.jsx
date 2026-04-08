@@ -5,13 +5,9 @@ import './PerfilPage.css'
 
 function PerfilPage() {
   const navigate = useNavigate()
-  const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem('isLoggedIn') === 'true'
-  })
-  const [showLoginModal, setShowLoginModal] = useState(false)
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem('darkMode') === 'true'
-  })
+  const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
   
   const [editMode, setEditMode] = useState(false)
   const [profileData, setProfileData] = useState(() => {
@@ -43,62 +39,6 @@ function PerfilPage() {
     const newDarkMode = !darkMode
     setDarkMode(newDarkMode)
     localStorage.setItem('darkMode', newDarkMode.toString())
-  }
-
-  const fetchUserProfile = async () => {
-    try {
-      setLoading(true)
-      const token = localStorage.getItem('token')
-      if (!token) return
-
-      const response = await axios.get('https://glorious-tribble-pjqg5xgqg9rp36jvx-8080.app.github.dev/api/auth/profile', {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      })
-
-      if (response.data.sucesso) {
-        const userData = response.data.usuario
-        setProfileData({
-          nome: userData.nome,
-          email: userData.email,
-          telefone: userData.telefone || '(11) 99999-9999',
-          cidade: userData.cidade || 'São Paulo, SP',
-          foto: userData.foto || null
-        })
-      }
-    } catch (error) {
-      console.error('Erro ao buscar perfil:', error)
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const fetchUserStats = async () => {
-    try {
-      const token = localStorage.getItem('token')
-      if (!token) return
-
-      const [locaisRes, avaliacoesRes, comentariosRes] = await Promise.all([
-        axios.get('https://glorious-tribble-pjqg5xgqg9rp36jvx-8080.app.github.dev/api/locais/usuario', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        }),
-        axios.get('https://glorious-tribble-pjqg5xgqg9rp36jvx-8080.app.github.dev/api/avaliacoes/usuario', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        }),
-        axios.get('https://glorious-tribble-pjqg5xgqg9rp36jvx-8080.app.github.dev/api/comentarios/usuario', {
-          headers: { 'Authorization': `Bearer ${token}` }
-        })
-      ])
-
-      setUserStats({
-        locaisAdicionados: locaisRes.data?.length || 0,
-        avaliacoes: avaliacoesRes.data?.length || 0,
-        comentarios: comentariosRes.data?.length || 0
-      })
-    } catch (error) {
-      console.error('Erro ao buscar estatísticas:', error)
-    }
   }
   
   const handlePhotoChange = (e) => {
@@ -139,37 +79,73 @@ function PerfilPage() {
   }
 
   useEffect(() => {
-    if (!isLoggedIn) {
-      setShowLoginModal(true)
-    } else {
-      fetchUserProfile()
-      fetchUserStats()
-    }
-  }, [isLoggedIn])
-
-  if (showLoginModal && !isLoggedIn) {
-    return (
-      <div className="login-modal">
-        <div className="login-modal-content">
-          <h3>Acesso Restrito</h3>
-          <p>Para acessar seu perfil, você precisa estar logado.</p>
-          <div className="login-modal-actions">
-            <button onClick={() => navigate('/login')} className="login-button">Fazer Login</button>
-            <button onClick={() => navigate('/')} className="back-button">Voltar</button>
-          </div>
-        </div>
-      </div>
-    )
-  }
+    if (localStorage.getItem('isLoggedIn') !== 'true') navigate('/login')
+  }, [])
 
   return (
     <div className={`perfil-page ${darkMode ? 'dark' : 'light'}`}>
-      <header className="perfil-header">
-        <Link to="/"><h1>GADYS</h1></Link>
-        <div className="header-actions">
-          <button onClick={toggleTheme} className="theme-toggle">{darkMode ? '☀️' : '🌙'}</button>
-          <Link to="/"><button className="back-button">Voltar</button></Link>
+      <header style={{
+        background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
+        padding: '1rem 2rem',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        position: 'sticky',
+        top: 0,
+        zIndex: 100,
+        borderBottom: '1px solid rgba(255,255,255,0.1)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <img src="/images/logos/logo.png" alt="GADYS" style={{ height: '40px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px' }} />
+          <span style={{ fontSize: '1.5rem', fontWeight: '700', color: 'white' }}>GADYS</span>
         </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <button onClick={toggleTheme} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>
+            {darkMode ? '☀️' : '🌙'}
+          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', zIndex: 1002 }} onClick={() => setMenuOpen(!menuOpen)}>
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
+          </div>
+        </div>
+        {menuOpen && <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000 }} onClick={() => setMenuOpen(false)} />}
+        <ul style={{
+          position: 'fixed', top: 0, right: menuOpen ? 0 : '-100%', width: '300px', height: '100vh',
+          background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', justifyContent: 'flex-start',
+          margin: 0, padding: '2rem 0', listStyle: 'none', transition: 'right 0.3s ease', zIndex: 1001, overflowY: 'auto'
+        }}>
+          {[
+            { label: 'Início', path: '/' },
+            { label: 'Lugares', path: '/lugares' },
+            { label: 'Mapa', path: '/mapa' },
+            { label: 'Adicionar Local', path: '/adicionar-local' },
+            { label: 'Sobre', path: '/sobre' },
+            { label: 'Contato', path: '/contato' },
+          ].map(({ label, path }) => (
+            <li key={path}>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate(path); setMenuOpen(false) }}
+                style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '5px', display: 'block' }}>
+                {label}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href="#" onClick={(e) => { e.preventDefault(); setMenuOpen(false) }}
+              style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '5px', display: 'block', cursor: 'default' }}>
+              👤 Meu Perfil (atual)
+            </a>
+          </li>
+          {isAdmin && (
+            <li>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate('/painel-adm'); setMenuOpen(false) }}
+                style={{ color: '#ffd700', textDecoration: 'none', padding: '0.5rem 1rem', fontWeight: '700', borderRadius: '5px', display: 'block' }}>
+                ⚙️ Painel Admin
+              </a>
+            </li>
+          )}
+        </ul>
       </header>
 
       <main className="perfil-main">
