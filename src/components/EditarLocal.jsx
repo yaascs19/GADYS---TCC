@@ -76,9 +76,11 @@ function EditarLocal() {
   const handleAddSlot = useCallback((afterId) => {
     setSlots(prev => {
       const idx = prev.findIndex(s => s.id === afterId);
-      const n = [...prev];
-      n.splice(idx + 1, 0, newSlot(''));
-      return n;
+      return [
+        ...prev.slice(0, idx + 1),
+        newSlot(''),
+        ...prev.slice(idx + 1)
+      ];
     });
   }, []);
 
