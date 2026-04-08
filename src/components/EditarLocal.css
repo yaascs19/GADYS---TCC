@@ -223,7 +223,8 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.3rem;
+  align-items: flex-start;
 }
 
 .editor-slot-actions {
