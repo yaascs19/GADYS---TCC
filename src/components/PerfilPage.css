@@ -1,0 +1,291 @@
+/* PerfilPage.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Poppins:wght@600&display=swap');
+
+.perfil-page {
+  min-height: 100vh;
+  font-family: 'Roboto', sans-serif;
+  padding: 2rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.perfil-page.light {
+  background-color: #f4f7f6;
+  color: #333;
+}
+
+.perfil-page.dark {
+  background-color: #1c1c1c;
+  color: #e0e0e0;
+}
+
+.perfil-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid;
+}
+
+.perfil-page.light .perfil-header {
+  border-color: #ddd;
+}
+
+.perfil-page.dark .perfil-header {
+  border-color: #333;
+}
+
+.perfil-header h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-family: 'Poppins', sans-serif;
+  color: #3498db;
+}
+
+.header-actions button {
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.theme-toggle {
+  background: transparent;
+  font-size: 1.5rem;
+}
+
+.perfil-page.light .theme-toggle {
+  color: #000;
+}
+
+.perfil-page.dark .theme-toggle {
+  color: #fff;
+}
+
+.back-button {
+  background: #3498db;
+  color: white;
+}
+
+.perfil-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  align-items: flex-start;
+}
+
+.profile-sidebar {
+  border-radius: 15px;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.perfil-page.light .profile-sidebar {
+  background: #fff;
+}
+
+.perfil-page.dark .profile-sidebar {
+  background: #2a2a2a;
+}
+
+.profile-picture-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5rem;
+  color: white;
+  border: 4px solid;
+}
+
+.perfil-page.light .profile-picture {
+  background-color: #3498db;
+  border-color: #eee;
+}
+
+.perfil-page.dark .profile-picture {
+  background-color: #3498db;
+  border-color: #333;
+}
+
+.change-picture-button {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.profile-info h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.profile-info .email {
+  color: #3498db;
+  margin-bottom: 1.5rem;
+}
+
+.profile-actions .edit-profile-button,
+.profile-actions .logout-button {
+  width: 100%;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+  margin-bottom: 1rem;
+}
+
+.edit-profile-button {
+  background: #3498db;
+  color: white;
+}
+
+.edit-profile-button:hover {
+  background: #2980b9;
+}
+
+.logout-button {
+  background: #e74c3c;
+  color: white;
+}
+
+.logout-button:hover {
+  background: #c0392b;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.stats-card,
+.actions-card {
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.perfil-page.light .stats-card,
+.perfil-page.light .actions-card {
+  background: #fff;
+}
+
+.perfil-page.dark .stats-card,
+.perfil-page.dark .actions-card {
+  background: #2a2a2a;
+}
+
+.card-header {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #3498db;
+  padding-bottom: 0.5rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.perfil-page.light .stat-item {
+  background: #f9f9f9;
+}
+
+.perfil-page.dark .stat-item {
+  background: #333;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #3498db;
+}
+
+.stat-label {
+  color: #666;
+}
+
+.perfil-page.dark .stat-label {
+  color: #aaa;
+}
+
+.actions-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.action-button {
+  color: white;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.add-place-button {
+  background: #2ecc71;
+}
+
+.my-reviews-button {
+  background: #9b59b6;
+}
+
+.home-page-button {
+  background: #f1c40f;
+}
+
+.perfil-footer {
+  text-align: center;
+  padding: 2rem 0;
+  margin-top: 4rem;
+  border-top: 1px solid;
+}
+
+.perfil-page.light .perfil-footer {
+  border-color: #ddd;
+  color: #666;
+}
+
+.perfil-page.dark .perfil-footer {
+  border-color: #333;
+  color: #888;
+}
