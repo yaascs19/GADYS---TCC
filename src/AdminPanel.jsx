@@ -567,6 +567,15 @@ function AdminPanel() {
               <p><strong>Cidade:</strong> {location.cidade}{location.estado ? `, ${location.estado}` : ''}</p>
               <p><strong>Enviado por:</strong> {location.enviadoPor || 'Anônimo'}</p>
               <p><strong>Data:</strong> {location.dataCriacao ? new Date(location.dataCriacao).toLocaleDateString('pt-BR') : 'N/A'}</p>
+              {(() => {
+                const match = (location.informacoesAdicionais || '').match(/\[geo_estado:([A-Z]{2})\]/)
+                if (!match) return null
+                return (
+                  <p style={{ background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.4)', borderRadius: '6px', padding: '0.4rem 0.7rem', marginTop: '0.5rem', color: '#f59e0b', fontSize: '0.82rem', fontWeight: '600' }}>
+                    ⚠️ Coordenadas apontam para <strong>{match[1]}</strong>, mas estado informado é <strong>{location.estado}</strong>
+                  </p>
+                )
+              })()}
             </div>
 
             {expandedCard === location.id && (
