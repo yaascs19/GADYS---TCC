@@ -2,7 +2,7 @@ import React from 'react';
 import NortePontosBase from './norte/NortePontosBase';
 
 const config = {
-  estado: 'Acre',
+  estado: 'AC',
   titulo: 'Tesouros do Acre',
   subtitulo: 'Descubra as maravilhas da Joia da Amazônia.',
   headerImage: '/images/geral/amazonas1.avif',

@@ -2,7 +2,7 @@ import React from 'react';
 import NortePontosBase from './norte/NortePontosBase';
 
 const config = {
-  estado: 'Amapá',
+  estado: 'AP',
   titulo: 'Tesouros do Amapá',
   subtitulo: 'Descubra onde a Amazônia encontra o Atlântico.',
   headerImage: '/images/geral/amazonas1.avif',

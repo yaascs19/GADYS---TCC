@@ -2,7 +2,7 @@ import React from 'react';
 import NortePontosBase from './norte/NortePontosBase';
 
 const config = {
-  estado: 'Tocantins',
+  estado: 'TO',
   titulo: 'Tesouros do Tocantins',
   subtitulo: 'Descubra o Coração do Brasil.',
   headerImage: '/images/geral/amazonas3.1.jpg',

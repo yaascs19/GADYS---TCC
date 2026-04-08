@@ -70,7 +70,7 @@ const SPPontos = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
-  const pontosAtivos = useLocaisAtivos('São Paulo', pontosTuristicos);
+  const pontosAtivos = useLocaisAtivos('SP', pontosTuristicos);
 
   const categories = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
 

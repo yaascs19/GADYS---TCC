@@ -2,7 +2,7 @@ import React from 'react';
 import NortePontosBase from './norte/NortePontosBase';
 
 const config = {
-  estado: 'Roraima',
+  estado: 'RR',
   titulo: 'Tesouros de Roraima',
   subtitulo: 'Descubra o Teto do Brasil.',
   headerImage: '/images/geral/oam.jpg',

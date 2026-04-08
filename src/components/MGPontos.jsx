@@ -21,7 +21,7 @@ const MGPontos = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
-  const pontosAtivos = useLocaisAtivos('Minas Gerais', pontos);
+  const pontosAtivos = useLocaisAtivos('MG', pontos);
 
   useEffect(() => {
     let result = pontosAtivos;

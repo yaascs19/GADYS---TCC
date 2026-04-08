@@ -95,7 +95,7 @@ const RJPontos = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
-  const pontosAtivos = useLocaisAtivos('Rio de Janeiro', pontosTuristicos);
+  const pontosAtivos = useLocaisAtivos('RJ', pontosTuristicos);
 
   const categories = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
 
