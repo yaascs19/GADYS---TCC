@@ -178,20 +178,20 @@ function EditarLocal() {
                   <h2>Informações Práticas</h2>
                   <div className="local-info-cards">
                     <div className="local-info-card">
-                      <h3>📍 Endereço</h3>
-                      <input className="editor-inline-input" value={local.endereco || ''} onChange={e => handleField('endereco', e.target.value)} placeholder="Endereço completo" />
+                      <input className="editor-inline-input editor-inline-card-title" value={local.labelEndereco || '📍 Endereço'} onChange={e => handleField('labelEndereco', e.target.value)} placeholder="Título do campo" />
+                      <input className="editor-inline-input" value={local.endereco || ''} onChange={e => handleField('endereco', e.target.value)} placeholder="Valor..." />
                     </div>
                     <div className="local-info-card">
-                      <h3>🕐 Horário de Funcionamento</h3>
-                      <input className="editor-inline-input" value={local.horarioFuncionamento || ''} onChange={e => handleField('horarioFuncionamento', e.target.value)} placeholder="Ex: 08h - 18h" />
+                      <input className="editor-inline-input editor-inline-card-title" value={local.labelHorario || '🕐 Horário de Funcionamento'} onChange={e => handleField('labelHorario', e.target.value)} placeholder="Título do campo" />
+                      <input className="editor-inline-input" value={local.horarioFuncionamento || ''} onChange={e => handleField('horarioFuncionamento', e.target.value)} placeholder="Valor..." />
                     </div>
                     <div className="local-info-card">
-                      <h3>💰 Preço</h3>
-                      <input className="editor-inline-input" value={local.preco || ''} onChange={e => handleField('preco', e.target.value)} placeholder="Ex: Gratuito" />
+                      <input className="editor-inline-input editor-inline-card-title" value={local.labelPreco || '💰 Preço'} onChange={e => handleField('labelPreco', e.target.value)} placeholder="Título do campo" />
+                      <input className="editor-inline-input" value={local.preco || ''} onChange={e => handleField('preco', e.target.value)} placeholder="Valor..." />
                     </div>
                     <div className="local-info-card">
-                      <h3>🗺️ Coordenadas</h3>
-                      <input className="editor-inline-input" value={local.coordenadas || ''} onChange={e => handleField('coordenadas', e.target.value)} placeholder="Ex: -23.5505, -46.6333" />
+                      <input className="editor-inline-input editor-inline-card-title" value={local.labelCoordenadas || '🗺️ Coordenadas'} onChange={e => handleField('labelCoordenadas', e.target.value)} placeholder="Título do campo" />
+                      <input className="editor-inline-input" value={local.coordenadas || ''} onChange={e => handleField('coordenadas', e.target.value)} placeholder="Valor..." />
                     </div>
                   </div>
                 </div>
