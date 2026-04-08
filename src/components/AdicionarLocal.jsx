@@ -18,6 +18,18 @@ function AdicionarLocal() {
   const [loading, setLoading] = useState(false)
   const [geocoding, setGeocoding] = useState(false)
   const [geocodeStatus, setGeocodeStatus] = useState(null)
+  const [estadoDetectado, setEstadoDetectado] = useState(null)
+
+  // mapa nome completo do estado -> sigla
+  const ESTADO_SIGLAS = {
+    'acre': 'AC', 'alagoas': 'AL', 'amapá': 'AP', 'amazonas': 'AM', 'bahia': 'BA',
+    'ceará': 'CE', 'distrito federal': 'DF', 'espírito santo': 'ES', 'goiás': 'GO',
+    'maranhão': 'MA', 'mato grosso': 'MT', 'mato grosso do sul': 'MS', 'minas gerais': 'MG',
+    'pará': 'PA', 'paraíba': 'PB', 'paraná': 'PR', 'pernambuco': 'PE', 'piauí': 'PI',
+    'rio de janeiro': 'RJ', 'rio grande do norte': 'RN', 'rio grande do sul': 'RS',
+    'rondônia': 'RO', 'roraima': 'RR', 'santa catarina': 'SC', 'são paulo': 'SP',
+    'sergipe': 'SE', 'tocantins': 'TO'
+  }
 
   const CLOUD_NAME = 'dybpie9aa'
   const UPLOAD_PRESET = 'gadys_tcc'
@@ -53,15 +65,20 @@ function AdicionarLocal() {
     if (!query.trim()) { alert('Preencha o endereço ou cidade antes de buscar.'); return }
     setGeocoding(true)
     setGeocodeStatus(null)
+    setEstadoDetectado(null)
     try {
-      const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1`, {
+      const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&addressdetails=1`, {
         headers: { 'Accept-Language': 'pt-BR' }
       })
       const data = await res.json()
       if (data.length > 0) {
         const coords = `${parseFloat(data[0].lat).toFixed(6)}, ${parseFloat(data[0].lon).toFixed(6)}`
+        // detectar estado pelo address retornado
+        const stateRaw = (data[0].address?.state || '').toLowerCase().trim()
+        const siglaDectada = ESTADO_SIGLAS[stateRaw] || null
+        setEstadoDetectado(siglaDectada)
         setFormData(prev => ({ ...prev, coordenadas: coords }))
-        setGeocodeStatus('ok')
+        setGeocodeStatus(siglaDectada && siglaDectada !== formData.estado ? 'mismatch' : 'ok')
       } else {
         setGeocodeStatus('notfound')
       }
@@ -83,6 +100,9 @@ function AdicionarLocal() {
         imagemUrl: imagens.filter(Boolean).join(','),
         enviadoPor: localStorage.getItem('userName') || 'Usuário Anônimo',
         categoria: 'lugares-visitar',
+        informacoesAdicionais: estadoDetectado && estadoDetectado !== formData.estado
+          ? `[geo_estado:${estadoDetectado}]${formData.informacoesAdicionais || ''}`
+          : (formData.informacoesAdicionais || null)
       }
       const API_URL = import.meta.env.VITE_API_URL || 'https://gadys-backend.onrender.com'
       const url = `${API_URL}/api/locais?usuarioId=${localStorage.getItem('usuarioId') || ''}`
@@ -261,6 +281,7 @@ function AdicionarLocal() {
                 </button>
               </div>
               {geocodeStatus === 'ok' && <small style={{ color: '#10b981', marginTop: '0.3rem', display: 'block' }}>✓ Localização encontrada!</small>}
+              {geocodeStatus === 'mismatch' && <small style={{ color: '#f59e0b', marginTop: '0.3rem', display: 'block' }}>⚠️ Atenção: as coordenadas apontam para <strong>{estadoDetectado}</strong>, mas você selecionou <strong>{formData.estado}</strong>. O admin será avisado.</small>}
               {geocodeStatus === 'notfound' && <small style={{ color: '#f43f5e', marginTop: '0.3rem', display: 'block' }}>Endereço não encontrado. Tente ser mais específico.</small>}
               {geocodeStatus === 'error' && <small style={{ color: '#f43f5e', marginTop: '0.3rem', display: 'block' }}>Erro ao buscar. Tente novamente.</small>}
             </div>
