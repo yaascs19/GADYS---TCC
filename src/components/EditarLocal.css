@@ -159,6 +159,15 @@
 }
 .editor-inline-input:focus { border-bottom-color: #38BDF8; }
 
+.editor-inline-card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.4rem;
+  border-bottom-color: rgba(255,255,255,0.2);
+}
+.editor-inline-card-title:focus { border-bottom-color: #38BDF8; }
+
 .editor-inline-textarea {
   width: 100%;
   background: rgba(255,255,255,0.04);
