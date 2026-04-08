@@ -24,7 +24,7 @@ function EditarLocal() {
       .then(data => {
         setLocal(data);
         const imgs = data.imagemUrl ? data.imagemUrl.split(',').map(u => u.trim()).filter(Boolean) : [];
-        setImagens(Array(5).fill('').map((_, i) => imgs[i] || ''));
+        setImagens(imgs.length >= 5 ? imgs : [...imgs, ...Array(5 - imgs.length).fill('')]);
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -45,6 +45,18 @@ function EditarLocal() {
       setImagens(prev => { const n = [...prev]; n[index] = json.secure_url; return n; });
     } catch { alert('Erro ao fazer upload da imagem.'); }
     finally { setUploadingIndex(null); }
+  };
+
+  const handleAddSlot = (afterIndex) => {
+    setImagens(prev => {
+      const n = [...prev];
+      n.splice(afterIndex + 1, 0, '');
+      return n;
+    });
+  };
+
+  const handleRemoveSlot = (index) => {
+    setImagens(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleSave = async (aprovar = false) => {
@@ -75,6 +87,24 @@ function EditarLocal() {
   const carrossel = imagens.slice(0, 2).filter(Boolean);
   const imagemSobre = imagens[2] || imagens[0];
   const imagensVisite = imagens.slice(3, 5).filter(Boolean);
+
+  const ImageSlot = ({ index, large = false }) => (
+    <div className="editor-slot-wrapper">
+      <label
+        className={`editor-image-thumb ${large ? 'editor-image-large' : ''}`}
+        style={{ backgroundImage: imagens[index] ? `url(${imagens[index]})` : 'none' }}
+      >
+        {uploadingIndex === index ? <span>⏳</span> : <span>{imagens[index] ? '🔄' : `+ Foto ${index + 1}`}</span>}
+        <input type="file" accept="image/*" onChange={e => handleImageUpload(e, index)} />
+      </label>
+      <div className="editor-slot-actions">
+        <button type="button" className="editor-slot-add" onClick={() => handleAddSlot(index)} title="Adicionar foto abaixo">+</button>
+        {imagens.length > 1 && (
+          <button type="button" className="editor-slot-remove" onClick={() => handleRemoveSlot(index)} title="Remover foto">×</button>
+        )}
+      </div>
+    </div>
+  );
 
   return (
     <div className="local-detalhe-container" style={{ position: 'relative' }}>
@@ -120,10 +150,16 @@ function EditarLocal() {
         </div>
         <div className="editor-image-strip">
           {imagens.slice(0, 2).map((img, i) => (
-            <label key={i} className="editor-image-thumb" style={{ backgroundImage: img ? `url(${img})` : 'none' }}>
-              {uploadingIndex === i ? <span>⏳</span> : <span>{img ? '🔄' : `+ Foto ${i + 1}`}</span>}
-              <input type="file" accept="image/*" onChange={e => handleImageUpload(e, i)} />
-            </label>
+            <div key={i} className="editor-slot-wrapper">
+              <label className="editor-image-thumb" style={{ backgroundImage: img ? `url(${img})` : 'none' }}>
+                {uploadingIndex === i ? <span>⏳</span> : <span>{img ? '🔄' : `+ Foto ${i + 1}`}</span>}
+                <input type="file" accept="image/*" onChange={e => handleImageUpload(e, i)} />
+              </label>
+              <div className="editor-slot-actions">
+                <button type="button" className="editor-slot-add" onClick={() => handleAddSlot(i)}>+</button>
+                {imagens.length > 1 && <button type="button" className="editor-slot-remove" onClick={() => handleRemoveSlot(i)}>×</button>}
+              </div>
+            </div>
           ))}
         </div>
       </header>
@@ -161,10 +197,7 @@ function EditarLocal() {
                   />
                 </div>
                 <div className="local-image-wrapper">
-                  <label className="editor-image-thumb editor-image-large" style={{ backgroundImage: imagemSobre ? `url(${imagemSobre})` : 'none' }}>
-                    {uploadingIndex === 2 ? <span>⏳</span> : <span>{imagemSobre ? '🔄 Trocar foto' : '+ Foto Sobre'}</span>}
-                    <input type="file" accept="image/*" onChange={e => handleImageUpload(e, 2)} />
-                  </label>
+                  <ImageSlot index={2} large />
                 </div>
               </div>
             </section>
@@ -196,12 +229,11 @@ function EditarLocal() {
                   </div>
                 </div>
                 <div className="local-image-wrapper">
-                  {[3, 4].map(i => (
-                    <label key={i} className="editor-image-thumb editor-image-large" style={{ backgroundImage: imagens[i] ? `url(${imagens[i]})` : 'none', marginBottom: '1rem' }}>
-                      {uploadingIndex === i ? <span>⏳</span> : <span>{imagens[i] ? '🔄 Trocar foto' : `+ Foto Visite ${i - 2}`}</span>}
-                      <input type="file" accept="image/*" onChange={e => handleImageUpload(e, i)} />
-                    </label>
-                  ))}
+                  {[3, 4].map(i => i < imagens.length ? (
+                    <div key={i} style={{ marginBottom: '1rem' }}>
+                      <ImageSlot index={i} large />
+                    </div>
+                  ) : null)}
                 </div>
               </div>
             </section>
@@ -213,12 +245,19 @@ function EditarLocal() {
               <h2>Galeria de Fotos</h2>
               <div className="local-galeria-grid">
                 {imagens.map((img, i) => (
-                  <label key={i} className="editor-galeria-item" style={{ backgroundImage: img ? `url(${img})` : 'none' }}>
-                    {uploadingIndex === i ? <span className="editor-galeria-overlay">⏳</span> : (
-                      <span className="editor-galeria-overlay">{img ? '🔄' : `+ Foto ${i + 1}`}</span>
-                    )}
-                    <input type="file" accept="image/*" onChange={e => handleImageUpload(e, i)} />
-                  </label>
+                  <div key={i} className="editor-slot-wrapper">
+                    <label className="editor-galeria-item" style={{ backgroundImage: img ? `url(${img})` : 'none' }}>
+                      {uploadingIndex === i
+                        ? <span className="editor-galeria-overlay">⏳</span>
+                        : <span className="editor-galeria-overlay">{img ? '🔄' : `+ Foto ${i + 1}`}</span>
+                      }
+                      <input type="file" accept="image/*" onChange={e => handleImageUpload(e, i)} />
+                    </label>
+                    <div className="editor-slot-actions editor-slot-actions--galeria">
+                      <button type="button" className="editor-slot-add" onClick={() => handleAddSlot(i)}>+</button>
+                      {imagens.length > 1 && <button type="button" className="editor-slot-remove" onClick={() => handleRemoveSlot(i)}>×</button>}
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
