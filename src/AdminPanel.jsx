@@ -585,7 +585,7 @@ function AdminPanel() {
               </button>
               <button 
                 className="expand-btn"
-                onClick={() => handleEdit(location.id)}
+                onClick={() => navigate(`/admin/editar-local/${location.id}`)}
               >
                 Editar
               </button>
