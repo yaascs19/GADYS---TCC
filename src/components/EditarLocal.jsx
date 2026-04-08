@@ -7,6 +7,27 @@ const API_URL = import.meta.env.VITE_API_URL;
 const CLOUD_NAME = 'dybpie9aa';
 const UPLOAD_PRESET = 'gadys_tcc';
 
+const ImageSlot = ({ index, large, imagens, uploadingIndex, onUpload, onAdd, onRemove, canRemove }) => (
+  <div className="editor-slot-wrapper">
+    <label
+      className={`editor-image-thumb ${large ? 'editor-image-large' : ''}`}
+      style={{ backgroundImage: imagens[index] ? `url(${imagens[index]})` : 'none' }}
+    >
+      {uploadingIndex === index
+        ? <span>⏳</span>
+        : <span>{imagens[index] ? '🔄' : `+ Foto ${index + 1}`}</span>
+      }
+      <input type="file" accept="image/*" onChange={e => onUpload(e, index)} />
+    </label>
+    <div className="editor-slot-actions">
+      <button type="button" className="editor-slot-add" onClick={() => onAdd(index)}>+</button>
+      {canRemove && (
+        <button type="button" className="editor-slot-remove" onClick={() => onRemove(index)}>×</button>
+      )}
+    </div>
+  </div>
+);
+
 function EditarLocal() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -85,26 +106,7 @@ function EditarLocal() {
   if (!local) return <div className="local-loading">Local não encontrado.</div>;
 
   const carrossel = imagens.slice(0, 2).filter(Boolean);
-  const imagemSobre = imagens[2] || imagens[0];
-  const imagensVisite = imagens.slice(3, 5).filter(Boolean);
-
-  const ImageSlot = ({ index, large = false }) => (
-    <div className="editor-slot-wrapper">
-      <label
-        className={`editor-image-thumb ${large ? 'editor-image-large' : ''}`}
-        style={{ backgroundImage: imagens[index] ? `url(${imagens[index]})` : 'none' }}
-      >
-        {uploadingIndex === index ? <span>⏳</span> : <span>{imagens[index] ? '🔄' : `+ Foto ${index + 1}`}</span>}
-        <input type="file" accept="image/*" onChange={e => handleImageUpload(e, index)} />
-      </label>
-      <div className="editor-slot-actions">
-        <button type="button" className="editor-slot-add" onClick={() => handleAddSlot(index)} title="Adicionar foto abaixo">+</button>
-        {imagens.length > 1 && (
-          <button type="button" className="editor-slot-remove" onClick={() => handleRemoveSlot(index)} title="Remover foto">×</button>
-        )}
-      </div>
-    </div>
-  );
+  const slotProps = { imagens, uploadingIndex, onUpload: handleImageUpload, onAdd: handleAddSlot, onRemove: handleRemoveSlot, canRemove: imagens.length > 1 };
 
   return (
     <div className="local-detalhe-container" style={{ position: 'relative' }}>
@@ -150,16 +152,7 @@ function EditarLocal() {
         </div>
         <div className="editor-image-strip">
           {imagens.slice(0, 2).map((img, i) => (
-            <div key={i} className="editor-slot-wrapper">
-              <label className="editor-image-thumb" style={{ backgroundImage: img ? `url(${img})` : 'none' }}>
-                {uploadingIndex === i ? <span>⏳</span> : <span>{img ? '🔄' : `+ Foto ${i + 1}`}</span>}
-                <input type="file" accept="image/*" onChange={e => handleImageUpload(e, i)} />
-              </label>
-              <div className="editor-slot-actions">
-                <button type="button" className="editor-slot-add" onClick={() => handleAddSlot(i)}>+</button>
-                {imagens.length > 1 && <button type="button" className="editor-slot-remove" onClick={() => handleRemoveSlot(i)}>×</button>}
-              </div>
-            </div>
+            <ImageSlot key={i} index={i} {...slotProps} />
           ))}
         </div>
       </header>
@@ -197,7 +190,7 @@ function EditarLocal() {
                   />
                 </div>
                 <div className="local-image-wrapper">
-                  <ImageSlot index={2} large />
+                  <ImageSlot index={2} large {...slotProps} />
                 </div>
               </div>
             </section>
@@ -231,7 +224,7 @@ function EditarLocal() {
                 <div className="local-image-wrapper">
                   {[3, 4].map(i => i < imagens.length ? (
                     <div key={i} style={{ marginBottom: '1rem' }}>
-                      <ImageSlot index={i} large />
+                      <ImageSlot index={i} large {...slotProps} />
                     </div>
                   ) : null)}
                 </div>
@@ -245,19 +238,7 @@ function EditarLocal() {
               <h2>Galeria de Fotos</h2>
               <div className="local-galeria-grid">
                 {imagens.map((img, i) => (
-                  <div key={i} className="editor-slot-wrapper">
-                    <label className="editor-galeria-item" style={{ backgroundImage: img ? `url(${img})` : 'none' }}>
-                      {uploadingIndex === i
-                        ? <span className="editor-galeria-overlay">⏳</span>
-                        : <span className="editor-galeria-overlay">{img ? '🔄' : `+ Foto ${i + 1}`}</span>
-                      }
-                      <input type="file" accept="image/*" onChange={e => handleImageUpload(e, i)} />
-                    </label>
-                    <div className="editor-slot-actions editor-slot-actions--galeria">
-                      <button type="button" className="editor-slot-add" onClick={() => handleAddSlot(i)}>+</button>
-                      {imagens.length > 1 && <button type="button" className="editor-slot-remove" onClick={() => handleRemoveSlot(i)}>×</button>}
-                    </div>
-                  </div>
+                  <ImageSlot key={i} index={i} {...slotProps} />
                 ))}
               </div>
             </div>
