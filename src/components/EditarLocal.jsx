@@ -7,8 +7,17 @@ const API_URL = import.meta.env.VITE_API_URL;
 const CLOUD_NAME = 'dybpie9aa';
 const UPLOAD_PRESET = 'gadys_tcc';
 
-let slotCounter = 0;
-const newSlot = (url = '') => ({ id: ++slotCounter, url });
+let _id = 0;
+const uid = () => ++_id;
+
+// seções: carrossel(0-1), sobre(2), visite(3-4), extras(5+)
+const SECOES = ['carrossel', 'sobre', 'visite'];
+const secaoDeIndice = (i) => {
+  if (i <= 1) return 'carrossel';
+  if (i === 2) return 'sobre';
+  if (i <= 4) return 'visite';
+  return 'extra';
+};
 
 const ImageSlot = ({ slot, index, large, uploading, onUpload, onAdd, onRemove, canRemove }) => {
   const fileRef = React.useRef();
@@ -50,7 +59,7 @@ function EditarLocal() {
         setLocal(data);
         const imgs = data.imagemUrl ? data.imagemUrl.split(',').map(u => u.trim()).filter(Boolean) : [];
         const base = imgs.length >= 5 ? imgs : [...imgs, ...Array(5 - imgs.length).fill('')];
-        setSlots(base.map(url => newSlot(url)));
+        setSlots(base.map((url, i) => ({ id: uid(), url, secao: secaoDeIndice(i) })));
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -73,12 +82,12 @@ function EditarLocal() {
     finally { setUploadingId(null); }
   }, []);
 
-  const handleAddSlot = useCallback((afterId) => {
+  const handleAddSlot = useCallback((afterId, secao) => {
     setSlots(prev => {
       const idx = prev.findIndex(s => s.id === afterId);
       return [
         ...prev.slice(0, idx + 1),
-        newSlot(''),
+        { id: uid(), url: '', secao },
         ...prev.slice(idx + 1)
       ];
     });
@@ -91,7 +100,14 @@ function EditarLocal() {
   const handleSave = async (aprovar = false) => {
     setSaving(true);
     try {
-      const body = { ...local, imagemUrl: slots.map(s => s.url).filter(Boolean).join(',') };
+      // ordem: carrossel, sobre, visite, extra
+      const ordered = [
+        ...slots.filter(s => s.secao === 'carrossel'),
+        ...slots.filter(s => s.secao === 'sobre'),
+        ...slots.filter(s => s.secao === 'visite'),
+        ...slots.filter(s => s.secao === 'extra'),
+      ];
+      const body = { ...local, imagemUrl: ordered.map(s => s.url).filter(Boolean).join(',') };
       const res = await fetch(`${API_URL}/api/locais/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
@@ -113,16 +129,26 @@ function EditarLocal() {
   if (loading) return <div className="local-loading">Carregando...</div>;
   if (!local) return <div className="local-loading">Local não encontrado.</div>;
 
-  const carrossel = slots.slice(0, 2).map(s => s.url).filter(Boolean);
-  const canRemove = slots.length > 1;
+  const carrosselSlots = slots.filter(s => s.secao === 'carrossel');
+  const sobreSlots = slots.filter(s => s.secao === 'sobre');
+  const visiteSlots = slots.filter(s => s.secao === 'visite');
+  const todosSlots = slots;
 
-  const slotProps = (slotId) => ({
-    uploading: uploadingId === slotId,
-    onUpload: handleImageUpload,
-    onAdd: handleAddSlot,
-    onRemove: handleRemoveSlot,
-    canRemove,
-  });
+  const carrossel = carrosselSlots.map(s => s.url).filter(Boolean);
+
+  const SP = (slot, i, secao, large = false) => (
+    <ImageSlot
+      key={slot.id}
+      slot={slot}
+      index={i}
+      large={large}
+      uploading={uploadingId === slot.id}
+      onUpload={handleImageUpload}
+      onAdd={(sid) => handleAddSlot(sid, secao)}
+      onRemove={handleRemoveSlot}
+      canRemove={slots.filter(s => s.secao === secao).length > 1}
+    />
+  );
 
   return (
     <div className="local-detalhe-container" style={{ position: 'relative' }}>
@@ -159,9 +185,7 @@ function EditarLocal() {
           />
         </div>
         <div className="editor-image-strip">
-          {slots.slice(0, 2).map((slot, i) => (
-            <ImageSlot key={slot.id} slot={slot} index={i} {...slotProps(slot.id)} />
-          ))}
+          {carrosselSlots.map((slot, i) => SP(slot, i, 'carrossel'))}
         </div>
       </header>
 
@@ -185,7 +209,7 @@ function EditarLocal() {
                   <textarea className="editor-inline-textarea" value={local.informacoesAdicionais || ''} onChange={e => handleField('informacoesAdicionais', e.target.value)} placeholder="Informações adicionais (opcional)..." rows={3} />
                 </div>
                 <div className="local-image-wrapper">
-                  {slots[2] && <ImageSlot key={slots[2].id} slot={slots[2]} index={2} large {...slotProps(slots[2].id)} />}
+                  {sobreSlots.map((slot, i) => SP(slot, i, 'sobre', true))}
                 </div>
               </div>
             </section>
@@ -216,9 +240,9 @@ function EditarLocal() {
                   </div>
                 </div>
                 <div className="local-image-wrapper">
-                  {slots.slice(3, 5).map((slot, i) => (
+                  {visiteSlots.map((slot, i) => (
                     <div key={slot.id} style={{ marginBottom: '1rem' }}>
-                      <ImageSlot slot={slot} index={3 + i} large {...slotProps(slot.id)} />
+                      {SP(slot, i, 'visite', true)}
                     </div>
                   ))}
                 </div>
@@ -229,10 +253,11 @@ function EditarLocal() {
           {aba === 'fotos' && (
             <div className="local-galeria-container">
               <h2>Galeria de Fotos</h2>
+              <p style={{ color: '#A9B4C2', fontSize: '0.85rem', marginBottom: '1.5rem', textAlign: 'center' }}>
+                Clique na imagem para trocar • + para adicionar • × para remover
+              </p>
               <div className="local-galeria-grid">
-                {slots.map((slot, i) => (
-                  <ImageSlot key={slot.id} slot={slot} index={i} {...slotProps(slot.id)} />
-                ))}
+                {todosSlots.map((slot, i) => SP(slot, i, slot.secao))}
               </div>
             </div>
           )}
