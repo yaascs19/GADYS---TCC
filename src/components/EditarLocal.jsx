@@ -19,7 +19,7 @@ const secaoDeIndice = (i) => {
   return 'extra';
 };
 
-const ImageSlot = ({ slot, index, large, uploading, onUpload, onAdd, onRemove, canRemove }) => {
+const ImageSlot = ({ slot, index, uploading, large, onUpload, onRemove, canRemove }) => {
   const fileRef = React.useRef();
   return (
     <div className="editor-slot-wrapper">
@@ -31,15 +31,16 @@ const ImageSlot = ({ slot, index, large, uploading, onUpload, onAdd, onRemove, c
         {uploading ? <span>⏳</span> : <span>{slot.url ? '🔄' : `+ Foto ${index + 1}`}</span>}
         <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={e => onUpload(e, slot.id)} />
       </div>
-      <div className="editor-slot-actions">
-        <button type="button" className="editor-slot-add" onClick={() => onAdd(slot.id)}>+</button>
-        {canRemove && (
-          <button type="button" className="editor-slot-remove" onClick={() => onRemove(slot.id)}>×</button>
-        )}
-      </div>
+      {canRemove && (
+        <button type="button" className="editor-slot-remove" onClick={() => onRemove(slot.id)}>×</button>
+      )}
     </div>
   );
 };
+
+const AddButton = ({ secao, onAdd }) => (
+  <button type="button" className="editor-slot-add-bottom" onClick={() => onAdd(secao)}>+</button>
+);
 
 function EditarLocal() {
   const { id } = useParams();
@@ -82,15 +83,8 @@ function EditarLocal() {
     finally { setUploadingId(null); }
   }, []);
 
-  const handleAddSlot = useCallback((afterId, secao) => {
-    setSlots(prev => {
-      const idx = prev.findIndex(s => s.id === afterId);
-      return [
-        ...prev.slice(0, idx + 1),
-        { id: uid(), url: '', secao },
-        ...prev.slice(idx + 1)
-      ];
-    });
+  const handleAddSlot = useCallback((secao) => {
+    setSlots(prev => [...prev, { id: uid(), url: '', secao }]);
   }, []);
 
   const handleRemoveSlot = useCallback((slotId) => {
@@ -144,7 +138,6 @@ function EditarLocal() {
       large={large}
       uploading={uploadingId === slot.id}
       onUpload={handleImageUpload}
-      onAdd={(sid) => handleAddSlot(sid, secao)}
       onRemove={handleRemoveSlot}
       canRemove={slots.filter(s => s.secao === secao).length > 1}
     />
@@ -186,6 +179,7 @@ function EditarLocal() {
         </div>
         <div className="editor-image-strip">
           {carrosselSlots.map((slot, i) => SP(slot, i, 'carrossel'))}
+          <AddButton secao="carrossel" onAdd={handleAddSlot} />
         </div>
       </header>
 
@@ -210,6 +204,7 @@ function EditarLocal() {
                 </div>
                 <div className="local-image-wrapper">
                   {sobreSlots.map((slot, i) => SP(slot, i, 'sobre', true))}
+                  <AddButton secao="sobre" onAdd={handleAddSlot} />
                 </div>
               </div>
             </section>
@@ -245,6 +240,7 @@ function EditarLocal() {
                       {SP(slot, i, 'visite', true)}
                     </div>
                   ))}
+                  <AddButton secao="visite" onAdd={handleAddSlot} />
                 </div>
               </div>
             </section>
@@ -259,6 +255,7 @@ function EditarLocal() {
               <div className="local-galeria-grid">
                 {todosSlots.map((slot, i) => SP(slot, i, slot.secao))}
               </div>
+              <AddButton secao="extra" onAdd={handleAddSlot} />
             </div>
           )}
 

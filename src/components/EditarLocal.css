@@ -239,30 +239,38 @@
   justify-content: center;
 }
 
-.editor-slot-add,
-.editor-slot-remove {
-  border: none;
-  border-radius: 6px;
-  width: 28px;
-  height: 28px;
-  font-size: 1rem;
+.editor-slot-add-bottom {
+  display: block;
+  width: 100%;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 2px dashed rgba(56, 189, 248, 0.4);
+  background: rgba(56, 189, 248, 0.05);
+  color: #38BDF8;
+  font-size: 1.2rem;
   font-weight: 700;
   cursor: pointer;
-  line-height: 1;
   transition: all 0.2s;
 }
-
-.editor-slot-add {
+.editor-slot-add-bottom:hover {
   background: rgba(56, 189, 248, 0.15);
-  color: #38BDF8;
-  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-color: #38BDF8;
 }
-.editor-slot-add:hover { background: rgba(56, 189, 248, 0.3); }
 
 .editor-slot-remove {
+  display: block;
+  width: 100%;
+  margin-top: 0.3rem;
+  padding: 0.2rem;
+  border-radius: 6px;
+  border: 1px solid rgba(244, 63, 94, 0.3);
   background: rgba(244, 63, 94, 0.1);
   color: #f43f5e;
-  border: 1px solid rgba(244, 63, 94, 0.3);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 .editor-slot-remove:hover { background: rgba(244, 63, 94, 0.25); }
 
