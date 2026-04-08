@@ -141,8 +141,8 @@ const CearaPontos = () => {
               <h2 className="ce-pontos-card-title">{ponto.nome}</h2>
               <p className="ce-pontos-card-category">{ponto.categoria} • {ponto.cidade}</p>
               <p className="ce-pontos-card-description">{ponto.descricao}</p>
-              <button className="ce-pontos-button" onClick={() => rotas[ponto.id] ? navigate(rotas[ponto.id]) : null}
-                style={{ opacity: rotas[ponto.id] ? 1 : 0.4, cursor: rotas[ponto.id] ? 'pointer' : 'not-allowed' }}>
+              <button className="ce-pontos-button" onClick={() => ponto.bdId ? navigate(rotas[ponto.id] || `/local/${ponto.bdId}`) : rotas[ponto.id] ? navigate(rotas[ponto.id]) : null}
+                style={{ opacity: ponto.bdId || rotas[ponto.id] ? 1 : 0.4, cursor: ponto.bdId || rotas[ponto.id] ? 'pointer' : 'not-allowed' }}>
                 Saiba mais
               </button>
             </div>

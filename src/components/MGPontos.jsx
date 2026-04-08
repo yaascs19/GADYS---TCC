@@ -68,8 +68,8 @@ const MGPontos = () => {
               <p className="sudeste-pontos-card-category">{ponto.categoria} • {ponto.cidade}</p>
               <p className="sudeste-pontos-card-description">{ponto.descricao}</p>
               <button className="sudeste-pontos-saibamais"
-                onClick={() => ponto.rota ? navigate(ponto.rota) : null}
-                style={{ opacity: ponto.rota ? 1 : 0.4, cursor: ponto.rota ? 'pointer' : 'not-allowed' }}>
+                onClick={() => ponto.bdId ? navigate(`/local/${ponto.bdId}`) : ponto.rota ? navigate(ponto.rota) : null}
+                style={{ opacity: ponto.bdId || ponto.rota ? 1 : 0.4, cursor: ponto.bdId || ponto.rota ? 'pointer' : 'not-allowed' }}>
                 Saiba mais
               </button>
             </div>

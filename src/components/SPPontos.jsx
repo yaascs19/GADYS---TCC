@@ -133,7 +133,8 @@ const SPPontos = () => {
               <h2 className="sp-pontos-card-title">{ponto.nome}</h2>
               <p className="sp-pontos-card-category">{ponto.categoria} • {ponto.cidade}</p>
               <p className="sp-pontos-card-description">{ponto.descricao}</p>
-              <button className="sp-pontos-button" onClick={() => alert('Página em breve!')}>
+              <button className="sp-pontos-button" onClick={() => ponto.bdId ? navigate(`/local/${ponto.bdId}`) : ponto.rota ? navigate(ponto.rota) : null}
+                style={{ opacity: ponto.bdId || ponto.rota ? 1 : 0.4, cursor: ponto.bdId || ponto.rota ? 'pointer' : 'not-allowed' }}>
                 Saiba mais
               </button>
             </div>

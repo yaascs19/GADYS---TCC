@@ -167,7 +167,8 @@ const RJPontos = () => {
               <p className="rj-pontos-card-description">{ponto.descricao}</p>
               <button 
                 className="rj-pontos-button"
-                onClick={() => handleSaibaMaisClick(ponto.id)}
+                onClick={() => ponto.bdId ? navigate(`/local/${ponto.bdId}`) : ponto.id === 'cristo-redentor' ? navigate('/cristo-redentor') : null}
+                style={{ opacity: ponto.bdId || ponto.id === 'cristo-redentor' ? 1 : 0.4, cursor: ponto.bdId || ponto.id === 'cristo-redentor' ? 'pointer' : 'not-allowed' }}
               >
                 Saiba mais
               </button>
