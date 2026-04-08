@@ -10,12 +10,14 @@ function AdicionarLocal() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [formData, setFormData] = useState({
     nome: '', subcategoria: '', cidade: '', estado: '', endereco: '', 
-    descricao: '', horario: '', preco: ''
+    descricao: '', horario: '', preco: '', coordenadas: ''
   })
   const [imagens, setImagens] = useState(Array(5).fill(null))
   const [uploadingIndex, setUploadingIndex] = useState(null)
   const [showSuccess, setShowSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [geocoding, setGeocoding] = useState(false)
+  const [geocodeStatus, setGeocodeStatus] = useState(null)
 
   const CLOUD_NAME = 'dybpie9aa'
   const UPLOAD_PRESET = 'gadys_tcc'
@@ -46,6 +48,27 @@ function AdicionarLocal() {
     setFormData(prev => ({ ...prev, [name]: value }))
   }
 
+  const handleGeocode = async () => {
+    const query = [formData.endereco, formData.cidade, formData.estado, 'Brasil'].filter(Boolean).join(', ')
+    if (!query.trim()) { alert('Preencha o endereço ou cidade antes de buscar.'); return }
+    setGeocoding(true)
+    setGeocodeStatus(null)
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1`, {
+        headers: { 'Accept-Language': 'pt-BR' }
+      })
+      const data = await res.json()
+      if (data.length > 0) {
+        const coords = `${parseFloat(data[0].lat).toFixed(6)}, ${parseFloat(data[0].lon).toFixed(6)}`
+        setFormData(prev => ({ ...prev, coordenadas: coords }))
+        setGeocodeStatus('ok')
+      } else {
+        setGeocodeStatus('notfound')
+      }
+    } catch { setGeocodeStatus('error') }
+    finally { setGeocoding(false) }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (imagens.every(img => img === null)) {
@@ -56,6 +79,7 @@ function AdicionarLocal() {
     try {
       const localData = {
         ...formData,
+        coordenadas: formData.coordenadas || null,
         imagemUrl: imagens.filter(Boolean).join(','),
         enviadoPor: localStorage.getItem('userName') || 'Usuário Anônimo',
         categoria: 'lugares-visitar',
@@ -65,7 +89,7 @@ function AdicionarLocal() {
       await axios.post(url, localData)
       
       setShowSuccess(true)
-      setFormData({ nome: '', subcategoria: '', cidade: '', estado: '', endereco: '', descricao: '', horario: '', preco: '' })
+      setFormData({ nome: '', subcategoria: '', cidade: '', estado: '', endereco: '', descricao: '', horario: '', preco: '', coordenadas: '' })
       setImagens(Array(5).fill(null))
       setTimeout(() => setShowSuccess(false), 5000)
       window.scrollTo(0, 0)
@@ -211,6 +235,34 @@ function AdicionarLocal() {
             <div className="form-group">
               <label className="form-label">Endereço Completo</label>
               <input type="text" name="endereco" value={formData.endereco} onChange={handleInputChange} className="form-input" placeholder="Ex: Av. Pedro Álvares Cabral, s/n" />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Localização no Mapa</label>
+              <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <input
+                  type="text"
+                  name="coordenadas"
+                  value={formData.coordenadas}
+                  onChange={handleInputChange}
+                  className="form-input"
+                  placeholder="Lat, Lon (preenchido automaticamente)"
+                  readOnly
+                  style={{ flex: 1, opacity: formData.coordenadas ? 1 : 0.6 }}
+                />
+                <button
+                  type="button"
+                  onClick={handleGeocode}
+                  disabled={geocoding}
+                  className="submit-button"
+                  style={{ width: 'auto', padding: '0.9rem 1.2rem', marginTop: 0, whiteSpace: 'nowrap', fontSize: '0.85rem' }}
+                >
+                  {geocoding ? '⏳ Buscando...' : 'Buscar no mapa'}
+                </button>
+              </div>
+              {geocodeStatus === 'ok' && <small style={{ color: '#10b981', marginTop: '0.3rem', display: 'block' }}>✓ Localização encontrada!</small>}
+              {geocodeStatus === 'notfound' && <small style={{ color: '#f43f5e', marginTop: '0.3rem', display: 'block' }}>Endereço não encontrado. Tente ser mais específico.</small>}
+              {geocodeStatus === 'error' && <small style={{ color: '#f43f5e', marginTop: '0.3rem', display: 'block' }}>Erro ao buscar. Tente novamente.</small>}
             </div>
 
             <button type="submit" disabled={loading} className="submit-button">
