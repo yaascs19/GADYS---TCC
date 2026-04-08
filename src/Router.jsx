@@ -14,6 +14,7 @@ import AdminPanel from './AdminPanel';
 import TranslateButton from './components/TranslateButton';
 
 import LocalDetalhe from './components/LocalDetalhe';
+import EditarLocal from './components/EditarLocal';
 
 import Para from './components/Para';
 import DestinosPara from './components/DestinosPara';
@@ -106,6 +107,7 @@ function Router() {
           <Route path="/painel-adm" element={<AdminPanel />} />
 
           <Route path="/local/:id" element={<LocalDetalhe />} />
+          <Route path="/admin/editar-local/:id" element={<EditarLocal />} />
 
           <Route path="/para" element={<Para />} />
           <Route path="/destinos-para" element={<DestinosPara />} />
