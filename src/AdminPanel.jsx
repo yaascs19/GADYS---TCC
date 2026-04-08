@@ -635,10 +635,17 @@ function AdminPanel() {
             )}
 
             <div className="card-actions">
+              <button
+                className="expand-btn"
+                onClick={() => toggleExpand(location.id)}
+              >
+                {expandedCard === location.id ? 'Recolher' : 'Expandir'}
+              </button>
               <button 
-                className={location.status === 'INATIVO' ? 'approve-btn' : 'expand-btn'}
+                className={location.status === 'INATIVO' ? 'approve-btn' : 'reject-btn'}
                 onClick={() => handleToggleLocal(location)}
                 disabled={togglingLocal === location.id}
+                style={{ background: location.status === 'INATIVO' ? undefined : 'rgba(255,165,0,0.15)', color: location.status === 'INATIVO' ? undefined : 'orange', borderColor: location.status === 'INATIVO' ? undefined : 'rgba(255,165,0,0.4)' }}
               >
                 {togglingLocal === location.id ? '...' : location.status === 'INATIVO' ? 'Ativar' : 'Inativar'}
               </button>
@@ -646,7 +653,7 @@ function AdminPanel() {
                 className="reject-btn"
                 onClick={() => handleRemoveLocation(location.id)}
               >
-                Excluir Local
+                Excluir
               </button>
             </div>
           </div>
