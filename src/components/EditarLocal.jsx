@@ -19,10 +19,10 @@ const ImageSlot = ({ slot, index, large, uploading, onUpload, onAdd, onRemove, c
       {uploading ? <span>⏳</span> : <span>{slot.url ? '🔄' : `+ Foto ${index + 1}`}</span>}
       <input type="file" accept="image/*" onChange={e => onUpload(e, slot.id)} />
     </label>
-    <div className="editor-slot-actions">
-      <button type="button" className="editor-slot-add" onClick={() => onAdd(slot.id)}>+</button>
+    <div className="editor-slot-actions" onClick={e => e.stopPropagation()}>
+      <button type="button" className="editor-slot-add" onClick={e => { e.preventDefault(); e.stopPropagation(); onAdd(slot.id); }}>+</button>
       {canRemove && (
-        <button type="button" className="editor-slot-remove" onClick={() => onRemove(slot.id)}>×</button>
+        <button type="button" className="editor-slot-remove" onClick={e => { e.preventDefault(); e.stopPropagation(); onRemove(slot.id); }}>×</button>
       )}
     </div>
   </div>

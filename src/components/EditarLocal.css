@@ -230,6 +230,9 @@
   display: flex;
   gap: 0.4rem;
   justify-content: flex-end;
+  position: relative;
+  z-index: 20;
+  pointer-events: all;
 }
 
 .editor-slot-actions--galeria {
