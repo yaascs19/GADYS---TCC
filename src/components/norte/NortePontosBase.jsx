@@ -57,8 +57,8 @@ const NortePontosBase = ({ config }) => {
               <p className="norte-pontos-card-category">{ponto.categoria} • {ponto.cidade}</p>
               <p className="norte-pontos-card-description">{ponto.descricao}</p>
               <button className="norte-pontos-saibamais"
-                onClick={() => ponto.rota ? navigate(ponto.rota) : null}
-                style={{ opacity: ponto.rota ? 1 : 0.4, cursor: ponto.rota ? 'pointer' : 'not-allowed' }}>
+                onClick={() => ponto.bdId ? navigate(`/local/${ponto.bdId}`) : ponto.rota ? navigate(ponto.rota) : null}
+                style={{ opacity: ponto.bdId || ponto.rota ? 1 : 0.4, cursor: ponto.bdId || ponto.rota ? 'pointer' : 'not-allowed' }}>
                 Saiba mais
               </button>
             </div>
