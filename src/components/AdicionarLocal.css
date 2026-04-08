@@ -7,7 +7,6 @@
     background: #f0f2f5;
     color: #333;
     transition: background 0.4s ease, color 0.4s ease;
-    padding: 2rem 0;
 }
 
 .adicionar-local-page.dark {
