@@ -253,7 +253,17 @@ function EditarLocal() {
                 Clique na imagem para trocar • + para adicionar • × para remover
               </p>
               <div className="local-galeria-grid">
-                {todosSlots.map((slot, i) => SP(slot, i, slot.secao))}
+                {todosSlots.map((slot, i) => (
+                  <ImageSlot
+                    key={slot.id}
+                    slot={slot}
+                    index={i}
+                    uploading={uploadingId === slot.id}
+                    onUpload={handleImageUpload}
+                    onRemove={handleRemoveSlot}
+                    canRemove={todosSlots.length > 1}
+                  />
+                ))}
               </div>
               <AddButton secao="extra" onAdd={handleAddSlot} />
             </div>
