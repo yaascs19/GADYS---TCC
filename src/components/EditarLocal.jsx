@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './LocalDetalhe.css';
 import './EditarLocal.css';
@@ -10,23 +10,27 @@ const UPLOAD_PRESET = 'gadys_tcc';
 let slotCounter = 0;
 const newSlot = (url = '') => ({ id: ++slotCounter, url });
 
-const ImageSlot = ({ slot, index, large, uploading, onUpload, onAdd, onRemove, canRemove }) => (
-  <div className="editor-slot-wrapper">
-    <label
-      className={`editor-image-thumb ${large ? 'editor-image-large' : ''}`}
-      style={{ backgroundImage: slot.url ? `url(${slot.url})` : 'none' }}
-    >
-      {uploading ? <span>⏳</span> : <span>{slot.url ? '🔄' : `+ Foto ${index + 1}`}</span>}
-      <input type="file" accept="image/*" onChange={e => onUpload(e, slot.id)} />
-    </label>
-    <div className="editor-slot-actions" onClick={e => e.stopPropagation()}>
-      <button type="button" className="editor-slot-add" onClick={e => { e.preventDefault(); e.stopPropagation(); onAdd(slot.id); }}>+</button>
-      {canRemove && (
-        <button type="button" className="editor-slot-remove" onClick={e => { e.preventDefault(); e.stopPropagation(); onRemove(slot.id); }}>×</button>
-      )}
+const ImageSlot = ({ slot, index, large, uploading, onUpload, onAdd, onRemove, canRemove }) => {
+  const fileRef = React.useRef();
+  return (
+    <div className="editor-slot-wrapper">
+      <div
+        className={`editor-image-thumb ${large ? 'editor-image-large' : ''}`}
+        style={{ backgroundImage: slot.url ? `url(${slot.url})` : 'none', cursor: 'pointer' }}
+        onClick={() => fileRef.current.click()}
+      >
+        {uploading ? <span>⏳</span> : <span>{slot.url ? '🔄' : `+ Foto ${index + 1}`}</span>}
+        <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={e => onUpload(e, slot.id)} />
+      </div>
+      <div className="editor-slot-actions">
+        <button type="button" className="editor-slot-add" onClick={() => onAdd(slot.id)}>+</button>
+        {canRemove && (
+          <button type="button" className="editor-slot-remove" onClick={() => onRemove(slot.id)}>×</button>
+        )}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 function EditarLocal() {
   const { id } = useParams();
