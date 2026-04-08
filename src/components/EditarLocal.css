@@ -218,6 +218,51 @@
 }
 .editor-galeria-item:hover .editor-galeria-overlay { opacity: 1; }
 
+/* Slot wrapper e botões + / × */
+.editor-slot-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.editor-slot-actions {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: flex-end;
+}
+
+.editor-slot-actions--galeria {
+  justify-content: center;
+}
+
+.editor-slot-add,
+.editor-slot-remove {
+  border: none;
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.2s;
+}
+
+.editor-slot-add {
+  background: rgba(56, 189, 248, 0.15);
+  color: #38BDF8;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+}
+.editor-slot-add:hover { background: rgba(56, 189, 248, 0.3); }
+
+.editor-slot-remove {
+  background: rgba(244, 63, 94, 0.1);
+  color: #f43f5e;
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+.editor-slot-remove:hover { background: rgba(244, 63, 94, 0.25); }
+
 @media (max-width: 600px) {
   .editor-toolbar { flex-direction: column; padding: 0.75rem 1rem; }
   .editor-toolbar-actions { flex-wrap: wrap; justify-content: center; }
