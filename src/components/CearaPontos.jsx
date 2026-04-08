@@ -78,7 +78,7 @@ const CearaPontos = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
-  const pontosAtivos = useLocaisAtivos('Ceará', pontosTuristicos);
+  const pontosAtivos = useLocaisAtivos('CE', pontosTuristicos);
 
   const categories = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
 

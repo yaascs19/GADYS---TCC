@@ -21,7 +21,7 @@ const ESPontos = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
-  const pontosAtivos = useLocaisAtivos('Espírito Santo', pontos);
+  const pontosAtivos = useLocaisAtivos('ES', pontos);
 
   useEffect(() => {
     let result = pontosAtivos;

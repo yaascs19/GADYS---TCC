@@ -7,7 +7,7 @@ const DestinosPara = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredDestinos, setFilteredDestinos] = useState([]);
-  const pontosAtivos = useLocaisAtivos('Pará', destinosData);
+  const pontosAtivos = useLocaisAtivos('PA', destinosData);
 
   const categories = ['Todos', 'Lugar Paradisíaco', 'Comida Típica', 'Costume Cultural', 'Monumento'];
 

@@ -2,7 +2,7 @@ import React from 'react';
 import NortePontosBase from './norte/NortePontosBase';
 
 const config = {
-  estado: 'Rondônia',
+  estado: 'RO',
   titulo: 'Tesouros de Rondônia',
   subtitulo: 'Descubra a Porta da Amazônia.',
   headerImage: '/images/geral/amazonas2.jpg',
