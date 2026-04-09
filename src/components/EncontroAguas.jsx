@@ -143,10 +143,9 @@ const EncontroDasAguas = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`${API_URL}/api/locais/buscar?nome=Encontro das Águas`)
+    fetch(`${API_URL}/api/locais/2`)
       .then(r => r.json())
-      .then(lista => {
-        const local = Array.isArray(lista) ? lista.find(l => l.status === 'ATIVO') : null;
+      .then(local => {
         if (!local?.informacoesAdicionais) return;
         try {
           const parsed = JSON.parse(local.informacoesAdicionais);
