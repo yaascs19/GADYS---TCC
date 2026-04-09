@@ -10,7 +10,7 @@ function AdicionarLocal() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [formData, setFormData] = useState({
     nome: '', subcategoria: '', cidade: '', estado: '', endereco: '', 
-    descricao: '', horario: '', preco: '', coordenadas: ''
+    descricao: '', horarioFuncionamento: '', preco: '', coordenadas: ''
   })
   const [imagens, setImagens] = useState(Array(5).fill(null))
   const [uploadingIndex, setUploadingIndex] = useState(null)
@@ -109,7 +109,7 @@ function AdicionarLocal() {
       await axios.post(url, localData)
       
       setShowSuccess(true)
-      setFormData({ nome: '', subcategoria: '', cidade: '', estado: '', endereco: '', descricao: '', horario: '', preco: '', coordenadas: '' })
+      setFormData({ nome: '', subcategoria: '', cidade: '', estado: '', endereco: '', descricao: '', horarioFuncionamento: '', preco: '', coordenadas: '' })
       setImagens(Array(5).fill(null))
       setTimeout(() => setShowSuccess(false), 5000)
       window.scrollTo(0, 0)
@@ -320,7 +320,7 @@ function AdicionarLocal() {
             <div className="form-grid">
               <div className="form-group">
                 <label className="form-label">Horários</label>
-                <input type="text" name="horario" value={formData.horario} onChange={handleInputChange} className="form-input" placeholder="Ex: 08h - 18h"/>
+                <input type="text" name="horarioFuncionamento" value={formData.horarioFuncionamento} onChange={handleInputChange} className="form-input" placeholder="Ex: 08h - 18h"/>
               </div>
               <div className="form-group">
                 <label className="form-label">Preço</label>
