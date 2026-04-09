@@ -623,7 +623,7 @@ function AdminPanel() {
             return categoria === locationFilter;
           })
           .map((location, index) => (
-          <div key={location.id || index} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
+          <div key={location.id || index} className="admin-card">
             <div className="card-header">
               <h3>{location.nome || location.name}</h3>
               <span className={`category-badge ${location.status}`}>{location.status}</span>
@@ -634,21 +634,12 @@ function AdminPanel() {
               <p><strong>Categoria:</strong> {location.subcategoria || location.category}</p>
             </div>
 
-            {expandedCard === location.id && (
-              <div className="card-details">
-                <p><strong>Descrição:</strong> {location.descricao || location.description}</p>
-                <p><strong>Localização:</strong> {location.localizacao || 'N/A'}</p>
-                <p><strong>Horário:</strong> {location.horario || 'N/A'}</p>
-                <p><strong>Preço:</strong> {location.preco || 'N/A'}</p>
-              </div>
-            )}
-
             <div className="card-actions">
               <button
                 className="expand-btn"
-                onClick={() => toggleExpand(location.id)}
+                onClick={() => navigate(`/admin/editar-local/${location.id}`)}
               >
-                {expandedCard === location.id ? 'Recolher' : 'Expandir'}
+                Editar
               </button>
               <button 
                 className={location.status === 'INATIVO' ? 'approve-btn' : 'reject-btn'}
