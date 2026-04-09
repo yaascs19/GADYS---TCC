@@ -38,143 +38,120 @@ const AddButton = ({ secao, onAdd }) => (
 );
 
 // --- Editor para locais com JSON rico (tipo EncontroAguas) ---
-function EditorRico({ dadosRicos, onChange }) {
+function EditorRico({ dadosRicos, onChange, abaAtiva }) {
   const { secoes } = dadosRicos;
+  const secao = secoes[abaAtiva];
+  if (!secao || abaAtiva === 'fotos') return null;
 
-  const updateSecao = (key, field, value) => {
-    onChange({ ...dadosRicos, secoes: { ...secoes, [key]: { ...secoes[key], [field]: value } } });
+  const updateSecao = (field, value) => {
+    onChange({ ...dadosRicos, secoes: { ...secoes, [abaAtiva]: { ...secao, [field]: value } } });
   };
 
-  const updateSubsecao = (secaoKey, idx, field, value) => {
-    const novas = [...(secoes[secaoKey].subsecoes || [])];
+  const updateSubsecao = (idx, field, value) => {
+    const novas = [...(secao.subsecoes || [])];
     novas[idx] = { ...novas[idx], [field]: value };
-    updateSecao(secaoKey, 'subsecoes', novas);
+    updateSecao('subsecoes', novas);
   };
 
-  const updateRecomendacao = (secaoKey, recIdx, field, value) => {
-    const novas = [...(secoes[secaoKey].recomendacoes || [])];
+  const updateRecomendacao = (recIdx, field, value) => {
+    const novas = [...(secao.recomendacoes || [])];
     novas[recIdx] = { ...novas[recIdx], [field]: value };
-    updateSecao(secaoKey, 'recomendacoes', novas);
+    updateSecao('recomendacoes', novas);
   };
 
-  const updateItem = (secaoKey, recIdx, itemIdx, field, value) => {
-    const novas = [...(secoes[secaoKey].recomendacoes || [])];
+  const updateItem = (recIdx, itemIdx, field, value) => {
+    const novas = [...(secao.recomendacoes || [])];
     const itens = [...novas[recIdx].itens];
     itens[itemIdx] = { ...itens[itemIdx], [field]: value };
     novas[recIdx] = { ...novas[recIdx], itens };
-    updateSecao(secaoKey, 'recomendacoes', novas);
+    updateSecao('recomendacoes', novas);
   };
 
-  const addItem = (secaoKey, recIdx) => {
-    const novas = [...(secoes[secaoKey].recomendacoes || [])];
+  const addItem = (recIdx) => {
+    const novas = [...(secao.recomendacoes || [])];
     novas[recIdx] = { ...novas[recIdx], itens: [...novas[recIdx].itens, { nome: '', nota: 5, contato: '', site: '' }] };
-    updateSecao(secaoKey, 'recomendacoes', novas);
+    updateSecao('recomendacoes', novas);
   };
 
-  const removeItem = (secaoKey, recIdx, itemIdx) => {
-    const novas = [...(secoes[secaoKey].recomendacoes || [])];
+  const removeItem = (recIdx, itemIdx) => {
+    const novas = [...(secao.recomendacoes || [])];
     novas[recIdx] = { ...novas[recIdx], itens: novas[recIdx].itens.filter((_, i) => i !== itemIdx) };
-    updateSecao(secaoKey, 'recomendacoes', novas);
+    updateSecao('recomendacoes', novas);
   };
 
-  const addSubsecao = (secaoKey) => {
-    const novas = [...(secoes[secaoKey].subsecoes || []), { titulo: '', texto: '' }];
-    updateSecao(secaoKey, 'subsecoes', novas);
-  };
-
-  const removeSubsecao = (secaoKey, idx) => {
-    updateSecao(secaoKey, 'subsecoes', secoes[secaoKey].subsecoes.filter((_, i) => i !== idx));
-  };
-
-  const addRecomendacao = (secaoKey) => {
-    const novas = [...(secoes[secaoKey].recomendacoes || []), { titulo: '', itens: [] }];
-    updateSecao(secaoKey, 'recomendacoes', novas);
-  };
-
-  const removeRecomendacao = (secaoKey, recIdx) => {
-    updateSecao(secaoKey, 'recomendacoes', secoes[secaoKey].recomendacoes.filter((_, i) => i !== recIdx));
-  };
+  const addSubsecao = () => updateSecao('subsecoes', [...(secao.subsecoes || []), { titulo: '', texto: '' }]);
+  const removeSubsecao = (idx) => updateSecao('subsecoes', secao.subsecoes.filter((_, i) => i !== idx));
+  const addRecomendacao = () => updateSecao('recomendacoes', [...(secao.recomendacoes || []), { titulo: '', itens: [] }]);
+  const removeRecomendacao = (recIdx) => updateSecao('recomendacoes', secao.recomendacoes.filter((_, i) => i !== recIdx));
 
   return (
-    <div>
-      {Object.entries(secoes).map(([key, secao]) => {
-        if (key === 'fotos') return null;
-        return (
-          <div key={key} style={{ marginBottom: '2.5rem', background: 'rgba(255,255,255,0.04)', borderRadius: '12px', padding: '1.5rem', border: '1px solid rgba(56,189,248,0.15)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
-              <span style={{ color: '#38BDF8', fontWeight: 700, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: 1 }}>Aba:</span>
-              <input className="editor-inline-input" style={{ fontWeight: 700, color: '#38BDF8' }} value={secao.label || ''} onChange={e => updateSecao(key, 'label', e.target.value)} placeholder="Nome da aba" />
+    <div style={{ marginBottom: '2.5rem' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+        <span style={{ color: '#38BDF8', fontWeight: 700, fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: 1 }}>Nome da aba:</span>
+        <input className="editor-inline-input" style={{ fontWeight: 700, color: '#38BDF8' }} value={secao.label || ''} onChange={e => updateSecao('label', e.target.value)} placeholder="Nome da aba" />
+      </div>
+
+      <input className="editor-inline-input" style={{ fontSize: '1.2rem', fontWeight: 600, color: '#fff', marginBottom: '0.75rem' }} value={secao.titulo || ''} onChange={e => updateSecao('titulo', e.target.value)} placeholder="Título da seção" />
+      <textarea className="editor-inline-textarea" value={secao.texto || ''} onChange={e => updateSecao('texto', e.target.value)} placeholder="Texto principal..." rows={4} />
+
+      {secao.lista !== undefined && (
+        <div style={{ marginTop: '1rem' }}>
+          <p style={{ color: '#38BDF8', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.5rem' }}>LISTA DE FATOS</p>
+          {secao.lista.map((item, i) => (
+            <div key={i} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
+              <input className="editor-inline-input" value={item} onChange={e => { const n = [...secao.lista]; n[i] = e.target.value; updateSecao('lista', n); }} placeholder="Item da lista" />
+              <button type="button" className="editor-slot-remove" onClick={() => updateSecao('lista', secao.lista.filter((_, j) => j !== i))}>×</button>
             </div>
+          ))}
+          <button type="button" className="editor-slot-add-bottom" onClick={() => updateSecao('lista', [...secao.lista, ''])}>+ item</button>
+        </div>
+      )}
 
-            <input className="editor-inline-input" style={{ fontSize: '1.2rem', fontWeight: 600, color: '#fff', marginBottom: '0.75rem' }} value={secao.titulo || ''} onChange={e => updateSecao(key, 'titulo', e.target.value)} placeholder="Título da seção" />
+      <div style={{ marginTop: '1rem' }}>
+        <p style={{ color: '#38BDF8', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.5rem' }}>IMAGEM DA SEÇÃO</p>
+        <input className="editor-inline-input" value={secao.imagem || ''} onChange={e => updateSecao('imagem', e.target.value)} placeholder="URL da imagem" />
+      </div>
 
-            <textarea className="editor-inline-textarea" value={secao.texto || ''} onChange={e => updateSecao(key, 'texto', e.target.value)} placeholder="Texto principal..." rows={4} />
-
-            {/* Lista de fatos */}
-            {secao.lista && (
-              <div style={{ marginTop: '1rem' }}>
-                <p style={{ color: '#38BDF8', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.5rem' }}>LISTA DE FATOS</p>
-                {secao.lista.map((item, i) => (
-                  <div key={i} style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.5rem' }}>
-                    <input className="editor-inline-input" value={item} onChange={e => { const n = [...secao.lista]; n[i] = e.target.value; updateSecao(key, 'lista', n); }} placeholder="Item da lista" />
-                    <button type="button" className="editor-slot-remove" onClick={() => updateSecao(key, 'lista', secao.lista.filter((_, j) => j !== i))}>×</button>
-                  </div>
-                ))}
-                <button type="button" className="editor-slot-add-bottom" onClick={() => updateSecao(key, 'lista', [...secao.lista, ''])}>+ item</button>
+      {secao.subsecoes !== undefined && (
+        <div style={{ marginTop: '1.5rem' }}>
+          <p style={{ color: '#38BDF8', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.75rem' }}>SUBSEÇÕES</p>
+          {secao.subsecoes.map((sub, i) => (
+            <div key={i} style={{ background: 'rgba(56,104,58,0.3)', borderRadius: '8px', padding: '1rem', marginBottom: '0.75rem', borderLeft: '3px solid #38BDF8' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                <input className="editor-inline-input" style={{ fontWeight: 600 }} value={sub.titulo} onChange={e => updateSubsecao(i, 'titulo', e.target.value)} placeholder="Título da subseção" />
+                <button type="button" className="editor-slot-remove" onClick={() => removeSubsecao(i)}>×</button>
               </div>
-            )}
-
-            {/* Imagem da seção */}
-            <div style={{ marginTop: '1rem' }}>
-              <p style={{ color: '#38BDF8', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.5rem' }}>IMAGEM DA SEÇÃO</p>
-              <input className="editor-inline-input" value={secao.imagem || ''} onChange={e => updateSecao(key, 'imagem', e.target.value)} placeholder="URL da imagem" />
+              <textarea className="editor-inline-textarea" value={sub.texto} onChange={e => updateSubsecao(i, 'texto', e.target.value)} placeholder="Texto..." rows={3} />
             </div>
+          ))}
+          <button type="button" className="editor-slot-add-bottom" onClick={addSubsecao}>+ subseção</button>
+        </div>
+      )}
 
-            {/* Subsecoes */}
-            {secao.subsecoes !== undefined && (
-              <div style={{ marginTop: '1.5rem' }}>
-                <p style={{ color: '#38BDF8', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.75rem' }}>SUBSEÇÕES</p>
-                {secao.subsecoes.map((sub, i) => (
-                  <div key={i} style={{ background: 'rgba(56,104,58,0.3)', borderRadius: '8px', padding: '1rem', marginBottom: '0.75rem', borderLeft: '3px solid #38BDF8' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                      <input className="editor-inline-input" style={{ fontWeight: 600 }} value={sub.titulo} onChange={e => updateSubsecao(key, i, 'titulo', e.target.value)} placeholder="Título da subseção" />
-                      <button type="button" className="editor-slot-remove" onClick={() => removeSubsecao(key, i)}>×</button>
-                    </div>
-                    <textarea className="editor-inline-textarea" value={sub.texto} onChange={e => updateSubsecao(key, i, 'texto', e.target.value)} placeholder="Texto..." rows={3} />
-                  </div>
-                ))}
-                <button type="button" className="editor-slot-add-bottom" onClick={() => addSubsecao(key)}>+ subseção</button>
+      {secao.recomendacoes !== undefined && (
+        <div style={{ marginTop: '1.5rem' }}>
+          <p style={{ color: '#38BDF8', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.75rem' }}>RECOMENDAÇÕES</p>
+          {secao.recomendacoes.map((rec, ri) => (
+            <div key={ri} style={{ background: 'rgba(56,104,58,0.3)', borderRadius: '8px', padding: '1rem', marginBottom: '1rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
+                <input className="editor-inline-input" style={{ fontWeight: 600 }} value={rec.titulo} onChange={e => updateRecomendacao(ri, 'titulo', e.target.value)} placeholder="Título do grupo" />
+                <button type="button" className="editor-slot-remove" onClick={() => removeRecomendacao(ri)}>×</button>
               </div>
-            )}
-
-            {/* Recomendações */}
-            {secao.recomendacoes !== undefined && (
-              <div style={{ marginTop: '1.5rem' }}>
-                <p style={{ color: '#38BDF8', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.75rem' }}>RECOMENDAÇÕES</p>
-                {secao.recomendacoes.map((rec, ri) => (
-                  <div key={ri} style={{ background: 'rgba(56,104,58,0.3)', borderRadius: '8px', padding: '1rem', marginBottom: '1rem' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.75rem' }}>
-                      <input className="editor-inline-input" style={{ fontWeight: 600 }} value={rec.titulo} onChange={e => updateRecomendacao(key, ri, 'titulo', e.target.value)} placeholder="Título do grupo" />
-                      <button type="button" className="editor-slot-remove" onClick={() => removeRecomendacao(key, ri)}>×</button>
-                    </div>
-                    {rec.itens.map((item, ii) => (
-                      <div key={ii} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 2fr auto', gap: '0.5rem', marginBottom: '0.5rem', alignItems: 'center' }}>
-                        <input className="editor-inline-input" value={item.nome} onChange={e => updateItem(key, ri, ii, 'nome', e.target.value)} placeholder="Nome" />
-                        <input className="editor-inline-input" type="number" min="1" max="5" step="0.1" value={item.nota} onChange={e => updateItem(key, ri, ii, 'nota', parseFloat(e.target.value))} placeholder="Nota" />
-                        <input className="editor-inline-input" value={item.contato} onChange={e => updateItem(key, ri, ii, 'contato', e.target.value)} placeholder="Contato" />
-                        <input className="editor-inline-input" value={item.site} onChange={e => updateItem(key, ri, ii, 'site', e.target.value)} placeholder="Site" />
-                        <button type="button" className="editor-slot-remove" onClick={() => removeItem(key, ri, ii)}>×</button>
-                      </div>
-                    ))}
-                    <button type="button" className="editor-slot-add-bottom" onClick={() => addItem(key, ri)}>+ item</button>
-                  </div>
-                ))}
-                <button type="button" className="editor-slot-add-bottom" onClick={() => addRecomendacao(key)}>+ grupo de recomendações</button>
-              </div>
-            )}
-          </div>
-        );
-      })}
+              {rec.itens.map((item, ii) => (
+                <div key={ii} style={{ display: 'grid', gridTemplateColumns: '2fr 1fr 1fr 2fr auto', gap: '0.5rem', marginBottom: '0.5rem', alignItems: 'center' }}>
+                  <input className="editor-inline-input" value={item.nome} onChange={e => updateItem(ri, ii, 'nome', e.target.value)} placeholder="Nome" />
+                  <input className="editor-inline-input" type="number" min="1" max="5" step="0.1" value={item.nota} onChange={e => updateItem(ri, ii, 'nota', parseFloat(e.target.value))} placeholder="Nota" />
+                  <input className="editor-inline-input" value={item.contato} onChange={e => updateItem(ri, ii, 'contato', e.target.value)} placeholder="Contato" />
+                  <input className="editor-inline-input" value={item.site} onChange={e => updateItem(ri, ii, 'site', e.target.value)} placeholder="Site" />
+                  <button type="button" className="editor-slot-remove" onClick={() => removeItem(ri, ii)}>×</button>
+                </div>
+              ))}
+              <button type="button" className="editor-slot-add-bottom" onClick={() => addItem(ri)}>+ item</button>
+            </div>
+          ))}
+          <button type="button" className="editor-slot-add-bottom" onClick={addRecomendacao}>+ grupo de recomendações</button>
+        </div>
+      )}
     </div>
   );
 }
@@ -341,7 +318,7 @@ function EditarLocal() {
 
           {/* EDITOR RICO */}
           {dadosRicos && aba !== '__fotos__' && aba !== 'fotos' && (
-            <EditorRico dadosRicos={dadosRicos} onChange={setDadosRicos} />
+            <EditorRico dadosRicos={dadosRicos} onChange={setDadosRicos} abaAtiva={aba} />
           )}
 
           {/* EDITOR SIMPLES — aba sobre */}
