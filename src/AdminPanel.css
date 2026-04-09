@@ -381,6 +381,10 @@ body {
     color: var(--text-light-primary);
 }
 
+body:has(.light-mode) {
+    background: #f8fafc;
+}
+
 .light-mode .admin-header h1 {
     background: linear-gradient(to right, #1e293b, #475569);
     -webkit-background-clip: text;
