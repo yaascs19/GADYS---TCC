@@ -37,6 +37,53 @@ const AddButton = ({ secao, onAdd }) => (
   <button type="button" className="editor-slot-add-bottom" onClick={() => onAdd(secao)}>+</button>
 );
 
+// --- Uploader de imagem com preview ---
+const ImagemUploader = ({ url, onChange }) => {
+  const fileRef = React.useRef();
+  const [uploading, setUploading] = React.useState(false);
+
+  const handleUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploading(true);
+    const data = new FormData();
+    data.append('file', file);
+    data.append('upload_preset', UPLOAD_PRESET);
+    try {
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: data });
+      const json = await res.json();
+      onChange(json.secure_url);
+    } catch { alert('Erro ao fazer upload.'); }
+    finally { setUploading(false); }
+  };
+
+  return (
+    <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+      <div
+        onClick={() => fileRef.current.click()}
+        style={{
+          width: '120px', height: '80px', borderRadius: '8px', cursor: 'pointer',
+          border: '2px dashed rgba(56,189,248,0.4)', backgroundSize: 'cover',
+          backgroundPosition: 'center', backgroundImage: url ? `url(${url})` : 'none',
+          backgroundColor: 'rgba(255,255,255,0.04)', display: 'flex',
+          alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+          fontSize: '0.75rem', color: '#38BDF8'
+        }}
+      >
+        {uploading ? '⏳' : url ? '🔄' : '+ foto'}
+        <input ref={fileRef} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleUpload} />
+      </div>
+      <input
+        className="editor-inline-input"
+        value={url}
+        onChange={e => onChange(e.target.value)}
+        placeholder="ou cole uma URL..."
+        style={{ flex: 1 }}
+      />
+    </div>
+  );
+};
+
 // --- Editor para locais com JSON rico (tipo EncontroAguas) ---
 function EditorRico({ dadosRicos, onChange, abaAtiva }) {
   const { secoes } = dadosRicos;
@@ -109,7 +156,7 @@ function EditorRico({ dadosRicos, onChange, abaAtiva }) {
 
       <div style={{ marginTop: '1rem' }}>
         <p style={{ color: '#38BDF8', fontSize: '0.8rem', fontWeight: 600, marginBottom: '0.5rem' }}>IMAGEM DA SEÇÃO</p>
-        <input className="editor-inline-input" value={secao.imagem || ''} onChange={e => updateSecao('imagem', e.target.value)} placeholder="URL da imagem" />
+        <ImagemUploader url={secao.imagem || ''} onChange={url => updateSecao('imagem', url)} />
       </div>
 
       {secao.subsecoes !== undefined && (
