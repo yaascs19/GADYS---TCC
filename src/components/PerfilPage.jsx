@@ -12,7 +12,8 @@ function PerfilPage() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
   const [profileData, setProfileData] = useState(() => {
-    const saved = JSON.parse(localStorage.getItem('profileData'))
+    const usuarioId = localStorage.getItem('usuarioId')
+    const saved = JSON.parse(localStorage.getItem(`profileData_${usuarioId}`))
     return saved || {
       nome: localStorage.getItem('userName') || 'Usuário',
       email: localStorage.getItem('userEmail') || 'usuario@email.com',
@@ -26,7 +27,10 @@ function PerfilPage() {
   const [userStats, setUserStats] = useState({ locaisAdicionados: 0, avaliacoes: 0, comentarios: 0 })
   const [meusLocais, setMeusLocais] = useState([])
 
-  const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+  const saveProfile = (data) => {
+    const usuarioId = localStorage.getItem('usuarioId')
+    localStorage.setItem(`profileData_${usuarioId}`, JSON.stringify(data))
+  }
 
   const toggleTheme = () => {
     const n = !darkMode
@@ -60,7 +64,7 @@ function PerfilPage() {
       const json = await res.json()
       const newData = { ...profileData, foto: json.secure_url }
       setProfileData(newData)
-      localStorage.setItem('profileData', JSON.stringify(newData))
+      saveProfile(newData)
       setShowPhotoOptions(false)
     } catch { alert('Erro ao fazer upload da foto.') }
   }
@@ -68,7 +72,7 @@ function PerfilPage() {
   const handleEmojiSelect = (emoji) => {
     const newData = { ...profileData, foto: emoji }
     setProfileData(newData)
-    localStorage.setItem('profileData', JSON.stringify(newData))
+    saveProfile(newData)
     setShowPhotoOptions(false)
   }
 
@@ -76,7 +80,7 @@ function PerfilPage() {
     if (urlInput.trim()) {
       const newData = { ...profileData, foto: urlInput.trim() }
       setProfileData(newData)
-      localStorage.setItem('profileData', JSON.stringify(newData))
+      saveProfile(newData)
       setUrlInput('')
       setShowPhotoOptions(false)
     }
@@ -249,7 +253,7 @@ function PerfilPage() {
                       senha: tempProfileData.novaSenha?.trim() ? tempProfileData.novaSenha : usuarioAtual.senha
                     })
                     setProfileData(tempProfileData)
-                    localStorage.setItem('profileData', JSON.stringify(tempProfileData))
+                    saveProfile(tempProfileData)
                     localStorage.setItem('userName', tempProfileData.nome)
                     setShowEditModal(false)
                     alert('Dados salvos com sucesso!')
