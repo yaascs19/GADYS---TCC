@@ -1,160 +1,119 @@
-import { useState, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import './LugaresPage.css'; // Import the CSS file
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import './LugaresPage.css'; // Importa a nova estilização
 
 function LugaresPage() {
-  const navigate = useNavigate()
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem('darkMode') === 'true'
-  })
+  const navigate = useNavigate();
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
 
   const toggleTheme = () => {
-    const newDarkMode = !darkMode
-    setDarkMode(newDarkMode)
-    localStorage.setItem('darkMode', newDarkMode.toString())
-  }
+    const newDarkMode = !darkMode;
+    setDarkMode(newDarkMode);
+    localStorage.setItem('darkMode', newDarkMode.toString());
+  };
 
-  useEffect(() => {
-    const style = document.createElement('style')
-    style.textContent = `
-      .nav-links.active {
-        right: 0 !important;
-      }
-      .nav-overlay.active {
-        opacity: 1 !important;
-        visibility: visible !important;
-      }
-      .nav-links li:hover .dropdown-content {
-        display: block !important;
-      }
-    `
-    document.head.appendChild(style)
-    return () => document.head.removeChild(style)
-  }, [])
-
+  // Dados dos lugares
   const lugares = [
     {
+      id: 'cristo-redentor',
       nome: 'Cristo Redentor',
       cidade: 'Rio de Janeiro - RJ',
-      descricao: 'Uma das Sete Maravilhas do Mundo Moderno',
+      descricao: 'Uma das Sete Maravilhas do Mundo Moderno, com uma vista panorâmica inesquecível da cidade.',
       imagem: '/cristo.jpg'
     },
     {
+      id: 'pao-de-acucar',
       nome: 'Pão de Açúcar',
       cidade: 'Rio de Janeiro - RJ',
-      descricao: 'Cartão postal do Rio de Janeiro',
+      descricao: 'Um icônico complexo de morros que oferece vistas deslumbrantes através de um passeio de teleférico.',
       imagem: '/pao.jpg'
     },
     {
+      id: 'cataratas-iguacu',
       nome: 'Cataratas do Iguaçu',
       cidade: 'Foz do Iguaçu - PR',
-      descricao: "Uma das maiores quedas d'água do mundo",
+      descricao: 'Um complexo impressionante com centenas de quedas d\'água, considerado uma das maiores do mundo.',
       imagem: '/cata.jpg'
     },
     {
+      id: 'pelourinho',
       nome: 'Pelourinho',
       cidade: 'Salvador - BA',
-      descricao: 'Centro histórico de Salvador',
+      descricao: 'O vibrante centro histórico de Salvador, repleto de arquitetura colonial colorida, cultura e música.',
       imagem: '/pelo.jpg'
     },
     {
+      id: 'fernando-noronha',
       nome: 'Fernando de Noronha',
       cidade: 'Pernambuco - PE',
-      descricao: 'Paraíso ecológico brasileiro',
+      descricao: 'Um paraíso ecológico com praias de areia branca, águas cristalinas e vida marinha abundante.',
       imagem: '/fer.jpg'
     },
     {
+      id: 'pantanal',
       nome: 'Pantanal',
       cidade: 'Mato Grosso - MT',
-      descricao: 'Maior planície alagável do mundo',
+      descricao: 'A maior planície inundável do planeta, um santuário de vida selvagem com biodiversidade incomparável.',
       imagem: '/pan.jpg'
     }
-  ]
+  ];
 
   return (
-    <div className={`lugares-page ${darkMode ? 'dark' : ''}`}>
-      <div className="background-gradient" />
+    <div className={`lugares-visual-container ${darkMode ? 'dark' : ''}`}>
 
-      <header className="lugares-header">
-        <div className="lugares-logo-container">
-          <img src="/images/logos/logo.png" alt="GADYS" className="lugares-logo" />
-          <span className="lugares-title-header">GADYS</span>
+      <header className="lugares-header-visual">
+        <img src="/images/geral/mapa-br.jpg" alt="Mapa do Brasil" className="header-bg-image" />
+        <Link to="/" className="back-button-visual">← Voltar</Link>
+        <div className="header-content">
+          <h1>Explore o Brasil</h1>
+          <p>Descubra alguns dos destinos mais incríveis que nosso país tem a oferecer.</p>
         </div>
-        <div className="lugares-header-actions">
-          <button onClick={toggleTheme} className="theme-toggle-button">
-            {darkMode ? '☀️' : '🌙'}
-          </button>
-          <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', zIndex: 1002 }} onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
-            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0', transition: '0.3s' }} />
-            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0', transition: '0.3s' }} />
-            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0', transition: '0.3s' }} />
-          </div>
-        </div>
-        <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0, 0, 0, 0.5)', zIndex: 1000, opacity: 0, visibility: 'hidden', transition: 'all 0.3s ease' }} className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')} />
-        <ul className="nav-links" style={{ position: 'fixed', top: 0, right: '-100%', width: '300px', height: '100vh', background: '#1a237e', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: '2rem', margin: 0, padding: '4rem 0', listStyle: 'none', transition: 'right 0.3s ease', zIndex: 1001, overflowY: 'scroll', boxShadow: '-5px 0 15px rgba(0,0,0,0.1)' }}>
-        <li><Link to="/" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</Link></li>
-        <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Lugares (atual)</a></li>
-        <li><Link to="/mapa" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Mapa</Link></li>
-        <li><Link to="/adicionar-local" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Adicionar Local</Link></li>
-        <li><Link to="/perfil" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Meu Perfil</Link></li>
-        <li><Link to="/sobre" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Sobre</Link></li>
-        <li><Link to="/contato" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Contato</Link></li>
-      </ul>
       </header>
 
-      <main className="lugares-main">
-        <section className="hero-section">
-          <h1 className="hero-title">
-            Lugares Mais Visitados
-          </h1>
-          <p className="hero-subtitle">
-            Descubra os destinos mais procurados pelos turistas<br />
-            <span className="hero-subtitle-highlight">Explore as maravilhas do Brasil</span>
-          </p>
-        </section>
-
-        <section className="lugares-grid-section">
-          <div className="lugares-grid">
-            {lugares.map((lugar, index) => (
-              <div key={index} className="lugar-card">
-                <img src={lugar.imagem} alt={lugar.nome} className="lugar-card-image" />
-                <div className="lugar-card-content">
-                  <h3 className="lugar-card-title">{lugar.nome}</h3>
-                  <p className="lugar-card-city">{lugar.cidade}</p>
-                  <p className="lugar-card-description">{lugar.descricao}</p>
-                  <Link to={
-                    lugar.nome === 'Cristo Redentor' ? '/cristo-redentor' :
-                    lugar.nome === 'Pão de Açúcar' ? '/pao-de-acucar' :
-                    lugar.nome === 'Cataratas do Iguaçu' ? '/cataratas-iguacu' :
-                    lugar.nome === 'Pelourinho' ? '/pelourinho' :
-                    lugar.nome === 'Fernando de Noronha' ? '/fernando-noronha' :
-                    lugar.nome === 'Pantanal' ? '/pantanal' : '#'}
-                    className="lugar-card-link">
-                    Visitar
-                  </Link>
-                </div>
+      <main className="page-content-wrapper">
+        <div className="lugares-grid-visual">
+          {lugares.map((lugar) => (
+            <div key={lugar.id} className="lugar-card-visual">
+              <div className="card-image-container">
+                <img src={lugar.imagem} alt={lugar.nome} />
               </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="actions-section">
-          <div className="actions-container">
-            <Link to="/" className="action-link action-link-primary">
-              Voltar ao Início
-            </Link>
-            <Link to="/mapa" className="action-link action-link-secondary">
-              Ver no Mapa
-            </Link>
-          </div>
-        </section>
+              <div className="card-content-visual">
+                <h3>{lugar.nome}</h3>
+                <p className="city">{lugar.cidade}</p>
+                <p className="description">{lugar.descricao}</p>
+                <Link to={`/${lugar.id}`} className="card-link-visual">
+                  Saber Mais
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
       </main>
 
-      <footer className="lugares-footer">
-        <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
-      </footer>
+      {/* O botão de tema pode ser integrado ao header principal do App, se houver um, ou mantido aqui */}
+      <button
+        onClick={toggleTheme}
+        style={{
+          position: 'fixed',
+          bottom: '20px',
+          right: '20px',
+          zIndex: 1000,
+          background: darkMode ? '#f0f2f5' : '#2c2c2c',
+          color: darkMode ? '#2c2c2c' : '#f0f2f5',
+          border: 'none',
+          borderRadius: '50%',
+          width: '50px',
+          height: '50px',
+          fontSize: '24px',
+          cursor: 'pointer',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+        }}
+      >
+        {darkMode ? '☀️' : '🌙'}
+      </button>
+
     </div>
-  )
+  );
 }
 
-export default LugaresPage
+export default LugaresPage;
