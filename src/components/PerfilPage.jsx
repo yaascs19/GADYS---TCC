@@ -11,6 +11,11 @@ function PerfilPage() {
   const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
   const [menuOpen, setMenuOpen] = useState(false)
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
+
+  if (localStorage.getItem('isLoggedIn') !== 'true') {
+    navigate('/login')
+    return null
+  }
   const [profileData, setProfileData] = useState(() => {
     const usuarioId = localStorage.getItem('usuarioId')
     const saved = JSON.parse(localStorage.getItem(`profileData_${usuarioId}`))
@@ -41,14 +46,12 @@ function PerfilPage() {
   }
 
   useEffect(() => {
-    if (localStorage.getItem('isLoggedIn') !== 'true') { navigate('/login'); return }
     const userName = localStorage.getItem('userName')
     const usuarioId = localStorage.getItem('usuarioId')
     fetch(`${API_URL}/api/locais`)
       .then(r => r.json())
       .then(locais => {
         const userName = localStorage.getItem('userName')
-        console.log('userName:', userName, 'isAdmin:', isAdmin)
         const meus = locais.filter(l =>
           isAdmin ? l.enviadoPor === 'GADYS' : l.enviadoPor === userName
         )
