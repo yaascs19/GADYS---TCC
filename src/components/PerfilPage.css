@@ -438,25 +438,25 @@
 }
 
 .login-modal-content {
-  background: #fff;
+  background: #2d2d2d;
   border-radius: 16px;
   padding: 2.5rem;
   max-width: 400px;
   width: 90%;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
   animation: fadeInDown 0.3s ease;
 }
 
 .login-modal-content h3 {
   font-size: 1.6rem;
   font-weight: 700;
-  color: #1a237e;
+  color: #3498db;
   margin-bottom: 0.75rem;
 }
 
 .login-modal-content p {
-  color: #555;
+  color: #aaa;
   margin-bottom: 2rem;
   line-height: 1.6;
 }
@@ -468,7 +468,7 @@
 }
 
 .login-button {
-  background: #1a237e;
+  background: #3498db;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -478,12 +478,12 @@
   font-size: 0.95rem;
   transition: background 0.2s;
 }
-.login-button:hover { background: #283593; }
+.login-button:hover { background: #2980b9; }
 
 .login-modal-actions .back-button {
   background: transparent;
-  color: #666;
-  border: 1px solid #ddd;
+  color: #aaa;
+  border: 1px solid #444;
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
   font-weight: 600;
@@ -491,4 +491,4 @@
   font-size: 0.95rem;
   transition: all 0.2s;
 }
-.login-modal-actions .back-button:hover { background: #f5f5f5; }
+.login-modal-actions .back-button:hover { background: #3a3a3a; }
