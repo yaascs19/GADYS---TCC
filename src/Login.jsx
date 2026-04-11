@@ -80,6 +80,7 @@ function Login({ onLogin, isAdminAccess = false }) {
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('userType', response.data.tipoUsuario);
             localStorage.setItem('userName', response.data.nome);
+            localStorage.setItem('userEmail', email);
             localStorage.setItem('usuarioId', response.data.usuarioId);
             if (onLogin) onLogin(response.data.tipoUsuario, response.data.nome);
             navigate('/');
