@@ -3,46 +3,41 @@ import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import './PerfilPage.css'
 
+const CLOUD_NAME = 'dybpie9aa'
+const UPLOAD_PRESET = 'gadys_tcc'
+
 function PerfilPage() {
   const navigate = useNavigate()
   const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
   const [menuOpen, setMenuOpen] = useState(false)
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
-  
-  const [editMode, setEditMode] = useState(false)
   const [profileData, setProfileData] = useState(() => {
-    const savedProfile = JSON.parse(localStorage.getItem('profileData'))
-    const userName = localStorage.getItem('userName')
-    const userEmail = localStorage.getItem('userEmail')
-    
-    return savedProfile || {
-      nome: userName || 'Usuário',
-      email: userEmail || 'usuario@email.com',
-      telefone: '(11) 99999-9999',
-      cidade: 'São Paulo, SP',
+    const saved = JSON.parse(localStorage.getItem('profileData'))
+    return saved || {
+      nome: localStorage.getItem('userName') || 'Usuário',
+      email: localStorage.getItem('userEmail') || 'usuario@email.com',
       foto: null
     }
   })
-  
   const [showPhotoOptions, setShowPhotoOptions] = useState(false)
   const [urlInput, setUrlInput] = useState('')
   const [showEditModal, setShowEditModal] = useState(false)
   const [tempProfileData, setTempProfileData] = useState(profileData)
-  const [loading, setLoading] = useState(false)
-  const [userStats, setUserStats] = useState({
-    locaisAdicionados: 0,
-    avaliacoes: 0,
-    comentarios: 0
-  })
+  const [userStats, setUserStats] = useState({ locaisAdicionados: 0, avaliacoes: 0, comentarios: 0 })
   const [meusLocais, setMeusLocais] = useState([])
 
-  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '')
+  const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+
+  const toggleTheme = () => {
+    const n = !darkMode
+    setDarkMode(n)
+    localStorage.setItem('darkMode', n.toString())
+  }
 
   useEffect(() => {
-    if (localStorage.getItem('isLoggedIn') !== 'true') { navigate('/login'); return; }
+    if (localStorage.getItem('isLoggedIn') !== 'true') { navigate('/login'); return }
     const userName = localStorage.getItem('userName')
     const usuarioId = localStorage.getItem('usuarioId')
-    // buscar locais do usuário pelo enviadoPor ou criado_por
     fetch(`${API_URL}/api/locais`)
       .then(r => r.json())
       .then(locais => {
@@ -57,9 +52,6 @@ function PerfilPage() {
       })
       .catch(() => {})
   }, [])
-  
-  const CLOUD_NAME = 'dybpie9aa'
-  const UPLOAD_PRESET = 'gadys_tcc'
 
   const handlePhotoChange = async (e) => {
     const file = e.target.files[0]
@@ -76,14 +68,14 @@ function PerfilPage() {
       setShowPhotoOptions(false)
     } catch { alert('Erro ao fazer upload da foto.') }
   }
-  
+
   const handleEmojiSelect = (emoji) => {
     const newData = { ...profileData, foto: emoji }
     setProfileData(newData)
     localStorage.setItem('profileData', JSON.stringify(newData))
     setShowPhotoOptions(false)
   }
-  
+
   const handleUrlSubmit = () => {
     if (urlInput.trim()) {
       const newData = { ...profileData, foto: urlInput.trim() }
@@ -93,28 +85,15 @@ function PerfilPage() {
       setShowPhotoOptions(false)
     }
   }
-  
-  const handleSave = () => {
-    localStorage.setItem('profileData', JSON.stringify(profileData))
-    setEditMode(false)
-    alert('Dados salvos com sucesso!')
-  }
 
-  useEffect(() => {
-    if (localStorage.getItem('isLoggedIn') !== 'true') navigate('/login')
-  }, [])
+  const isUrl = (str) => str && str.match(/^(https?:\/\/|\/)/)
 
   return (
     <div className={`perfil-page ${darkMode ? 'dark' : 'light'}`}>
       <header style={{
         background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
-        padding: '1rem 2rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
+        padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between',
+        alignItems: 'center', position: 'sticky', top: 0, zIndex: 100,
         borderBottom: '1px solid rgba(255,255,255,0.1)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -175,13 +154,14 @@ function PerfilPage() {
           <div className="profile-picture-container">
             <div
               className={`profile-picture ${!profileData.foto ? 'sem-foto' : ''}`}
-              style={{ backgroundImage: profileData.foto && !profileData.foto.match(/^(https?:\/\/|\/)/) ? 'none' : profileData.foto ? `url(${profileData.foto})` : 'none' }}
+              style={{ backgroundImage: isUrl(profileData.foto) ? `url(${profileData.foto})` : 'none' }}
             >
               {!profileData.foto && '👤'}
-              {profileData.foto && !profileData.foto.match(/^(https?:\/\/|\/)/) && profileData.foto}
+              {profileData.foto && !isUrl(profileData.foto) && profileData.foto}
             </div>
             <button onClick={() => setShowPhotoOptions(!showPhotoOptions)} className="change-picture-button">📷</button>
           </div>
+
           {showPhotoOptions && (
             <div className="photo-options">
               <input type="file" accept="image/*" onChange={handlePhotoChange} id="photoInput" style={{ display: 'none' }} />
@@ -195,13 +175,14 @@ function PerfilPage() {
               <button onClick={handleUrlSubmit}>Usar URL</button>
             </div>
           )}
+
           <div className="profile-info">
             <h2>{profileData.nome}</h2>
             <p className="email">{profileData.email}</p>
           </div>
           <div className="profile-actions">
-            <button onClick={() => { setTempProfileData(profileData); setShowEditModal(true); }} className="edit-profile-button">Editar Perfil</button>
-            <button onClick={() => { localStorage.removeItem('isLoggedIn'); localStorage.removeItem('userType'); localStorage.removeItem('userName'); navigate('/'); }} className="logout-button">Sair</button>
+            <button onClick={() => { setTempProfileData(profileData); setShowEditModal(true) }} className="edit-profile-button">Editar Perfil</button>
+            <button onClick={() => { localStorage.removeItem('isLoggedIn'); localStorage.removeItem('userType'); localStorage.removeItem('userName'); navigate('/') }} className="logout-button">Sair</button>
           </div>
         </div>
 
@@ -265,8 +246,6 @@ function PerfilPage() {
                 onClick={async () => {
                   try {
                     const usuarioId = localStorage.getItem('usuarioId')
-                    const RAW_API_URL = import.meta.env.VITE_API_URL
-                    const API_URL = RAW_API_URL.replace(/\/$/, '')
                     const { data: usuarioAtual } = await axios.get(`${API_URL}/api/usuarios/${usuarioId}`)
                     await axios.put(`${API_URL}/api/usuarios/${usuarioId}`, {
                       nome: tempProfileData.nome,
@@ -278,10 +257,7 @@ function PerfilPage() {
                     localStorage.setItem('userName', tempProfileData.nome)
                     setShowEditModal(false)
                     alert('Dados salvos com sucesso!')
-                  } catch (error) {
-                    alert('Erro ao salvar. Tente novamente.')
-                    console.error(error)
-                  }
+                  } catch { alert('Erro ao salvar. Tente novamente.') }
                 }}
                 className="save-button"
               >Salvar</button>
