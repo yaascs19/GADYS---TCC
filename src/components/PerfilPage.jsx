@@ -78,16 +78,25 @@ function PerfilPage() {
   }, [])
 
   useEffect(() => {
-    const usuarioId = localStorage.getItem('usuarioId')
     fetch(`${API_URL}/api/locais`)
       .then(r => r.json())
-      .then(locais => {
+      .then(async locais => {
         const userName = localStorage.getItem('userName')
         const meus = locais.filter(l =>
           isAdmin ? l.enviadoPor === 'GADYS' : l.enviadoPor === userName
         )
-        setMeusLocais(meus)
-        setUserStats(prev => ({ ...prev, locaisAdicionados: meus.length }))
+        const meusComImagem = await Promise.all(
+          meus.map(async l => {
+            if (l.imagemUrl) return l
+            try {
+              const res = await fetch(`${API_URL}/api/locais/${l.id}`)
+              const detalhe = await res.json()
+              return { ...l, imagemUrl: detalhe.imagemUrl || detalhe.imagem_url || null }
+            } catch { return l }
+          })
+        )
+        setMeusLocais(meusComImagem)
+        setUserStats(prev => ({ ...prev, locaisAdicionados: meusComImagem.length }))
       })
       .catch(() => {})
   }, [])
