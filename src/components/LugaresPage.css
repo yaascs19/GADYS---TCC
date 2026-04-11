@@ -1,24 +1,41 @@
-@keyframes lp-card-load-in {
+/* === ESTILO GERAL DE PONTOS TURÍSTICOS v1.0 === */
+
+/* --- Animações --- */
+@keyframes card-load-in {
   0% { opacity: 0; transform: translateY(30px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
-.lp-page {
-  --lp-primary: #1a237e;
-  --lp-secondary: #3949ab;
-  --lp-accent: #667eea;
-  --lp-surface: #ffffff;
-  --lp-shadow: rgba(102, 126, 234, 0.2);
+/* --- Estilos da Página com Variáveis --- */
+.lugares-page-container {
+  --lugares-bg: #f4f7f6;
+  --lugares-text: #333;
+  --lugares-primary: #005f73;
+  --lugares-secondary: #0a9396;
+  --lugares-accent: #94d2bd;
+  --lugares-surface: #ffffff;
+  --lugares-shadow: rgba(0, 95, 115, 0.15);
 
   font-family: 'Nunito Sans', sans-serif;
-  background: linear-gradient(160deg, #f0f2ff 0%, #dde1f5 100%);
-  color: #1a237e;
+  background-color: var(--lugares-bg);
+  color: var(--lugares-text);
   min-height: 100vh;
 }
 
-/* --- Header --- */
-.lp-header {
-  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/images/geral/mapa-br.jpg');
+.lugares-page-container.dark {
+  --lugares-bg: #121212;
+  --lugares-text: #e0e0e0;
+  --lugares-primary: #94d2bd;
+  --lugares-secondary: #0a9396;
+  --lugares-accent: #005f73;
+  --lugares-surface: #1e1e1e;
+  --lugares-shadow: rgba(0, 0, 0, 0.4);
+}
+
+
+/* --- Cabeçalho --- */
+.lugares-header-styled {
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/geral/mapa-br.jpg');
   background-size: cover;
   background-position: center;
   color: white;
@@ -27,166 +44,110 @@
   position: relative;
 }
 
-.lp-back-btn {
-  position: absolute;
-  top: 2rem;
-  left: 2rem;
-  background: rgba(255,255,255,0.2);
-  border: 2px solid white;
-  color: white;
-  padding: 0.7rem 1.5rem;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 0.95rem;
-  text-decoration: none;
-  backdrop-filter: blur(5px);
-  transition: background 0.3s ease;
-}
-
-.lp-back-btn:hover {
-  background: rgba(255,255,255,0.35);
-}
-
-.lp-header h1 {
+.lugares-header-styled h1 {
   font-family: 'Merriweather', serif;
-  font-size: clamp(3rem, 7vw, 5rem);
+  font-size: clamp(3rem, 7vw, 4.5rem);
   font-weight: 700;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.lp-header p {
-  font-size: clamp(1.2rem, 3vw, 1.6rem);
+.lugares-header-styled p {
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
   font-weight: 300;
   margin-top: 1rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-/* --- Banner de Ranking --- */
-.lp-ranking-banner {
+/* --- Grid e Cards --- */
+.lugares-grid-styled {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 3rem;
+  padding: 4rem 2rem;
+  max-width: 1600px;
+  margin: 0 auto;
+}
+
+.lugar-card-styled {
+  background-color: var(--lugares-surface);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px var(--lugares-shadow);
+  overflow: hidden;
+  animation: card-load-in 0.5s backwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  background: linear-gradient(135deg, #1a237e, #3949ab);
-  color: white;
-  padding: 1.2rem 2rem;
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: 0.3px;
+  flex-direction: column;
 }
 
-.lp-ranking-banner span { font-size: 1.4rem; }
-.lp-ranking-banner p { margin: 0; opacity: 0.92; }
+.lugar-card-styled:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 25px var(--lugares-shadow);
+}
 
-.lp-btn {
-  background-color: rgba(255,255,255,0.2);
-  border: 2px solid white;
-  color: white;
+.lugar-card-image-container { height: 240px; overflow: hidden; }
+.lugar-card-image { width: 100%; height: 100%; object-fit: cover; }
+
+.lugar-card-content {
+ padding: 1.5rem;
+ display: flex;
+ flex-direction: column;
+ flex-grow: 1;
+}
+
+.lugar-card-title {
+  font-family: 'Merriweather', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--lugares-primary);
+  margin-bottom: 0.5rem;
+}
+
+.lugar-card-city {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--lugares-secondary);
+  margin-bottom: 1rem;
+}
+
+.lugar-card-description {
+    line-height: 1.6;
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+}
+
+.lugar-card-link {
+  margin-top: auto;
+  background-color: var(--lugares-primary);
+  border: 2px solid var(--lugares-primary);
+  color: var(--lugares-surface);
   padding: 0.7rem 1.5rem;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 600;
-  font-size: 0.95rem;
-}
-
-/* --- Grid e Cards --- */
-.lp-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 3rem;
-  padding: 4rem 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.lp-card {
-  background-color: var(--lp-surface);
-  border-radius: 10px;
-  box-shadow: 0 4px 15px var(--lp-shadow);
-  overflow: hidden;
-  animation: lp-card-load-in 0.5s backwards;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  border-top: 4px solid transparent;
-  border-image: linear-gradient(90deg, #667eea, #764ba2) 1;
-}
-
-.lp-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 30px rgba(102, 126, 234, 0.35);
-}
-
-.lp-card-image-container { height: 220px; overflow: hidden; position: relative; }
-.lp-card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
-.lp-card-image-container:hover .lp-card-image { transform: scale(1.05); }
-
-.lp-rank-badge {
-  position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
-  z-index: 2;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  color: white;
-  font-weight: 700;
-  font-size: 0.85rem;
-  padding: 0.3rem 0.75rem;
-  border-radius: 50px;
-  letter-spacing: 0.5px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-}
-
-.lp-card-content {
-  padding: 1.5rem;
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-}
-
-.lp-card-title {
-  font-family: 'Merriweather', serif;
-  font-size: 1.7rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #1a237e, #764ba2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 0.5rem;
-}
-
-.lp-card-category {
-  font-weight: 700;
-  color: var(--lp-accent);
-  margin-bottom: 1rem;
-}
-
-.lp-card-description {
-  line-height: 1.6;
-  flex-grow: 1;
-  color: #444;
-}
-
-.lp-card-description {
-  line-height: 1.6;
-  flex-grow: 1;
-  color: #444;
-  margin-bottom: 0.5rem;
-}
-
-.lp-card .lp-btn {
-  margin-top: 1.5rem;
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  border: none;
-  color: white;
+  text-decoration: none;
+  text-align: center;
   align-self: flex-start;
 }
 
+.lugar-card-link:hover {
+    background-color: var(--lugares-secondary);
+    border-color: var(--lugares-secondary);
+}
+
+
 /* --- Rodapé --- */
-.lp-footer {
-  background: linear-gradient(135deg, #1a237e, #0d1257);
-  color: #c5cae9;
+.lugares-footer-styled {
+  background-color: #333;
+  color: white;
   text-align: center;
   padding: 2rem;
+  margin-top: 2rem;
+}
+
+.lugares-page-container.dark .lugares-footer-styled {
+    background-color: #1a1a1a;
+    border-top: 1px solid #333;
 }
