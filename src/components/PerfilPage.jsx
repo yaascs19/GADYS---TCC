@@ -48,6 +48,7 @@ function PerfilPage() {
       .then(r => r.json())
       .then(locais => {
         const userName = localStorage.getItem('userName')
+        console.log('userName:', userName, 'isAdmin:', isAdmin)
         const meus = locais.filter(l =>
           isAdmin ? l.enviadoPor === 'GADYS' : l.enviadoPor === userName
         )
