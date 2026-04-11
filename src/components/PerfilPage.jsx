@@ -13,8 +13,18 @@ function PerfilPage() {
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
 
   if (localStorage.getItem('isLoggedIn') !== 'true') {
-    navigate('/login')
-    return null
+    return (
+      <div className="login-modal">
+        <div className="login-modal-content">
+          <h3>Acesso Restrito</h3>
+          <p>Para acessar seu perfil, você precisa estar logado.</p>
+          <div className="login-modal-actions">
+            <button onClick={() => navigate('/login')} className="login-button">Fazer Login</button>
+            <button onClick={() => navigate('/')} className="back-button">Voltar</button>
+          </div>
+        </div>
+      </div>
+    )
   }
   const [profileData, setProfileData] = useState(() => {
     const usuarioId = localStorage.getItem('usuarioId')
