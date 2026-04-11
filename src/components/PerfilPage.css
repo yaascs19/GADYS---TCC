@@ -492,3 +492,128 @@
   transition: all 0.2s;
 }
 .login-modal-actions .back-button:hover { background: #3a3a3a; }
+
+/* ── Modal Editar Perfil ── */
+.edit-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  backdrop-filter: blur(6px);
+  animation: fadeInDown 0.2s ease;
+}
+
+.edit-modal-content {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 460px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.perfil-page.dark .edit-modal-content {
+  background: #1e1e2e;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+}
+
+.edit-modal-content h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.edit-modal-content input {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  border-radius: 10px;
+  border: 1.5px solid #e0e0e0;
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  background: #f8f9ff;
+  color: #333;
+}
+
+.edit-modal-content input:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.perfil-page.dark .edit-modal-content input {
+  background: #2a2a3e;
+  border-color: #3a3a5e;
+  color: #e0e0e0;
+}
+
+.perfil-page.dark .edit-modal-content input:focus {
+  border-color: #667eea;
+}
+
+.edit-modal-content input::placeholder {
+  color: #aaa;
+}
+
+.edit-modal-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.save-button {
+  flex: 1;
+  padding: 0.9rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.save-button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.cancel-button {
+  flex: 1;
+  padding: 0.9rem;
+  border: 1.5px solid #e0e0e0;
+  border-radius: 10px;
+  background: transparent;
+  color: #666;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.cancel-button:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.perfil-page.dark .cancel-button {
+  border-color: #3a3a5e;
+  color: #aaa;
+}
+
+.perfil-page.dark .cancel-button:hover {
+  background: #2a2a3e;
+  color: #e0e0e0;
+}
