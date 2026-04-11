@@ -62,36 +62,22 @@
   margin-top: 1rem;
 }
 
-/* --- Controles --- */
-.lp-controls {
-  padding: 3rem 2rem;
+/* --- Banner de Ranking --- */
+.lp-ranking-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
   background: linear-gradient(135deg, #1a237e, #3949ab);
   color: white;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  padding: 1.2rem 2rem;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
 }
 
-.lp-search-bar {
-  width: 100%;
-  max-width: 600px;
-  padding: 1rem 1.5rem;
-  border: 2px solid rgba(255,255,255,0.4);
-  border-radius: 50px;
-  font-size: 1.1rem;
-  margin: 0 auto;
-  display: block;
-  background-color: rgba(255,255,255,0.95);
-  color: #1a237e;
-}
-
-.lp-search-bar::placeholder { color: rgba(26, 35, 126, 0.5); }
-
-.lp-filter-buttons {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin-top: 2rem;
-}
+.lp-ranking-banner span { font-size: 1.4rem; }
+.lp-ranking-banner p { margin: 0; opacity: 0.92; }
 
 .lp-btn {
   background-color: rgba(255,255,255,0.2);
@@ -103,12 +89,6 @@
   transition: all 0.3s ease;
   font-weight: 600;
   font-size: 0.95rem;
-}
-
-.lp-btn.active {
-  background-color: white;
-  color: #1a237e;
-  font-weight: 700;
 }
 
 /* --- Grid e Cards --- */
@@ -139,9 +119,24 @@
   box-shadow: 0 8px 30px rgba(102, 126, 234, 0.35);
 }
 
-.lp-card-image-container { height: 220px; overflow: hidden; }
+.lp-card-image-container { height: 220px; overflow: hidden; position: relative; }
 .lp-card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
 .lp-card-image-container:hover .lp-card-image { transform: scale(1.05); }
+
+.lp-rank-badge {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 50px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+}
 
 .lp-card-content {
   padding: 1.5rem;
@@ -171,6 +166,13 @@
   line-height: 1.6;
   flex-grow: 1;
   color: #444;
+}
+
+.lp-card-description {
+  line-height: 1.6;
+  flex-grow: 1;
+  color: #444;
+  margin-bottom: 0.5rem;
 }
 
 .lp-card .lp-btn {
