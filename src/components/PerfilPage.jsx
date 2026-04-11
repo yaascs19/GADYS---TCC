@@ -32,6 +32,8 @@ function PerfilPage() {
     localStorage.setItem(`profileData_${usuarioId}`, JSON.stringify(data))
   }
 
+  const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+
   const toggleTheme = () => {
     const n = !darkMode
     setDarkMode(n)
