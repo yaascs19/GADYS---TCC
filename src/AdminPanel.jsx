@@ -557,7 +557,7 @@ function AdminPanel() {
         {activeTab === 'pending' && (pendingLocations.length === 0 ? (
             <div className="empty-state-message"><p>Nenhum local pendente.</p></div>
         ) : pendingLocations.map(location => (
-          <div key={location.id} className={`admin-card ${expandedCard === location.id ? 'expanded' : ''}`}>
+          <div key={location.id} className="admin-card">
             <div className="card-header">
               <h3>{location.nome}</h3>
               <span className="category-badge PENDENTE">{location.subcategoria}</span>
@@ -578,25 +578,12 @@ function AdminPanel() {
               })()}
             </div>
 
-            {expandedCard === location.id && (
-              <div className="card-details">
-                <p><strong>Descrição:</strong> {location.descricao}</p>
-                <p><strong>Coordenadas:</strong> {location.coordenadas}</p>
-              </div>
-            )}
-
             <div className="card-actions">
-              <button 
+              <button
                 className="expand-btn"
-                onClick={() => toggleExpand(location.id)}
+                onClick={() => navigate(`/local/${location.id}`)}
               >
-                {expandedCard === location.id ? 'Recolher' : 'Expandir'}
-              </button>
-              <button 
-                className="expand-btn"
-                onClick={() => navigate(`/admin/editar-local/${location.id}`)}
-              >
-                Editar
+                Ver
               </button>
               <button 
                 className="approve-btn"
@@ -637,9 +624,11 @@ function AdminPanel() {
             <div className="card-actions">
               <button
                 className="expand-btn"
-                onClick={() => navigate(`/admin/editar-local/${location.id}`)}
+                onClick={() => location.enviadoPor === 'Admin' || !location.enviadoPor
+                  ? navigate(`/admin/editar-local/${location.id}`)
+                  : navigate(`/local/${location.id}`)}
               >
-                Editar
+                {location.enviadoPor === 'Admin' || !location.enviadoPor ? 'Editar' : 'Ver'}
               </button>
               <button 
                 className={location.status === 'INATIVO' ? 'approve-btn' : 'reject-btn'}
@@ -700,7 +689,7 @@ function AdminPanel() {
         {activeTab === 'trash' && (trashedLocations.length === 0 ? (
             <div className="empty-state-message"><p>A lixeira está vazia.</p></div>
         ) : trashedLocations.map((location, index) => (
-          <div key={location.id || index} className={`admin-card ${expandedCard === `trash-${location.id}` ? 'expanded' : ''}`}>
+          <div key={location.id || index} className="admin-card">
             <div className="card-header">
               <h3>{location.nome || location.name}</h3>
               <span className="category-badge INATIVO">{location.subcategoria || location.category}</span>
@@ -711,19 +700,7 @@ function AdminPanel() {
               <p><strong>Excluído em:</strong> {new Date(location.trashedAt).toLocaleDateString()}</p>
             </div>
 
-            {expandedCard === `trash-${location.id}` && (
-              <div className="card-details">
-                <p><strong>Descrição:</strong> {location.descricao || location.description}</p>
-              </div>
-            )}
-
             <div className="card-actions">
-              <button 
-                className="expand-btn"
-                onClick={() => toggleExpand(`trash-${location.id}`)}
-              >
-                {expandedCard === `trash-${location.id}` ? 'Recolher' : 'Expandir'}
-              </button>
               <button 
                 className="approve-btn"
                 onClick={() => handleRestoreLocation(location.id)}
