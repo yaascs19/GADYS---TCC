@@ -426,75 +426,10 @@
 .meu-local-status.PENDENTE { background: rgba(245,158,11,0.15); color: #f59e0b; }
 .meu-local-status.INATIVO { background: rgba(148,163,184,0.15); color: #94a3b8; }
 
-.login-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  backdrop-filter: blur(4px);
-}
-
-.login-modal-content {
-  background: #2d2d2d;
-  border-radius: 16px;
-  padding: 2.5rem;
-  max-width: 400px;
-  width: 90%;
-  text-align: center;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-  animation: fadeInDown 0.3s ease;
-}
-
-.login-modal-content h3 {
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: #3498db;
-  margin-bottom: 0.75rem;
-}
-
-.login-modal-content p {
-  color: #aaa;
-  margin-bottom: 2rem;
-  line-height: 1.6;
-}
-
-.login-modal-actions {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
-.login-button {
-  background: #3498db;
-  color: white;
-  border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: background 0.2s;
-}
-.login-button:hover { background: #2980b9; }
-
-.login-modal-actions .back-button {
-  background: transparent;
-  color: #aaa;
-  border: 1px solid #444;
-  padding: 0.75rem 1.5rem;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 0.95rem;
-  transition: all 0.2s;
-}
-.login-modal-actions .back-button:hover { background: #3a3a3a; }
 
 /* ── Modal Editar Perfil ── */
-.edit-modal {
+.edit-modal,
+.login-modal {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.65);
@@ -506,114 +441,144 @@
   animation: fadeInDown 0.2s ease;
 }
 
-.edit-modal-content {
-  background: #ffffff;
+.edit-modal-content,
+.login-modal-content {
+  background: rgba(255, 255, 255, 0.97);
+  backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 2.5rem;
   width: 100%;
-  max-width: 460px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
+  max-width: 420px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  text-align: center;
 }
 
-.perfil-page.dark .edit-modal-content {
-  background: #1e1e2e;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+.perfil-page.dark .edit-modal-content,
+.perfil-page.dark .login-modal-content {
+  background: rgba(30, 30, 46, 0.97);
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
 }
 
-.edit-modal-content h3 {
-  font-size: 1.6rem;
+.edit-modal-content h3,
+.login-modal-content h3 {
+  font-size: 1.8rem;
   font-weight: 700;
-  margin: 0 0 0.25rem;
+  margin: 0;
   background: linear-gradient(135deg, #667eea, #764ba2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  letter-spacing: 0.5px;
+}
+
+.login-modal-content p {
+  color: #666;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.perfil-page.dark .login-modal-content p {
+  color: #aaa;
 }
 
 .edit-modal-content input {
   width: 100%;
-  padding: 0.85rem 1.1rem;
-  border-radius: 10px;
-  border: 1.5px solid #e0e0e0;
+  padding: 1rem;
+  border: 2px solid transparent;
+  border-radius: 12px;
   font-size: 1rem;
   font-family: inherit;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: all 0.3s ease;
   box-sizing: border-box;
-  background: #f8f9ff;
+  background: rgba(255, 255, 255, 0.8);
   color: #333;
 }
 
 .edit-modal-content input:focus {
   border-color: #667eea;
-  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+  background: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
 }
 
 .perfil-page.dark .edit-modal-content input {
-  background: #2a2a3e;
-  border-color: #3a3a5e;
+  background: rgba(255, 255, 255, 0.07);
   color: #e0e0e0;
 }
 
 .perfil-page.dark .edit-modal-content input:focus {
+  background: rgba(255, 255, 255, 0.1);
   border-color: #667eea;
 }
 
-.edit-modal-content input::placeholder {
-  color: #aaa;
-}
+.edit-modal-content input::placeholder { color: #999; font-weight: 300; }
 
-.edit-modal-actions {
+.edit-modal-actions,
+.login-modal-actions {
   display: flex;
   gap: 1rem;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 }
 
-.save-button {
+.save-button,
+.login-button {
   flex: 1;
-  padding: 0.9rem;
+  padding: 1rem;
   border: none;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   font-size: 1rem;
-  font-weight: 700;
+  font-weight: 500;
   cursor: pointer;
-  transition: opacity 0.2s, transform 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
 }
 
-.save-button:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
+.save-button:hover,
+.login-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
 }
 
-.cancel-button {
+.cancel-button,
+.login-modal-actions .back-button {
   flex: 1;
-  padding: 0.9rem;
-  border: 1.5px solid #e0e0e0;
-  border-radius: 10px;
-  background: transparent;
+  padding: 1rem;
+  border: 2px solid transparent;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
   color: #666;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s;
+  transition: all 0.3s ease;
 }
 
-.cancel-button:hover {
-  background: #f0f0f0;
+.cancel-button:hover,
+.login-modal-actions .back-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  background: white;
   color: #333;
 }
 
-.perfil-page.dark .cancel-button {
-  border-color: #3a3a5e;
+.perfil-page.dark .cancel-button,
+.perfil-page.dark .login-modal-actions .back-button {
+  background: rgba(255, 255, 255, 0.07);
   color: #aaa;
 }
 
-.perfil-page.dark .cancel-button:hover {
-  background: #2a2a3e;
+.perfil-page.dark .cancel-button:hover,
+.perfil-page.dark .login-modal-actions .back-button:hover {
+  background: rgba(255, 255, 255, 0.12);
   color: #e0e0e0;
 }
