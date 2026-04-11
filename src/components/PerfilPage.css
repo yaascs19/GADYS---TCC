@@ -110,16 +110,19 @@
   font-size: 5rem;
   color: white;
   border: 4px solid;
+  background-color: transparent;
 }
 
 .perfil-page.light .profile-picture {
-  background-color: #3498db;
   border-color: #eee;
 }
 
 .perfil-page.dark .profile-picture {
-  background-color: #3498db;
   border-color: #333;
+}
+
+.profile-picture.sem-foto {
+  background-color: #3498db;
 }
 
 .change-picture-button {

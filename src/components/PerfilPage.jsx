@@ -156,8 +156,12 @@ function PerfilPage() {
       <main className="perfil-main">
         <div className="profile-sidebar">
           <div className="profile-picture-container">
-            <div className="profile-picture" style={{ backgroundImage: profileData.foto ? `url(${profileData.foto})` : 'none' }}>
+            <div
+              className={`profile-picture ${!profileData.foto ? 'sem-foto' : ''}`}
+              style={{ backgroundImage: profileData.foto && !profileData.foto.match(/^(https?:\/\/|\/)/) ? 'none' : profileData.foto ? `url(${profileData.foto})` : 'none' }}
+            >
               {!profileData.foto && '👤'}
+              {profileData.foto && !profileData.foto.match(/^(https?:\/\/|\/)/) && profileData.foto}
             </div>
             <button onClick={() => setShowPhotoOptions(!showPhotoOptions)} className="change-picture-button">📷</button>
           </div>
