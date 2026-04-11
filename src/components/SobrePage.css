@@ -1,4 +1,4 @@
-/* === SOBRE PAGE - DESIGN MODERNO E ELEGANTE v4.0 === */
+/* === SOBRE PAGE - DESIGN MODERNO E ELEGANTE v4.1 (TEXTO CORRIGIDO) === */
 
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@500;700&family=Poppins:wght@300;400;500&display=swap');
 
@@ -11,7 +11,7 @@
   --modern-surface: #ffffff;
 
   --modern-bg-dark: #1a202c;
-  --modern-text-dark: #a0aec0;
+  --modern-text-dark: #c9d1d9; /* Corrigido para melhor legibilidade */
   --modern-headings-dark: #e2e8f0;
   --modern-primary-dark: #5ebdb0;
   --modern-border-dark: #2d3748;
@@ -115,10 +115,16 @@
 }
 .dark .modern-text h2 { color: var(--modern-headings-dark); }
 
+/* --- CORREÇÃO DE LEGIBILIDADE --- */
 .modern-text p {
   font-size: 1.05rem;
   line-height: 1.8;
-  font-weight: 300;
+  font-weight: 400; /* Aumentado de 300 para 400 */
+  color: #3d3d3d;    /* Garantindo a cor escura do texto */
+}
+
+.dark .modern-text p {
+    color: var(--modern-text-dark);
 }
 
 /* --- Seção da Equipe --- */
@@ -137,7 +143,10 @@
 .team-subtitle {
   font-size: 1.1rem;
   margin-bottom: 3rem;
+  color: #555;
 }
+
+.dark .team-subtitle { color: #aaa; }
 
 .modern-team-grid {
   display: grid;
