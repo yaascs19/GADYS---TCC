@@ -1,9 +1,33 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import './SobrePage.css'; // Usará a mesma folha de estilos, que será reescrita
+import './SobrePage.css'; // Usará uma nova folha de estilos (v4)
 
 function SobrePage() {
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
+  const sectionsRef = useRef([]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    sectionsRef.current.forEach((section) => {
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      sectionsRef.current.forEach((section) => {
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, []);
 
   const teamMembers = [
     { name: 'Ana Silva', role: 'CEO & Fundadora', photo: '/images/team/member1.jpg' },
@@ -15,46 +39,58 @@ function SobrePage() {
   ];
 
   return (
-    // A classe principal será alterada para um novo padrão, mais limpo.
-    <div className={`sobre-page-clean ${darkMode ? 'dark' : ''}`}>
-      
-      <header className="sobre-header-clean">
-        <div className="container">
-          <h1 className="main-title">Sobre o GADYS</h1>
-          <p className="subtitle">
-            Conectando você aos lugares mais incríveis do Brasil. Nossa missão é fomentar um turismo mais consciente, curioso e conectado.
-          </p>
-        </div>
-      </header>
+    <div className={`sobre-page-modern ${darkMode ? 'dark' : ''}`}>
+      <div className="modern-container">
+        <header ref={el => sectionsRef.current[0] = el} className="modern-hero fade-in-section">
+          <span className="hero-subheading">Nossa História</span>
+          <h1>Mais que um guia, uma janela para a alma do Brasil.</h1>
+        </header>
 
-      <main className="container">
-        <section className="sobre-section-clean">
-          <h2 className="section-title-clean">O Projeto</h2>
-          <div className="text-content">
-            <p>O GADYS (Guia de Atrativos e Destinos Turísticos) nasceu de uma paixão compartilhada pelo Brasil. Somos mais do que um simples guia; somos uma plataforma dedicada a desvendar a alma do país, revelando as histórias que cada destino tem para contar. Da vastidão da Amazônia às praias paradisíacas do Nordeste, nosso objetivo é ser a ponte entre o viajante e a experiência autêntica.</p>
-            <p>Nós acreditamos que viajar é uma forma de aprendizado e transformação. Por isso, valorizamos o turismo sustentável, que respeita a cultura local e o meio ambiente. Cada local em nossa plataforma é cuidadosamente selecionado, garantindo que sua jornada seja rica, segura e inesquecível.</p>
-          </div>
-        </section>
-
-        <section className="sobre-section-clean">
-          <h2 className="section-title-clean">Nossa Equipe</h2>
-          <div className="team-grid-clean">
-            {teamMembers.map(member => (
-              <div key={member.name} className="team-member-clean">
-                <img src={member.photo} alt={member.name} className="team-photo" />
-                <h3 className="member-name">{member.name}</h3>
-                <p className="member-role">{member.role}</p>
+        <main>
+          <section ref={el => sectionsRef.current[1] = el} className="modern-section fade-in-section">
+            <div className="modern-content-block text-first">
+              <div className="modern-text">
+                <h2>O Ponto de Partida</h2>
+                <p>O GADYS nasceu de uma inquietação: como podemos ir além do turismo superficial? Impulsionados pela paixão por descobrir e pela vontade de compartilhar, criamos uma plataforma que não apenas aponta destinos, mas conta as histórias, celebra as culturas e revela a verdadeira essência de cada lugar.</p>
               </div>
-            ))}
-          </div>
-        </section>
+              <div className="modern-image">
+                <img src="/images/geral/sobre-modern-1.jpg" alt="Mapa antigo sobre uma mesa de madeira" />
+              </div>
+            </div>
+          </section>
 
-        <section className="sobre-section-clean cta-section-clean">
-            <h2>Pronto para sua próxima aventura?</h2>
-            <Link to="/lugares" className="cta-button-clean">Explore os Destinos</Link>
-        </section>
+          <section ref={el => sectionsRef.current[2] = el} className="modern-section fade-in-section">
+            <div className="modern-content-block image-first">
+              <div className="modern-text">
+                <h2>Nossa Filosofia</h2>
+                <p>Acreditamos no poder do turismo consciente. Para nós, viajar é uma oportunidade de crescimento, conexão e respeito. Por isso, nosso foco está em promover experiências autênticas que beneficiem tanto os viajantes quanto as comunidades locais, incentivando a sustentabilidade e a preservação do nosso imenso patrimônio.</p>
+              </div>
+              <div className="modern-image">
+                <img src="/images/geral/sobre-modern-2.jpg" alt="Pessoas caminhando em uma trilha na natureza" />
+              </div>
+            </div>
+          </section>
 
-      </main>
+          <section ref={el => sectionsRef.current[3] = el} className="modern-team-section fade-in-section">
+            <h2>Nossa Equipe</h2>
+            <p className="team-subtitle">Os rostos por trás da jornada.</p>
+            <div className="modern-team-grid">
+              {teamMembers.map(member => (
+                <div key={member.name} className="modern-team-member">
+                  <img src={member.photo} alt={member.name} />
+                  <h3>{member.name}</h3>
+                  <span>{member.role}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section ref={el => sectionsRef.current[4] = el} className="modern-cta-section fade-in-section">
+            <h2>Sua jornada começa agora.</h2>
+            <Link to="/lugares" className="modern-cta-button">Explorar Destinos</Link>
+          </section>
+        </main>
+      </div>
     </div>
   );
 }
