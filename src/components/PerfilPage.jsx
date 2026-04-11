@@ -34,12 +34,29 @@ function PerfilPage() {
     avaliacoes: 0,
     comentarios: 0
   })
+  const [meusLocais, setMeusLocais] = useState([])
 
-  const toggleTheme = () => {
-    const newDarkMode = !darkMode
-    setDarkMode(newDarkMode)
-    localStorage.setItem('darkMode', newDarkMode.toString())
-  }
+  const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '')
+
+  useEffect(() => {
+    if (localStorage.getItem('isLoggedIn') !== 'true') { navigate('/login'); return; }
+    const userName = localStorage.getItem('userName')
+    const usuarioId = localStorage.getItem('usuarioId')
+    // buscar locais do usuário pelo enviadoPor ou criado_por
+    fetch(`${API_URL}/api/locais`)
+      .then(r => r.json())
+      .then(locais => {
+        const meus = locais.filter(l =>
+          l.enviadoPor === userName ||
+          l.enviadoPor === 'Admin' ||
+          l.enviadoPor === 'GADYS' ||
+          String(l.criadoPor) === String(usuarioId)
+        )
+        setMeusLocais(meus)
+        setUserStats(prev => ({ ...prev, locaisAdicionados: meus.length }))
+      })
+      .catch(() => {})
+  }, [])
   
   const CLOUD_NAME = 'dybpie9aa'
   const UPLOAD_PRESET = 'gadys_tcc'
@@ -210,11 +227,29 @@ function PerfilPage() {
           <div className="actions-card">
             <h3 className="card-header">Ações Rápidas</h3>
             <div className="actions-grid">
-              <Link to="/adicionar-locais.html" className="action-button add-place-button">Adicionar Local</Link>
+              <Link to="/adicionar-local" className="action-button add-place-button">Adicionar Local</Link>
               <Link to="#" className="action-button my-reviews-button">Minhas Avaliações</Link>
               <Link to="/" className="action-button home-page-button">Página Inicial</Link>
             </div>
           </div>
+
+          {meusLocais.length > 0 && (
+            <div className="stats-card">
+              <h3 className="card-header">Meus Locais</h3>
+              <div className="meus-locais-lista">
+                {meusLocais.map(local => (
+                  <div key={local.id} className="meu-local-item" onClick={() => navigate(`/local/${local.id}`)}>
+                    <div className="meu-local-img" style={{ backgroundImage: local.imagemUrl ? `url(${local.imagemUrl.split(',')[0]})` : 'none' }} />
+                    <div className="meu-local-info">
+                      <strong>{local.nome}</strong>
+                      <span>{local.cidade}{local.estado ? `, ${local.estado}` : ''}</span>
+                      <span className={`meu-local-status ${local.status}`}>{local.status}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </main>
 
