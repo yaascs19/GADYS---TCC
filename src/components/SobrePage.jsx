@@ -1,55 +1,68 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './SobrePage.css'; // Importa o CSS exclusivo
+import './SobrePage.css'; // Carrega a nova folha de estilos v2
 
 function SobrePage() {
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
 
-  // Dados da equipe
   const teamMembers = [
     { name: 'Ana Silva', role: 'CEO & Fundadora', photo: '/images/team/member1.jpg' },
-    { name: 'Carlos Santos', role: 'CTO & Arquiteto de Software', photo: '/images/team/member2.jpg' },
+    { name: 'Carlos Santos', role: 'CTO', photo: '/images/team/member2.jpg' },
     { name: 'Mariana Oliveira', role: 'Designer Chefe UX/UI', photo: '/images/team/member3.jpg' },
-    { name: 'João Costa', role: 'Engenheiro Front-End Sênior', photo: '/images/team/member4.jpg' },
-    { name: 'Lúcia Ferreira', role: 'Estrategista de Marketing Digital', photo: '/images/team/member5.jpg' }
+    { name: 'João Costa', role: 'Engenheiro Front-End', photo: '/images/team/member4.jpg' },
+    { name: 'Lúcia Ferreira', role: 'Marketing', photo: '/images/team/member5.jpg' },
+    { name: 'Pedro Almeida', role: 'Conteudista', photo: '/images/team/member6.jpg' }
   ];
 
-  // O componente do Header principal e o menu de navegação devem ser unificados no App.jsx
-  // para evitar duplicação. Por enquanto, a página assume que eles existem.
   return (
-    <div className={`sobre-page-container ${darkMode ? 'dark' : ''}`}>
-      <section className="sobre-hero">
-        <div className="sobre-hero-content">
-          <h1>A Alma do Brasil, Mapeada.</h1>
-          <p>Somos a GADYS. Nascemos da paixão por descobrir e compartilhar as histórias que cada canto do Brasil tem para contar.</p>
+    <div className={`sobre-page-v2 ${darkMode ? 'dark' : ''}`}>
+      {/* --- Seção Hero com Layout Dividido --- */}
+      <header className="sobre-hero-split">
+        <div className="hero-split-content">
+          <h1>Desvendando o Brasil, uma história de cada vez.</h1>
+          <p className="subtitle">
+            A GADYS é mais que um guia. É um convite para mergulhar na alma do Brasil, conectando pessoas a lugares e culturas de forma autêntica e significativa.
+          </p>
         </div>
-      </section>
+        <div className="hero-split-image"></div>
+      </header>
 
-      <div className="sobre-content-wrapper">
-        <section className="mission-section">
-          <div className="mission-card">
-            <div className="icon">🧭</div>
-            <h2>Explorar</h2>
-            <p>Mapeamos desde os destinos mais icônicos até as joias escondidas, oferecendo um guia curado e autêntico.</p>
-          </div>
-          <div className="mission-card">
-            <div className="icon">🤝</div>
-            <h2>Conectar</h2>
-            <p>Criamos pontes entre viajantes e comunidades locais, promovendo um turismo mais rico e humano.</p>
-          </div>
-          <div className="mission-card">
-            <div className="icon">🌱</div>
-            <h2>Preservar</h2>
-            <p>Incentivamos um turismo consciente e sustentável, que valoriza e protege nosso patrimônio natural e cultural.</p>
+      <main>
+        {/* --- Nossa Missão --- */}
+        <section id="mission" className="sobre-section">
+          <h2 className="section-title-v2">Nossa Missão</h2>
+          <p className="section-subtitle-v2">
+            Fomentar um turismo mais consciente, curioso e conectado.
+          </p>
+          <div className="mission-grid-v2">
+            <div className="mission-card-v2">
+              <div className="icon">🧭</div>
+              <h3>Explorar com Profundidade</h3>
+              <p>Vamos além do óbvio, revelando a riqueza que se esconde em cada destino e incentivando a descoberta genuína.</p>
+            </div>
+            <div className="mission-card-v2">
+              <div className="icon">🤝</div>
+              <h3>Conectar Culturas</h3>
+              <p>Criamos pontes entre viajantes e comunidades, valorizando o conhecimento local e as trocas verdadeiras.</p>
+            </div>
+            <div className="mission-card-v2">
+              <div className="icon">🌱</div>
+              <h3>Inspirar a Preservação</h3>
+              <p>Acreditamos que conhecer é o primeiro passo para proteger. Promovemos o respeito e o cuidado com nosso patrimônio.</p>
+            </div>
           </div>
         </section>
 
-        <section className="team-section">
-          <h2 className="section-title">Nossa Tribo</h2>
-          <div className="team-grid">
+        {/* --- Nossa Equipe --- */}
+        <section id="team" className="sobre-section">
+          <h2 className="section-title-v2">Nossa Tribo</h2>
+          <p className="section-subtitle-v2">
+            Somos um grupo diverso de viajantes, criativos e tecnólogos apaixonados pelo Brasil.
+          </p>
+          <div className="team-grid-v2">
             {teamMembers.map(member => (
-              <div key={member.name} className="team-member">
-                <img src={member.photo} alt={member.name} className="team-member-photo" />
+              <div key={member.name} className="team-member-v2">
+                <img src={member.photo} alt={member.name} />
                 <h3>{member.name}</h3>
                 <p>{member.role}</p>
               </div>
@@ -57,21 +70,13 @@ function SobrePage() {
           </div>
         </section>
 
-        <section className="values-section">
-          <h2 className="section-title" style={{ color: 'white' }}>Nossos Princípios</h2>
-          <ul className="values-list">
-            <li><h3>Curiosidade sem fim:</h3> <p>Acreditamos que sempre há algo novo para descobrir.</p></li>
-            <li><h3>Autenticidade acima de tudo:</h3> <p>Celebramos o que torna cada lugar e cada cultura única.</p></li>
-            <li><h3>Paixão pelo Brasil:</h3> <p>Somos movidos pelo amor à diversidade e riqueza do nosso país.</p></li>
-            <li><h3>Impacto Positivo:</h3> <p>Nosso objetivo é deixar cada lugar um pouco melhor do que o encontramos.</p></li>
-          </ul>
+        {/* --- Seção de CTA Final --- */}
+        <section className="cta-section-v2">
+          <h2>Junte-se a nós nesta jornada.</h2>
+          <p>O seu próximo destino inesquecível está a um clique de distância.</p>
+          <Link to="/lugares" className="cta-button-v2">Começar a Explorar</Link>
         </section>
-
-        <section className="cta-section">
-          <h2 className="section-title">Pronto para a Aventura?</h2>
-          <Link to="/lugares" className="cta-button">Comece a Explorar</Link>
-        </section>
-      </div>
+      </main>
     </div>
   );
 }
