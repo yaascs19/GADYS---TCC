@@ -56,29 +56,17 @@ function Login({ onLogin, isAdminAccess = false }) {
         if (!passwordStrength || passwordStrength.label === 'Fraca') { alert('Senha muito fraca! Use letras maiúsculas, números e símbolos.'); setLoading(false); return; }
         if (password !== confirmPassword) { alert('Senhas não coincidem!'); setLoading(false); return; }
 
-          const response = await axios.post(
-            `${API_URL}/api/auth/cadastrar`,
-            {
-              nome: name,
-              email,
-              senha: password,
-              tipoUsuario: 'USUARIO'
-            }
-          );
+        const response = await axios.post(
+          `${API_URL}/api/auth/cadastrar`,
+          { nome: name, email, senha: password, tipoUsuario: 'USUARIO' }
+        );
 
-          if (response.data.sucesso) {
-            showAlert(response.data.mensagem, 'Cadastro realizado com sucesso!');
-            setIsRegister(false);
-            setEmail('');
-            setPassword('');
-            setConfirmPassword('');
-            setName('');
-          } else {
-            showAlert(response.data.mensagem, 'Erro no cadastro.');
-          }
-
+        if (response.data.sucesso) {
+          showAlert(response.data.mensagem, 'Cadastro realizado com sucesso!');
+          setIsRegister(false);
+          setEmail(''); setPassword(''); setConfirmPassword(''); setName('');
         } else {
-          alert('Preencha todos os campos!');
+          showAlert(response.data.mensagem, 'Erro no cadastro.');
         }
 
       } else {
