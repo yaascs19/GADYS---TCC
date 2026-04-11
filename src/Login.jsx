@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Login.css';
 import axios from 'axios';
@@ -21,6 +21,8 @@ const getPasswordStrength = (pwd) => {
 
 const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
+const ICONS = { success: '✓', error: '✕', info: 'ℹ' };
+
 function Login({ onLogin, isAdminAccess = false }) {
   const navigate = useNavigate();
 
@@ -32,18 +34,16 @@ function Login({ onLogin, isAdminAccess = false }) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState(null);
 
   const passwordStrength = getPasswordStrength(password);
   const emailInvalid = emailTouched && email && !isValidEmail(email);
   const passwordsMismatch = confirmPassword && password !== confirmPassword;
 
-  const showAlert = (primaryMessage, fallbackMessage) => {
-    if (typeof primaryMessage === 'string' && primaryMessage) {
-      alert(primaryMessage);
-    } else {
-      alert(fallbackMessage);
-    }
-  };
+  const showToast = useCallback((message, type = 'error') => {
+    setToast({ message, type });
+    setTimeout(() => setToast(null), 4000);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,10 +51,10 @@ function Login({ onLogin, isAdminAccess = false }) {
 
     try {
       if (isRegister) {
-        if (!name) { alert('Preencha o nome!'); setLoading(false); return; }
-        if (!isValidEmail(email)) { alert('Email inválido!'); setLoading(false); return; }
-        if (!passwordStrength || passwordStrength.label === 'Fraca') { alert('Senha muito fraca! Use letras maiúsculas, números e símbolos.'); setLoading(false); return; }
-        if (password !== confirmPassword) { alert('Senhas não coincidem!'); setLoading(false); return; }
+        if (!name) { showToast('Preencha o nome!'); setLoading(false); return; }
+        if (!isValidEmail(email)) { showToast('Email inválido!'); setLoading(false); return; }
+        if (!passwordStrength || passwordStrength.label === 'Fraca') { showToast('Senha muito fraca! Use letras maiúsculas, números e símbolos.'); setLoading(false); return; }
+        if (password !== confirmPassword) { showToast('Senhas não coincidem!'); setLoading(false); return; }
 
         const response = await axios.post(
           `${API_URL}/api/auth/cadastrar`,
@@ -62,23 +62,18 @@ function Login({ onLogin, isAdminAccess = false }) {
         );
 
         if (response.data.sucesso) {
-          showAlert(response.data.mensagem, 'Cadastro realizado com sucesso!');
+          showToast(response.data.mensagem || 'Cadastro realizado com sucesso!', 'success');
           setIsRegister(false);
           setEmail(''); setPassword(''); setConfirmPassword(''); setName('');
         } else {
-          showAlert(response.data.mensagem, 'Erro no cadastro.');
+          showToast(response.data.mensagem || 'Erro no cadastro.');
         }
 
       } else {
         if (email && password) {
-
           const response = await axios.post(
             `${API_URL}/api/auth/login`,
-            {
-              email,
-              senha: password,
-              tipoUsuario: userType === 'adm' ? 'ADM' : 'USUARIO'
-            }
+            { email, senha: password, tipoUsuario: userType === 'adm' ? 'ADM' : 'USUARIO' }
           );
 
           if (response.data.sucesso) {
@@ -86,33 +81,22 @@ function Login({ onLogin, isAdminAccess = false }) {
             localStorage.setItem('userType', response.data.tipoUsuario);
             localStorage.setItem('userName', response.data.nome);
             localStorage.setItem('usuarioId', response.data.usuarioId);
-
-            if (onLogin) {
-              onLogin(response.data.tipoUsuario, response.data.nome);
-            }
-
-            if (response.data.tipoUsuario === 'ADM') {
-              navigate('/');
-            } else {
-              navigate('/');
-            }
+            if (onLogin) onLogin(response.data.tipoUsuario, response.data.nome);
+            navigate('/');
           } else {
-            showAlert(response.data.mensagem, 'Credenciais inválidas!');
+            showToast(response.data.mensagem || 'Credenciais inválidas!');
           }
         }
       }
 
     } catch (error) {
-      console.error("ERRO COMPLETO:", error);
-
       if (error.response) {
-        alert(error.response.data?.mensagem || "Erro no servidor.");
+        showToast(error.response.data?.mensagem || 'Erro no servidor.');
       } else if (error.request) {
-        alert("Servidor não respondeu. Pode ser CORS ou backend fora do ar.");
+        showToast('Servidor não respondeu. Tente novamente.');
       } else {
-        alert("Erro inesperado.");
+        showToast('Erro inesperado.');
       }
-
     } finally {
       setLoading(false);
     }
@@ -120,6 +104,15 @@ function Login({ onLogin, isAdminAccess = false }) {
 
   return (
     <div className="login-container">
+
+      {toast && (
+        <div className={`login-toast login-toast--${toast.type}`}>
+          <span className="login-toast-icon">{ICONS[toast.type]}</span>
+          <span>{toast.message}</span>
+          <button className="login-toast-close" onClick={() => setToast(null)}>×</button>
+        </div>
+      )}
+
       <div className="login-form">
         <img src="/images/logos/logo.png" alt="GADYS" className="login-logo" />
         <h2>{isRegister ? 'Cadastrar' : 'Bem-vindo'}</h2>
