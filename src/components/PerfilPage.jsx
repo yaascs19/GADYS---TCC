@@ -41,18 +41,23 @@ function PerfilPage() {
     localStorage.setItem('darkMode', newDarkMode.toString())
   }
   
-  const handlePhotoChange = (e) => {
+  const CLOUD_NAME = 'dybpie9aa'
+  const UPLOAD_PRESET = 'gadys_tcc'
+
+  const handlePhotoChange = async (e) => {
     const file = e.target.files[0]
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        const newData = { ...profileData, foto: e.target.result }
-        setProfileData(newData)
-        localStorage.setItem('profileData', JSON.stringify(newData))
-        setShowPhotoOptions(false)
-      }
-      reader.readAsDataURL(file)
-    }
+    if (!file) return
+    const data = new FormData()
+    data.append('file', file)
+    data.append('upload_preset', UPLOAD_PRESET)
+    try {
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: data })
+      const json = await res.json()
+      const newData = { ...profileData, foto: json.secure_url }
+      setProfileData(newData)
+      localStorage.setItem('profileData', JSON.stringify(newData))
+      setShowPhotoOptions(false)
+    } catch { alert('Erro ao fazer upload da foto.') }
   }
   
   const handleEmojiSelect = (emoji) => {
