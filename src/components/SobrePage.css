@@ -1,227 +1,142 @@
-/* === SOBRE PAGE - DESIGN SOFISTICADO v2.0 === */
+/* === SOBRE PAGE - DESIGN LIMPO E DIRETO v3.0 === */
 
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Lora:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
 :root {
-  --sobre-v2-bg: #ffffff;
-  --sobre-v2-bg-alt: #f7f9fb;
-  --sobre-v2-text: #2d3748;
-  --sobre-v2-headings: #1a202c;
-  --sobre-v2-primary: #2c5282;
-  --sobre-v2-secondary: #3182ce;
-  --sobre-v2-border: #e2e8f0;
+  --clean-bg: #ffffff;
+  --clean-text: #202020;
+  --clean-primary: #007aff; /* Um azul padrão de UI */
+  --clean-border: #e8e8e8;
+  --clean-bg-alt: #f9f9f9;
 
-  --sobre-v2-bg-dark: #1a202c;
-  --sobre-v2-bg-alt-dark: #2d3748;
-  --sobre-v2-text-dark: #a0aec0;
-  --sobre-v2-headings-dark: #e2e8f0;
-  --sobre-v2-primary-dark: #63b3ed;
-  --sobre-v2-secondary-dark: #4299e1;
-  --sobre-v2-border-dark: #4a5568;
+  --clean-bg-dark: #121212;
+  --clean-text-dark: #e0e0e0;
+  --clean-border-dark: #333;
+  --clean-bg-alt-dark: #1e1e1e;
 }
 
-.sobre-page-v2 {
-  font-family: 'Montserrat', sans-serif;
-  background-color: var(--sobre-v2-bg);
-  color: var(--sobre-v2-text);
+.sobre-page-clean {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--clean-bg);
+  color: var(--clean-text);
 }
 
-.sobre-page-v2.dark {
-  background-color: var(--sobre-v2-bg-dark);
-  color: var(--sobre-v2-text-dark);
+.sobre-page-clean.dark {
+  background-color: var(--clean-bg-dark);
+  color: var(--clean-text-dark);
 }
 
-/* --- Seção Hero (Split Layout) --- */
-.sobre-hero-split {
-  display: flex;
-  min-height: 85vh;
-  background-color: var(--sobre-v2-bg-alt);
+/* --- Estrutura e Container --- */
+.container {
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
-.dark .sobre-hero-split {
-  background-color: var(--sobre-v2-bg-alt-dark);
+/* --- Cabeçalho Simples --- */
+.sobre-header-clean {
+  padding: 4rem 0;
+  border-bottom: 1px solid var(--clean-border);
+  background-color: var(--clean-bg-alt);
+}
+.dark .sobre-header-clean { 
+  border-color: var(--clean-border-dark);
+  background-color: var(--clean-bg-alt-dark);
 }
 
-.hero-split-content {
-  width: 50%;
-  padding: 4rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+.main-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
 }
 
-.hero-split-content h1 {
-  font-family: 'Lora', serif;
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  color: var(--sobre-v2-headings);
+.subtitle {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  color: #555;
+}
+.dark .subtitle { color: #aaa; }
+
+/* --- Seções e Conteúdo --- */
+.sobre-section-clean {
+  padding: 4rem 0;
+  border-bottom: 1px solid var(--clean-border);
+}
+.dark .sobre-section-clean { border-color: var(--clean-border-dark); }
+.sobre-section-clean:last-child { border-bottom: none; }
+
+.section-title-clean {
+  font-size: 2rem;
   font-weight: 600;
-  line-height: 1.2;
+  margin-bottom: 2rem;
+}
+
+.text-content p {
+  font-size: 1.1rem;
+  line-height: 1.8;
   margin-bottom: 1.5rem;
 }
 
-.dark .hero-split-content h1 { color: var(--sobre-v2-headings-dark); }
-
-.hero-split-content .subtitle {
-  font-size: 1.2rem;
-  line-height: 1.7;
-  max-width: 500px;
-}
-
-.hero-split-image {
-  width: 50%;
-  background-image: url('/images/geral/sobre-v2-bg.jpg');
-  background-size: cover;
-  background-position: center;
-}
-
-/* --- Estilos Gerais de Seção --- */
-.sobre-section {
-  padding: 6rem 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.section-title-v2 {
-  font-family: 'Lora', serif;
-  font-size: 2.5rem;
-  font-weight: 600;
-  text-align: center;
-  margin-bottom: 1rem;
-  color: var(--sobre-v2-headings);
-}
-
-.dark .section-title-v2 { color: var(--sobre-v2-headings-dark); }
-
-.section-subtitle-v2 {
-  text-align: center;
-  font-size: 1.1rem;
-  margin-bottom: 4rem;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* --- Seção Missão --- */
-#mission {
-  background-color: var(--sobre-v2-bg-alt);
-}
-.dark #mission { background-color: var(--sobre-v2-bg-alt-dark); }
-
-.mission-grid-v2 {
+/* --- Grid da Equipe --- */
+.team-grid-clean {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2.5rem;
-}
-
-.mission-card-v2 {
-  background: var(--sobre-v2-bg);
-  padding: 2.5rem;
-  border: 1px solid var(--sobre-v2-border);
-  border-radius: 8px;
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.dark .mission-card-v2 {
-  background: var(--sobre-v2-bg-dark);
-  border-color: var(--sobre-v2-border-dark);
-}
-
-.mission-card-v2:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(45, 55, 72, 0.1);
-}
-
-.mission-card-v2 .icon {
-  font-size: 2.5rem;
-  color: var(--sobre-v2-primary);
-  margin-bottom: 1rem;
-}
-
-.dark .mission-card-v2 .icon { color: var(--sobre-v2-primary-dark); }
-
-.mission-card-v2 h3 {
-  font-size: 1.3rem;
-  color: var(--sobre-v2-headings);
-  margin-bottom: 0.5rem;
-}
-
-.dark .mission-card-v2 h3 { color: var(--sobre-v2-headings-dark); }
-
-/* --- Seção Equipe --- */
-.team-grid-v2 {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 2rem;
-  justify-content: center;
 }
 
-.team-member-v2 {
+.team-member-clean {
   text-align: center;
 }
 
-.team-member-v2 img {
-  width: 150px;
-  height: 150px;
-  border-radius: 12px;
+.team-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
   object-fit: cover;
   margin-bottom: 1rem;
-  filter: grayscale(100%);
-  transition: filter 0.4s, transform 0.4s;
 }
 
-.team-member-v2:hover img {
-  filter: grayscale(0%);
-  transform: scale(1.05);
-}
-
-.team-member-v2 h3 {
-  font-size: 1.2rem;
+.member-name {
+  font-size: 1.1rem;
   font-weight: 600;
-  margin-bottom: 0.25rem;
-  color: var(--sobre-v2-headings);
+  margin: 0;
 }
 
-.dark .team-member-v2 h3 { color: var(--sobre-v2-headings-dark); }
-
-.team-member-v2 p {
+.member-role {
   font-size: 0.9rem;
-  color: var(--sobre-v2-secondary);
+  color: #777;
 }
+.dark .member-role { color: #999; }
 
-.dark .team-member-v2 p { color: var(--sobre-v2-secondary-dark); }
-
-/* --- CTA Final --- */
-.cta-section-v2 {
-  background-color: var(--sobre-v2-primary);
+/* --- Seção CTA --- */
+.cta-section-clean {
   text-align: center;
-  padding: 5rem 2rem;
+  background-color: var(--clean-bg-alt);
+  padding: 4rem 0;
+  margin-top: -1px; /* Para sobrepor a borda anterior */
+}
+.dark .cta-section-clean { background-color: var(--clean-bg-alt-dark); }
+
+.cta-section-clean h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.cta-button-clean {
+  display: inline-block;
+  background-color: var(--clean-primary);
   color: white;
-}
-
-.dark .cta-section-v2 { background-color: var(--sobre-v2-primary-dark); color: #1a202c; }
-
-.cta-section-v2 h2 { 
-  font-family: 'Lora', serif;
-  font-size: 2.2rem;
-  margin-bottom: 1.5rem; 
-}
-
-.cta-button-v2 {
-  background: white;
-  color: var(--sobre-v2-primary);
-  border: 2px solid white;
-  padding: 0.8rem 2.5rem;
-  border-radius: 50px;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
   text-decoration: none;
-  transition: background-color 0.3s, color 0.3s;
+  transition: background-color 0.2s;
 }
 
-.dark .cta-button-v2 { background-color: var(--sobre-v2-bg-dark); color: var(--sobre-v2-primary-dark); border-color: var(--sobre-v2-bg-dark); }
-
-.cta-button-v2:hover {
-  background-color: transparent;
-  color: white;
+.cta-button-clean:hover {
+  background-color: #0056b3; /* Um pouco mais escuro no hover */
 }
-
-.dark .cta-button-v2:hover { color: var(--sobre-v2-bg-dark); background-color: transparent; border-color: var(--sobre-v2-bg-dark);}
