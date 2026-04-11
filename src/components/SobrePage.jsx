@@ -1,10 +1,22 @@
 import { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import './SobrePage.css'; // Usará uma nova folha de estilos (v4)
+import { Link, useNavigate } from 'react-router-dom';
+import './SobrePage.css';
 
 function SobrePage() {
+  const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
+  const [menuOpen, setMenuOpen] = useState(false);
   const sectionsRef = useRef([]);
+
+  const toggleDarkMode = () => {
+    const next = !darkMode;
+    setDarkMode(next);
+    localStorage.setItem('darkMode', next.toString());
+  };
+
+  const closeMenu = () => document.querySelector('.nav-links')?.classList.remove('active');
+  const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM';
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -39,7 +51,37 @@ function SobrePage() {
   ];
 
   return (
-    <div className={`sobre-page-modern ${darkMode ? 'dark' : ''}`}>
+    <div className={`sobre-page-modern${darkMode ? ' dark' : ''}`}>
+
+      {/* ── NAVBAR ── */}
+      <header style={{ background: darkMode ? '#0f1117' : '#1a237e', position: 'sticky', top: 0, zIndex: 100, padding: '1rem 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+        <nav className="nav">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <img src="/images/logos/logo.png" alt="GADYS" className="logo" style={{ height: '40px', background: 'linear-gradient(135deg,#667eea,#764ba2)', borderRadius: '50%', padding: '8px' }} />
+            <span style={{ fontSize: '1.5rem', fontWeight: '700', color: 'white' }}>GADYS</span>
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <button onClick={toggleDarkMode} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>
+              {darkMode ? '☀️' : '🌙'}
+            </button>
+            <div className="hamburger" onClick={() => document.querySelector('.nav-links')?.classList.toggle('active')}>
+              <span /><span /><span />
+            </div>
+          </div>
+          <div className="nav-overlay" onClick={closeMenu} />
+          <ul className="nav-links" style={{ paddingTop: '5rem', justifyContent: 'flex-start', gap: '2rem' }}>
+            <li><Link to="/" onClick={closeMenu} style={{ color: 'white' }}>Início</Link></li>
+            <li><Link to="/lugares" onClick={closeMenu} style={{ color: 'white' }}>Lugares</Link></li>
+            <li><Link to="/mapa" onClick={closeMenu} style={{ color: 'white' }}>Mapa</Link></li>
+            <li><Link to="/adicionar-local" onClick={closeMenu} style={{ color: 'white' }}>Adicionar Local</Link></li>
+            {isAdmin && <li><Link to="/painel-adm" onClick={closeMenu} style={{ color: '#ffd700', fontWeight: '700' }}>⚙️ Administração</Link></li>}
+            <li>{isLoggedIn ? <Link to="/perfil" onClick={closeMenu} style={{ color: 'white' }}>Meu Perfil</Link> : <Link to="/login" onClick={closeMenu} style={{ color: 'white' }}>Entrar</Link>}</li>
+            <li><a href="#" onClick={(e) => e.preventDefault()} style={{ color: '#ccc', cursor: 'not-allowed' }}>Sobre (atual)</a></li>
+            <li><Link to="/contato" onClick={closeMenu} style={{ color: 'white' }}>Contato</Link></li>
+          </ul>
+        </nav>
+      </header>
+
       <div className="modern-container">
         <header ref={el => sectionsRef.current[0] = el} className="modern-hero fade-in-section">
           <span className="hero-subheading">Nossa História</span>

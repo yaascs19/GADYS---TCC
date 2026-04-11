@@ -1,32 +1,17 @@
-/* === SOBRE PAGE - DESIGN MODERNO E ELEGANTE v4.1 (TEXTO CORRIGIDO) === */
-
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@500;700&family=Poppins:wght@300;400;500&display=swap');
 
-:root {
-  --modern-bg: #fdfaf6;
-  --modern-text: #3d3d3d;
-  --modern-headings: #0a2e36;
-  --modern-primary: #3c6e71;
-  --modern-border: #ece4db;
-  --modern-surface: #ffffff;
-
-  --modern-bg-dark: #1a202c;
-  --modern-text-dark: #c9d1d9; /* Corrigido para melhor legibilidade */
-  --modern-headings-dark: #e2e8f0;
-  --modern-primary-dark: #5ebdb0;
-  --modern-border-dark: #2d3748;
-  --modern-surface-dark: #2d3748;
-}
-
+/* === LIGHT === */
 .sobre-page-modern {
   font-family: 'Poppins', sans-serif;
-  background-color: var(--modern-bg);
-  color: var(--modern-text);
+  background-color: #fdfaf6;
+  color: #3d3d3d;
+  min-height: 100vh;
 }
 
-.dark .sobre-page-modern {
-  background-color: var(--modern-bg-dark);
-  color: var(--modern-text-dark);
+/* === DARK === */
+.sobre-page-modern.dark {
+  background-color: #0f1117;
+  color: #c9d1d9;
 }
 
 .modern-container {
@@ -35,19 +20,18 @@
   padding: 0 2rem;
 }
 
-/* --- Animação de Fade-in --- */
+/* --- Fade-in --- */
 .fade-in-section {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
-
 .fade-in-section.is-visible {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* --- Cabeçalho Hero --- */
+/* --- Hero --- */
 .modern-hero {
   text-align: center;
   padding: 8rem 0;
@@ -57,77 +41,65 @@
   display: block;
   font-size: 1rem;
   font-weight: 500;
-  color: var(--modern-primary);
+  color: #3c6e71;
   margin-bottom: 1rem;
 }
-.dark .hero-subheading { color: var(--modern-primary-dark); }
+.sobre-page-modern.dark .hero-subheading { color: #5ebdb0; }
 
 .modern-hero h1 {
   font-family: 'Lora', serif;
   font-size: clamp(2.5rem, 5vw, 4rem);
-  color: var(--modern-headings);
+  color: #0a2e36;
   line-height: 1.2;
   font-weight: 700;
   max-width: 800px;
   margin: 0 auto;
 }
-.dark .modern-hero h1 { color: var(--modern-headings-dark); }
+.sobre-page-modern.dark .modern-hero h1 { color: #e2e8f0; }
 
-/* --- Seções de Conteúdo Assimétrico --- */
+/* --- Seções --- */
 .modern-section {
   padding: 5rem 0;
-  border-bottom: 1px solid var(--modern-border);
+  border-bottom: 1px solid #ece4db;
 }
-.dark .modern-section { border-color: var(--modern-border-dark); }
+.sobre-page-modern.dark .modern-section { border-color: #2d3748; }
 
 .modern-content-block {
   display: flex;
   align-items: center;
   gap: 4rem;
 }
-
-.modern-content-block.text-first { flex-direction: row; }
+.modern-content-block.text-first  { flex-direction: row; }
 .modern-content-block.image-first { flex-direction: row-reverse; }
 
-.modern-text {
-  flex: 1;
-}
+.modern-text { flex: 1; }
 
 .modern-image {
   flex: 1;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 15px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 15px 30px rgba(0,0,0,0.12);
 }
-
-.modern-image img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
+.modern-image img { width: 100%; height: auto; display: block; }
 
 .modern-text h2 {
   font-family: 'Lora', serif;
   font-size: 2rem;
   font-weight: 500;
-  color: var(--modern-headings);
+  color: #0a2e36;
   margin-bottom: 1.5rem;
 }
-.dark .modern-text h2 { color: var(--modern-headings-dark); }
+.sobre-page-modern.dark .modern-text h2 { color: #e2e8f0; }
 
-/* --- CORREÇÃO DE LEGIBILIDADE --- */
 .modern-text p {
   font-size: 1.05rem;
   line-height: 1.8;
-  font-weight: 400; /* Aumentado de 300 para 400 */
-  color: #3d3d3d;    /* Garantindo a cor escura do texto */
+  font-weight: 400;
+  color: #3d3d3d;
 }
+.sobre-page-modern.dark .modern-text p { color: #c9d1d9; }
 
-.dark .modern-text p {
-    color: var(--modern-text-dark);
-}
-
-/* --- Seção da Equipe --- */
+/* --- Equipe --- */
 .modern-team-section {
   padding: 6rem 0;
   text-align: center;
@@ -136,29 +108,26 @@
 .modern-team-section h2 {
   font-family: 'Lora', serif;
   font-size: 2.5rem;
-  color: var(--modern-headings);
+  color: #0a2e36;
 }
-.dark .modern-team-section h2 { color: var(--modern-headings-dark); }
+.sobre-page-modern.dark .modern-team-section h2 { color: #e2e8f0; }
 
 .team-subtitle {
   font-size: 1.1rem;
   margin-bottom: 3rem;
   color: #555;
 }
-
-.dark .team-subtitle { color: #aaa; }
+.sobre-page-modern.dark .team-subtitle { color: #8b949e; }
 
 .modern-team-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 2rem;
   max-width: 900px;
   margin: 0 auto;
 }
 
-.modern-team-member {
-  text-align: center;
-}
+.modern-team-member { text-align: center; }
 
 .modern-team-member img {
   width: 100px;
@@ -166,48 +135,50 @@
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 1rem;
+  background: #2d3748;
   transition: transform 0.3s ease;
 }
-
-.modern-team-member:hover img {
-  transform: scale(1.05);
-}
+.modern-team-member:hover img { transform: scale(1.05); }
 
 .modern-team-member h3 {
-  font-size: 1.1rem;
-  font-weight: 500;
-  color: var(--modern-headings);
-  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0a2e36;
+  margin: 0 0 0.25rem;
 }
-.dark .modern-team-member h3 { color: var(--modern-headings-dark); }
+.sobre-page-modern.dark .modern-team-member h3 { color: #e2e8f0; }
 
 .modern-team-member span {
-  font-size: 0.9rem;
-  color: var(--modern-primary);
+  font-size: 0.85rem;
+  color: #3c6e71;
 }
-.dark .modern-team-member span { color: var(--modern-primary-dark); }
+.sobre-page-modern.dark .modern-team-member span { color: #5ebdb0; }
 
-/* --- Seção de CTA Final --- */
+/* --- CTA --- */
 .modern-cta-section {
-  background-color: var(--modern-surface);
+  background-color: #ffffff;
   padding: 5rem 2rem;
   text-align: center;
   border-radius: 8px;
   margin: 4rem 0;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
 }
-.dark .modern-cta-section { background-color: var(--modern-surface-dark); }
+.sobre-page-modern.dark .modern-cta-section {
+  background-color: #161b22;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
 
 .modern-cta-section h2 {
   font-family: 'Lora', serif;
   font-size: 2rem;
-  color: var(--modern-headings);
-  margin: 0 0 1.5rem 0;
+  color: #0a2e36;
+  margin: 0 0 1.5rem;
 }
-.dark .modern-cta-section h2 { color: var(--modern-headings-dark); }
+.sobre-page-modern.dark .modern-cta-section h2 { color: #e2e8f0; }
 
 .modern-cta-button {
   display: inline-block;
-  background-color: var(--modern-primary);
+  background-color: #3c6e71;
   color: #fff;
   font-size: 1rem;
   font-weight: 500;
@@ -216,16 +187,12 @@
   text-decoration: none;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
-
 .modern-cta-button:hover {
   background-color: #2c5b5d;
   transform: translateY(-3px);
 }
 
-/* --- Responsividade --- */
+/* --- Responsivo --- */
 @media (max-width: 768px) {
-  .modern-content-block {
-    flex-direction: column !important;
-    gap: 2.5rem;
-  }
+  .modern-content-block { flex-direction: column !important; gap: 2.5rem; }
 }
