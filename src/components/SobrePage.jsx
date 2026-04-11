@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './SobrePage.css'; // Carrega a nova folha de estilos v2
+import './SobrePage.css'; // Usará a mesma folha de estilos, que será reescrita
 
 function SobrePage() {
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
@@ -15,67 +15,45 @@ function SobrePage() {
   ];
 
   return (
-    <div className={`sobre-page-v2 ${darkMode ? 'dark' : ''}`}>
-      {/* --- Seção Hero com Layout Dividido --- */}
-      <header className="sobre-hero-split">
-        <div className="hero-split-content">
-          <h1>Desvendando o Brasil, uma história de cada vez.</h1>
+    // A classe principal será alterada para um novo padrão, mais limpo.
+    <div className={`sobre-page-clean ${darkMode ? 'dark' : ''}`}>
+      
+      <header className="sobre-header-clean">
+        <div className="container">
+          <h1 className="main-title">Sobre o GADYS</h1>
           <p className="subtitle">
-            A GADYS é mais que um guia. É um convite para mergulhar na alma do Brasil, conectando pessoas a lugares e culturas de forma autêntica e significativa.
+            Conectando você aos lugares mais incríveis do Brasil. Nossa missão é fomentar um turismo mais consciente, curioso e conectado.
           </p>
         </div>
-        <div className="hero-split-image"></div>
       </header>
 
-      <main>
-        {/* --- Nossa Missão --- */}
-        <section id="mission" className="sobre-section">
-          <h2 className="section-title-v2">Nossa Missão</h2>
-          <p className="section-subtitle-v2">
-            Fomentar um turismo mais consciente, curioso e conectado.
-          </p>
-          <div className="mission-grid-v2">
-            <div className="mission-card-v2">
-              <div className="icon">🧭</div>
-              <h3>Explorar com Profundidade</h3>
-              <p>Vamos além do óbvio, revelando a riqueza que se esconde em cada destino e incentivando a descoberta genuína.</p>
-            </div>
-            <div className="mission-card-v2">
-              <div className="icon">🤝</div>
-              <h3>Conectar Culturas</h3>
-              <p>Criamos pontes entre viajantes e comunidades, valorizando o conhecimento local e as trocas verdadeiras.</p>
-            </div>
-            <div className="mission-card-v2">
-              <div className="icon">🌱</div>
-              <h3>Inspirar a Preservação</h3>
-              <p>Acreditamos que conhecer é o primeiro passo para proteger. Promovemos o respeito e o cuidado com nosso patrimônio.</p>
-            </div>
+      <main className="container">
+        <section className="sobre-section-clean">
+          <h2 className="section-title-clean">O Projeto</h2>
+          <div className="text-content">
+            <p>O GADYS (Guia de Atrativos e Destinos Turísticos) nasceu de uma paixão compartilhada pelo Brasil. Somos mais do que um simples guia; somos uma plataforma dedicada a desvendar a alma do país, revelando as histórias que cada destino tem para contar. Da vastidão da Amazônia às praias paradisíacas do Nordeste, nosso objetivo é ser a ponte entre o viajante e a experiência autêntica.</p>
+            <p>Nós acreditamos que viajar é uma forma de aprendizado e transformação. Por isso, valorizamos o turismo sustentável, que respeita a cultura local e o meio ambiente. Cada local em nossa plataforma é cuidadosamente selecionado, garantindo que sua jornada seja rica, segura e inesquecível.</p>
           </div>
         </section>
 
-        {/* --- Nossa Equipe --- */}
-        <section id="team" className="sobre-section">
-          <h2 className="section-title-v2">Nossa Tribo</h2>
-          <p className="section-subtitle-v2">
-            Somos um grupo diverso de viajantes, criativos e tecnólogos apaixonados pelo Brasil.
-          </p>
-          <div className="team-grid-v2">
+        <section className="sobre-section-clean">
+          <h2 className="section-title-clean">Nossa Equipe</h2>
+          <div className="team-grid-clean">
             {teamMembers.map(member => (
-              <div key={member.name} className="team-member-v2">
-                <img src={member.photo} alt={member.name} />
-                <h3>{member.name}</h3>
-                <p>{member.role}</p>
+              <div key={member.name} className="team-member-clean">
+                <img src={member.photo} alt={member.name} className="team-photo" />
+                <h3 className="member-name">{member.name}</h3>
+                <p className="member-role">{member.role}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* --- Seção de CTA Final --- */}
-        <section className="cta-section-v2">
-          <h2>Junte-se a nós nesta jornada.</h2>
-          <p>O seu próximo destino inesquecível está a um clique de distância.</p>
-          <Link to="/lugares" className="cta-button-v2">Começar a Explorar</Link>
+        <section className="sobre-section-clean cta-section-clean">
+            <h2>Pronto para sua próxima aventura?</h2>
+            <Link to="/lugares" className="cta-button-clean">Explore os Destinos</Link>
         </section>
+
       </main>
     </div>
   );
