@@ -5,12 +5,19 @@ import './PerfilPage.css'
 
 const CLOUD_NAME = 'dybpie9aa'
 const UPLOAD_PRESET = 'gadys_tcc'
+const ICONS = { success: '✓', error: '✕', info: 'ℹ' }
 
 function PerfilPage() {
   const navigate = useNavigate()
   const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
   const [menuOpen, setMenuOpen] = useState(false)
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
+  const [toast, setToast] = useState(null)
+
+  const showToast = (message, type = 'error') => {
+    setToast({ message, type })
+    setTimeout(() => setToast(null), 4000)
+  }
 
   if (localStorage.getItem('isLoggedIn') !== 'true') {
     return (
@@ -98,7 +105,7 @@ function PerfilPage() {
       setProfileData(newData)
       saveProfile(newData)
       setShowPhotoOptions(false)
-    } catch { alert('Erro ao fazer upload da foto.') }
+    } catch { showToast('Erro ao fazer upload da foto.') }
   }
 
   const handleEmojiSelect = (emoji) => {
@@ -122,6 +129,14 @@ function PerfilPage() {
 
   return (
     <div className={`perfil-page ${darkMode ? 'dark' : 'light'}`}>
+
+      {toast && (
+        <div className={`perfil-toast perfil-toast--${toast.type}`}>
+          <span className="perfil-toast-icon">{ICONS[toast.type]}</span>
+          <span>{toast.message}</span>
+          <button className="perfil-toast-close" onClick={() => setToast(null)}>×</button>
+        </div>
+      )}
       <header style={{
         background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
         padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between',
@@ -288,8 +303,8 @@ function PerfilPage() {
                     saveProfile(tempProfileData)
                     localStorage.setItem('userName', tempProfileData.nome)
                     setShowEditModal(false)
-                    alert('Dados salvos com sucesso!')
-                  } catch { alert('Erro ao salvar. Tente novamente.') }
+                    showToast('Dados salvos com sucesso!', 'success')
+                  } catch { showToast('Erro ao salvar. Tente novamente.') }
                 }}
                 className="save-button"
               >Salvar</button>

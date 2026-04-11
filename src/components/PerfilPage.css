@@ -582,3 +582,66 @@
   background: rgba(255, 255, 255, 0.12);
   color: #e0e0e0;
 }
+
+/* ── Toast (padrão login) ── */
+.perfil-toast {
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  z-index: 99999;
+  animation: perfil-slide-down 0.3s ease;
+  max-width: 420px;
+  width: 90%;
+}
+
+.perfil-toast--error {
+  background: #2d1a1a;
+  border: 1px solid rgba(244,63,94,0.4);
+  color: #fca5a5;
+}
+
+.perfil-toast--success {
+  background: #1a2d1e;
+  border: 1px solid rgba(16,185,129,0.4);
+  color: #6ee7b7;
+}
+
+.perfil-toast--info {
+  background: #1a1f2d;
+  border: 1px solid rgba(59,130,246,0.4);
+  color: #93c5fd;
+}
+
+.perfil-toast-icon {
+  font-size: 1.1rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.perfil-toast-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.7;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.perfil-toast-close:hover { opacity: 1; }
+
+@keyframes perfil-slide-down {
+  from { opacity: 0; transform: translateX(-50%) translateY(-12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
