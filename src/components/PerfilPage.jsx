@@ -43,7 +43,6 @@ function PerfilPage() {
       .then(locais => {
         const meus = locais.filter(l =>
           l.enviadoPor === userName ||
-          l.enviadoPor === 'Admin' ||
           l.enviadoPor === 'GADYS' ||
           String(l.criadoPor) === String(usuarioId)
         )
