@@ -41,11 +41,8 @@ function PerfilPage() {
     fetch(`${API_URL}/api/locais`)
       .then(r => r.json())
       .then(locais => {
-        const adminNames = ['GADYS', 'Admin', 'admin']
-        const meus = locais.filter(l =>
-          (isAdmin && adminNames.includes(l.enviadoPor)) ||
-          l.enviadoPor === userName
-        )
+        console.log('locais:', locais.map(l => ({ id: l.id, nome: l.nome, enviadoPor: l.enviadoPor })))
+        const meus = locais.filter(l => l.enviadoPor === 'GADYS')
         setMeusLocais(meus)
         setUserStats(prev => ({ ...prev, locaisAdicionados: meus.length }))
       })
