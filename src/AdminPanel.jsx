@@ -625,11 +625,11 @@ function AdminPanel() {
               <button
                 className="expand-btn"
                 onClick={() => {
-                  const deUsuario = location.enviadoPor && location.enviadoPor !== 'Admin';
+                  const deUsuario = location.enviadoPor && !['Admin', 'GADYS', 'admin'].includes(location.enviadoPor);
                   navigate(deUsuario ? `/local/${location.id}` : `/admin/editar-local/${location.id}`);
                 }}
               >
-                {location.enviadoPor && location.enviadoPor !== 'Admin' ? 'Ver' : 'Editar'}
+                {location.enviadoPor && !['Admin', 'GADYS', 'admin'].includes(location.enviadoPor) ? 'Ver' : 'Editar'}
               </button>
               <button 
                 className={location.status === 'INATIVO' ? 'approve-btn' : 'reject-btn'}
