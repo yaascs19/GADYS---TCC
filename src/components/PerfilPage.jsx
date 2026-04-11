@@ -7,33 +7,6 @@ const CLOUD_NAME = 'dybpie9aa'
 const UPLOAD_PRESET = 'gadys_tcc'
 const ICONS = { success: '✓', error: '✕', info: 'ℹ' }
 
-// Mapa de id do BD -> rota especifica do site
-const ROTAS_ESPECIFICAS = {
-  1:  '/teatro-amazonas',
-  2:  '/encontro-aguas',
-  3:  '/arquipelago-anavilhanas',
-  4:  '/amazonico-peixaria',
-  9:  '/cristo-redentor',
-  23: '/ceara/jericoacoara',
-  24: '/ceara/canoa-quebrada',
-  25: '/ceara/dragao-do-mar',
-  26: '/ceara/beach-park',
-  27: '/ceara/praia-do-futuro',
-  28: '/ceara/serra-de-baturite',
-  29: '/ceara/chapada-do-araripe',
-  30: '/ceara/centro-historico-fortaleza',
-  36: '/acre/parque-chandless',
-  37: '/acre/centro-historico',
-  38: '/amapa/fortaleza-sao-jose',
-  39: '/rondonia/ferrovia-madeira-mamore',
-  40: '/roraima/monte-roraima',
-  41: '/tocantins/jalapao',
-  42: '/mg/ouro-preto',
-  43: '/mg/inhotim',
-  44: '/es/pedra-azul',
-  45: '/es/guarapari',
-}
-
 function PerfilPage() {
   const navigate = useNavigate()
   const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
@@ -302,7 +275,7 @@ function PerfilPage() {
               <h3 className="card-header">Meus Locais</h3>
               <div className="meus-locais-lista">
                 {meusLocais.map(local => (
-                  <div key={local.id} className="meu-local-item" onClick={() => navigate(ROTAS_ESPECIFICAS[local.id] || `/local/${local.id}`)}>
+                  <div key={local.id} className="meu-local-item" onClick={() => navigate(local.rotaFrontend || `/local/${local.id}`)}>
                     <div className="meu-local-img" style={{ backgroundImage: local.imagemUrl ? `url(${local.imagemUrl.split(',')[0]})` : 'none' }} />
                     <div className="meu-local-info">
                       <strong>{local.nome}</strong>
