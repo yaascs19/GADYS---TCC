@@ -100,17 +100,11 @@ function LugaresPage() {
         <p>Os lugares mais visitados e admirados do Brasil pelos usuários do GADYS.</p>
       </header>
 
-      <div className="lp-ranking-banner">
-        <span>🏆</span>
-        <p>Ranking atualizado com base nas visitas e avaliações dos usuários</p>
-      </div>
-
       {/* ── GRID ── */}
       <main className="lp-grid">
         {lugares.map((lugar, i) => (
           <div key={lugar.id} className="lp-card" style={{ animationDelay: `${i * 0.08}s` }}>
             <div className="lp-card-image-container">
-              <span className="lp-rank-badge">#{i + 1}</span>
               <img src={lugar.imagem} alt={lugar.nome} className="lp-card-image" />
             </div>
             <div className="lp-card-content">
