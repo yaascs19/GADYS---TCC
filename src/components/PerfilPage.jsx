@@ -31,7 +31,7 @@ function PerfilPage() {
     const saved = JSON.parse(localStorage.getItem(`profileData_${usuarioId}`))
     return saved || {
       nome: localStorage.getItem('userName') || 'Usuário',
-      email: localStorage.getItem('userEmail') || 'usuario@email.com',
+      email: localStorage.getItem('userEmail') || '',
       foto: null
     }
   })
@@ -56,7 +56,21 @@ function PerfilPage() {
   }
 
   useEffect(() => {
-    const userName = localStorage.getItem('userName')
+    const usuarioId = localStorage.getItem('usuarioId')
+    if (usuarioId && API_URL) {
+      fetch(`${API_URL}/api/usuarios/${usuarioId}`)
+        .then(r => r.json())
+        .then(usuario => {
+          if (usuario?.email) {
+            localStorage.setItem('userEmail', usuario.email)
+            setProfileData(prev => ({ ...prev, email: usuario.email }))
+          }
+        })
+        .catch(() => {})
+    }
+  }, [])
+
+  useEffect(() => {
     const usuarioId = localStorage.getItem('usuarioId')
     fetch(`${API_URL}/api/locais`)
       .then(r => r.json())
