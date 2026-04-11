@@ -6,16 +6,36 @@ import axios from 'axios';
 const RAW_API_URL = import.meta.env.VITE_API_URL;
 const API_URL = RAW_API_URL.replace(/\/$/, '');
 
+const getPasswordStrength = (pwd) => {
+  if (!pwd) return null;
+  let score = 0;
+  if (pwd.length >= 8) score++;
+  if (/[A-Z]/.test(pwd)) score++;
+  if (/[0-9]/.test(pwd)) score++;
+  if (/[^A-Za-z0-9]/.test(pwd)) score++;
+  if (score <= 1) return { label: 'Fraca', color: '#f43f5e', width: '25%' };
+  if (score === 2) return { label: 'Razoável', color: '#f59e0b', width: '50%' };
+  if (score === 3) return { label: 'Boa', color: '#3b82f6', width: '75%' };
+  return { label: 'Forte', color: '#10b981', width: '100%' };
+};
+
+const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
 function Login({ onLogin, isAdminAccess = false }) {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
+  const [emailTouched, setEmailTouched] = useState(false);
   const [password, setPassword] = useState('');
   const [userType, setUserType] = useState(isAdminAccess ? 'adm' : 'usuario');
   const [isRegister, setIsRegister] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
+
+  const passwordStrength = getPasswordStrength(password);
+  const emailInvalid = emailTouched && email && !isValidEmail(email);
+  const passwordsMismatch = confirmPassword && password !== confirmPassword;
 
   const showAlert = (primaryMessage, fallbackMessage) => {
     if (typeof primaryMessage === 'string' && primaryMessage) {
@@ -31,7 +51,10 @@ function Login({ onLogin, isAdminAccess = false }) {
 
     try {
       if (isRegister) {
-        if (email && password && password === confirmPassword && name) {
+        if (!name) { alert('Preencha o nome!'); setLoading(false); return; }
+        if (!isValidEmail(email)) { alert('Email inválido!'); setLoading(false); return; }
+        if (!passwordStrength || passwordStrength.label === 'Fraca') { alert('Senha muito fraca! Use letras maiúsculas, números e símbolos.'); setLoading(false); return; }
+        if (password !== confirmPassword) { alert('Senhas não coincidem!'); setLoading(false); return; }
 
           const response = await axios.post(
             `${API_URL}/api/auth/cadastrar`,
@@ -54,8 +77,6 @@ function Login({ onLogin, isAdminAccess = false }) {
             showAlert(response.data.mensagem, 'Erro no cadastro.');
           }
 
-        } else if (password !== confirmPassword) {
-          alert('Senhas não coincidem!');
         } else {
           alert('Preencha todos os campos!');
         }
@@ -131,8 +152,11 @@ function Login({ onLogin, isAdminAccess = false }) {
             placeholder="Digite seu email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            onBlur={() => setEmailTouched(true)}
             required
+            style={{ borderColor: emailInvalid ? '#f43f5e' : '' }}
           />
+          {emailInvalid && <p className="field-error">Email inválido</p>}
 
           <input
             type="password"
@@ -141,6 +165,14 @@ function Login({ onLogin, isAdminAccess = false }) {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          {isRegister && password && (
+            <div className="password-strength">
+              <div className="password-strength-bar">
+                <div style={{ width: passwordStrength.width, background: passwordStrength.color }} />
+              </div>
+              <span style={{ color: passwordStrength.color }}>{passwordStrength.label}</span>
+            </div>
+          )}
 
           {isRegister && (
             <input
@@ -149,8 +181,10 @@ function Login({ onLogin, isAdminAccess = false }) {
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
+              style={{ borderColor: passwordsMismatch ? '#f43f5e' : confirmPassword && !passwordsMismatch ? '#10b981' : '' }}
             />
           )}
+          {passwordsMismatch && <p className="field-error">Senhas não coincidem</p>}
 
           {!isRegister && (
             <select
