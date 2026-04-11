@@ -89,6 +89,15 @@ app.get('/api/locais', async (req, res) => {
     } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+app.get('/api/locais/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        const result = await sql.query`SELECT * FROM vw_Locais WHERE id = ${id}`;
+        if (!result.recordset.length) return res.status(404).json({ error: 'Local não encontrado' });
+        res.json(result.recordset[0]);
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 app.get('/api/locais/pendentes', async (req, res) => {
     try {
         const result = await sql.query`
