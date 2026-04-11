@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import './LugaresPage.css'; // Import the CSS file
 
 function LugaresPage() {
   const navigate = useNavigate()
@@ -47,7 +48,7 @@ function LugaresPage() {
     {
       nome: 'Cataratas do Iguaçu',
       cidade: 'Foz do Iguaçu - PR',
-      descricao: 'Uma das maiores quedas d\'água do mundo',
+      descricao: "Uma das maiores quedas d'água do mundo",
       imagem: '/cata.jpg'
     },
     {
@@ -71,42 +72,16 @@ function LugaresPage() {
   ]
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: darkMode ? 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' : 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-      color: darkMode ? 'white' : '#2c3e50',
-      fontFamily: "'Inter', 'Segoe UI', sans-serif",
-      position: 'relative',
-      overflowX: 'hidden'
-    }}>
-      <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        background: darkMode ? 'radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.15) 0%, transparent 50%)' : 'radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.1) 0%, transparent 50%)',
-        zIndex: 1
-      }} />
+    <div className={`lugares-page ${darkMode ? 'dark' : ''}`}>
+      <div className="background-gradient" />
 
-      <header style={{
-        background: darkMode ? 'rgba(15, 12, 41, 0.8)' : '#1a237e',
-        backdropFilter: 'blur(30px)',
-        padding: '1rem 2rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        borderBottom: '1px solid rgba(255,255,255,0.1)'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <img src="/images/logos/logo.png" alt="GADYS" style={{ height: '45px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px' }} />
-          <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: 'white' }}>GADYS</span>
+      <header className="lugares-header">
+        <div className="lugares-logo-container">
+          <img src="/images/logos/logo.png" alt="GADYS" className="lugares-logo" />
+          <span className="lugares-title-header">GADYS</span>
         </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <button onClick={toggleTheme} style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', color: 'white', fontSize: '1.2rem', cursor: 'pointer', padding: '0.5rem', borderRadius: '10px', transition: 'all 0.3s' }}>
+        <div className="lugares-header-actions">
+          <button onClick={toggleTheme} className="theme-toggle-button">
             {darkMode ? '☀️' : '🌙'}
           </button>
           <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', zIndex: 1002 }} onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
@@ -117,39 +92,36 @@ function LugaresPage() {
         </div>
         <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', background: 'rgba(0, 0, 0, 0.5)', zIndex: 1000, opacity: 0, visibility: 'hidden', transition: 'all 0.3s ease' }} className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')} />
         <ul className="nav-links" style={{ position: 'fixed', top: 0, right: '-100%', width: '300px', height: '100vh', background: '#1a237e', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', gap: '2rem', margin: 0, padding: '4rem 0', listStyle: 'none', transition: 'right 0.3s ease', zIndex: 1001, overflowY: 'scroll', boxShadow: '-5px 0 15px rgba(0,0,0,0.1)' }}>
-          <li><Link to="/" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</Link></li>
-          <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Lugares (atual)</a></li>
-          <li><Link to="/mapa" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Mapa</Link></li>
-          <li><Link to="/adicionar-local" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Adicionar Local</Link></li>
-          <li><Link to="/perfil" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Meu Perfil</Link></li>
-          <li><Link to="/sobre" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Sobre</Link></li>
-          <li><Link to="/contato" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Contato</Link></li>
-        </ul>
+        <li><Link to="/" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</Link></li>
+        <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Lugares (atual)</a></li>
+        <li><Link to="/mapa" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Mapa</Link></li>
+        <li><Link to="/adicionar-local" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Adicionar Local</Link></li>
+        <li><Link to="/perfil" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Meu Perfil</Link></li>
+        <li><Link to="/sobre" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Sobre</Link></li>
+        <li><Link to="/contato" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Contato</Link></li>
+      </ul>
       </header>
 
-      <main style={{ maxWidth: '1400px', margin: '0 auto', padding: '0 2rem', position: 'relative', zIndex: 10 }}>
-        <section style={{ textAlign: 'center', padding: '8rem 0 6rem', background: darkMode ? 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%)', borderRadius: '0 0 50px 50px', marginBottom: '6rem' }}>
-          <h1 style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: '900', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: '2rem', lineHeight: '1.3' }}>
+      <main className="lugares-main">
+        <section className="hero-section">
+          <h1 className="hero-title">
             Lugares Mais Visitados
           </h1>
-          <p style={{ fontSize: '1.4rem', opacity: 0.8, maxWidth: '700px', margin: '0 auto', lineHeight: '1.6', fontWeight: '300' }}>
+          <p className="hero-subtitle">
             Descubra os destinos mais procurados pelos turistas<br />
-            <span style={{ color: '#667eea', fontWeight: '500' }}>Explore as maravilhas do Brasil</span>
+            <span className="hero-subtitle-highlight">Explore as maravilhas do Brasil</span>
           </p>
         </section>
 
-        <section style={{ background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)', padding: '5rem 4rem', borderRadius: '30px', marginBottom: '6rem', border: '1px solid rgba(102, 126, 234, 0.2)', boxShadow: '0 30px 60px rgba(102, 126, 234, 0.1)' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem' }}>
+        <section className="lugares-grid-section">
+          <div className="lugares-grid">
             {lugares.map((lugar, index) => (
-              <div key={index} style={{ background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 15px 30px rgba(102, 126, 234, 0.1)', transition: 'all 0.3s', border: '1px solid rgba(102, 126, 234, 0.2)' }}
-                onMouseOver={e => { e.currentTarget.style.transform = 'translateY(-10px)'; e.currentTarget.style.boxShadow = '0 25px 50px rgba(102, 126, 234, 0.2)' }}
-                onMouseOut={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 15px 30px rgba(102, 126, 234, 0.1)' }}
-              >
-                <img src={lugar.imagem} alt={lugar.nome} style={{ width: '100%', height: '250px', objectFit: 'cover', objectPosition: 'center top' }} />
-                <div style={{ padding: '2rem' }}>
-                  <h3 style={{ fontSize: '1.5rem', marginBottom: '0.5rem', color: darkMode ? '#f0f6fc' : '#2c3e50', fontWeight: '600' }}>{lugar.nome}</h3>
-                  <p style={{ color: '#667eea', fontSize: '0.9rem', marginBottom: '1rem', fontWeight: '500' }}>{lugar.cidade}</p>
-                  <p style={{ color: darkMode ? '#8b949e' : '#555', lineHeight: 1.6, marginBottom: '1.5rem' }}>{lugar.descricao}</p>
+              <div key={index} className="lugar-card">
+                <img src={lugar.imagem} alt={lugar.nome} className="lugar-card-image" />
+                <div className="lugar-card-content">
+                  <h3 className="lugar-card-title">{lugar.nome}</h3>
+                  <p className="lugar-card-city">{lugar.cidade}</p>
+                  <p className="lugar-card-description">{lugar.descricao}</p>
                   <Link to={
                     lugar.nome === 'Cristo Redentor' ? '/cristo-redentor' :
                     lugar.nome === 'Pão de Açúcar' ? '/pao-de-acucar' :
@@ -157,7 +129,7 @@ function LugaresPage() {
                     lugar.nome === 'Pelourinho' ? '/pelourinho' :
                     lugar.nome === 'Fernando de Noronha' ? '/fernando-noronha' :
                     lugar.nome === 'Pantanal' ? '/pantanal' : '#'}
-                    style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', border: 'none', padding: '0.8rem 2rem', borderRadius: '25px', cursor: 'pointer', fontSize: '1rem', fontWeight: '600', transition: 'all 0.3s', boxShadow: '0 5px 15px rgba(102, 126, 234, 0.3)', textDecoration: 'none', display: 'inline-block' }}>
+                    className="lugar-card-link">
                     Visitar
                   </Link>
                 </div>
@@ -166,20 +138,20 @@ function LugaresPage() {
           </div>
         </section>
 
-        <section style={{ textAlign: 'center', padding: '4rem 0 6rem' }}>
-          <div style={{ display: 'flex', gap: '2rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <Link to="/" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', border: 'none', padding: '1.5rem 3rem', borderRadius: '50px', cursor: 'pointer', fontSize: '1.1rem', fontWeight: '600', transition: 'all 0.4s', boxShadow: '0 15px 35px rgba(102, 126, 234, 0.4)', textDecoration: 'none' }}>
+        <section className="actions-section">
+          <div className="actions-container">
+            <Link to="/" className="action-link action-link-primary">
               Voltar ao Início
             </Link>
-            <Link to="/mapa" style={{ background: 'transparent', color: darkMode ? 'white' : '#2c3e50', border: darkMode ? '2px solid rgba(255,255,255,0.3)' : '2px solid rgba(44, 62, 80, 0.3)', padding: '1.5rem 3rem', borderRadius: '50px', cursor: 'pointer', fontSize: '1.1rem', fontWeight: '600', transition: 'all 0.4s', backdropFilter: 'blur(10px)', textDecoration: 'none' }}>
+            <Link to="/mapa" className="action-link action-link-secondary">
               Ver no Mapa
             </Link>
           </div>
         </section>
       </main>
 
-      <footer style={{ background: darkMode ? 'rgba(15, 12, 41, 0.9)' : 'rgba(255, 255, 255, 0.9)', textAlign: 'center', padding: '3rem', borderTop: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.1)', position: 'relative', zIndex: 10 }}>
-        <p style={{ opacity: 0.7, fontSize: '1rem' }}>&copy; 2025 GADYS. Todos os direitos reservados.</p>
+      <footer className="lugares-footer">
+        <p>&copy; 2025 GADYS. Todos os direitos reservados.</p>
       </footer>
     </div>
   )
