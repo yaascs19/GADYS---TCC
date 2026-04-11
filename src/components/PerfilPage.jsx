@@ -42,9 +42,8 @@ function PerfilPage() {
       .then(r => r.json())
       .then(locais => {
         const meus = locais.filter(l =>
-          l.enviadoPor === userName ||
           l.enviadoPor === 'GADYS' ||
-          String(l.criadoPor) === String(usuarioId)
+          l.enviadoPor === userName
         )
         setMeusLocais(meus)
         setUserStats(prev => ({ ...prev, locaisAdicionados: meus.length }))
