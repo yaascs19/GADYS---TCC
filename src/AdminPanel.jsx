@@ -20,6 +20,19 @@ function AdminPanel() {
   const [locationFilter, setLocationFilter] = useState('')
   const [editingLocation, setEditingLocation] = useState(null)
   const [showEditModal, setShowEditModal] = useState(false)
+  const [toast, setToast] = useState(null)
+  const [confirmModal, setConfirmModal] = useState(null)
+
+  const ICONS = { success: '✓', error: '✕', info: 'ℹ' }
+
+  const showToast = (message, type = 'error') => {
+    setToast({ message, type })
+    setTimeout(() => setToast(null), 4000)
+  }
+
+  const showConfirm = (message, onConfirm) => {
+    setConfirmModal({ message, onConfirm })
+  }
   
   const API_URL = import.meta.env.VITE_API_URL;
 
@@ -148,72 +161,71 @@ function AdminPanel() {
       })
       
       if (response.ok) {
-        alert('Local aprovado com sucesso!')
+        showToast('Local aprovado com sucesso!', 'success')
         loadPendingLocations()
         loadSiteLocations()
       } else {
-        alert('Erro ao aprovar local')
+        showToast('Erro ao aprovar local')
       }
     } catch (error) {
       console.error('Erro de conexão ao aprovar local:', error)
-      alert('Erro de conexão. Tente novamente.')
+      showToast('Erro de conexão. Tente novamente.')
     }
   }
 
-  const handleReject = async (id) => {
-    if (confirm('Tem certeza que deseja rejeitar e excluir este local?')) {
+  const handleReject = (id) => {
+    showConfirm('Tem certeza que deseja rejeitar e excluir este local?', async () => {
       try {
         const response = await fetch(`${API_URL}/api/locais/${id}`, { method: 'DELETE' })
         if (response.ok) {
-          alert('Local rejeitado e excluído!')
+          showToast('Local rejeitado e excluído!', 'success')
           loadPendingLocations()
         } else {
-          alert('Erro ao rejeitar local')
+          showToast('Erro ao rejeitar local')
         }
       } catch (error) {
-        alert('Erro de conexão. Tente novamente.')
+        showToast('Erro de conexão. Tente novamente.')
       }
-    }
+    })
   }
 
-  const handleRemoveLocation = async (id) => {
-    if (confirm('Tem certeza que deseja excluir este local permanentemente? Esta ação não pode ser desfeita!')) {
+  const handleRemoveLocation = (id) => {
+    showConfirm('Tem certeza que deseja excluir este local permanentemente? Esta ação não pode ser desfeita!', async () => {
       try {
         const response = await fetch(`${API_URL}/api/locais/${id}`, { method: 'DELETE' })
         if (response.ok) {
-          alert('Local excluído com sucesso!')
+          showToast('Local excluído com sucesso!', 'success')
           loadSiteLocations()
         } else {
-          alert('Erro ao excluir local')
+          showToast('Erro ao excluir local')
         }
       } catch (error) {
-        alert('Erro de conexão. Tente novamente.')
+        showToast('Erro de conexão. Tente novamente.')
       }
-    }
+    })
   }
 
   const toggleExpand = (id) => {
     setExpandedCard(expandedCard === id ? null : id)
   }
 
-  const handleRemoveUser = async (userId) => {
-    if (confirm('Tem certeza que deseja excluir este usuário?')) {
+  const handleRemoveUser = (userId) => {
+    showConfirm('Tem certeza que deseja excluir este usuário?', async () => {
       try {
         const response = await fetch(`${API_URL}/api/usuarios/${userId}`, {
           method: 'DELETE'
         })
-        
         if (response.ok) {
-          alert('Usuário excluído com sucesso!')
+          showToast('Usuário excluído com sucesso!', 'success')
           loadUsers()
         } else {
-          alert('Erro ao excluir usuário')
+          showToast('Erro ao excluir usuário')
         }
       } catch (error) {
         console.error('Erro de conexão ao excluir usuário:', error)
-        alert('Erro de conexão. Tente novamente.')
+        showToast('Erro de conexão. Tente novamente.')
       }
-    }
+    })
   }
 
   const handleToggleUsuario = async (id) => {
@@ -222,10 +234,10 @@ function AdminPanel() {
       if (response.ok) {
         setUserAccess(prev => prev.map(u => u.id === id ? { ...u, ativo: !u.ativo } : u))
       } else {
-        alert('Erro ao alterar status do usuário')
+        showToast('Erro ao alterar status do usuário')
       }
     } catch (error) {
-      alert('Erro de conexão. Tente novamente.')
+      showToast('Erro de conexão. Tente novamente.')
     }
   }
 
@@ -238,10 +250,10 @@ function AdminPanel() {
       if (response.ok) {
         loadSiteLocations()
       } else {
-        alert('Erro ao alterar status do local')
+        showToast('Erro ao alterar status do local')
       }
     } catch (error) {
-      alert('Erro de conexão. Tente novamente.')
+      showToast('Erro de conexão. Tente novamente.')
     } finally {
       setTogglingLocal(null)
     }
@@ -265,54 +277,54 @@ function AdminPanel() {
         if (response.ok) {
           setNewUser({ userName: '', email: '', senha: '', userType: 'usuario' })
           setShowAddUserModal(false)
-          alert('Usuário cadastrado com sucesso!')
+          showToast('Usuário cadastrado com sucesso!', 'success')
           loadUsers()
         } else {
           const error = await response.json()
-          alert(error.error || 'Erro ao cadastrar usuário')
+          showToast(error.error || 'Erro ao cadastrar usuário')
         }
       } catch (error) {
-        alert('Erro de conexão com o servidor')
+        showToast('Erro de conexão com o servidor')
       }
     } else {
-      alert('Por favor, preencha todos os campos obrigatórios (Nome, Email e Senha)!')
+      showToast('Por favor, preencha todos os campos obrigatórios (Nome, Email e Senha)!')
     }
   }
 
-  const handleRestoreLocation = async (id) => {
-    if (confirm('Tem certeza que deseja restaurar este local?')) {
+  const handleRestoreLocation = (id) => {
+    showConfirm('Tem certeza que deseja restaurar este local?', async () => {
       try {
         const response = await fetch(`${API_URL}/api/locais/restaurar/${id}`, {
           method: 'POST'
         });
         if (response.ok) {
-          alert('Local restaurado com sucesso!');
+          showToast('Local restaurado com sucesso!', 'success')
           loadTrashedLocations();
           loadSiteLocations();
         } else {
-          alert('Erro ao restaurar o local.');
+          showToast('Erro ao restaurar o local.')
         }
       } catch (error) {
         console.error('Erro de conexão ao restaurar local:', error)
-        alert('Erro de conexão. Tente novamente.')
+        showToast('Erro de conexão. Tente novamente.')
       }
-    }
+    })
   }
 
-  const handlePermanentDelete = async (id) => {
-    if (confirm('Tem certeza que deseja excluir permanentemente este local? Esta ação não pode ser desfeita!')) {
+  const handlePermanentDelete = (id) => {
+    showConfirm('Tem certeza que deseja excluir permanentemente este local? Esta ação não pode ser desfeita!', async () => {
       try {
         const response = await fetch(`${API_URL}/api/locais/${id}`, { method: 'DELETE' });
         if (response.ok) {
-          alert('Local excluído permanentemente!');
+          showToast('Local excluído permanentemente!', 'success')
           loadTrashedLocations();
         } else {
-          alert('Erro ao excluir o local permanentemente.');
+          showToast('Erro ao excluir o local permanentemente.')
         }
       } catch (error) {
-        alert('Erro de conexão. Tente novamente.')
+        showToast('Erro de conexão. Tente novamente.')
       }
-    }
+    })
   }
 
   const handleEdit = (id) => {
@@ -334,14 +346,14 @@ function AdminPanel() {
             if (response.ok) {
                 setShowEditModal(false)
                 setEditingLocation(null)
-                alert('Local editado com sucesso! Agora você pode aprová-lo.')
+                showToast('Local editado com sucesso! Agora você pode aprová-lo.', 'success')
                 loadPendingLocations();
             } else {
-                alert('Erro ao salvar edição do local.');
+                showToast('Erro ao salvar edição do local.')
             }
         } catch (error) {
             console.error('Erro de conexão ao salvar edição:', error);
-            alert('Erro de conexão. Tente novamente.');
+            showToast('Erro de conexão. Tente novamente.')
         }
     }
   }
@@ -353,30 +365,77 @@ function AdminPanel() {
     }
   }
 
-  const responderMensagem = async (id) => {
-    const resposta = prompt('Digite sua resposta:')
-    if (resposta && resposta.trim()) {
-        try {
-            const response = await fetch(`${API_URL}/api/mensagens/responder/${id}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ resposta: resposta.trim() })
-            });
-            if (response.ok) {
-                alert('Resposta enviada com sucesso!');
-                loadContactMessages();
-            } else {
-                alert('Erro ao enviar resposta.');
-            }
-        } catch (error) {
-            console.error('Erro de conexão ao responder mensagem:', error);
-            alert('Erro de conexão. Tente novamente.');
-        }
+  const [replyModal, setReplyModal] = useState(null)
+  const [replyText, setReplyText] = useState('')
+
+  const responderMensagem = (id) => {
+    setReplyModal(id)
+    setReplyText('')
+  }
+
+  const handleSendReply = async () => {
+    if (!replyText.trim()) return
+    try {
+      const response = await fetch(`${API_URL}/api/mensagens/responder/${replyModal}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ resposta: replyText.trim() })
+      })
+      if (response.ok) {
+        showToast('Resposta enviada com sucesso!', 'success')
+        setReplyModal(null)
+        loadContactMessages()
+      } else {
+        showToast('Erro ao enviar resposta.')
+      }
+    } catch (error) {
+      console.error('Erro de conexão ao responder mensagem:', error)
+      showToast('Erro de conexão. Tente novamente.')
     }
   }
 
   return (
     <div>
+      {toast && (
+        <div className={`admin-toast admin-toast--${toast.type}`}>
+          <span className="admin-toast-icon">{ICONS[toast.type]}</span>
+          <span>{toast.message}</span>
+          <button className="admin-toast-close" onClick={() => setToast(null)}>×</button>
+        </div>
+      )}
+
+      {confirmModal && (
+        <div className="modal-overlay" onClick={() => setConfirmModal(null)}>
+          <div className="modal-content modal-confirm" onClick={e => e.stopPropagation()}>
+            <p>{confirmModal.message}</p>
+            <div className="modal-actions">
+              <button className="reject-btn" onClick={() => { confirmModal.onConfirm(); setConfirmModal(null) }}>Confirmar</button>
+              <button className="expand-btn" onClick={() => setConfirmModal(null)}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {replyModal && (
+        <div className="modal-overlay" onClick={() => setReplyModal(null)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <h2>Responder Mensagem</h2>
+            <div className="form-group">
+              <label>Resposta:</label>
+              <textarea
+                value={replyText}
+                onChange={e => setReplyText(e.target.value)}
+                rows="5"
+                placeholder="Digite sua resposta..."
+              />
+            </div>
+            <div className="modal-actions">
+              <button className="approve-btn" onClick={handleSendReply}>Enviar</button>
+              <button className="reject-btn" onClick={() => setReplyModal(null)}>Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
       <header style={{
         background: darkMode ? 'rgba(15, 12, 41, 0.8)' : '#1a237e',
         backdropFilter: 'blur(30px)',
