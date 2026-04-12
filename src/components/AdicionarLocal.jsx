@@ -6,6 +6,7 @@ import './AdicionarLocal.css'
 function AdicionarLocal() {
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
   const navigate = useNavigate()
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
   const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
   const [menuOpen, setMenuOpen] = useState(false)
   const [formData, setFormData] = useState({
@@ -134,6 +135,19 @@ function AdicionarLocal() {
   // Return statement with new structure
   return (
     <div className={`adicionar-local-page ${darkMode ? 'dark' : ''}`}>
+
+      {!isLoggedIn && (
+        <div className="login-modal">
+          <div className="login-modal-content">
+            <h3>Acesso Restrito</h3>
+            <p>Para adicionar um local, você precisa estar logado.</p>
+            <div className="login-modal-actions">
+              <button onClick={() => navigate('/login')} className="login-button">Fazer Login</button>
+              <button onClick={() => navigate('/')} className="back-button">Voltar</button>
+            </div>
+          </div>
+        </div>
+      )}
       <header style={{
         background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
         padding: '1rem 2rem',
