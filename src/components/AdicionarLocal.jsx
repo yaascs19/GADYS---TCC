@@ -62,7 +62,7 @@ function AdicionarLocal() {
   }
 
   const handleGeocode = async () => {
-    const query = [formData.endereco, formData.cidade, formData.estado, 'Brasil'].filter(Boolean).join(', ')
+    const query = [formData.endereco, formData.cidade, 'Brasil'].filter(Boolean).join(', ')
     if (!query.trim()) { alert('Preencha o endereço ou cidade antes de buscar.'); return }
     setGeocoding(true)
     setGeocodeStatus(null)
