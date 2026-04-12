@@ -232,7 +232,7 @@ function AdminPanel() {
     try {
       const response = await fetch(`${API_URL}/api/usuarios/${id}/inativar`, { method: 'POST' })
       if (response.ok) {
-        setUserAccess(prev => prev.map(u => u.id === id ? { ...u, ativo: !u.ativo } : u))
+        setUserAccess(prev => prev.map(u => u.id === id ? { ...u, ativo: u.ativo === 'INATIVO' ? 'ATIVO' : 'INATIVO' } : u))
       } else {
         showToast('Erro ao alterar status do usuário')
       }
@@ -700,8 +700,8 @@ function AdminPanel() {
                 <span className={`category-badge ${user.tipoUsuario === 'adm' ? 'ADM' : 'USUARIO'}`}>
                   {user.tipoUsuario === 'adm' ? 'Admin' : 'Usuário'}
                 </span>
-                <span className={`category-badge ${user.ativo === false ? 'INATIVO' : 'ATIVO'}`}>
-                  {user.ativo === false ? 'Inativo' : 'Ativo'}
+                <span className={`category-badge ${user.ativo === 'INATIVO' ? 'INATIVO' : 'ATIVO'}`}>
+                  {user.ativo === 'INATIVO' ? 'Inativo' : 'Ativo'}
                 </span>
               </div>
             </div>
@@ -713,10 +713,10 @@ function AdminPanel() {
 
             <div className="card-actions">
               <button 
-                className={user.ativo === false ? 'approve-btn' : 'expand-btn'}
+                className={user.ativo === 'INATIVO' ? 'approve-btn' : 'expand-btn'}
                 onClick={() => handleToggleUsuario(user.id)}
               >
-                {user.ativo === false ? 'Ativar' : 'Inativar'}
+                {user.ativo === 'INATIVO' ? 'Ativar' : 'Inativar'}
               </button>
               <button 
                 className="reject-btn"
