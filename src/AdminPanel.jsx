@@ -16,7 +16,6 @@ function AdminPanel() {
   const [showAddUserModal, setShowAddUserModal] = useState(false)
   const [newUser, setNewUser] = useState({ userName: '', email: '', senha: '', userType: 'usuario' })
   const [siteLocations, setSiteLocations] = useState([])
-  const [trashedLocations, setTrashedLocations] = useState([])
   const [contactMessages, setContactMessages] = useState([])
   const [locationFilter, setLocationFilter] = useState('')
   const [editingLocation, setEditingLocation] = useState(null)
@@ -162,40 +161,32 @@ function AdminPanel() {
   }
 
   const handleReject = async (id) => {
-    try {
-      const response = await fetch(`${API_URL}/api/locais/rejeitar/${id}`, {
-        method: 'POST'
-      })
-      
-      if (response.ok) {
-        alert('Local rejeitado!')
-        loadPendingLocations()
-        loadTrashedLocations()
-      } else {
-        alert('Erro ao rejeitar local')
+    if (confirm('Tem certeza que deseja rejeitar e excluir este local?')) {
+      try {
+        const response = await fetch(`${API_URL}/api/locais/${id}`, { method: 'DELETE' })
+        if (response.ok) {
+          alert('Local rejeitado e excluído!')
+          loadPendingLocations()
+        } else {
+          alert('Erro ao rejeitar local')
+        }
+      } catch (error) {
+        alert('Erro de conexão. Tente novamente.')
       }
-    } catch (error) {
-      console.error('Erro de conexão ao rejeitar local:', error)
-      alert('Erro de conexão. Tente novamente.')
     }
   }
 
   const handleRemoveLocation = async (id) => {
-    if (confirm('Tem certeza que deseja mover este local para a lixeira?')) {
+    if (confirm('Tem certeza que deseja excluir este local permanentemente? Esta ação não pode ser desfeita!')) {
       try {
-        const response = await fetch(`${API_URL}/api/locais/excluir/${id}`, {
-          method: 'POST'
-        })
-        
+        const response = await fetch(`${API_URL}/api/locais/${id}`, { method: 'DELETE' })
         if (response.ok) {
-          alert('Local movido para a lixeira!')
+          alert('Local excluído com sucesso!')
           loadSiteLocations()
-          loadTrashedLocations()
         } else {
-          alert('Erro ao mover local para lixeira')
+          alert('Erro ao excluir local')
         }
       } catch (error) {
-        console.error('Erro de conexão ao mover local para a lixeira:', error)
         alert('Erro de conexão. Tente novamente.')
       }
     }
@@ -311,9 +302,7 @@ function AdminPanel() {
   const handlePermanentDelete = async (id) => {
     if (confirm('Tem certeza que deseja excluir permanentemente este local? Esta ação não pode ser desfeita!')) {
       try {
-        const response = await fetch(`${API_URL}/api/locais/lixeira/${id}`, {
-          method: 'DELETE'
-        });
+        const response = await fetch(`${API_URL}/api/locais/${id}`, { method: 'DELETE' });
         if (response.ok) {
           alert('Local excluído permanentemente!');
           loadTrashedLocations();
@@ -321,7 +310,6 @@ function AdminPanel() {
           alert('Erro ao excluir o local permanentemente.');
         }
       } catch (error) {
-        console.error('Erro de conexão ao excluir local permanentemente:', error)
         alert('Erro de conexão. Tente novamente.')
       }
     }
@@ -477,12 +465,6 @@ function AdminPanel() {
             onClick={() => setActiveTab('locations')}
           >
             Locais ({siteLocations.length})
-          </button>
-          <button 
-            className={`tab-btn ${activeTab === 'trash' ? 'active' : ''}`}
-            onClick={() => setActiveTab('trash')}
-          >
-            Lixeira ({trashedLocations.length})
           </button>
           <button 
             className={`tab-btn ${activeTab === 'messages' ? 'active' : ''}`}
