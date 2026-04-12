@@ -23,13 +23,12 @@ const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 const ICONS = { success: '✓', error: '✕', info: 'ℹ' };
 
-function Login({ onLogin, isAdminAccess = false }) {
+function Login({ onLogin }) {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
   const [emailTouched, setEmailTouched] = useState(false);
   const [password, setPassword] = useState('');
-  const [userType, setUserType] = useState(isAdminAccess ? 'adm' : 'usuario');
   const [isRegister, setIsRegister] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState('');
   const [name, setName] = useState('');
@@ -73,7 +72,7 @@ function Login({ onLogin, isAdminAccess = false }) {
         if (email && password) {
           const response = await axios.post(
             `${API_URL}/api/auth/login`,
-            { email, senha: password, tipoUsuario: userType === 'adm' ? 'ADM' : 'USUARIO' }
+            { email, senha: password }
           );
 
           if (response.data.sucesso) {
@@ -168,30 +167,17 @@ function Login({ onLogin, isAdminAccess = false }) {
           )}
           {passwordsMismatch && <p className="field-error">Senhas não coincidem</p>}
 
-          {!isRegister && (
-            <select
-              value={userType}
-              onChange={(e) => setUserType(e.target.value)}
-              className="user-type-select"
-            >
-              {!isAdminAccess && <option value="usuario">Usuário</option>}
-              <option value="adm">Administrador</option>
-            </select>
-          )}
-
-          <button type="submit" disabled={loading}>
+<button type="submit" disabled={loading}>
             {loading ? 'Carregando...' : (isRegister ? 'Cadastrar' : 'Entrar')}
           </button>
         </form>
 
-        {!isAdminAccess && (
-          <p className="toggle-form">
+        <p className="toggle-form">
             {isRegister ? 'Já tem conta?' : 'Não tem conta?'}
             <span onClick={() => setIsRegister(!isRegister)}>
               {isRegister ? ' Entrar' : ' Cadastrar-se'}
             </span>
           </p>
-        )}
       </div>
     </div>
   );
