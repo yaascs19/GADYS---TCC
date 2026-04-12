@@ -1,33 +1,33 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import './ContatoPage.css'
 
 function MapaLeaflet() {
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem('darkMode') === 'true'
-  })
+  const navigate = useNavigate()
+  const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
+  const [menuOpen, setMenuOpen] = useState(false)
   const [categoria, setCategoria] = useState('todas')
   const [preco, setPreco] = useState('todos')
   const [distancia, setDistancia] = useState(3000)
   const [userLocation, setUserLocation] = useState(null)
   const [lugaresVisiveis, setLugaresVisiveis] = useState([])
+  const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
 
   const toggleTheme = () => {
-    const newDarkMode = !darkMode
-    setDarkMode(newDarkMode)
-    localStorage.setItem('darkMode', newDarkMode.toString())
+    const n = !darkMode
+    setDarkMode(n)
+    localStorage.setItem('darkMode', n.toString())
   }
 
-
-
   const calcularDistancia = (lat1, lng1, lat2, lng2) => {
-    const R = 6371 // Raio da Terra em km
+    const R = 6371
     const dLat = (lat2 - lat1) * Math.PI / 180
     const dLng = (lng2 - lng1) * Math.PI / 180
     const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
               Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
               Math.sin(dLng/2) * Math.sin(dLng/2)
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
-    return R * c
+    return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))
   }
 
   const getMyLocation = () => {
@@ -37,28 +37,15 @@ function MapaLeaflet() {
           const lat = position.coords.latitude
           const lng = position.coords.longitude
           setUserLocation({ lat, lng })
-          
-          // Buscar nome da localização usando coordenadas
           fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&limit=1`)
-            .then(response => response.json())
+            .then(r => r.json())
             .then(data => {
-              if (data && data.display_name) {
-                const searchInput = document.getElementById('searchInput')
-                if (searchInput) {
-                  searchInput.value = data.display_name
-                }
-                alert(`Localização encontrada: ${data.display_name}`)
-              } else {
-                alert(`Localização encontrada: ${lat.toFixed(4)}, ${lng.toFixed(4)}`)
-              }
-            })
-            .catch(() => {
-              alert(`Localização encontrada: ${lat.toFixed(4)}, ${lng.toFixed(4)}`)
-            })
+              const searchInput = document.getElementById('searchInput')
+              if (searchInput && data?.display_name) searchInput.value = data.display_name
+            }).catch(() => {})
+          if (window.currentMap) window.currentMap.setView([lat, lng], 10)
         },
-        (error) => {
-          alert('Erro ao obter localização: ' + error.message)
-        }
+        (error) => alert('Erro ao obter localização: ' + error.message)
       )
     } else {
       alert('Geolocalização não é suportada neste navegador.')
@@ -66,863 +53,275 @@ function MapaLeaflet() {
   }
 
   const lugares = [
-    { nome: 'Cristo Redentor', lat: -22.9519, lng: -43.2105, cor: '#e74c3c', cidade: 'Rio de Janeiro - RJ', categoria: 'monumentos', preco: 'pago' },
-    { nome: 'Pão de Açúcar', lat: -22.9487, lng: -43.1566, cor: '#3498db', cidade: 'Rio de Janeiro - RJ', categoria: 'natureza', preco: 'pago' },
-    { nome: 'Cataratas do Iguaçu', lat: -25.6953, lng: -54.4367, cor: '#2ecc71', cidade: 'Foz do Iguaçu - PR', categoria: 'natureza', preco: 'pago' },
-    { nome: 'Pelourinho', lat: -12.9714, lng: -38.5014, cor: '#f39c12', cidade: 'Salvador - BA', categoria: 'cultura', preco: 'gratuito' },
-    { nome: 'Fernando de Noronha', lat: -3.8549, lng: -32.4229, cor: '#9b59b6', cidade: 'Pernambuco - PE', categoria: 'praias', preco: 'pago' },
-    { nome: 'Pantanal', lat: -16.3394, lng: -56.4669, cor: '#1abc9c', cidade: 'Mato Grosso - MT', categoria: 'natureza', preco: 'pago' },
-    { nome: 'Teatro Amazonas', lat: -3.1302, lng: -60.0231, cor: '#4caf50', cidade: 'Manaus - AM', categoria: 'monumentos', preco: 'pago' },
-    { nome: 'Palácio da Justiça', lat: -3.1319, lng: -60.0212, cor: '#ff5722', cidade: 'Manaus - AM', categoria: 'monumentos', preco: 'gratuito' },
-    { nome: 'Mercado Municipal Adolpho Lisboa', lat: -3.1365, lng: -60.0235, cor: '#795548', cidade: 'Manaus - AM', categoria: 'monumentos', preco: 'gratuito' },
-    { nome: 'Igreja São Sebastião', lat: -3.1298, lng: -60.0178, cor: '#607d8b', cidade: 'Manaus - AM', categoria: 'monumentos', preco: 'gratuito' },
-    { nome: 'Palácio Rio Negro', lat: -3.1285, lng: -60.0195, cor: '#9c27b0', cidade: 'Manaus - AM', categoria: 'monumentos', preco: 'pago' },
-    { nome: 'Centro Cultural Palácio da Justiça', lat: -3.1315, lng: -60.0208, cor: '#ff9800', cidade: 'Manaus - AM', categoria: 'monumentos', preco: 'gratuito' },
-    { nome: 'Monumento à Abertura dos Portos', lat: -3.1275, lng: -60.0165, cor: '#3f51b5', cidade: 'Manaus - AM', categoria: 'monumentos', preco: 'gratuito' },
-    { nome: 'Encontro das Águas', lat: -3.1285, lng: -59.9070, cor: '#8bc34a', cidade: 'Manaus - AM', categoria: 'natureza', preco: 'gratuito' },
-    { nome: 'Parque Nacional do Jaú', lat: -1.9000, lng: -61.6000, cor: '#cddc39', cidade: 'Novo Airão - AM', categoria: 'natureza', preco: 'pago' },
-    { nome: 'Reserva Mamirauá', lat: -3.0833, lng: -64.8500, cor: '#66bb6a', cidade: 'Tefé - AM', categoria: 'natureza', preco: 'pago' },
-    { nome: 'Floresta Amazônica', lat: -3.4653, lng: -62.2159, cor: '#2e7d32', cidade: 'Amazonas - AM', categoria: 'natureza', preco: 'gratuito' },
-    { nome: 'Rio Amazonas', lat: -3.1190, lng: -60.0217, cor: '#1976d2', cidade: 'Amazonas - AM', categoria: 'natureza', preco: 'gratuito' }
+    { nome: 'Teatro Amazonas', lat: -3.1302, lng: -60.0231, cor: '#4caf50', cidade: 'Manaus - AM', categoria: 'Monumentos', preco: 'pago' },
+    { nome: 'Encontro das Águas', lat: -3.1190, lng: -59.9050, cor: '#8bc34a', cidade: 'Manaus - AM', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Arquipélago de Anavilhanas', lat: -2.6833, lng: -60.9500, cor: '#2e7d32', cidade: 'Novo Airão - AM', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Amazônico Peixaria Regional', lat: -3.1316, lng: -60.0233, cor: '#ff9800', cidade: 'Manaus - AM', categoria: 'Restaurantes', preco: 'pago' },
+    { nome: 'Bumbódromo', lat: -2.6278, lng: -56.7358, cor: '#e91e63', cidade: 'Parintins - AM', categoria: 'Costume Cultural', preco: 'pago' },
+    { nome: 'Cachoeira do Santuário', lat: -2.0167, lng: -60.0333, cor: '#00bcd4', cidade: 'Presidente Figueiredo - AM', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Coreto Peixaria', lat: -3.1290, lng: -60.0220, cor: '#ff5722', cidade: 'Manaus - AM', categoria: 'Restaurantes', preco: 'pago' },
+    { nome: 'Ponte Rio Negro', lat: -3.2167, lng: -60.0500, cor: '#607d8b', cidade: 'Manaus - AM', categoria: 'Monumentos', preco: 'gratuito' },
+    { nome: 'Cristo Redentor', lat: -22.9519, lng: -43.2105, cor: '#e74c3c', cidade: 'Rio de Janeiro - RJ', categoria: 'Monumentos', preco: 'pago' },
+    { nome: 'Pão de Açúcar', lat: -22.9487, lng: -43.1566, cor: '#3498db', cidade: 'Rio de Janeiro - RJ', categoria: 'Lugar Paradísíaco', preco: 'pago' },
+    { nome: 'Theatro Municipal RJ', lat: -22.9103, lng: -43.1761, cor: '#9c27b0', cidade: 'Rio de Janeiro - RJ', categoria: 'Monumentos', preco: 'pago' },
+    { nome: 'Escadaria Selarón', lat: -22.9147, lng: -43.1794, cor: '#f39c12', cidade: 'Rio de Janeiro - RJ', categoria: 'Costume Cultural', preco: 'gratuito' },
+    { nome: 'Arcos da Lapa', lat: -22.9122, lng: -43.1800, cor: '#795548', cidade: 'Rio de Janeiro - RJ', categoria: 'Monumentos', preco: 'gratuito' },
+    { nome: 'Museu do Amanhã', lat: -22.8944, lng: -43.1731, cor: '#00bcd4', cidade: 'Rio de Janeiro - RJ', categoria: 'Costume Cultural', preco: 'pago' },
+    { nome: 'Praia de Copacabana', lat: -22.9711, lng: -43.1822, cor: '#1976d2', cidade: 'Rio de Janeiro - RJ', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Praia de Ipanema', lat: -22.9868, lng: -43.2044, cor: '#0288d1', cidade: 'Rio de Janeiro - RJ', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'MASP', lat: -23.5614, lng: -46.6558, cor: '#e74c3c', cidade: 'São Paulo - SP', categoria: 'Costume Cultural', preco: 'pago' },
+    { nome: 'Teatro Municipal SP', lat: -23.5454, lng: -46.6388, cor: '#9c27b0', cidade: 'São Paulo - SP', categoria: 'Monumentos', preco: 'pago' },
+    { nome: 'Mercadão', lat: -23.5418, lng: -46.6292, cor: '#ff9800', cidade: 'São Paulo - SP', categoria: 'Restaurantes', preco: 'gratuito' },
+    { nome: 'Edifício Copan', lat: -23.5455, lng: -46.6437, cor: '#607d8b', cidade: 'São Paulo - SP', categoria: 'Monumentos', preco: 'gratuito' },
+    { nome: 'Parque Ibirapuera', lat: -23.5874, lng: -46.6576, cor: '#4caf50', cidade: 'São Paulo - SP', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Beco do Batman', lat: -23.5558, lng: -46.6897, cor: '#f39c12', cidade: 'São Paulo - SP', categoria: 'Costume Cultural', preco: 'gratuito' },
+    { nome: 'Jericoacoara', lat: -2.7975, lng: -40.5137, cor: '#00bcd4', cidade: 'Jijoca - CE', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Canoa Quebrada', lat: -4.5167, lng: -37.6667, cor: '#ff9800', cidade: 'Aracati - CE', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Centro Dragão do Mar', lat: -3.7197, lng: -38.5069, cor: '#e91e63', cidade: 'Fortaleza - CE', categoria: 'Costume Cultural', preco: 'pago' },
+    { nome: 'Beach Park', lat: -3.8333, lng: -38.3833, cor: '#1976d2', cidade: 'Aquiraz - CE', categoria: 'Lugar Paradísíaco', preco: 'pago' },
+    { nome: 'Praia do Futuro', lat: -3.7667, lng: -38.4500, cor: '#0288d1', cidade: 'Fortaleza - CE', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Serra de Baturité', lat: -4.3333, lng: -38.8833, cor: '#4caf50', cidade: 'Baturité - CE', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Chapada do Araripe', lat: -7.2167, lng: -39.4167, cor: '#8bc34a', cidade: 'Crato - CE', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Centro Histórico de Fortaleza', lat: -3.7275, lng: -38.5275, cor: '#795548', cidade: 'Fortaleza - CE', categoria: 'Monumentos', preco: 'gratuito' },
+    { nome: 'Alter do Chão', lat: -2.5167, lng: -54.9500, cor: '#00bcd4', cidade: 'Santarém - PA', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Mercado Ver-o-Peso', lat: -1.4558, lng: -48.5044, cor: '#ff9800', cidade: 'Belém - PA', categoria: 'Costume Cultural', preco: 'gratuito' },
+    { nome: 'Feliz Lusitânia', lat: -1.4561, lng: -48.5022, cor: '#795548', cidade: 'Belém - PA', categoria: 'Monumentos', preco: 'gratuito' },
+    { nome: 'Ilha de Marajó', lat: -1.0000, lng: -49.5000, cor: '#4caf50', cidade: 'Marajó - PA', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Mangal das Garças', lat: -1.4667, lng: -48.5000, cor: '#8bc34a', cidade: 'Belém - PA', categoria: 'Lugar Paradísíaco', preco: 'pago' },
+    { nome: 'Parque Estadual Chandless', lat: -9.3333, lng: -70.6667, cor: '#2e7d32', cidade: 'Santa Rosa do Purus - AC', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Centro Histórico de Rio Branco', lat: -9.9753, lng: -67.8249, cor: '#795548', cidade: 'Rio Branco - AC', categoria: 'Monumentos', preco: 'gratuito' },
+    { nome: 'Fortaleza de São José', lat: 0.0389, lng: -51.0664, cor: '#607d8b', cidade: 'Macapá - AP', categoria: 'Monumentos', preco: 'pago' },
+    { nome: 'Ferrovia Madeira-Mamoré', lat: -8.7619, lng: -63.9039, cor: '#ff5722', cidade: 'Porto Velho - RO', categoria: 'Monumentos', preco: 'pago' },
+    { nome: 'Monte Roraima', lat: 5.1439, lng: -60.7619, cor: '#9c27b0', cidade: 'Uiramutã - RR', categoria: 'Lugar Paradísíaco', preco: 'pago' },
+    { nome: 'Jalapão', lat: -10.3500, lng: -46.6167, cor: '#f39c12', cidade: 'Mateiros - TO', categoria: 'Lugar Paradísíaco', preco: 'pago' },
+    { nome: 'Ouro Preto', lat: -20.3856, lng: -43.5036, cor: '#795548', cidade: 'Ouro Preto - MG', categoria: 'Monumentos', preco: 'gratuito' },
+    { nome: 'Instituto Inhotim', lat: -20.1281, lng: -44.1986, cor: '#4caf50', cidade: 'Brumadinho - MG', categoria: 'Costume Cultural', preco: 'pago' },
+    { nome: 'Pedra Azul', lat: -20.4167, lng: -41.0167, cor: '#1976d2', cidade: 'Domingos Martins - ES', categoria: 'Lugar Paradísíaco', preco: 'pago' },
+    { nome: 'Guarapari', lat: -20.6719, lng: -40.4994, cor: '#00bcd4', cidade: 'Guarapari - ES', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
   ]
 
+  const adicionarMarcadores = (lista, map) => {
+    if (!window.L || !map) return
+    if (window.mapMarkers) window.mapMarkers.forEach(m => map.removeLayer(m))
+    window.mapMarkers = []
+    lista.forEach(lugar => {
+      try {
+        const marker = window.L.circleMarker([lugar.lat, lugar.lng], {
+          radius: 12, fillColor: lugar.cor, color: 'white', weight: 3, opacity: 1, fillOpacity: 0.9
+        }).addTo(map)
+        marker.bindPopup(`
+          <div style="padding:12px;font-family:Arial;min-width:180px;">
+            <h3 style="margin:0 0 6px;color:#333;font-size:15px;">${lugar.nome}</h3>
+            <p style="margin:0 0 8px;color:#666;font-size:12px;">${lugar.cidade}</p>
+            <div style="display:flex;gap:4px;margin-bottom:10px;">
+              <span style="background:#3c6e71;color:white;padding:2px 7px;border-radius:10px;font-size:10px;">${lugar.categoria}</span>
+              <span style="background:${lugar.preco === 'gratuito' ? '#2ecc71' : '#e74c3c'};color:white;padding:2px 7px;border-radius:10px;font-size:10px;">${lugar.preco}</span>
+            </div>
+            <button onclick="window.location.href='/lugares'"
+              style="background:#3c6e71;color:white;border:none;padding:8px 16px;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;width:100%;">
+              Ver Detalhes
+            </button>
+          </div>
+        `)
+        window.mapMarkers.push(marker)
+      } catch (e) {}
+    })
+  }
+
   useEffect(() => {
-    const style = document.createElement('style')
-    style.textContent = `
-      .nav-links.active {
-        right: 0 !important;
-      }
-      .nav-overlay.active {
-        opacity: 1 !important;
-        visibility: visible !important;
-      }
-      .nav-links li:hover .dropdown-content {
-        display: block !important;
-      }
-    `
-    document.head.appendChild(style)
-    
     setLugaresVisiveis(lugares)
-    
-    // Aguardar um pouco antes de carregar o mapa
     setTimeout(() => {
-      // Carregar Leaflet
       const link = document.createElement('link')
       link.rel = 'stylesheet'
       link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css'
       document.head.appendChild(link)
-      
       const script = document.createElement('script')
       script.src = `https://unpkg.com/leaflet@1.9.4/dist/leaflet.js?v=${Date.now()}`
       script.onload = () => {
-        console.log('LEAFLET CARREGADO EM:', new Date().toLocaleTimeString())
         setTimeout(() => {
           if (window.L && document.getElementById('map')) {
             const map = window.L.map('map').setView([-14.2350, -51.9253], 4)
-            
             window.L.tileLayer('https://mt1.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
-              attribution: '© Google Maps',
-              maxZoom: 20
+              attribution: '© Google Maps', maxZoom: 20
             }).addTo(map)
-            
-            window.mapMarkers = []
-            
-            // MARCADORES BONITOS - DEBUG
-            console.log('TOTAL DE LUGARES:', lugares.length)
-            lugares.forEach((lugar, index) => {
-              console.log(`MARCADOR ${index + 1}:`, lugar.nome, 'Coordenadas:', lugar.lat, lugar.lng, 'Cor:', lugar.cor)
-              
-              try {
-                const marker = window.L.circleMarker([lugar.lat, lugar.lng], {
-                  radius: 12,
-                  fillColor: lugar.cor,
-                  color: 'white',
-                  weight: 3,
-                  opacity: 1,
-                  fillOpacity: 0.9
-                }).addTo(map)
-                
-                console.log(`MARCADOR ${index + 1} CRIADO COM SUCESSO`)
-              
-              const icone = lugar.categoria === 'monumentos' ? '🏛️' : 
-                           lugar.categoria === 'natureza' ? '🌳' : 
-                           lugar.categoria === 'praias' ? '🏖️' : '🏢'
-              
-              marker.bindPopup(`
-                <div style="padding: 15px; font-family: Arial; min-width: 200px;">
-                  <h3 style="margin: 0 0 8px 0; color: #333; font-size: 16px;">${icone} ${lugar.nome}</h3>
-                  <p style="margin: 0 0 10px 0; color: #666; font-size: 13px;">${lugar.cidade}</p>
-                  <div style="display: flex; gap: 5px; margin-bottom: 12px;">
-                    <span style="background: #667eea; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px;">${lugar.categoria}</span>
-                    <span style="background: ${lugar.preco === 'gratuito' ? '#2ecc71' : '#e74c3c'}; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px;">${lugar.preco}</span>
-                  </div>
-                  <button 
-                    onclick="window.location.href='${lugar.cidade.includes('AM') ? '/amazonas' : '/lugares'}'" 
-                    style="
-                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                      color: white;
-                      border: none;
-                      padding: 10px 20px;
-                      border-radius: 25px;
-                      cursor: pointer;
-                      font-size: 13px;
-                      font-weight: 600;
-                      width: 100%;
-                      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-                      transition: all 0.3s ease;
-                      text-transform: uppercase;
-                      letter-spacing: 0.5px;
-                    "
-                    onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.6)'"
-                    onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.4)'"
-                  >
-                    Ver Detalhes
-                  </button>
-                </div>
-              `)
-              
-                window.mapMarkers.push(marker)
-                console.log(`MARCADOR ${index + 1} ADICIONADO AO ARRAY. Total no array:`, window.mapMarkers.length)
-              } catch (error) {
-                console.error(`ERRO AO CRIAR MARCADOR ${index + 1}:`, error)
-              }
-            })
-            
-            console.log('RESUMO FINAL:')
-            console.log('- Lugares processados:', lugares.length)
-            console.log('- Marcadores no array:', window.mapMarkers.length)
-            console.log('- Marcadores no mapa:', map._layers ? Object.keys(map._layers).length : 'N/A')
-            
             window.currentMap = map
-            console.log('TOTAL DE MARCADORES:', window.mapMarkers.length)
-            alert(`${window.mapMarkers.length} MARCADORES COLORIDOS ADICIONADOS!`)
+            adicionarMarcadores(lugares, map)
           }
         }, 500)
       }
       document.head.appendChild(script)
     }, 100)
-    
-    return () => document.head.removeChild(style)
   }, [])
 
-  const buscarLocal = (local) => {
-    if (!local) {
-      console.log('Local vazio')
-      return
+  const aplicarFiltros = () => {
+    let filtrados = lugares
+    if (categoria !== 'todas') filtrados = filtrados.filter(l => l.categoria === categoria)
+    if (preco !== 'todos') filtrados = filtrados.filter(l => l.preco === preco)
+    if (userLocation) {
+      filtrados = filtrados.filter(l =>
+        calcularDistancia(userLocation.lat, userLocation.lng, l.lat, l.lng) <= distancia
+      )
     }
-    
-    console.log('Buscando local:', local)
-    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(local)}&limit=1`)
-      .then(response => {
-        console.log('Response status:', response.status)
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`)
-        }
-        return response.json()
-      })
-      .then(data => {
-        console.log('Dados recebidos:', data)
-        if (data.length > 0 && data[0].lat && data[0].lon) {
-          const lat = parseFloat(data[0].lat)
-          const lng = parseFloat(data[0].lon)
-          if (!isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
-            setUserLocation({ lat, lng })
-            
-            if (window.currentMap) {
-              window.currentMap.setView([lat, lng], 10)
-            }
-            alert(`Local encontrado: ${local}`)
-          } else {
-            alert('Coordenadas inválidas')
+    setLugaresVisiveis(filtrados)
+    if (window.currentMap) adicionarMarcadores(filtrados, window.currentMap)
+    const searchInput = document.getElementById('searchInput')
+    if (searchInput?.value.trim()) {
+      fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchInput.value)}&limit=1`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.length > 0) {
+            const lat = parseFloat(data[0].lat), lng = parseFloat(data[0].lon)
+            if (window.currentMap) window.currentMap.setView([lat, lng], 10)
           }
-        } else {
-          alert('Local não encontrado')
-        }
-      })
-      .catch(error => {
-        console.error('Erro na busca:', error)
-        alert(`Erro na busca: ${error.message}`)
-      })
+        }).catch(() => {})
+    }
   }
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      background: darkMode ? 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' : 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
-      color: darkMode ? 'white' : '#2c3e50',
-      fontFamily: "'Inter', 'Segoe UI', sans-serif",
-      position: 'relative',
-      overflowX: 'hidden'
-    }}>
+    <div className={`contato-page${darkMode ? ' dark' : ''}`}>
+
       <header style={{
-        background: darkMode ? 'rgba(15, 12, 41, 0.8)' : '#1a237e',
-        backdropFilter: 'blur(30px)',
-        padding: '1rem 2rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
+        background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
+        padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between',
+        alignItems: 'center', position: 'sticky', top: 0, zIndex: 100,
         borderBottom: '1px solid rgba(255,255,255,0.1)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <img 
-            src="/images/logos/logo.png" 
-            alt="GADYS" 
-            style={{
-              height: '45px',
-              background: 'linear-gradient(135deg, #667eea, #764ba2)',
-              borderRadius: '50%',
-              padding: '8px'
-            }}
-          />
-          <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: 'white' }}>GADYS</span>
+          <img src="/images/logos/logo.png" alt="GADYS" style={{ height: '40px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px' }} />
+          <span style={{ fontSize: '1.5rem', fontWeight: '700', color: 'white' }}>GADYS</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <button 
-            onClick={toggleTheme}
-            style={{
-              background: darkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
-              border: darkMode ? '1px solid rgba(255,255,255,0.2)' : '1px solid rgba(0,0,0,0.2)',
-              color: darkMode ? 'white' : '#2c3e50',
-              fontSize: '1.2rem',
-              cursor: 'pointer',
-              padding: '0.5rem',
-              borderRadius: '10px',
-              transition: 'all 0.3s'
-            }}
-          >
+          <button onClick={toggleTheme} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>
             {darkMode ? '☀️' : '🌙'}
           </button>
-          <div 
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              cursor: 'pointer',
-              zIndex: 1002
-            }}
-            onClick={() => document.querySelector('.nav-links').classList.toggle('active')}
-          >
-            <span style={{
-              width: '25px',
-              height: '3px',
-              background: 'white',
-              margin: '3px 0',
-              transition: '0.3s'
-            }} />
-            <span style={{
-              width: '25px',
-              height: '3px',
-              background: 'white',
-              margin: '3px 0',
-              transition: '0.3s'
-            }} />
-            <span style={{
-              width: '25px',
-              height: '3px',
-              background: 'white',
-              margin: '3px 0',
-              transition: '0.3s'
-            }} />
+          <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', zIndex: 1002 }} onClick={() => setMenuOpen(!menuOpen)}>
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
           </div>
         </div>
-        <div 
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            background: 'rgba(0, 0, 0, 0.5)',
-            zIndex: 1000,
-            opacity: 0,
-            visibility: 'hidden',
-            transition: 'all 0.3s ease'
-          }}
-          className="nav-overlay"
-          onClick={() => document.querySelector('.nav-links').classList.remove('active')}
-        />
-        <ul 
-          className="nav-links"
-          style={{
-            position: 'fixed',
-            top: 0,
-            right: '-100%',
-            width: '300px',
-            height: '100vh',
-            background: darkMode ? '#1a237e' : '#1a237e',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'flex-start',
-            alignItems: 'center',
-            gap: '2rem',
-            margin: 0,
-            padding: '4rem 0',
-            listStyle: 'none',
-            transition: 'right 0.3s ease',
-            zIndex: 1001,
-            overflowY: 'scroll',
-            boxShadow: '-5px 0 15px rgba(0,0,0,0.1)'
-          }}
-        >
-          <li><Link to="/" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Início</Link></li>
-          <li className="dropdown" style={{ position: 'relative' }}>
-            <a href="#" style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Estados Brasileiros ▼</a>
-            <div className="dropdown-content" style={{
-              position: 'absolute',
-              top: '100%',
-              left: 0,
-              background: 'white',
-              minWidth: '200px',
-              maxHeight: '300px',
-              overflowY: 'auto',
-              boxShadow: '0 8px 16px rgba(0,0,0,0.2)',
-              borderRadius: '5px',
-              display: 'none',
-              zIndex: 1002
-            }}>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Acre</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Alagoas</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amapá</a>
-              <Link to="/amazonas" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amazonas</Link>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Bahia</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Ceará</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Distrito Federal</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Espírito Santo</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Goiás</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Maranhão</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Mato Grosso</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Mato Grosso do Sul</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Minas Gerais</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Pará</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Paraíba</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Paraná</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Pernambuco</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Piauí</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio de Janeiro</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio Grande do Norte</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio Grande do Sul</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rondônia</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Roraima</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Santa Catarina</a>
-              <Link to="/sao-paulo" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>São Paulo</Link>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Sergipe</a>
-              <a href="#" style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Tocantins</a>
-            </div>
+        {menuOpen && <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000 }} onClick={() => setMenuOpen(false)} />}
+        <ul style={{
+          position: 'fixed', top: 0, right: menuOpen ? 0 : '-100%', width: '300px', height: '100vh',
+          background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', justifyContent: 'flex-start',
+          margin: 0, padding: '2rem 0', listStyle: 'none', transition: 'right 0.3s ease', zIndex: 1001, overflowY: 'auto'
+        }}>
+          {[
+            { label: 'Início', path: '/' },
+            { label: 'Lugares', path: '/lugares' },
+            { label: 'Adicionar Local', path: '/adicionar-local' },
+            { label: isLoggedIn ? 'Meu Perfil' : 'Entrar', path: isLoggedIn ? '/perfil' : '/login' },
+            { label: 'Sobre', path: '/sobre' },
+            { label: 'Contato', path: '/contato' },
+          ].map(({ label, path }) => (
+            <li key={path}>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate(path); setMenuOpen(false) }}
+                style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '5px', display: 'block' }}>
+                {label}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href="#" onClick={(e) => e.preventDefault()}
+              style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '5px', display: 'block', cursor: 'default' }}>
+              Mapa (atual)
+            </a>
           </li>
-          <li><Link to="/lugares" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Lugares</Link></li>
-          <li><a href="#" style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', cursor: 'not-allowed' }}>Mapa (atual)</a></li>
-          <li><Link to="/adicionar-local" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Adicionar Local</Link></li>
-          <li><Link to="/perfil" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Meu Perfil</Link></li>
-          <li><Link to="/sobre" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Sobre</Link></li>
-          <li><Link to="/contato" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem' }}>Contato</Link></li>
+          {isAdmin && (
+            <li>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate('/painel-adm'); setMenuOpen(false) }}
+                style={{ color: '#ffd700', textDecoration: 'none', padding: '0.5rem 1rem', fontWeight: '700', borderRadius: '5px', display: 'block' }}>
+                Painel Admin
+              </a>
+            </li>
+          )}
         </ul>
       </header>
 
-      <main style={{
-        maxWidth: '1400px',
-        margin: '0 auto',
-        padding: '0 2rem',
-        position: 'relative',
-        zIndex: 10
-      }}>
-        <section style={{
-          textAlign: 'center',
-          padding: '8rem 0 6rem',
-          background: darkMode ? 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.4) 100%)',
-          borderRadius: '0 0 50px 50px',
-          marginBottom: '6rem'
-        }}>
-          <h1 style={{
-            fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
-            fontWeight: '900',
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            marginBottom: '2rem',
-            letterSpacing: '-3px',
-            lineHeight: '1.1'
-          }}>
-            Mapa Interativo
-          </h1>
-          
-          <p style={{
-            fontSize: '1.4rem',
-            opacity: 0.8,
-            maxWidth: '700px',
-            margin: '0 auto',
-            lineHeight: '1.6',
-            fontWeight: '300'
-          }}>
-            Explore pontos turísticos pelo Brasil<br />
-            <span style={{ color: '#667eea', fontWeight: '500' }}>Descubra destinos incríveis em um mapa interativo</span>
-          </p>
-        </section>
+      <header className="contato-hero">
+        <h1>Mapa Interativo</h1>
+        <p>Explore pontos turísticos pelo Brasil e descubra destinos incríveis.</p>
+      </header>
 
-        <section style={{
-          background: 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)',
-          padding: '5rem 4rem',
-          borderRadius: '30px',
-          marginBottom: '6rem',
-          border: '1px solid rgba(102, 126, 234, 0.2)',
-          boxShadow: '0 30px 60px rgba(102, 126, 234, 0.1)'
-        }}>
-          <h2 style={{ 
-            fontSize: '3rem', 
-            marginBottom: '3rem', 
-            textAlign: 'center',
-            color: darkMode ? 'white' : '#2c3e50',
-            fontWeight: '700'
-          }}>Mapa do Brasil</h2>
-          
-          <div>
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-              gap: '2rem',
-              marginBottom: '3rem'
-            }}>
-              <div style={{
-                background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                padding: '1.5rem',
-                borderRadius: '15px'
-              }}>
-                <label style={{ 
-                  display: 'block', 
-                  marginBottom: '0.5rem', 
-                  fontWeight: '600',
-                  color: '#667eea'
-                }}>Categoria:</label>
-                <select 
-                  value={categoria}
-                  onChange={(e) => setCategoria(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem',
-                    borderRadius: '10px',
-                    border: '1px solid rgba(102, 126, 234, 0.3)',
-                    background: darkMode ? '#333' : 'white',
-                    color: darkMode ? 'white' : '#333',
-                    fontSize: '1rem'
-                  }}>
-                  <option value="todas">Todas as categorias</option>
-                  <option value="monumentos">🏛️ Monumentos</option>
-                  <option value="natureza">🌳 Natureza</option>
-                  <option value="praias">🏖️ Praias</option>
-                  <option value="cultura">🏢 Cultura</option>
-                </select>
-              </div>
-              
-              <div style={{
-                background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                padding: '1.5rem',
-                borderRadius: '15px'
-              }}>
-                <label style={{ 
-                  display: 'block', 
-                  marginBottom: '0.5rem', 
-                  fontWeight: '600',
-                  color: '#667eea'
-                }}>Preço:</label>
-                <select 
-                  value={preco}
-                  onChange={(e) => setPreco(e.target.value)}
-                  style={{
-                    width: '100%',
-                    padding: '0.75rem',
-                    borderRadius: '10px',
-                    border: '1px solid rgba(102, 126, 234, 0.3)',
-                    background: darkMode ? '#333' : 'white',
-                    color: darkMode ? 'white' : '#333',
-                    fontSize: '1rem'
-                  }}>
-                  <option value="todos">Todos os preços</option>
-                  <option value="gratuito">🆓 Gratuito</option>
-                  <option value="pago">💵 Pago</option>
-                </select>
-              </div>
-              
-              <div style={{
-                background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                padding: '1.5rem',
-                borderRadius: '15px'
-              }}>
-                <label style={{ 
-                  display: 'block', 
-                  marginBottom: '0.5rem', 
-                  fontWeight: '600',
-                  color: '#667eea'
-                }}>Distância máxima:</label>
-                <input 
-                  type="range" 
-                  min="1" 
-                  max="3000" 
-                  value={distancia}
-                  onChange={(e) => {
-                    const novaDistancia = parseInt(e.target.value)
-                    console.log('Distância alterada para:', novaDistancia)
-                    setDistancia(novaDistancia)
-                  }}
-                  style={{
-                    width: '100%',
-                    marginBottom: '0.5rem'
-                  }}
-                />
-                <div style={{ textAlign: 'center', fontSize: '0.9rem', opacity: 0.7 }}>{distancia}km</div>
-              </div>
-              
-              <div style={{
-                background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                padding: '1.5rem',
-                borderRadius: '15px'
-              }}>
-                <label style={{ 
-                  display: 'block', 
-                  marginBottom: '0.5rem', 
-                  fontWeight: '600',
-                  color: '#667eea'
-                }}>Localização:</label>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                  <input 
-                    id="searchInput"
-                    type="text"
-                    placeholder="Buscar local (ex: Manaus)"
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      borderRadius: '10px',
-                      border: '1px solid rgba(102, 126, 234, 0.3)',
-                      background: darkMode ? '#333' : 'white',
-                      color: darkMode ? 'white' : '#333',
-                      fontSize: '0.9rem'
-                    }}
-                  />
-                  <button 
-                    onClick={getMyLocation}
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      borderRadius: '10px',
-                      border: '1px solid rgba(102, 126, 234, 0.3)',
-                      background: '#667eea',
-                      color: 'white',
-                      fontSize: '0.9rem',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease'
-                    }}>
-                    📍 Minha Localização
-                  </button>
-                  <button 
-                    onClick={() => {
-                      if (window.currentMap) {
-                        window.currentMap.setView([-14.2350, -51.9253], 4)
-                      }
-                      setUserLocation(null)
-                    }}
-                    style={{
-                      width: '100%',
-                      padding: '0.75rem',
-                      borderRadius: '10px',
-                      border: '1px solid rgba(102, 126, 234, 0.3)',
-                      background: '#764ba2',
-                      color: 'white',
-                      fontSize: '0.9rem',
-                      cursor: 'pointer',
-                      transition: 'all 0.3s ease'
-                    }}>
-                    🇧🇷 Ver Brasil Inteiro
-                  </button>
-                </div>
-              </div>
-            </div>
-            
-            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-              <button 
-                onClick={() => {
-                  console.log('=== APLICANDO FILTROS ===')
-                  
-                  let filtrados = lugares
-                  
-                  // Filtro por categoria
-                  if (categoria !== 'todas') {
-                    filtrados = filtrados.filter(lugar => lugar.categoria === categoria)
-                    console.log(`Filtro categoria '${categoria}':`, filtrados.length, 'lugares')
-                  }
-                  
-                  // Filtro por preço
-                  if (preco !== 'todos') {
-                    filtrados = filtrados.filter(lugar => lugar.preco === preco)
-                    console.log(`Filtro preço '${preco}':`, filtrados.length, 'lugares')
-                  }
-                  
-                  // Filtro por distância
-                  if (userLocation) {
-                    filtrados = filtrados.filter(lugar => {
-                      const distanciaKm = calcularDistancia(
-                        userLocation.lat, userLocation.lng,
-                        lugar.lat, lugar.lng
-                      )
-                      return distanciaKm <= parseInt(distancia)
-                    })
-                    console.log(`Filtro distância ${distancia}km:`, filtrados.length, 'lugares')
-                  }
-                  
-                  // Atualizar lista
-                  setLugaresVisiveis(filtrados)
-                  
-                  // Atualizar marcadores no mapa
-                  if (window.currentMap && window.mapMarkers) {
-                    console.log('Removendo', window.mapMarkers.length, 'marcadores antigos')
-                    
-                    // Remover todos os marcadores
-                    window.mapMarkers.forEach(marker => {
-                      window.currentMap.removeLayer(marker)
-                    })
-                    window.mapMarkers = []
-                    
-                    // Adicionar apenas marcadores filtrados
-                    console.log('Adicionando', filtrados.length, 'marcadores filtrados:')
-                    filtrados.forEach((lugar, index) => {
-                      console.log(`  ${index + 1}. ${lugar.nome} em [${lugar.lat}, ${lugar.lng}] - Cor: ${lugar.cor}`)
-                      
-                      // Verificar se já existe marcador nessa posição
-                      const coordsExistentes = window.mapMarkers.find(m => 
-                        m.getLatLng && m.getLatLng().lat === lugar.lat && m.getLatLng().lng === lugar.lng
-                      )
-                      if (coordsExistentes) {
-                        console.log(`    ATENÇÃO: Já existe marcador em [${lugar.lat}, ${lugar.lng}]`)
-                      }
-                      
-                      const marker = window.L.circleMarker([lugar.lat, lugar.lng], {
-                        radius: 15, // Aumentando o raio para ficar mais visível
-                        fillColor: lugar.cor,
-                        color: 'white',
-                        weight: 4,
-                        opacity: 1,
-                        fillOpacity: 1
-                      }).addTo(window.currentMap)
-                      
-                      console.log(`    Marcador ${index + 1} criado com sucesso`)
-                      
-                      const icone = lugar.categoria === 'monumentos' ? '🏛️' : 
-                                   lugar.categoria === 'natureza' ? '🌳' : 
-                                   lugar.categoria === 'praias' ? '🏖️' : '🏢'
-                      
-                      marker.bindPopup(`
-                        <div style="padding: 15px; font-family: Arial; min-width: 200px;">
-                          <h3 style="margin: 0 0 8px 0; color: #333; font-size: 16px;">${icone} ${lugar.nome}</h3>
-                          <p style="margin: 0 0 10px 0; color: #666; font-size: 13px;">${lugar.cidade}</p>
-                          <div style="display: flex; gap: 5px; margin-bottom: 12px;">
-                            <span style="background: #667eea; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px;">${lugar.categoria}</span>
-                            <span style="background: ${lugar.preco === 'gratuito' ? '#2ecc71' : '#e74c3c'}; color: white; padding: 3px 8px; border-radius: 12px; font-size: 11px;">${lugar.preco}</span>
-                          </div>
-                          <button 
-                            onclick="window.location.href='${lugar.cidade.includes('AM') ? '/amazonas' : '/lugares'}'" 
-                            style="
-                              background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                              color: white;
-                              border: none;
-                              padding: 10px 20px;
-                              border-radius: 25px;
-                              cursor: pointer;
-                              font-size: 13px;
-                              font-weight: 600;
-                              width: 100%;
-                              box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
-                              transition: all 0.3s ease;
-                              text-transform: uppercase;
-                              letter-spacing: 0.5px;
-                            "
-                            onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(102, 126, 234, 0.6)'"
-                            onmouseout="this.style.transform='translateY(0px)'; this.style.boxShadow='0 4px 15px rgba(102, 126, 234, 0.4)'"
-                          >
-                            Ver Detalhes
-                          </button>
-                        </div>
-                      `)
-                      
-                      window.mapMarkers.push(marker)
-                      console.log(`    Marcador ${index + 1} adicionado ao array. Total: ${window.mapMarkers.length}`)
-                    })
-                    
-                    console.log('\n=== RESUMO FINAL ===')
-                    console.log('Lugares filtrados:', filtrados.length)
-                    console.log('Marcadores criados:', window.mapMarkers.length)
-                    console.log('Lista de marcadores:')
-                    window.mapMarkers.forEach((marker, i) => {
-                      if (marker.getLatLng) {
-                        const pos = marker.getLatLng()
-                        console.log(`  Marcador ${i + 1}: [${pos.lat}, ${pos.lng}]`)
-                      }
-                    })
-                  }
-                  
-                  // Buscar local se digitado
-                  const searchInput = document.getElementById('searchInput')
-                  if (searchInput && searchInput.value.trim()) {
-                    console.log('Buscando local:', searchInput.value)
-                    buscarLocal(searchInput.value)
-                  }
-                  
-                  const msgDistancia = userLocation ? ` (dentro de ${distancia}km)` : ''
-                  alert(`Filtros aplicados! ${filtrados.length} lugares mostrados${msgDistancia}`)
-                }}
-                style={{
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                  color: 'white',
-                  border: 'none',
-                  padding: '1rem 3rem',
-                  borderRadius: '25px',
-                  cursor: 'pointer',
-                  fontSize: '1.1rem',
-                  fontWeight: '600'
-                }}>
-                🔍 Aplicar Filtros
+      <main className="contato-main">
+
+        <div className="contato-info-grid" style={{ marginBottom: '2rem' }}>
+          <div className="contato-info-card" style={{ textAlign: 'left' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>Categoria</label>
+            <select value={categoria} onChange={e => setCategoria(e.target.value)}
+              style={{ width: '100%', padding: '0.7rem', borderRadius: '6px', border: '1px solid var(--modern-border)', background: darkMode ? '#2d3748' : '#f7f7f7', color: darkMode ? '#e2e8f0' : '#333', fontSize: '0.95rem' }}>
+              <option value="todas">Todas</option>
+              <option value="Monumentos">Monumentos</option>
+              <option value="Lugar Paradísíaco">Lugar Paradísíaco</option>
+              <option value="Restaurantes">Restaurantes</option>
+              <option value="Costume Cultural">Costume Cultural</option>
+            </select>
+          </div>
+          <div className="contato-info-card" style={{ textAlign: 'left' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>Preço</label>
+            <select value={preco} onChange={e => setPreco(e.target.value)}
+              style={{ width: '100%', padding: '0.7rem', borderRadius: '6px', border: '1px solid var(--modern-border)', background: darkMode ? '#2d3748' : '#f7f7f7', color: darkMode ? '#e2e8f0' : '#333', fontSize: '0.95rem' }}>
+              <option value="todos">Todos</option>
+              <option value="gratuito">Gratuito</option>
+              <option value="pago">Pago</option>
+            </select>
+          </div>
+          <div className="contato-info-card" style={{ textAlign: 'left' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>Distância: {distancia}km</label>
+            <input type="range" min="1" max="3000" value={distancia} onChange={e => setDistancia(parseInt(e.target.value))}
+              style={{ width: '100%' }} />
+          </div>
+          <div className="contato-info-card" style={{ textAlign: 'left' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>Localização</label>
+            <input id="searchInput" type="text" placeholder="Buscar local..."
+              style={{ width: '100%', padding: '0.6rem 0.8rem', borderRadius: '6px', border: '1px solid var(--modern-border)', background: darkMode ? '#2d3748' : '#f7f7f7', color: darkMode ? '#e2e8f0' : '#333', marginBottom: '0.5rem', boxSizing: 'border-box' }} />
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <button onClick={getMyLocation} className="contato-submit-btn" style={{ flex: 1, padding: '0.6rem', fontSize: '0.85rem' }}>
+                Minha Loc.
+              </button>
+              <button onClick={() => { if (window.currentMap) window.currentMap.setView([-14.2350, -51.9253], 4); setUserLocation(null) }}
+                className="contato-submit-btn" style={{ flex: 1, padding: '0.6rem', fontSize: '0.85rem', background: 'var(--modern-headings)' }}>
+                Brasil
               </button>
             </div>
-          
-            <div style={{
-              background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-              padding: '1rem',
-              borderRadius: '20px',
-              minHeight: '600px',
-              border: '1px solid rgba(102, 126, 234, 0.3)'
-            }}>
-              <div id="map" style={{
-                width: '100%',
-                height: '580px',
-                borderRadius: '15px'
-              }}></div>
-            </div>
           </div>
-        </section>
+        </div>
 
-        <section style={{
-          background: darkMode ? 'linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%)' : 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0.5) 100%)',
-          padding: '5rem 4rem',
-          borderRadius: '30px',
-          marginBottom: '6rem',
-          border: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.1)'
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <button onClick={aplicarFiltros} className="contato-submit-btn" style={{ width: 'auto', padding: '0.9rem 3rem' }}>
+            Aplicar Filtros
+          </button>
+        </div>
+
+        <div style={{
+          background: darkMode ? 'var(--modern-surface-dark)' : 'var(--modern-surface)',
+          border: '1px solid var(--modern-border)',
+          borderRadius: '8px', padding: '1rem', marginBottom: '3rem'
         }}>
-          <h2 style={{ 
-            fontSize: '3rem', 
-            marginBottom: '4rem',
-            textAlign: 'center',
-            fontWeight: '700'
-          }}>Pontos Populares</h2>
-          
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-            gap: '2rem'
-          }}>
-            {lugaresVisiveis.map((ponto, index) => (
-              <div key={index} style={{
-                background: darkMode ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.8)',
-                padding: '2rem',
-                borderRadius: '20px',
-                textAlign: 'center',
-                cursor: 'pointer',
-                transition: 'all 0.3s',
-                border: '1px solid rgba(102, 126, 234, 0.2)'
-              }}>
-                <h3 style={{ 
-                  fontSize: '1.3rem',
-                  marginBottom: '0.5rem',
-                  fontWeight: '600',
-                  color: '#667eea'
-                }}>{ponto.nome}</h3>
-                <p style={{ 
-                  opacity: 0.7,
-                  fontSize: '1rem',
-                  marginBottom: '0.5rem'
-                }}>{ponto.cidade}</p>
-                <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <span style={{
-                    background: '#667eea',
-                    color: 'white',
-                    padding: '0.3rem 0.8rem',
-                    borderRadius: '15px',
-                    fontSize: '0.9rem',
-                    fontWeight: '500'
-                  }}>{ponto.categoria}</span>
-                  <span style={{
-                    background: ponto.preco === 'gratuito' ? '#2ecc71' : '#e74c3c',
-                    color: 'white',
-                    padding: '0.3rem 0.8rem',
-                    borderRadius: '15px',
-                    fontSize: '0.9rem',
-                    fontWeight: '500'
-                  }}>{ponto.preco === 'gratuito' ? '🆓 Gratuito' : '💵 Pago'}</span>
-                </div>
+          <div id="map" style={{ width: '100%', height: '560px', borderRadius: '6px' }} />
+        </div>
+
+        <h2 style={{ fontFamily: 'Lora, serif', fontSize: '1.8rem', marginBottom: '1.5rem', color: darkMode ? '#e2e8f0' : 'var(--modern-headings)' }}>
+          Pontos no Mapa
+        </h2>
+        <div className="contato-info-grid">
+          {lugaresVisiveis.map((ponto, i) => (
+            <div key={i} className="contato-info-card" style={{ textAlign: 'left' }}>
+              <h3 style={{ margin: '0 0 0.25rem', color: 'var(--modern-primary)', fontSize: '1rem' }}>{ponto.nome}</h3>
+              <p style={{ margin: '0 0 0.75rem', fontSize: '0.85rem', opacity: 0.7 }}>{ponto.cidade}</p>
+              <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                <span style={{ background: 'var(--modern-primary)', color: 'white', padding: '2px 8px', borderRadius: '10px', fontSize: '0.75rem' }}>{ponto.categoria}</span>
+                <span style={{ background: ponto.preco === 'gratuito' ? '#2ecc71' : '#e74c3c', color: 'white', padding: '2px 8px', borderRadius: '10px', fontSize: '0.75rem' }}>{ponto.preco}</span>
               </div>
-            ))}
-          </div>
-        </section>
+            </div>
+          ))}
+        </div>
 
-        <section style={{
-          textAlign: 'center',
-          padding: '4rem 0 6rem'
-        }}>
-          <div style={{
-            display: 'flex',
-            gap: '2rem',
-            justifyContent: 'center',
-            flexWrap: 'wrap'
-          }}>
-            <Link 
-              to="/"
-              style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                color: 'white',
-                border: 'none',
-                padding: '1.5rem 3rem',
-                borderRadius: '50px',
-                cursor: 'pointer',
-                fontSize: '1.1rem',
-                fontWeight: '600',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                boxShadow: '0 15px 35px rgba(102, 126, 234, 0.4)',
-                letterSpacing: '0.5px',
-                textDecoration: 'none'
-              }}
-            >
-              Voltar ao Início
-            </Link>
-            
-            <Link 
-              to="/lugares"
-              style={{
-                background: 'transparent',
-                color: darkMode ? 'white' : '#2c3e50',
-                border: darkMode ? '2px solid rgba(255,255,255,0.3)' : '2px solid rgba(44, 62, 80, 0.3)',
-                padding: '1.5rem 3rem',
-                borderRadius: '50px',
-                cursor: 'pointer',
-                fontSize: '1.1rem',
-                fontWeight: '600',
-                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-                backdropFilter: 'blur(10px)',
-                letterSpacing: '0.5px',
-                textDecoration: 'none'
-              }}
-            >
-              Ver Lugares
-            </Link>
-          </div>
-        </section>
       </main>
 
-      <footer style={{
-        background: darkMode ? 'rgba(15, 12, 41, 0.9)' : 'rgba(255, 255, 255, 0.9)',
-        textAlign: 'center',
-        padding: '3rem',
-        borderTop: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.1)',
-        position: 'relative',
-        zIndex: 10
-      }}>
-        <p style={{ opacity: 0.7, fontSize: '1rem' }}>&copy; 2025 GADYS. Todos os direitos reservados.</p>
+      <footer className="contato-footer">
+        <p>&copy; {new Date().getFullYear()} GADYS. Todos os direitos reservados.</p>
       </footer>
     </div>
   )
