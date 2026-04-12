@@ -273,3 +273,13 @@
     grid-template-columns: 1fr !important;
   }
 }
+
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 10 !important;
+}
+
+.leaflet-control {
+  z-index: 11 !important;
+}
