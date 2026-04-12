@@ -166,7 +166,15 @@ app.post('/api/locais/rejeitar/:id', async (req, res) => {
 app.post('/api/locais/excluir/:id', async (req, res) => {
     try {
         const id = parseInt(req.params.id);
-        await sql.query`UPDATE Localizacao SET status = 'INATIVO' WHERE id = ${id}`;
+        await sql.query`UPDATE Localizacao SET status = 'LIXEIRA' WHERE id = ${id}`;
+        res.json({ success: true });
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/locais/lixeira/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        await sql.query`DELETE FROM Localizacao WHERE id = ${id}`;
         res.json({ success: true });
     } catch (err) { res.status(500).json({ error: err.message }); }
 });
