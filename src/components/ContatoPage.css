@@ -182,9 +182,14 @@
 }
 
 .dark .contato-field input, .dark .contato-field textarea {
-  background-color: var(--modern-input-bg-dark);
-  border-color: var(--modern-border-dark);
-  color: var(--modern-text-dark);
+  background-color: #2d3748;
+  border-color: #4a5568;
+  color: #e2e8f0;
+}
+
+.dark .contato-field input::placeholder,
+.dark .contato-field textarea::placeholder {
+  color: #718096;
 }
 
 .contato-field input:focus, .contato-field textarea:focus {
@@ -262,3 +267,9 @@
 
 /* --- Toast --- */
 .contato-toast { display: none; } /* Ocultando o toast antigo, idealmente seria um componente global */
+
+@media (max-width: 768px) {
+  .sobre-grid {
+    grid-template-columns: 1fr !important;
+  }
+}

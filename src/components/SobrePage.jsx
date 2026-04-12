@@ -1,12 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import './SobrePage.css';
+import './ContatoPage.css';
 
 function SobrePage() {
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [menuOpen, setMenuOpen] = useState(false);
   const sectionsRef = useRef([]);
+  const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM';
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
 
   const toggleDarkMode = () => {
     const next = !darkMode;
@@ -14,125 +16,142 @@ function SobrePage() {
     localStorage.setItem('darkMode', next.toString());
   };
 
-  const closeMenu = () => document.querySelector('.nav-links')?.classList.remove('active');
-  const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM';
-  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-
   useEffect(() => {
     const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-          }
-        });
-      },
+      (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('is-visible'); }),
       { threshold: 0.1 }
     );
-
-    sectionsRef.current.forEach((section) => {
-      if (section) observer.observe(section);
-    });
-
-    return () => {
-      sectionsRef.current.forEach((section) => {
-        if (section) observer.unobserve(section);
-      });
-    };
+    sectionsRef.current.forEach(s => s && observer.observe(s));
+    return () => sectionsRef.current.forEach(s => s && observer.unobserve(s));
   }, []);
 
-  const teamMembers = [
-    { name: 'Ana Silva', role: 'CEO & Fundadora', photo: '/images/team/member1.jpg' },
-    { name: 'Carlos Santos', role: 'CTO', photo: '/images/team/member2.jpg' },
-    { name: 'Mariana Oliveira', role: 'Designer Chefe UX/UI', photo: '/images/team/member3.jpg' },
-    { name: 'João Costa', role: 'Engenheiro Front-End', photo: '/images/team/member4.jpg' },
-    { name: 'Lúcia Ferreira', role: 'Marketing', photo: '/images/team/member5.jpg' },
-    { name: 'Pedro Almeida', role: 'Conteudista', photo: '/images/team/member6.jpg' }
-  ];
-
   return (
-    <div className={`sobre-page-modern${darkMode ? ' dark' : ''}`}>
+    <div className={`contato-page${darkMode ? ' dark' : ''}`}>
 
-      {/* ── NAVBAR ── */}
-      <header style={{ background: darkMode ? '#0f1117' : '#1a237e', position: 'sticky', top: 0, zIndex: 100, padding: '1rem 0', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-        <nav className="nav">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <img src="/images/logos/logo.png" alt="GADYS" className="logo" style={{ height: '40px', background: 'linear-gradient(135deg,#667eea,#764ba2)', borderRadius: '50%', padding: '8px' }} />
-            <span style={{ fontSize: '1.5rem', fontWeight: '700', color: 'white' }}>GADYS</span>
+      {/* NAVBAR PADRONIZADA */}
+      <header style={{
+        background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
+        padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between',
+        alignItems: 'center', position: 'sticky', top: 0, zIndex: 100,
+        borderBottom: '1px solid rgba(255,255,255,0.1)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <img src="/images/logos/logo.png" alt="GADYS" style={{ height: '40px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px' }} />
+          <span style={{ fontSize: '1.5rem', fontWeight: '700', color: 'white' }}>GADYS</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <button onClick={toggleDarkMode} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>
+            {darkMode ? '☀️' : '🌙'}
+          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', zIndex: 1002 }} onClick={() => setMenuOpen(!menuOpen)}>
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <button onClick={toggleDarkMode} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>
-              {darkMode ? '☀️' : '🌙'}
-            </button>
-            <div className="hamburger" onClick={() => document.querySelector('.nav-links')?.classList.toggle('active')}>
-              <span /><span /><span />
-            </div>
-          </div>
-          <div className="nav-overlay" onClick={closeMenu} />
-          <ul className="nav-links" style={{ paddingTop: '5rem', justifyContent: 'flex-start', gap: '2rem' }}>
-            <li><Link to="/" onClick={closeMenu} style={{ color: 'white' }}>Início</Link></li>
-            <li><Link to="/lugares" onClick={closeMenu} style={{ color: 'white' }}>Lugares</Link></li>
-            <li><Link to="/mapa" onClick={closeMenu} style={{ color: 'white' }}>Mapa</Link></li>
-            <li><Link to="/adicionar-local" onClick={closeMenu} style={{ color: 'white' }}>Adicionar Local</Link></li>
-            {isAdmin && <li><Link to="/painel-adm" onClick={closeMenu} style={{ color: '#ffd700', fontWeight: '700' }}>⚙️ Administração</Link></li>}
-            <li>{isLoggedIn ? <Link to="/perfil" onClick={closeMenu} style={{ color: 'white' }}>Meu Perfil</Link> : <Link to="/login" onClick={closeMenu} style={{ color: 'white' }}>Entrar</Link>}</li>
-            <li><a href="#" onClick={(e) => e.preventDefault()} style={{ color: '#ccc', cursor: 'not-allowed' }}>Sobre (atual)</a></li>
-            <li><Link to="/contato" onClick={closeMenu} style={{ color: 'white' }}>Contato</Link></li>
-          </ul>
-        </nav>
+        </div>
+        {menuOpen && <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000 }} onClick={() => setMenuOpen(false)} />}
+        <ul style={{
+          position: 'fixed', top: 0, right: menuOpen ? 0 : '-100%', width: '300px', height: '100vh',
+          background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', justifyContent: 'flex-start',
+          margin: 0, padding: '2rem 0', listStyle: 'none', transition: 'right 0.3s ease', zIndex: 1001, overflowY: 'auto'
+        }}>
+          {[
+            { label: 'Início', path: '/' },
+            { label: 'Lugares', path: '/lugares' },
+            { label: 'Mapa', path: '/mapa' },
+            { label: 'Adicionar Local', path: '/adicionar-local' },
+            { label: isLoggedIn ? 'Meu Perfil' : 'Entrar', path: isLoggedIn ? '/perfil' : '/login' },
+            { label: 'Contato', path: '/contato' },
+          ].map(({ label, path }) => (
+            <li key={path}>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate(path); setMenuOpen(false) }}
+                style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '5px', display: 'block' }}>
+                {label}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a href="#" onClick={(e) => e.preventDefault()}
+              style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '5px', display: 'block', cursor: 'default' }}>
+              Sobre (atual)
+            </a>
+          </li>
+          {isAdmin && (
+            <li>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate('/painel-adm'); setMenuOpen(false) }}
+                style={{ color: '#ffd700', textDecoration: 'none', padding: '0.5rem 1rem', fontWeight: '700', borderRadius: '5px', display: 'block' }}>
+                Painel Admin
+              </a>
+            </li>
+          )}
+        </ul>
       </header>
 
-      <div className="modern-container">
-        <header ref={el => sectionsRef.current[0] = el} className="modern-hero fade-in-section">
-          <span className="hero-subheading">Nossa História</span>
-          <h1>Mais que um guia, uma janela para a alma do Brasil.</h1>
-        </header>
+      {/* HERO */}
+      <header className="contato-hero">
+        <h1>Mais que um guia, uma janela para a alma do Brasil.</h1>
+        <p>Conheça a história, a filosofia e as pessoas por trás do GADYS.</p>
+      </header>
 
-        <main>
-          <section ref={el => sectionsRef.current[1] = el} className="modern-section fade-in-section">
-            <div className="modern-content-block text-first">
-              <div className="modern-text">
-                <h2>O Ponto de Partida</h2>
-                <p>O GADYS nasceu de uma inquietação: como podemos ir além do turismo superficial? Impulsionados pela paixão por descobrir e pela vontade de compartilhar, criamos uma plataforma que não apenas aponta destinos, mas conta as histórias, celebra as culturas e revela a verdadeira essência de cada lugar.</p>
-              </div>
-              <div className="modern-image">
-                <img src="/images/geral/sobre-modern-1.jpg" alt="Mapa antigo sobre uma mesa de madeira" />
-              </div>
+      <main className="contato-main">
+
+        {/* SEÇÃO 1 */}
+        <section ref={el => sectionsRef.current[0] = el} style={{ marginBottom: '4rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'center' }} className="sobre-grid">
+            <div>
+              <h2 style={{ fontFamily: 'Lora, serif', fontSize: '1.8rem', color: darkMode ? '#e2e8f0' : 'var(--modern-headings)', marginBottom: '1rem' }}>O Ponto de Partida</h2>
+              <p style={{ lineHeight: 1.8, color: 'inherit' }}>O GADYS nasceu de uma inquietação: como podemos ir além do turismo superficial? Impulsionados pela paixão por descobrir e pela vontade de compartilhar, criamos uma plataforma que não apenas aponta destinos, mas conta as histórias, celebra as culturas e revela a verdadeira essência de cada lugar.</p>
             </div>
-          </section>
-
-          <section ref={el => sectionsRef.current[2] = el} className="modern-section fade-in-section">
-            <div className="modern-content-block image-first">
-              <div className="modern-text">
-                <h2>Nossa Filosofia</h2>
-                <p>Acreditamos no poder do turismo consciente. Para nós, viajar é uma oportunidade de crescimento, conexão e respeito. Por isso, nosso foco está em promover experiências autênticas que beneficiem tanto os viajantes quanto as comunidades locais, incentivando a sustentabilidade e a preservação do nosso imenso patrimônio.</p>
-              </div>
-              <div className="modern-image">
-                <img src="/images/geral/sobre-modern-2.jpg" alt="Pessoas caminhando em uma trilha na natureza" />
-              </div>
+            <div>
+              <img src="/images/geral/img-sobre.webp" alt="Sobre o GADYS" style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }} />
             </div>
-          </section>
+          </div>
+        </section>
 
-          <section ref={el => sectionsRef.current[3] = el} className="modern-team-section fade-in-section">
-            <h2>Nossa Equipe</h2>
-            <p className="team-subtitle">Os rostos por trás da jornada.</p>
-            <div className="modern-team-grid">
-              {teamMembers.map(member => (
-                <div key={member.name} className="modern-team-member">
-                  <img src={member.photo} alt={member.name} />
-                  <h3>{member.name}</h3>
-                  <span>{member.role}</span>
-                </div>
-              ))}
+        {/* SEÇÃO 2 */}
+        <section ref={el => sectionsRef.current[1] = el} style={{ marginBottom: '4rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', alignItems: 'center' }} className="sobre-grid">
+            <div>
+              <img src="/images/geral/img-sobre2.webp" alt="Nossa Filosofia" style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 30px rgba(0,0,0,0.1)' }} />
             </div>
-          </section>
+            <div>
+              <h2 style={{ fontFamily: 'Lora, serif', fontSize: '1.8rem', color: darkMode ? '#e2e8f0' : 'var(--modern-headings)', marginBottom: '1rem' }}>Nossa Filosofia</h2>
+              <p style={{ lineHeight: 1.8, color: 'inherit' }}>Acreditamos no poder do turismo consciente. Para nós, viajar é uma oportunidade de crescimento, conexão e respeito. Por isso, nosso foco está em promover experiências autênticas que beneficiem tanto os viajantes quanto as comunidades locais, incentivando a sustentabilidade e a preservação do nosso imenso patrimônio.</p>
+            </div>
+          </div>
+        </section>
 
-          <section ref={el => sectionsRef.current[4] = el} className="modern-cta-section fade-in-section">
-            <h2>Sua jornada começa agora.</h2>
-            <Link to="/lugares" className="modern-cta-button">Explorar Destinos</Link>
-          </section>
-        </main>
-      </div>
+        {/* STATS */}
+        <section ref={el => sectionsRef.current[2] = el} style={{ marginBottom: '4rem' }}>
+          <div className="contato-info-grid">
+            {[
+              { valor: '500+', label: 'Destinos Catalogados' },
+              { valor: '27', label: 'Estados Cobertos' },
+              { valor: '10k+', label: 'Viajantes Atendidos' },
+              { valor: '100%', label: 'Feito com Paixão' },
+            ].map(({ valor, label }) => (
+              <div key={label} className="contato-info-card">
+                <h3 style={{ fontSize: '2rem', color: 'var(--modern-primary)', marginBottom: '0.25rem' }}>{valor}</h3>
+                <p>{label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section ref={el => sectionsRef.current[3] = el} style={{ textAlign: 'center', padding: '3rem 0' }}>
+          <h2 style={{ fontFamily: 'Lora, serif', fontSize: '2rem', marginBottom: '1.5rem' }}>Sua jornada começa agora.</h2>
+          <Link to="/lugares" className="contato-submit-btn" style={{ display: 'inline-block', width: 'auto', padding: '1rem 3rem', textDecoration: 'none' }}>
+            Explorar Destinos
+          </Link>
+        </section>
+
+      </main>
+
+      <footer className="contato-footer">
+        <p>&copy; {new Date().getFullYear()} GADYS. Todos os direitos reservados.</p>
+      </footer>
     </div>
   );
 }
