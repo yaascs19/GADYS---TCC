@@ -141,7 +141,7 @@ const Amazonas = () => {
       }}>
         <nav className="nav" style={{ display: 'contents' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <img src="/images/logos/logo.png" alt="GADYS" className="logo" style={{height: '40px'}} />
+            <img onClick={() => navigate('/')} style={{cursor:'pointer'}} src="/images/logos/logo.png" alt="GADYS" className="logo" style={{height: '40px'}} />
             <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: darkMode ? 'white' : '#2c3e50' }}>GADYS</span>
           </div>
           <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
