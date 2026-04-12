@@ -11,7 +11,7 @@ const DestinosAmazonas = () => {
   const [filteredDestinos, setFilteredDestinos] = useState([]);
   const pontosAtivos = useLocaisAtivos('AM', destinosAmazonasData);
 
-  const categories = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
+  const categories = ['Todos', 'Lugar Paradisíaco', 'Restaurantes', 'Monumento'];
 
   useEffect(() => {
     let result = pontosAtivos;
