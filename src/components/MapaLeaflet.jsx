@@ -8,7 +8,7 @@ function MapaLeaflet() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [categoria, setCategoria] = useState('todas')
   const [preco, setPreco] = useState('todos')
-  const [distancia, setDistancia] = useState(3000)
+  const [distancia, setDistancia] = useState(5000)
   const [userLocation, setUserLocation] = useState(null)
   const [lugaresVisiveis, setLugaresVisiveis] = useState([])
   const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
@@ -44,6 +44,7 @@ function MapaLeaflet() {
               if (searchInput && data?.display_name) searchInput.value = data.display_name
             }).catch(() => {})
           if (window.currentMap) window.currentMap.setView([lat, lng], 10)
+          setTimeout(() => aplicarFiltrosComLocalizacao(lat, lng), 100)
         },
         (error) => alert('Erro ao obter localização: ' + error.message)
       )
@@ -153,17 +154,20 @@ function MapaLeaflet() {
     }, 100)
   }, [])
 
-  const aplicarFiltros = () => {
+  const aplicarFiltrosComLocalizacao = (lat, lng) => {
     let filtrados = lugares
     if (categoria !== 'todas') filtrados = filtrados.filter(l => l.categoria === categoria)
     if (preco !== 'todos') filtrados = filtrados.filter(l => l.preco === preco)
-    if (userLocation) {
-      filtrados = filtrados.filter(l =>
-        calcularDistancia(userLocation.lat, userLocation.lng, l.lat, l.lng) <= distancia
-      )
+    if (lat !== null && lng !== null) {
+      filtrados = filtrados.filter(l => calcularDistancia(lat, lng, l.lat, l.lng) <= distancia)
     }
     setLugaresVisiveis(filtrados)
     if (window.currentMap) adicionarMarcadores(filtrados, window.currentMap)
+  }
+
+  const aplicarFiltros = () => {
+    const loc = userLocation
+    aplicarFiltrosComLocalizacao(loc?.lat ?? null, loc?.lng ?? null)
     const searchInput = document.getElementById('searchInput')
     if (searchInput?.value.trim()) {
       fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchInput.value)}&limit=1`)
@@ -171,7 +175,9 @@ function MapaLeaflet() {
         .then(data => {
           if (data.length > 0) {
             const lat = parseFloat(data[0].lat), lng = parseFloat(data[0].lon)
+            setUserLocation({ lat, lng })
             if (window.currentMap) window.currentMap.setView([lat, lng], 10)
+            aplicarFiltrosComLocalizacao(lat, lng)
           }
         }).catch(() => {})
     }
@@ -269,7 +275,7 @@ function MapaLeaflet() {
           </div>
           <div className="contato-info-card" style={{ textAlign: 'left' }}>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>Distância: {distancia}km</label>
-            <input type="range" min="1" max="3000" value={distancia} onChange={e => setDistancia(parseInt(e.target.value))}
+            <input type="range" min="1" max="5000" value={distancia} onChange={e => setDistancia(parseInt(e.target.value))}
               style={{ width: '100%' }} />
           </div>
           <div className="contato-info-card" style={{ textAlign: 'left' }}>
