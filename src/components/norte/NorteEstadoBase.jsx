@@ -80,7 +80,7 @@ const NorteEstadoBase = ({ config }) => {
       <header className="header" style={{ background: darkMode ? 'rgba(15,12,41,0.8)' : '#FFFFFF', backdropFilter: 'blur(30px)', padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, zIndex: 100, borderBottom: darkMode ? '1px solid rgba(255,255,255,0.1)' : '1px solid #e0e0e0' }}>
         <nav className="nav" style={{ display: 'contents' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <img src="/images/logos/logo.png" alt="GADYS" className="logo" style={{height: '40px'}} />
+            <img onClick={() => navigate('/')} style={{cursor:'pointer'}} src="/images/logos/logo.png" alt="GADYS" className="logo" style={{height: '40px'}} />
             <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: darkMode ? 'white' : '#2c3e50' }}>GADYS</span>
           </div>
           <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
