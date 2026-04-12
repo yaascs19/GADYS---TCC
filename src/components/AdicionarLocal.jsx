@@ -68,12 +68,14 @@ function AdicionarLocal() {
     setGeocodeStatus(null)
     setEstadoDetectado(null)
     try {
-      const res = await fetch(`https://photon.komoot.io/api/?q=${encodeURIComponent(query)}&limit=1&lang=pt`)
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&addressdetails=1&countrycodes=br`,
+        { headers: { 'Accept-Language': 'pt-BR', 'User-Agent': 'GADYS-TCC/1.0' } }
+      )
       const data = await res.json()
-      if (data.features?.length > 0) {
-        const [lon, lat] = data.features[0].geometry.coordinates
-        const coords = `${parseFloat(lat).toFixed(6)}, ${parseFloat(lon).toFixed(6)}`
-        const stateRaw = (data.features[0].properties?.state || '').toLowerCase().trim()
+      if (data.length > 0) {
+        const coords = `${parseFloat(data[0].lat).toFixed(6)}, ${parseFloat(data[0].lon).toFixed(6)}`
+        const stateRaw = (data[0].address?.state || '').toLowerCase().trim()
         const siglaDectada = ESTADO_SIGLAS[stateRaw] || null
         setEstadoDetectado(siglaDectada)
         setFormData(prev => ({ ...prev, coordenadas: coords }))
