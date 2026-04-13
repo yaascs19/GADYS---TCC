@@ -17,7 +17,7 @@ export const destinosAmazonasData = [
   },
   {
     id: 3,
-    name: 'Amazonico Peixaria Regional',
+    name: 'Amazônico Peixaria Regional',
     category: 'Restaurantes',
     location: 'Largo de São Sebastião, Manaus',
     image: '/images/geral/restama1.jpg',
