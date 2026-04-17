@@ -34,6 +34,7 @@ function AdicionarLocal() {
 
   const CLOUD_NAME = 'dybpie9aa'
   const UPLOAD_PRESET = 'gadys_tcc'
+  const sanitize = (str) => (str || '').replace(/<[^>]*>/g, '').trim()
 
   // Functions remain the same
   const handleImageUpload = async (e, index) => {
@@ -97,6 +98,10 @@ function AdicionarLocal() {
     try {
       const localData = {
         ...formData,
+        nome: sanitize(formData.nome),
+        descricao: sanitize(formData.descricao),
+        endereco: sanitize(formData.endereco),
+        cidade: sanitize(formData.cidade),
         coordenadas: formData.coordenadas || null,
         imagemUrl: imagens.filter(Boolean).join(','),
         enviadoPor: localStorage.getItem('userName') || 'Usuário Anônimo',

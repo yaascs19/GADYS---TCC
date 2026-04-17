@@ -25,6 +25,12 @@ function AdminPanel() {
 
   const ICONS = { success: '✓', error: '✕', info: 'ℹ' }
 
+  const maskEmail = (email) => {
+    if (!email) return ''
+    const [user, domain] = email.split('@')
+    return `${user.slice(0, 2)}***@${domain}`
+  }
+
   const showToast = (message, type = 'error') => {
     setToast({ message, type })
     setTimeout(() => setToast(null), 4000)
@@ -707,7 +713,7 @@ function AdminPanel() {
             </div>
             
             <div className="card-info">
-              <p><strong>Email:</strong> {user.email}</p>
+              <p><strong>Email:</strong> {maskEmail(user.email)}</p>
               <p><strong>Cadastrado em:</strong> {new Date(user.dataCadastro).toLocaleDateString() || 'N/A'}</p>
             </div>
 
