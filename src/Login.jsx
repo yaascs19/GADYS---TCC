@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import './Login.css';
 import axios from 'axios';
 
@@ -27,6 +28,7 @@ const ICONS = { success: '✓', error: '✕', info: 'ℹ' };
 
 function Login({ onLogin }) {
   const navigate = useNavigate();
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const [email, setEmail] = useState('');
   const [emailTouched, setEmailTouched] = useState(false);
@@ -37,6 +39,8 @@ function Login({ onLogin }) {
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
   const [cooldown, setCooldown] = useState(false);
+  const [failedAttempts, setFailedAttempts] = useState(0);
+  const MAX_ATTEMPTS = 5;
 
   const passwordStrength = getPasswordStrength(password);
   const emailInvalid = emailTouched && email && !isValidEmail(email);
@@ -50,9 +54,11 @@ function Login({ onLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (cooldown) { showToast('Aguarde antes de tentar novamente.', 'info'); return; }
+    if (failedAttempts >= MAX_ATTEMPTS) { showToast('Muitas tentativas. Tente novamente mais tarde.', 'error'); return; }
+    if (!executeRecaptcha) { showToast('reCAPTCHA não carregado. Recarregue a página.', 'error'); return; }
     setLoading(true);
-
     try {
+      const recaptchaToken = await executeRecaptcha(isRegister ? 'cadastro' : 'login');
       if (isRegister) {
         if (!name) { showToast('Preencha o nome!'); setLoading(false); return; }
         if (!isValidEmail(email)) { showToast('Email inválido!'); setLoading(false); return; }
@@ -61,7 +67,7 @@ function Login({ onLogin }) {
 
         const response = await axios.post(
           `${API_URL}/api/auth/cadastrar`,
-          { nome: name, email, senha: password, tipoUsuario: 'USUARIO' }
+          { nome: name, email, senha: password, tipoUsuario: 'USUARIO', recaptchaToken }
         );
 
         if (response.data.sucesso) {
@@ -76,7 +82,7 @@ function Login({ onLogin }) {
         if (email && password) {
           const response = await axios.post(
             `${API_URL}/api/auth/login`,
-            { email, senha: password }
+            { email, senha: password, recaptchaToken }
           );
 
           if (response.data.sucesso) {
@@ -89,6 +95,7 @@ function Login({ onLogin }) {
             if (onLogin) onLogin(response.data.tipoUsuario, response.data.nome);
             navigate('/');
           } else {
+            setFailedAttempts(prev => prev + 1)
             showToast(response.data.mensagem || 'Credenciais inválidas!');
           }
         }
