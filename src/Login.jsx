@@ -19,6 +19,8 @@ const getPasswordStrength = (pwd) => {
   return { label: 'Forte', color: '#10b981', width: '100%' };
 };
 
+const sanitize = (str) => (str || '').replace(/<[^>]*>/g, '').trim()
+
 const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
 const ICONS = { success: '✓', error: '✕', info: 'ℹ' };
@@ -34,6 +36,7 @@ function Login({ onLogin }) {
   const [name, setName] = useState('');
   const [loading, setLoading] = useState(false);
   const [toast, setToast] = useState(null);
+  const [cooldown, setCooldown] = useState(false);
 
   const passwordStrength = getPasswordStrength(password);
   const emailInvalid = emailTouched && email && !isValidEmail(email);
@@ -46,6 +49,7 @@ function Login({ onLogin }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (cooldown) { showToast('Aguarde antes de tentar novamente.', 'info'); return; }
     setLoading(true);
 
     try {
@@ -81,6 +85,7 @@ function Login({ onLogin }) {
             localStorage.setItem('userName', response.data.nome);
             localStorage.setItem('userEmail', email);
             localStorage.setItem('usuarioId', response.data.usuarioId);
+            localStorage.setItem('loginExpiry', Date.now() + 8 * 60 * 60 * 1000);
             if (onLogin) onLogin(response.data.tipoUsuario, response.data.nome);
             navigate('/');
           } else {
@@ -99,6 +104,8 @@ function Login({ onLogin }) {
       }
     } finally {
       setLoading(false);
+      setCooldown(true);
+      setTimeout(() => setCooldown(false), 3000);
     }
   };
 

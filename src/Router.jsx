@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { LanguageProvider } from './context/LanguageContext';
 import useImagePreload from './hooks/useImagePreload';
@@ -73,22 +73,30 @@ function ScrollToTop() {
   return null;
 }
 
+function checkSession() {
+  const expiry = localStorage.getItem('loginExpiry')
+  if (expiry && Date.now() > Number(expiry)) {
+    localStorage.removeItem('isLoggedIn')
+    localStorage.removeItem('userType')
+    localStorage.removeItem('userName')
+    localStorage.removeItem('userEmail')
+    localStorage.removeItem('usuarioId')
+    localStorage.removeItem('loginExpiry')
+  }
+}
+
+function AdminRoute({ children }) {
+  checkSession()
+  const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
+  if (!isLoggedIn || !isAdmin) return <Navigate to="/login" replace />
+  return children
+}
+
 function Router() {
   useImagePreload(['/rj.jpeg', '/ama.jpg', '/sp.jpg']);
 
-  useEffect(() => {
-    const adminUser = {
-      email: 'yasmincunegundes25@gmail.com',
-      password: 'Cun*1925',
-      userType: 'adm',
-      userName: 'Yasmin Admin',
-    };
-    let users = JSON.parse(localStorage.getItem('users')) || [];
-    if (!users.find(u => u.email === adminUser.email)) {
-      users.push(adminUser);
-      localStorage.setItem('users', JSON.stringify(users));
-    }
-  }, []);
+  useEffect(() => { checkSession() }, []);
 
   return (
     <LanguageProvider>
@@ -104,10 +112,10 @@ function Router() {
           <Route path="/login" element={<Login />} />
           <Route path="/mapa" element={<MapaLeaflet />} />
           <Route path="/adicionar-local" element={<AdicionarLocal />} />
-          <Route path="/painel-adm" element={<AdminPanel />} />
+          <Route path="/painel-adm" element={<AdminRoute><AdminPanel /></AdminRoute>} />
+          <Route path="/admin/editar-local/:id" element={<AdminRoute><EditarLocal /></AdminRoute>} />
 
           <Route path="/local/:id" element={<LocalDetalhe />} />
-          <Route path="/admin/editar-local/:id" element={<EditarLocal />} />
 
           <Route path="/para" element={<Para />} />
           <Route path="/destinos-para" element={<DestinosPara />} />
