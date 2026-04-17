@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { LanguageProvider } from './context/LanguageContext';
 import useImagePreload from './hooks/useImagePreload';
 import HomePage from './components/HomePage';
@@ -99,6 +100,7 @@ function Router() {
   useEffect(() => { checkSession() }, []);
 
   return (
+    <GoogleReCaptchaProvider reCaptchaKey="6LfPpbwsAAAAAHbgACqCKa86SB7mIThT6gmZZoCV">
     <LanguageProvider>
       <BrowserRouter>
         <ScrollToTop />
@@ -170,6 +172,7 @@ function Router() {
         </Routes>
       </BrowserRouter>
     </LanguageProvider>
+    </GoogleReCaptchaProvider>
   );
 }
 
