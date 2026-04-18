@@ -119,9 +119,19 @@ function MapaLeaflet() {
               <span style="background:${lugar.preco === 'gratuito' ? '#2ecc71' : '#e74c3c'};color:white;padding:2px 7px;border-radius:10px;font-size:10px;">${lugar.preco}</span>
             </div>
             <button onclick="window.location.href='/lugares'"
-              style="background:#3c6e71;color:white;border:none;padding:8px 16px;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;width:100%;">
+              style="background:#3c6e71;color:white;border:none;padding:8px 16px;border-radius:20px;cursor:pointer;font-size:12px;font-weight:600;width:100%;margin-bottom:8px;">
               Ver Detalhes
             </button>
+            <div style="display:flex;gap:6px;">
+              <a href="https://waze.com/ul?ll=${lugar.lat},${lugar.lng}&navigate=yes" target="_blank"
+                style="flex:1;background:#33ccff;color:white;border:none;padding:7px 0;border-radius:20px;cursor:pointer;font-size:11px;font-weight:600;text-align:center;text-decoration:none;display:block;">
+                🚗 Waze
+              </a>
+              <a href="https://www.google.com/maps/dir/?api=1&destination=${lugar.lat},${lugar.lng}" target="_blank"
+                style="flex:1;background:#4285f4;color:white;border:none;padding:7px 0;border-radius:20px;cursor:pointer;font-size:11px;font-weight:600;text-align:center;text-decoration:none;display:block;">
+                🗺️ Maps
+              </a>
+            </div>
           </div>
         `)
         window.mapMarkers.push(marker)
