@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './AdminPanel.css'
-import './App.css'
 
 function AdminPanel() {
   const navigate = useNavigate()
@@ -401,7 +400,7 @@ function AdminPanel() {
   }
 
   return (
-    <div>
+    <div style={{ overflowX: 'hidden', width: '100%' }}>
       {toast && (
         <div className={`admin-toast admin-toast--${toast.type}`}>
           <span className="admin-toast-icon">{ICONS[toast.type]}</span>
@@ -445,7 +444,7 @@ function AdminPanel() {
       <header style={{
         background: darkMode ? 'rgba(15, 12, 41, 0.8)' : '#1a237e',
         backdropFilter: 'blur(30px)',
-        padding: '1rem 2rem',
+        padding: '0.75rem 1rem',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -454,9 +453,9 @@ function AdminPanel() {
         zIndex: 100,
         borderBottom: '1px solid rgba(255,255,255,0.1)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <img onClick={() => navigate('/')} style={{cursor:'pointer'}} src="/images/logos/logo.png" alt="GADYS" style={{ height: '40px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px' }} />
-          <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: 'white' }}>GADYS</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <img onClick={() => navigate('/')} src="/images/logos/logo.png" alt="GADYS" style={{ height: '36px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '6px', cursor: 'pointer', flexShrink: 0 }} />
+          <span style={{ fontSize: '1.3rem', fontWeight: '700', letterSpacing: '1px', color: 'white' }}>GADYS</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <button onClick={() => { const n = !darkMode; setDarkMode(n); localStorage.setItem('darkMode', n) }} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>
