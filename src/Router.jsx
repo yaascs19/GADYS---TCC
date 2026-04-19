@@ -10,6 +10,7 @@ import LugaresPage from './components/LugaresPage';
 import PerfilPage from './components/PerfilPage';
 import ContatoPage from './components/ContatoPage';
 import Login from './Login';
+import RedefinirSenha from './RedefinirSenha';
 import MapaLeaflet from './components/MapaLeaflet';
 import AdicionarLocal from './components/AdicionarLocal';
 import AdminPanel from './AdminPanel';
@@ -114,6 +115,7 @@ function Router() {
           <Route path="/perfil" element={<PerfilPage />} />
           <Route path="/contato" element={<ContatoPage />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/redefinir-senha" element={<RedefinirSenha />} />
           <Route path="/mapa" element={<MapaLeaflet />} />
           <Route path="/adicionar-local" element={<AdicionarLocal />} />
           <Route path="/painel-adm" element={<AdminRoute><AdminPanel /></AdminRoute>} />
