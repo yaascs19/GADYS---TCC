@@ -175,3 +175,11 @@
   text-align: center;
   padding: 2rem;
 }
+
+@media (max-width: 768px) {
+  .sudeste-pontos-header { padding: 3rem 1rem; }
+  .sudeste-pontos-controls { padding: 1.5rem 1rem; }
+  .sudeste-pontos-grid { grid-template-columns: 1fr; padding: 2rem 1rem; gap: 1.5rem; }
+  .sudeste-pontos-filter-buttons { gap: 0.5rem; }
+  .sudeste-pontos-button { padding: 0.5rem 1rem; font-size: 0.85rem; }
+}

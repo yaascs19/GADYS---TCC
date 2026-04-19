@@ -177,3 +177,16 @@
 .aa-galeria-item { overflow: hidden; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); height: 280px; }
 .aa-galeria-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
 .aa-galeria-item:hover img { transform: scale(1.05); }
+
+@media (max-width: 768px) {
+  .aa-header { height: 250px; }
+  .aa-header-text h1 { font-size: 1.8rem; }
+  .aa-header-text p { font-size: 0.95rem; }
+  .aa-content-wrapper { padding: 0 1rem; }
+  .aa-nav { gap: 0.5rem; overflow-x: auto; justify-content: flex-start; }
+  .aa-nav button { font-size: 0.85rem; padding: 0.5rem 0.75rem 0.75rem; white-space: nowrap; }
+  .aa-text-image-split { flex-direction: column; gap: 1.5rem; }
+  .aa-text, .aa-image-wrapper { min-width: unset; }
+  .aa-recomendacao-cards { grid-template-columns: 1fr; }
+  .aa-galeria-grid { grid-template-columns: 1fr 1fr; }
+}

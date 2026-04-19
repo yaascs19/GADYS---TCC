@@ -195,4 +195,9 @@
 /* --- Responsivo --- */
 @media (max-width: 768px) {
   .modern-content-block { flex-direction: column !important; gap: 2.5rem; }
+  .modern-hero { padding: 4rem 1rem; }
+  .modern-section { padding: 3rem 0; }
+  .modern-container { padding: 0 1rem; }
+  .modern-team-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .modern-cta-section { padding: 3rem 1rem; margin: 2rem 0; }
 }

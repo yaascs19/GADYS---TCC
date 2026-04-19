@@ -158,3 +158,16 @@
 .sudeste-ponto-galeria-item:hover img { transform: scale(1.05); }
 
 .sudeste-ponto-footer { background: linear-gradient(135deg, #4a1f00, #7a3500); color: #FFE0B2; text-align: center; padding: 2rem; }
+
+@media (max-width: 768px) {
+  .sudeste-ponto-header { height: 250px; }
+  .sudeste-ponto-header-text h1 { font-size: 1.8rem; }
+  .sudeste-ponto-header-text p { font-size: 0.95rem; }
+  .sudeste-ponto-content-wrapper { padding: 0 1rem; }
+  .sudeste-ponto-nav { gap: 0.5rem; overflow-x: auto; justify-content: flex-start; }
+  .sudeste-ponto-nav button { font-size: 0.85rem; padding: 0.5rem 0.75rem 0.75rem; white-space: nowrap; }
+  .sudeste-ponto-split { flex-direction: column; gap: 1.5rem; }
+  .sudeste-ponto-text, .sudeste-ponto-img-wrapper { min-width: unset; }
+  .sudeste-ponto-rec-cards { grid-template-columns: 1fr; }
+  .sudeste-ponto-galeria-grid { grid-template-columns: 1fr 1fr; }
+}

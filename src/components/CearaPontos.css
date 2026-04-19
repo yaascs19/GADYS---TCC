@@ -158,3 +158,12 @@
   text-align: center;
   padding: 2rem;
 }
+
+@media (max-width: 768px) {
+  .ce-pontos-header { padding: 3rem 1rem; }
+  .ce-pontos-controls { padding: 1.5rem 1rem; }
+  .ce-pontos-grid { grid-template-columns: 1fr; padding: 2rem 1rem; gap: 1.5rem; }
+  .ce-pontos-filter-buttons { gap: 0.5rem; }
+  .ce-pontos-button { padding: 0.5rem 1rem; font-size: 0.85rem; }
+  .ce-pontos-card-title { font-size: 1.3rem; }
+}

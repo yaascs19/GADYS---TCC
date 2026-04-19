@@ -237,3 +237,16 @@
 .ta-galeria-item { overflow: hidden; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
 .ta-galeria-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
 .ta-galeria-item:hover img { transform: scale(1.05); }
+
+@media (max-width: 768px) {
+  .ta-header { height: 250px; }
+  .ta-header-text h1 { font-size: 2rem; }
+  .ta-header-text p { font-size: 1rem; }
+  .ta-content-wrapper { padding: 0 1rem; }
+  .ta-nav { gap: 0.5rem; overflow-x: auto; justify-content: flex-start; padding-bottom: 0; }
+  .ta-nav button { font-size: 0.85rem; padding: 0.5rem 0.75rem 0.75rem; white-space: nowrap; }
+  .ta-text-image-split { flex-direction: column; gap: 1.5rem; }
+  .ta-text, .ta-image-wrapper { min-width: unset; }
+  .ta-recomendacao-cards { grid-template-columns: 1fr; }
+  .ta-galeria-grid { grid-template-columns: 1fr 1fr; }
+}

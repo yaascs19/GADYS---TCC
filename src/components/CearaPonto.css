@@ -242,3 +242,16 @@
   text-align: center;
   padding: 2rem;
 }
+
+@media (max-width: 768px) {
+  .ce-ponto-header { height: 250px; }
+  .ce-ponto-header-text h1 { font-size: 1.8rem; }
+  .ce-ponto-header-text p { font-size: 0.95rem; }
+  .ce-ponto-content-wrapper { padding: 0 1rem; }
+  .ce-ponto-nav { gap: 0.5rem; overflow-x: auto; justify-content: flex-start; }
+  .ce-ponto-nav button { font-size: 0.85rem; padding: 0.5rem 0.75rem 0.75rem; white-space: nowrap; }
+  .ce-ponto-split { flex-direction: column; gap: 1.5rem; }
+  .ce-ponto-text, .ce-ponto-img-wrapper { min-width: unset; }
+  .ce-ponto-rec-cards { grid-template-columns: 1fr; }
+  .ce-ponto-galeria-grid { grid-template-columns: 1fr 1fr; }
+}

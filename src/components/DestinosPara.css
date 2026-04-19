@@ -161,3 +161,12 @@
   text-align: center;
   padding: 2rem;
 }
+
+@media (max-width: 768px) {
+  .para-destinos-header { padding: 3rem 1rem; }
+  .para-destinos-controls { padding: 1.5rem 1rem; }
+  .para-destinos-grid { grid-template-columns: 1fr; padding: 2rem 1rem; gap: 1.5rem; }
+  .para-destinos-filter-buttons { gap: 0.5rem; }
+  .para-destinos-button { padding: 0.5rem 1rem; font-size: 0.85rem; }
+  .para-destinos-card-title { font-size: 1.3rem; }
+}

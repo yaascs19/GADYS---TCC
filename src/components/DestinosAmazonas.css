@@ -174,3 +174,11 @@
   text-align: center;
   padding: 2rem;
 }
+
+@media (max-width: 768px) {
+  .amazonas-destinos-header { padding: 3rem 1rem; }
+  .amazonas-destinos-controls { padding: 1.5rem 1rem; }
+  .amazonas-destinos-grid { grid-template-columns: 1fr; padding: 2rem 1rem; gap: 1.5rem; }
+  .amazonas-destinos-filter-buttons { gap: 0.5rem; }
+  .amazonas-destinos-button { padding: 0.5rem 1rem; font-size: 0.85rem; }
+}
