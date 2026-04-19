@@ -117,7 +117,7 @@ const TranslateButton = () => {
         position: 'fixed',
         bottom: '2rem',
         right: '2rem',
-        zIndex: 9999,
+        zIndex: 99999,
         background: isEnglish
           ? 'linear-gradient(45deg, #1a237e, #283593)'
           : 'linear-gradient(45deg, #1565C0, #1E88E5)',

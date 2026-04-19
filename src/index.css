@@ -99,3 +99,9 @@ button {
   .subtitle-generic { font-size: 1.1rem; }
   .cards-generic { grid-template-columns: 1fr; }
 }
+
+/* Evita sobreposição do badge reCAPTCHA com o botão de traduzir */
+.grecaptcha-badge {
+  bottom: 5.5rem !important;
+  z-index: 9998 !important;
+}
