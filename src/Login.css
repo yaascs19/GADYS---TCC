@@ -352,3 +352,13 @@
   display: flex;
   gap: 1rem;
 }
+
+@media (max-width: 480px) {
+  .login-form {
+    padding: 2rem 1.25rem;
+    margin: 1rem;
+  }
+  .login-form h2 { font-size: 1.6rem; }
+  .login-modal-box { padding: 1.5rem; margin: 1rem; }
+  .google-btn { font-size: 0.85rem; }
+}

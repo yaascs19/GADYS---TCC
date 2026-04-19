@@ -272,6 +272,26 @@
   .sobre-grid {
     grid-template-columns: 1fr !important;
   }
+  .contato-main {
+    padding: 2rem 1rem;
+  }
+  .contato-hero {
+    padding: 3rem 1rem;
+  }
+  .contato-info-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .contato-form {
+    padding: 1.5rem 1rem;
+  }
+  .contato-form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  #map {
+    height: 350px !important;
+  }
 }
 
 .leaflet-pane,

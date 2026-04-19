@@ -521,6 +521,24 @@ body {
   transform: translateY(-2px);
 }
 
+/* --- Mobile --- */
+@media (max-width: 768px) {
+  .admin-panel { padding: 1.5rem 1rem; }
+  .admin-header h1 { font-size: 1.8rem; margin-bottom: 1.5rem; }
+  .admin-tabs {
+    gap: 0.4rem;
+    padding: 0.4rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+  }
+  .tab-btn { padding: 0.5rem 0.8rem; font-size: 0.75rem; }
+  .admin-grid { grid-template-columns: 1fr; gap: 1rem; }
+  .admin-card { padding: 1.25rem; }
+  .modal-content { padding: 1.5rem; margin: 1rem; }
+  .card-actions { flex-wrap: wrap; }
+  .card-actions button { font-size: 0.7rem; padding: 0.6rem; }
+}
+
 /* --- Light Mode --- */
 .light-mode {
     --bg-light: #f8fafc;
