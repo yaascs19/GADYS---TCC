@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TeatroAmazonas.css';
+import { useLocalByRota } from '../hooks/useLocalByRota';
 
 // --- DADOS ---
 const carouselImages = [
@@ -212,11 +213,27 @@ const Galeria = () => (
 const TeatroAmazonas = () => {
   const [abaAtiva, setAbaAtiva] = useState('historia');
   const navigate = useNavigate();
+  const { bdLocal } = useLocalByRota('/teatro-amazonas');
+
+  const titulo = bdLocal?.nome || 'Teatro Amazonas';
+  const subtitulo = bdLocal?.descricao || 'Um palácio de arte erguido no coração da floresta.';
+  const headerImgs = bdLocal?.imagemUrl
+    ? [bdLocal.imagemUrl.split(',')[0], ...carouselImages.slice(1)]
+    : carouselImages;
 
   return (
     <div className="ta-container">
       <div style={{ position: 'relative' }}>
-        <HeaderCarousel />
+        <header className="ta-header">
+          {headerImgs.map((img, index) => (
+            <img key={img} src={img} alt={titulo}
+              className={`ta-header-carousel-image ${index === 0 ? 'active' : ''}`} />
+          ))}
+          <div className="ta-header-text">
+            <h1>{titulo}</h1>
+            <p>{subtitulo}</p>
+          </div>
+        </header>
         <button
           onClick={() => navigate('/destinos-amazonas')}
           style={{

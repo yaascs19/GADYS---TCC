@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CearaPonto.css';
+import { useLocalByRota } from '../hooks/useLocalByRota';
 
 const HeaderCarousel = ({ images, titulo, subtitulo, onVoltar }) => {
   const [ativo, setAtivo] = useState(0);
@@ -97,10 +98,18 @@ const Galeria = ({ images }) => (
 const CearaPontoBase = ({ config }) => {
   const [abaAtiva, setAbaAtiva] = useState(Object.keys(config.secoes)[0]);
   const navigate = useNavigate();
+  const rota = window.location.pathname;
+  const { bdLocal } = useLocalByRota(rota);
+
+  const titulo = bdLocal?.nome || config.titulo;
+  const subtitulo = bdLocal?.descricao || config.subtitulo;
+  const carouselImages = bdLocal?.imagemUrl
+    ? [bdLocal.imagemUrl.split(',')[0], ...config.carouselImages.slice(1)]
+    : config.carouselImages;
 
   return (
     <div className="ce-ponto-container">
-      <HeaderCarousel images={config.carouselImages} titulo={config.titulo} subtitulo={config.subtitulo} onVoltar={() => navigate('/ceara-pontos')} />
+      <HeaderCarousel images={carouselImages} titulo={titulo} subtitulo={subtitulo} onVoltar={() => navigate('/ceara-pontos')} />
       <div className="ce-ponto-content-wrapper">
         <nav className="ce-ponto-nav">
           {Object.keys(config.secoes).map((key) => (
@@ -117,7 +126,7 @@ const CearaPontoBase = ({ config }) => {
         </main>
       </div>
       <footer className="ce-ponto-footer">
-        <p>GADYS © 2025 — {config.titulo}</p>
+        <p>GADYS © 2025 — {titulo}</p>
       </footer>
     </div>
   );

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ArquipelagoAnavilhanas.css';
+import { useLocalByRota } from '../hooks/useLocalByRota';
 
 const carouselImages = [
   '/images/geral/Ana-Am.jpg',
@@ -162,11 +163,27 @@ const Galeria = () => (
 const ArquipelagoAnavilhanas = () => {
   const [abaAtiva, setAbaAtiva] = useState('sobre');
   const navigate = useNavigate();
+  const { bdLocal } = useLocalByRota('/arquipelago-anavilhanas');
+
+  const titulo = bdLocal?.nome || 'Arquipélago de Anavilhanas';
+  const subtitulo = bdLocal?.descricao || 'Um santuário de biodiversidade nas águas negras do Rio Negro.';
+  const headerImgs = bdLocal?.imagemUrl
+    ? [bdLocal.imagemUrl.split(',')[0], ...carouselImages.slice(1)]
+    : carouselImages;
 
   return (
     <div className="aa-container">
       <div style={{ position: 'relative' }}>
-        <HeaderCarousel />
+        <header className="aa-header">
+          {headerImgs.map((img, index) => (
+            <img key={img} src={img} alt={titulo}
+              className={`aa-header-carousel-image ${index === 0 ? 'active' : ''}`} />
+          ))}
+          <div className="aa-header-text">
+            <h1>{titulo}</h1>
+            <p>{subtitulo}</p>
+          </div>
+        </header>
         <button onClick={() => navigate('/destinos-amazonas')} style={{ position: 'absolute', top: '2rem', left: '2rem', zIndex: 10, background: 'rgba(255,255,255,0.2)', border: '2px solid white', color: 'white', padding: '0.7rem 1.5rem', borderRadius: '50px', cursor: 'pointer', fontWeight: '600', fontSize: '0.95rem' }}>
           ← Voltar
         </button>

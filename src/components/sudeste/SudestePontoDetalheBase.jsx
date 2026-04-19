@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SudestePontoDetalhe.css';
+import { useLocalByRota } from '../../hooks/useLocalByRota';
 
 const HeaderCarousel = ({ images, titulo, subtitulo, onVoltar }) => {
   const [ativo, setAtivo] = useState(0);
@@ -92,10 +93,18 @@ const Galeria = ({ images }) => (
 const SudestePontoDetalheBase = ({ config }) => {
   const [abaAtiva, setAbaAtiva] = useState(Object.keys(config.secoes)[0]);
   const navigate = useNavigate();
+  const rota = window.location.pathname;
+  const { bdLocal } = useLocalByRota(rota);
+
+  const titulo = bdLocal?.nome || config.titulo;
+  const subtitulo = bdLocal?.descricao || config.subtitulo;
+  const carouselImages = bdLocal?.imagemUrl
+    ? [bdLocal.imagemUrl.split(',')[0], ...config.carouselImages.slice(1)]
+    : config.carouselImages;
 
   return (
     <div className="sudeste-ponto-container">
-      <HeaderCarousel images={config.carouselImages} titulo={config.titulo} subtitulo={config.subtitulo} onVoltar={() => navigate(config.voltarRota)} />
+      <HeaderCarousel images={carouselImages} titulo={titulo} subtitulo={subtitulo} onVoltar={() => navigate(config.voltarRota)} />
       <div className="sudeste-ponto-content-wrapper">
         <nav className="sudeste-ponto-nav">
           {Object.keys(config.secoes).map(key => (
@@ -109,7 +118,7 @@ const SudestePontoDetalheBase = ({ config }) => {
         </main>
       </div>
       <footer className="sudeste-ponto-footer">
-        <p>GADYS © 2025 — {config.titulo}</p>
+        <p>GADYS © 2025 — {titulo}</p>
       </footer>
     </div>
   );

@@ -16,4 +16,6 @@ public interface LocalRepository extends JpaRepository<Local, Long> {
 
     @Query("SELECT l FROM Local l WHERE l.nome LIKE %?1%")
     List<Local> findByNomeContaining(String nome);
+
+    java.util.Optional<Local> findByRotaFrontend(String rotaFrontend);
 }
