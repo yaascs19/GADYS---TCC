@@ -55,11 +55,11 @@ function MapaLeaflet() {
 
   const lugares = [
     { nome: 'Teatro Amazonas', lat: -3.1302, lng: -60.0231, cor: '#4caf50', cidade: 'Manaus - AM', categoria: 'Monumentos', preco: 'pago' },
-    { nome: 'Encontro das Águas', lat: -3.1190, lng: -59.9050, cor: '#8bc34a', cidade: 'Manaus - AM', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Encontro das Águas', lat: -3.1190, lng: -60.0167, cor: '#8bc34a', cidade: 'Manaus - AM', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Arquipélago de Anavilhanas', lat: -2.6833, lng: -60.9500, cor: '#2e7d32', cidade: 'Novo Airão - AM', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Amazônico Peixaria Regional', lat: -3.1316, lng: -60.0233, cor: '#ff9800', cidade: 'Manaus - AM', categoria: 'Restaurantes', preco: 'pago' },
     { nome: 'Bumbódromo', lat: -2.6278, lng: -56.7358, cor: '#e91e63', cidade: 'Parintins - AM', categoria: 'Costume Cultural', preco: 'pago' },
-    { nome: 'Cachoeira do Santuário', lat: -2.0167, lng: -60.0333, cor: '#00bcd4', cidade: 'Presidente Figueiredo - AM', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Cachoeira do Santuário', lat: -1.9833, lng: -60.0333, cor: '#00bcd4', cidade: 'Presidente Figueiredo - AM', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Coreto Peixaria', lat: -3.1290, lng: -60.0220, cor: '#ff5722', cidade: 'Manaus - AM', categoria: 'Restaurantes', preco: 'pago' },
     { nome: 'Ponte Rio Negro', lat: -3.2167, lng: -60.0500, cor: '#607d8b', cidade: 'Manaus - AM', categoria: 'Monumentos', preco: 'gratuito' },
     { nome: 'Cristo Redentor', lat: -22.9519, lng: -43.2105, cor: '#e74c3c', cidade: 'Rio de Janeiro - RJ', categoria: 'Monumentos', preco: 'pago' },
@@ -72,8 +72,8 @@ function MapaLeaflet() {
     { nome: 'Praia de Ipanema', lat: -22.9868, lng: -43.2044, cor: '#0288d1', cidade: 'Rio de Janeiro - RJ', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'MASP', lat: -23.5614, lng: -46.6558, cor: '#e74c3c', cidade: 'São Paulo - SP', categoria: 'Costume Cultural', preco: 'pago' },
     { nome: 'Teatro Municipal SP', lat: -23.5454, lng: -46.6388, cor: '#9c27b0', cidade: 'São Paulo - SP', categoria: 'Monumentos', preco: 'pago' },
-    { nome: 'Mercadão', lat: -23.5418, lng: -46.6292, cor: '#ff9800', cidade: 'São Paulo - SP', categoria: 'Restaurantes', preco: 'gratuito' },
-    { nome: 'Edifício Copan', lat: -23.5455, lng: -46.6437, cor: '#607d8b', cidade: 'São Paulo - SP', categoria: 'Monumentos', preco: 'gratuito' },
+    { nome: 'Mercadão', lat: -23.5418, lng: -46.6292, cor: '#ff9800', cidade: 'São Paulo - SP', categoria: 'Restaurantes', preco: 'pago' },
+    { nome: 'Edifício Copan', lat: -23.5455, lng: -46.6437, cor: '#607d8b', cidade: 'São Paulo - SP', categoria: 'Monumentos', preco: 'pago' },
     { nome: 'Parque Ibirapuera', lat: -23.5874, lng: -46.6576, cor: '#4caf50', cidade: 'São Paulo - SP', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Beco do Batman', lat: -23.5558, lng: -46.6897, cor: '#f39c12', cidade: 'São Paulo - SP', categoria: 'Costume Cultural', preco: 'gratuito' },
     { nome: 'Jericoacoara', lat: -2.7975, lng: -40.5137, cor: '#00bcd4', cidade: 'Jijoca - CE', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
@@ -87,13 +87,13 @@ function MapaLeaflet() {
     { nome: 'Alter do Chão', lat: -2.5167, lng: -54.9500, cor: '#00bcd4', cidade: 'Santarém - PA', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Mercado Ver-o-Peso', lat: -1.4558, lng: -48.5044, cor: '#ff9800', cidade: 'Belém - PA', categoria: 'Costume Cultural', preco: 'gratuito' },
     { nome: 'Feliz Lusitânia', lat: -1.4561, lng: -48.5022, cor: '#795548', cidade: 'Belém - PA', categoria: 'Monumentos', preco: 'gratuito' },
-    { nome: 'Ilha de Marajó', lat: -1.0000, lng: -49.5000, cor: '#4caf50', cidade: 'Marajó - PA', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
+    { nome: 'Ilha de Marajó', lat: -0.6500, lng: -49.5000, cor: '#4caf50', cidade: 'Marajó - PA', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Mangal das Garças', lat: -1.4667, lng: -48.5000, cor: '#8bc34a', cidade: 'Belém - PA', categoria: 'Lugar Paradísíaco', preco: 'pago' },
     { nome: 'Parque Estadual Chandless', lat: -9.3333, lng: -70.6667, cor: '#2e7d32', cidade: 'Santa Rosa do Purus - AC', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Centro Histórico de Rio Branco', lat: -9.9753, lng: -67.8249, cor: '#795548', cidade: 'Rio Branco - AC', categoria: 'Monumentos', preco: 'gratuito' },
     { nome: 'Fortaleza de São José', lat: 0.0389, lng: -51.0664, cor: '#607d8b', cidade: 'Macapá - AP', categoria: 'Monumentos', preco: 'pago' },
     { nome: 'Ferrovia Madeira-Mamoré', lat: -8.7619, lng: -63.9039, cor: '#ff5722', cidade: 'Porto Velho - RO', categoria: 'Monumentos', preco: 'pago' },
-    { nome: 'Monte Roraima', lat: 5.1439, lng: -60.7619, cor: '#9c27b0', cidade: 'Uiramutã - RR', categoria: 'Lugar Paradísíaco', preco: 'pago' },
+    { nome: 'Monte Roraima', lat: 5.1439, lng: -61.0000, cor: '#9c27b0', cidade: 'Uiramutã - RR', categoria: 'Lugar Paradísíaco', preco: 'pago' },
     { nome: 'Jalapão', lat: -10.3500, lng: -46.6167, cor: '#f39c12', cidade: 'Mateiros - TO', categoria: 'Lugar Paradísíaco', preco: 'pago' },
     { nome: 'Ouro Preto', lat: -20.3856, lng: -43.5036, cor: '#795548', cidade: 'Ouro Preto - MG', categoria: 'Monumentos', preco: 'gratuito' },
     { nome: 'Instituto Inhotim', lat: -20.1281, lng: -44.1986, cor: '#4caf50', cidade: 'Brumadinho - MG', categoria: 'Costume Cultural', preco: 'pago' },
@@ -125,11 +125,11 @@ function MapaLeaflet() {
             <div style="display:flex;gap:6px;">
               <a href="https://waze.com/ul?ll=${lugar.lat},${lugar.lng}&navigate=yes" target="_blank"
                 style="flex:1;background:#33ccff;color:white;border:none;padding:7px 0;border-radius:20px;cursor:pointer;font-size:11px;font-weight:600;text-align:center;text-decoration:none;display:block;">
-                🚗 Waze
+                Waze
               </a>
               <a href="https://www.google.com/maps/dir/?api=1&destination=${lugar.lat},${lugar.lng}" target="_blank"
                 style="flex:1;background:#4285f4;color:white;border:none;padding:7px 0;border-radius:20px;cursor:pointer;font-size:11px;font-weight:600;text-align:center;text-decoration:none;display:block;">
-                🗺️ Maps
+                Maps
               </a>
             </div>
           </div>

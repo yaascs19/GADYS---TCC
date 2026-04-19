@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
+import { useGoogleLogin } from '@react-oauth/google';
 import './Login.css';
 import axios from 'axios';
 
@@ -41,6 +42,8 @@ function Login({ onLogin }) {
   const [cooldown, setCooldown] = useState(false);
   const [failedAttempts, setFailedAttempts] = useState(0);
   const MAX_ATTEMPTS = 5;
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [forgotEmail, setForgotEmail] = useState('');
 
   const passwordStrength = getPasswordStrength(password);
   const emailInvalid = emailTouched && email && !isValidEmail(email);
@@ -50,6 +53,44 @@ function Login({ onLogin }) {
     setToast({ message, type });
     setTimeout(() => setToast(null), 4000);
   }, []);
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const userInfo = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+          headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+        })
+        const response = await axios.post(`${API_URL}/api/auth/google`, {
+          token: tokenResponse.access_token,
+          email: userInfo.data.email,
+          nome: userInfo.data.name
+        })
+        if (response.data.sucesso) {
+          localStorage.setItem('isLoggedIn', 'true')
+          localStorage.setItem('userType', response.data.tipoUsuario)
+          localStorage.setItem('userName', response.data.nome)
+          localStorage.setItem('userEmail', userInfo.data.email)
+          localStorage.setItem('usuarioId', response.data.usuarioId)
+          localStorage.setItem('loginExpiry', Date.now() + 8 * 60 * 60 * 1000)
+          if (onLogin) onLogin(response.data.tipoUsuario, response.data.nome)
+          navigate('/')
+        } else {
+          showToast(response.data.mensagem || 'Erro ao entrar com Google.')
+        }
+      } catch { showToast('Erro ao autenticar com Google.') }
+    },
+    onError: () => showToast('Login com Google cancelado.')
+  })
+
+  const handleForgotPassword = async () => {
+    if (!forgotEmail || !isValidEmail(forgotEmail)) { showToast('Digite um email válido.'); return }
+    try {
+      await axios.post(`${API_URL}/api/auth/esqueci-senha`, { email: forgotEmail })
+      showToast('Email enviado com instruções para redefinir sua senha.', 'success')
+      setShowForgotPassword(false)
+      setForgotEmail('')
+    } catch { showToast('Erro ao enviar email. Tente novamente.') }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -192,7 +233,40 @@ function Login({ onLogin }) {
               {isRegister ? ' Entrar' : ' Cadastrar-se'}
             </span>
           </p>
+
+        {!isRegister && (
+          <p className="toggle-form">
+            <span onClick={() => setShowForgotPassword(true)}>Esqueci minha senha</span>
+          </p>
+        )}
+
+        <div className="login-divider"><span>ou</span></div>
+
+        <button type="button" className="google-btn" onClick={() => handleGoogleLogin()}>
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="20" />
+          Entrar com Google
+        </button>
+
       </div>
+
+      {showForgotPassword && (
+        <div className="login-modal-overlay" onClick={() => setShowForgotPassword(false)}>
+          <div className="login-modal-box" onClick={e => e.stopPropagation()}>
+            <h3>Redefinir Senha</h3>
+            <p>Digite seu email e enviaremos um link para redefinir sua senha.</p>
+            <input
+              type="email"
+              placeholder="Seu email"
+              value={forgotEmail}
+              onChange={e => setForgotEmail(e.target.value)}
+            />
+            <div className="login-modal-box-actions">
+              <button onClick={handleForgotPassword} className="login-button">Enviar</button>
+              <button onClick={() => setShowForgotPassword(false)} className="back-button">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
