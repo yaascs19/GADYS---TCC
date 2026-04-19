@@ -236,6 +236,23 @@ function EditarLocal() {
 
   const handleField = (field, value) => setLocal(prev => ({ ...prev, [field]: value }));
 
+  const buscarCoordenadas = async () => {
+    const endereco = local.endereco || `${local.cidade}, ${local.estado}, Brasil`;
+    if (!endereco.trim()) return;
+    try {
+      const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(endereco)}&limit=1`);
+      const data = await res.json();
+      if (data.length > 0) {
+        const { lat, lon } = data[0];
+        handleField('coordenadas', `${parseFloat(lat).toFixed(6)},${parseFloat(lon).toFixed(6)}`);
+      } else {
+        alert('Endereço não encontrado. Tente um endereço mais específico.');
+      }
+    } catch {
+      alert('Erro ao buscar coordenadas.');
+    }
+  };
+
   const handleImageUpload = useCallback(async (e, slotId) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -395,13 +412,22 @@ function EditarLocal() {
                       { label: 'labelEndereco', default: '📍 Endereço', field: 'endereco' },
                       { label: 'labelHorario', default: '🕐 Horário de Funcionamento', field: 'horarioFuncionamento' },
                       { label: 'labelPreco', default: '💰 Preço', field: 'preco' },
-                      { label: 'labelCoordenadas', default: '🗺️ Coordenadas', field: 'coordenadas' },
                     ].map(({ label, default: def, field }) => (
                       <div key={field} className="local-info-card">
                         <input className="editor-inline-input editor-inline-card-title" value={local[label] || def} onChange={e => handleField(label, e.target.value)} />
                         <input className="editor-inline-input" value={local[field] || ''} onChange={e => handleField(field, e.target.value)} placeholder="Valor..." />
                       </div>
                     ))}
+                    <div className="local-info-card">
+                      <input className="editor-inline-input editor-inline-card-title" value={local.labelCoordenadas || '🗺️ Coordenadas'} onChange={e => handleField('labelCoordenadas', e.target.value)} />
+                      <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                        <input className="editor-inline-input" value={local.coordenadas || ''} onChange={e => handleField('coordenadas', e.target.value)} placeholder="lat,lng" style={{ flex: 1 }} />
+                        <button type="button" onClick={buscarCoordenadas}
+                          style={{ background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.4)', color: '#38BDF8', borderRadius: '6px', padding: '0.4rem 0.75rem', cursor: 'pointer', fontSize: '0.8rem', fontWeight: 600, whiteSpace: 'nowrap' }}>
+                          📍 Buscar
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <div className="local-image-wrapper">
