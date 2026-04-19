@@ -165,3 +165,16 @@
   text-align: center;
   padding: 2rem;
 }
+
+@media (max-width: 768px) {
+  .lp-grid {
+    grid-template-columns: 1fr;
+    padding: 2rem 1rem;
+    gap: 1.5rem;
+  }
+  .lp-header {
+    padding: 3rem 1rem;
+  }
+  .lp-card-title { font-size: 1.3rem; }
+  .lp-card-image-container { height: 180px; }
+}
