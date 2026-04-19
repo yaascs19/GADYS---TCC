@@ -58,7 +58,7 @@ function ContatoPage() {
       {/* ── NAVBAR ── */}
       <header style={{
         background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
-        padding: '1rem 2rem',
+        padding: '0.75rem 1rem',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -67,9 +67,9 @@ function ContatoPage() {
         zIndex: 100,
         borderBottom: '1px solid rgba(255,255,255,0.1)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <img onClick={() => navigate('/')} style={{cursor:'pointer'}} src="/images/logos/logo.png" alt="GADYS" style={{ height: '40px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '8px' }} />
-          <span style={{ fontSize: '1.5rem', fontWeight: '700', color: 'white' }}>GADYS</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <img onClick={() => navigate('/')} src="/images/logos/logo.png" alt="GADYS" style={{ height: '36px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '6px', cursor: 'pointer', flexShrink: 0 }} />
+          <span style={{ fontSize: '1.3rem', fontWeight: '700', color: 'white' }}>GADYS</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <button onClick={toggleDarkMode} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>

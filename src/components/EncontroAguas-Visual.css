@@ -140,5 +140,18 @@
   width: 100%;
   border-radius: 8px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-  margin-top: 1rem; /* Adiciona um espaço entre as imagens */
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .encontro-header { height: 250px; }
+  .encontro-header h1 { font-size: 1.8rem; }
+  .encontro-header p { font-size: 0.95rem; }
+  .page-content-wrapper { padding: 0 1rem; }
+  .encontro-nav { gap: 0.5rem; overflow-x: auto; justify-content: flex-start; flex-wrap: nowrap; }
+  .encontro-nav button { font-size: 0.85rem; padding: 0.5rem 0.75rem 0.75rem; white-space: nowrap; }
+  .encontro-text-image-split { flex-direction: column; gap: 1.5rem; }
+  .encontro-text, .encontro-image-wrapper { min-width: unset; }
+  .recomendacao-cards-container { grid-template-columns: 1fr; }
+  .galeria-grid { grid-template-columns: 1fr 1fr; }
 }
