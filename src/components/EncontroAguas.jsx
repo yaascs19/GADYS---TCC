@@ -142,8 +142,6 @@ const GaleriaDeImagens = ({ images }) => (
 
 const EncontroDasAguas = () => {
   const [abaAtiva, setAbaAtiva] = useState('fenomeno');
-  const abaRef = React.useRef('fenomeno');
-  const handleSetAba = (aba) => { abaRef.current = aba; setAbaAtiva(aba); };
   const [dados, setDados] = useState(DADOS_FALLBACK);
   const navigate = useNavigate();
   const { bdId } = useLocalByRota('/encontro-aguas');
@@ -158,8 +156,7 @@ const EncontroDasAguas = () => {
           if (parsed.secoes) setDados(parsed);
         } catch { /* usa fallback */ }
       })
-      .catch(() => {})
-      .finally(() => setAbaAtiva(abaRef.current));
+      .catch(() => {});
   }, []);
 
   const { carouselImages, galleryImages, secoes } = dados;
@@ -184,7 +181,7 @@ const EncontroDasAguas = () => {
       <div className="page-content-wrapper">
         <nav className="encontro-nav">
           {Object.keys(secoes).map(key => (
-            <button key={key} onClick={() => handleSetAba(key)} className={abaAtiva === key ? 'active' : ''}>
+            <button key={key} onClick={() => setAbaAtiva(key)} className={abaAtiva === key ? 'active' : ''}>
               {secoes[key].label}
             </button>
           ))}
