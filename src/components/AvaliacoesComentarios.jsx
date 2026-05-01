@@ -63,11 +63,9 @@ function AvaliacoesComentarios({ localId }) {
 
   const handleAvaliar = async (nota) => {
     if (!isLoggedIn) { showToast('Faça login para avaliar.', 'info'); return; }
-    const jaAvaliou = minhaAvaliacao > 0;
-    if (!jaAvaliou) setTotalAvaliacoes(prev => prev + 1);
-    setMinhaAvaliacao(nota);
     try {
       await fetch(`${API_URL}/api/avaliacoes?localId=${resolvedId}&usuarioId=${usuarioId}&nota=${nota}`, { method: 'POST' });
+      setMinhaAvaliacao(nota);
       loadAvaliacoes();
       showToast('Avaliação salva!', 'success');
     } catch { showToast('Erro ao salvar avaliação.'); }
