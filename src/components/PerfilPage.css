@@ -426,6 +426,23 @@
 .meu-local-status.PENDENTE { background: rgba(245,158,11,0.15); color: #f59e0b; }
 .meu-local-status.INATIVO { background: rgba(148,163,184,0.15); color: #94a3b8; }
 
+.ver-mais-btn {
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: #3498db;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.ver-mais-btn:hover { background: rgba(52,152,219,0.08); }
+.perfil-page.dark .ver-mais-btn { color: #818cf8; }
+.perfil-page.dark .ver-mais-btn:hover { background: rgba(129,140,248,0.08); }
+
 /* ── Mensagens Respondidas ── */
 .mensagens-respondidas-lista {
   display: flex;

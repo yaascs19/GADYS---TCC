@@ -49,6 +49,7 @@ function PerfilPage() {
   const [userStats, setUserStats] = useState({ locaisAdicionados: 0, avaliacoes: 0, comentarios: 0 })
   const [meusLocais, setMeusLocais] = useState([])
   const [mensagensRespondidas, setMensagensRespondidas] = useState([])
+  const [mostrarTodosLocais, setMostrarTodosLocais] = useState(false)
 
   const saveProfile = (data) => {
     const usuarioId = localStorage.getItem('usuarioId')
@@ -298,7 +299,7 @@ function PerfilPage() {
             <div className="stats-card">
               <h3 className="card-header">Meus Locais</h3>
               <div className="meus-locais-lista">
-                {meusLocais.map(local => (
+                {(mostrarTodosLocais ? meusLocais : meusLocais.slice(0, 5)).map(local => (
                   <div key={local.id} className="meu-local-item" onClick={() => navigate(local.rotaFrontend || `/local/${local.id}`)}>
                     <div className="meu-local-img" style={{ backgroundImage: local.imagemUrl ? `url(${local.imagemUrl.split(',')[0]})` : 'none' }} />
                     <div className="meu-local-info">
@@ -309,6 +310,14 @@ function PerfilPage() {
                   </div>
                 ))}
               </div>
+              {meusLocais.length > 5 && (
+                <button
+                  onClick={() => setMostrarTodosLocais(!mostrarTodosLocais)}
+                  className="ver-mais-btn"
+                >
+                  {mostrarTodosLocais ? 'Ver menos' : `Ver mais (${meusLocais.length - 5})`}
+                </button>
+              )}
             </div>
           )}
 
