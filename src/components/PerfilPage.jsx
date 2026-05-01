@@ -111,7 +111,12 @@ function PerfilPage() {
         .then(msgs => {
           const respondidas = msgs.filter(m =>
             m.email === userEmail && m.status === 'respondida' && m.resposta
-          )
+          ).map(m => ({
+            ...m,
+            resposta: (() => {
+              try { return JSON.parse(m.resposta).resposta || m.resposta } catch { return m.resposta }
+            })()
+          }))
           setMensagensRespondidas(respondidas)
         })
         .catch(() => {})

@@ -385,7 +385,7 @@ function AdminPanel() {
       const response = await fetch(`${API_URL}/api/contato/${replyModal}/responder`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ resposta: replyText.trim() })
+        body: JSON.stringify(replyText.trim())
       })
       if (response.ok) {
         showToast('Resposta enviada com sucesso!', 'success')
