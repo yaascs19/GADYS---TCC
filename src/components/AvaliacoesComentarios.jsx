@@ -1,9 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './AvaliacoesComentarios.css';
 
 const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
 
 function AvaliacoesComentarios({ localId }) {
+  const idRef = useRef(localId);
+  const [resolvedId, setResolvedId] = useState(localId);
+
+  useEffect(() => {
+    if (localId && localId !== idRef.current) {
+      idRef.current = localId;
+      setResolvedId(localId);
+    } else if (localId && !resolvedId) {
+      idRef.current = localId;
+      setResolvedId(localId);
+    }
+  }, [localId]);
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
   const usuarioId = localStorage.getItem('usuarioId');
 
@@ -22,9 +34,9 @@ function AvaliacoesComentarios({ localId }) {
   };
 
   const loadAvaliacoes = () => {
-    fetch(`${API_URL}/api/avaliacoes/local/${localId}/media`)
+    fetch(`${API_URL}/api/avaliacoes/local/${resolvedId}/media`)
       .then(r => r.json()).then(m => setMedia(m)).catch(() => {});
-    fetch(`${API_URL}/api/avaliacoes/local/${localId}`)
+    fetch(`${API_URL}/api/avaliacoes/local/${resolvedId}`)
       .then(r => r.json())
       .then(avs => {
         setTotalAvaliacoes(avs.length);
@@ -39,21 +51,23 @@ function AvaliacoesComentarios({ localId }) {
   };
 
   const loadComentarios = () => {
-    fetch(`${API_URL}/api/comentarios/local/${localId}`)
+    fetch(`${API_URL}/api/comentarios/local/${resolvedId}`)
       .then(r => r.json())
       .then(data => setComentarios(Array.isArray(data) ? data : []))
       .catch(() => {});
   };
 
   useEffect(() => {
-    if (localId) { loadAvaliacoes(); loadComentarios(); }
-  }, [localId]);
+    if (resolvedId) { loadAvaliacoes(); loadComentarios(); }
+  }, [resolvedId]);
+
+  if (!resolvedId) return <div style={{ color: '#A9B4C2', textAlign: 'center', padding: '3rem' }}>Carregando...</div>;
 
   const handleAvaliar = async (nota) => {
     if (!isLoggedIn) { showToast('Faça login para avaliar.', 'info'); return; }
     setMinhaAvaliacao(nota);
     try {
-      await fetch(`${API_URL}/api/avaliacoes?localId=${localId}&usuarioId=${usuarioId}&nota=${nota}`, { method: 'POST' });
+      await fetch(`${API_URL}/api/avaliacoes?localId=${resolvedId}&usuarioId=${usuarioId}&nota=${nota}`, { method: 'POST' });
       loadAvaliacoes();
       showToast('Avaliação salva!', 'success');
     } catch { showToast('Erro ao salvar avaliação.'); }
@@ -65,7 +79,7 @@ function AvaliacoesComentarios({ localId }) {
     setEnviando(true);
     try {
       const res = await fetch(
-        `${API_URL}/api/comentarios?localId=${localId}&usuarioId=${usuarioId}&texto=${encodeURIComponent(novoComentario.trim())}`,
+        `${API_URL}/api/comentarios?localId=${resolvedId}&usuarioId=${usuarioId}&texto=${encodeURIComponent(novoComentario.trim())}`,
         { method: 'POST' }
       );
       if (res.ok) { setNovoComentario(''); loadComentarios(); showToast('Comentário enviado!', 'success'); }

@@ -218,7 +218,7 @@ const Galeria = () => (
 const TeatroAmazonas = () => {
   const [abaAtiva, setAbaAtiva] = useState('historia');
   const navigate = useNavigate();
-  const { bdLocal } = useLocalByRota('/teatro-amazonas');
+  const { bdLocal, bdId } = useLocalByRota('/teatro-amazonas');
 
   const titulo = bdLocal?.nome || 'Teatro Amazonas';
   const subtitulo = bdLocal?.descricao || 'Um palácio de arte erguido no coração da floresta.';

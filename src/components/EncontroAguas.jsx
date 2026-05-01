@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EncontroAguas-Visual.css';
 import AvaliacoesComentarios from './AvaliacoesComentarios';
+import { useLocalByRota } from '../hooks/useLocalByRota';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -143,6 +144,7 @@ const EncontroDasAguas = () => {
   const [abaAtiva, setAbaAtiva] = useState('fenomeno');
   const [dados, setDados] = useState(DADOS_FALLBACK);
   const navigate = useNavigate();
+  const { bdId } = useLocalByRota('/encontro-aguas');
 
   useEffect(() => {
     fetch(`${API_URL}/api/locais/2`)
@@ -189,7 +191,7 @@ const EncontroDasAguas = () => {
           {abaAtiva === 'fotos'
             ? <GaleriaDeImagens images={galleryImages} />
             : abaAtiva === 'avaliacoes'
-            ? <AvaliacoesComentarios localId={2} />
+            ? <AvaliacoesComentarios localId={bdId} />
             : <ConteudoAba secao={secoes[abaAtiva]} />
           }
         </main>
