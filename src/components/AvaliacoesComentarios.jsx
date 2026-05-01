@@ -65,8 +65,9 @@ function AvaliacoesComentarios({ localId }) {
     if (!isLoggedIn) { showToast('Faça login para avaliar.', 'info'); return; }
     try {
       await fetch(`${API_URL}/api/avaliacoes?localId=${resolvedId}&usuarioId=${usuarioId}&nota=${nota}`, { method: 'POST' });
+      const jaAvaliou = minhaAvaliacao > 0;
       setMinhaAvaliacao(nota);
-      loadAvaliacoes();
+      if (!jaAvaliou) setTotalAvaliacoes(prev => prev + 1);
       showToast('Avaliação salva!', 'success');
     } catch { showToast('Erro ao salvar avaliação.'); }
   };
