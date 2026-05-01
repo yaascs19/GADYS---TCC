@@ -171,6 +171,7 @@ function AvaliacoesComentarios({ localId }) {
             <div key={c.id} className="ac-comentario">
               <div className="ac-comentario-header">
                 <span className="ac-comentario-autor">{c.nomeUsuario || 'Usuário'}</span>
+                {c.nota && <Estrelas valor={c.nota} tamanho="1rem" />}
                 <span className="ac-comentario-data">
                   {new Date(c.dataComentario).toLocaleDateString('pt-BR')}
                 </span>
