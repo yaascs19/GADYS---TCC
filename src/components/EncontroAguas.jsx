@@ -141,7 +141,9 @@ const GaleriaDeImagens = ({ images }) => (
 );
 
 const EncontroDasAguas = () => {
-  const [abaAtiva, setAbaAtiva] = useState('fenomeno');
+  const abaRef = React.useRef('fenomeno');
+  const [abaAtiva, setAbaAtivaState] = useState('fenomeno');
+  const setAbaAtiva = (aba) => { abaRef.current = aba; setAbaAtivaState(aba); };
   const [dados, setDados] = useState(DADOS_FALLBACK);
   const navigate = useNavigate();
   const { bdId } = useLocalByRota('/encontro-aguas');
@@ -153,7 +155,10 @@ const EncontroDasAguas = () => {
         if (!local?.informacoesAdicionais) return;
         try {
           const parsed = JSON.parse(local.informacoesAdicionais);
-          if (parsed.secoes) setDados(parsed);
+          if (parsed.secoes) {
+            setDados(parsed);
+            setAbaAtivaState(abaRef.current);
+          }
         } catch { /* usa fallback */ }
       })
       .catch(() => { /* usa fallback */ });
