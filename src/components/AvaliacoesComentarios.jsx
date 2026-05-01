@@ -66,8 +66,12 @@ function AvaliacoesComentarios({ localId }) {
     try {
       await fetch(`${API_URL}/api/avaliacoes?localId=${resolvedId}&usuarioId=${usuarioId}&nota=${nota}`, { method: 'POST' });
       const jaAvaliou = minhaAvaliacao > 0;
+      const novoTotal = jaAvaliou ? totalAvaliacoes : totalAvaliacoes + 1;
+      const somaAtual = media * totalAvaliacoes;
+      const novaSoma = jaAvaliou ? somaAtual - minhaAvaliacao + nota : somaAtual + nota;
       setMinhaAvaliacao(nota);
-      if (!jaAvaliou) setTotalAvaliacoes(prev => prev + 1);
+      if (!jaAvaliou) setTotalAvaliacoes(novoTotal);
+      setMedia(novaSoma / novoTotal);
       showToast('Avaliação salva!', 'success');
     } catch { showToast('Erro ao salvar avaliação.'); }
   };
