@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './ArquipelagoAnavilhanas.css';
 import { useLocalByRota } from '../hooks/useLocalByRota';
+import AvaliacoesComentarios from './AvaliacoesComentarios';
 
 const carouselImages = [
   '/images/geral/Ana-Am.jpg',
@@ -72,6 +73,7 @@ const secoes = {
     ],
   },
   fotos: { id: 'fotos', label: 'Fotos' },
+  avaliacoes: { id: 'avaliacoes', label: 'Avaliações' },
 };
 
 const HeaderCarousel = () => {
@@ -163,7 +165,7 @@ const Galeria = () => (
 const ArquipelagoAnavilhanas = () => {
   const [abaAtiva, setAbaAtiva] = useState('sobre');
   const navigate = useNavigate();
-  const { bdLocal } = useLocalByRota('/arquipelago-anavilhanas');
+  const { bdLocal, bdId } = useLocalByRota('/arquipelago-anavilhanas');
 
   const titulo = bdLocal?.nome || 'Arquipélago de Anavilhanas';
   const subtitulo = bdLocal?.descricao || 'Um santuário de biodiversidade nas águas negras do Rio Negro.';
@@ -197,7 +199,7 @@ const ArquipelagoAnavilhanas = () => {
           ))}
         </nav>
         <main className="aa-main">
-          {abaAtiva === 'fotos' ? <Galeria /> : <ConteudoAba secao={secoes[abaAtiva]} />}
+          {abaAtiva === 'fotos' ? <Galeria /> : abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> : <ConteudoAba secao={secoes[abaAtiva]} />}
         </main>
       </div>
     </div>

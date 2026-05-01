@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './TeatroAmazonas.css';
 import { useLocalByRota } from '../hooks/useLocalByRota';
+import AvaliacoesComentarios from './AvaliacoesComentarios';
 
 // --- DADOS ---
 const carouselImages = [
@@ -98,6 +99,10 @@ const secoes = {
   fotos: {
     id: 'fotos',
     label: 'Fotos',
+  },
+  avaliacoes: {
+    id: 'avaliacoes',
+    label: 'Avaliações',
   },
 };
 
@@ -259,7 +264,7 @@ const TeatroAmazonas = () => {
           ))}
         </nav>
         <main className="ta-main">
-          {abaAtiva === 'fotos' ? <Galeria /> : <ConteudoAba secao={secoes[abaAtiva]} />}
+          {abaAtiva === 'fotos' ? <Galeria /> : abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> : <ConteudoAba secao={secoes[abaAtiva]} />}
         </main>
       </div>
     </div>

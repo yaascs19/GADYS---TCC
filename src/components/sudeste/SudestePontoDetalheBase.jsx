@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SudestePontoDetalhe.css';
 import { useLocalByRota } from '../../hooks/useLocalByRota';
+import AvaliacoesComentarios from '../AvaliacoesComentarios';
 
 const HeaderCarousel = ({ images, titulo, subtitulo, onVoltar }) => {
   const [ativo, setAtivo] = useState(0);
@@ -94,7 +95,7 @@ const SudestePontoDetalheBase = ({ config }) => {
   const [abaAtiva, setAbaAtiva] = useState(Object.keys(config.secoes)[0]);
   const navigate = useNavigate();
   const rota = window.location.pathname;
-  const { bdLocal } = useLocalByRota(rota);
+  const { bdLocal, bdId } = useLocalByRota(rota);
 
   const titulo = bdLocal?.nome || config.titulo;
   const subtitulo = bdLocal?.descricao || config.subtitulo;
@@ -112,9 +113,12 @@ const SudestePontoDetalheBase = ({ config }) => {
               {config.secoes[key].label}
             </button>
           ))}
+          <button onClick={() => setAbaAtiva('avaliacoes')} className={abaAtiva === 'avaliacoes' ? 'active' : ''}>
+            Avaliações
+          </button>
         </nav>
         <main className="sudeste-ponto-main">
-          {abaAtiva === 'fotos' ? <Galeria images={config.galeriaImages} /> : <ConteudoAba secao={config.secoes[abaAtiva]} />}
+          {abaAtiva === 'fotos' ? <Galeria images={config.galeriaImages} /> : abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> : <ConteudoAba secao={config.secoes[abaAtiva]} />}
         </main>
       </div>
       <footer className="sudeste-ponto-footer">

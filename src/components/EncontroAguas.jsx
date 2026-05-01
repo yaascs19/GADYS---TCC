@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EncontroAguas-Visual.css';
+import AvaliacoesComentarios from './AvaliacoesComentarios';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -47,6 +48,7 @@ const DADOS_FALLBACK = {
       ],
     },
     fotos: { label: 'Fotos' },
+    avaliacoes: { label: 'Avaliações' },
   },
 };
 
@@ -186,6 +188,8 @@ const EncontroDasAguas = () => {
         <main className="encontro-main-content">
           {abaAtiva === 'fotos'
             ? <GaleriaDeImagens images={galleryImages} />
+            : abaAtiva === 'avaliacoes'
+            ? <AvaliacoesComentarios localId={2} />
             : <ConteudoAba secao={secoes[abaAtiva]} />
           }
         </main>

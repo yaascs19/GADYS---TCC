@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './AmazonicoPeixaria.css';
 import { useLocalByRota } from '../hooks/useLocalByRota';
+import AvaliacoesComentarios from './AvaliacoesComentarios';
 
 const carouselImages = [
   '/images/geral/restama1.jpg',
@@ -78,6 +79,7 @@ const secoes = {
     ],
   },
   fotos: { id: 'fotos', label: 'Fotos' },
+  avaliacoes: { id: 'avaliacoes', label: 'Avaliações' },
 };
 
 const HeaderCarousel = () => {
@@ -184,7 +186,7 @@ const Galeria = () => (
 const AmazonicoPeixaria = () => {
   const [abaAtiva, setAbaAtiva] = useState('sobre');
   const navigate = useNavigate();
-  const { bdLocal } = useLocalByRota('/amazonico-peixaria');
+  const { bdLocal, bdId } = useLocalByRota('/amazonico-peixaria');
 
   const titulo = bdLocal?.nome || 'Amazônico Peixaria Regional';
   const subtitulo = bdLocal?.descricao || 'Os sabores autênticos da Amazônia no coração de Manaus.';
@@ -218,7 +220,7 @@ const AmazonicoPeixaria = () => {
           ))}
         </nav>
         <main className="ap-main">
-          {abaAtiva === 'fotos' ? <Galeria /> : <ConteudoAba secao={secoes[abaAtiva]} />}
+          {abaAtiva === 'fotos' ? <Galeria /> : abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> : <ConteudoAba secao={secoes[abaAtiva]} />}
         </main>
       </div>
     </div>
