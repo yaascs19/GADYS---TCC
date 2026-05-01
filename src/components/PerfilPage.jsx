@@ -48,6 +48,7 @@ function PerfilPage() {
   const [tempProfileData, setTempProfileData] = useState(profileData)
   const [userStats, setUserStats] = useState({ locaisAdicionados: 0, avaliacoes: 0, comentarios: 0 })
   const [meusLocais, setMeusLocais] = useState([])
+  const [mensagensRespondidas, setMensagensRespondidas] = useState([])
 
   const saveProfile = (data) => {
     const usuarioId = localStorage.getItem('usuarioId')
@@ -102,7 +103,20 @@ function PerfilPage() {
       .catch(() => {})
   }, [])
 
-  const handlePhotoChange = async (e) => {
+  useEffect(() => {
+    const userEmail = localStorage.getItem('userEmail')
+    if (userEmail && API_URL) {
+      fetch(`${API_URL}/api/contato`)
+        .then(r => r.json())
+        .then(msgs => {
+          const respondidas = msgs.filter(m =>
+            m.email === userEmail && m.status === 'respondida' && m.resposta
+          )
+          setMensagensRespondidas(respondidas)
+        })
+        .catch(() => {})
+    }
+  }, [])
     const file = e.target.files[0]
     if (!file) return
     const data = new FormData()
@@ -282,6 +296,26 @@ function PerfilPage() {
                       <strong>{local.nome}</strong>
                       <span>{local.cidade}{local.estado ? `, ${local.estado}` : ''}</span>
                       <span className={`meu-local-status ${local.status}`}>{local.status}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {mensagensRespondidas.length > 0 && (
+            <div className="stats-card">
+              <h3 className="card-header">Respostas do Suporte</h3>
+              <div className="mensagens-respondidas-lista">
+                {mensagensRespondidas.map(msg => (
+                  <div key={msg.id} className="mensagem-respondida-item">
+                    <div className="mensagem-respondida-header">
+                      <strong>{msg.assunto || 'Sem assunto'}</strong>
+                      <span className="mensagem-data">{new Date(msg.data).toLocaleDateString('pt-BR')}</span>
+                    </div>
+                    <div className="mensagem-respondida-body">
+                      <p className="mensagem-original"><span>Sua mensagem:</span> {msg.mensagem}</p>
+                      <p className="mensagem-resposta"><span>Resposta:</span> {msg.resposta}</p>
                     </div>
                   </div>
                 ))}
