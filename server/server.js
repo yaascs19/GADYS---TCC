@@ -89,39 +89,21 @@ app.get('/api/locais', async (req, res) => {
     } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+app.get('/api/locais/rota', async (req, res) => {
+    try {
+        const { rota } = req.query;
+        const result = await sql.query`SELECT * FROM vw_Locais WHERE rota_frontend = ${rota}`;
+        if (!result.recordset.length) return res.status(404).json({ error: 'Local não encontrado' });
+        res.json(result.recordset[0]);
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 app.get('/api/locais/:id', async (req, res) => {
     try {
         const id = parseInt(req.params.id);
         const result = await sql.query`SELECT * FROM vw_Locais WHERE id = ${id}`;
         if (!result.recordset.length) return res.status(404).json({ error: 'Local não encontrado' });
         res.json(result.recordset[0]);
-    } catch (err) { res.status(500).json({ error: err.message }); }
-});
-
-app.get('/api/locais/pendentes', async (req, res) => {
-    try {
-        const result = await sql.query`
-            SELECT * FROM Localizacao WHERE status = 'PENDENTE' ORDER BY data_criacao DESC
-        `;
-        res.json(result.recordset);
-    } catch (err) { res.status(500).json({ error: err.message }); }
-});
-
-app.get('/api/locais/aprovados', async (req, res) => {
-    try {
-        const result = await sql.query`
-            SELECT * FROM Localizacao WHERE status = 'ATIVO' ORDER BY data_aprovacao DESC
-        `;
-        res.json(result.recordset);
-    } catch (err) { res.status(500).json({ error: err.message }); }
-});
-
-app.get('/api/locais/lixeira', async (req, res) => {
-    try {
-        const result = await sql.query`
-            SELECT * FROM Localizacao WHERE status = 'INATIVO' ORDER BY data_criacao DESC
-        `;
-        res.json(result.recordset);
     } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
@@ -146,11 +128,7 @@ app.post('/api/locais', async (req, res) => {
 app.post('/api/locais/aprovar/:id', async (req, res) => {
     try {
         const id = parseInt(req.params.id);
-        await sql.query`
-            UPDATE Localizacao
-            SET status = 'ATIVO', data_aprovacao = GETDATE()
-            WHERE id = ${id}
-        `;
+        await sql.query`UPDATE Localizacao SET status = 'ATIVO', data_aprovacao = GETDATE() WHERE id = ${id}`;
         res.json({ success: true });
     } catch (err) { res.status(500).json({ error: err.message }); }
 });
@@ -191,18 +169,30 @@ app.post('/api/locais/restaurar/:id', async (req, res) => {
 // AVALIAÇÕES
 // =============================================
 
+app.get('/api/avaliacoes/:localId', async (req, res) => {
+    try {
+        const localId = parseInt(req.params.localId);
+        const result = await sql.query`
+            SELECT id, nota AS Nota, usuario_id AS UsuarioID
+            FROM Avaliacao WHERE localizacao_id = ${localId}
+        `;
+        res.json(result.recordset);
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 app.post('/api/avaliacoes', async (req, res) => {
     try {
         const { localId, usuarioId, nota } = req.body;
+        const lid = parseInt(localId), uid = parseInt(usuarioId), n = parseInt(nota);
         await sql.query`
-            INSERT INTO Avaliacao (localizacao_id, usuario_id, nota)
-            VALUES (${localId}, ${usuarioId}, ${nota})
+            MERGE Avaliacao AS target
+            USING (SELECT ${lid} AS localizacao_id, ${uid} AS usuario_id) AS source
+            ON target.localizacao_id = source.localizacao_id AND target.usuario_id = source.usuario_id
+            WHEN MATCHED THEN UPDATE SET nota = ${n}
+            WHEN NOT MATCHED THEN INSERT (localizacao_id, usuario_id, nota) VALUES (${lid}, ${uid}, ${n});
         `;
         res.json({ success: true });
-    } catch (err) {
-        if (err.number === 2627) return res.status(400).json({ error: 'Você já avaliou este local!' });
-        res.status(500).json({ error: err.message });
-    }
+    } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
 // =============================================
@@ -213,7 +203,8 @@ app.get('/api/comentarios/:localId', async (req, res) => {
     try {
         const localId = parseInt(req.params.localId);
         const result = await sql.query`
-            SELECT c.texto, c.data_comentario, u.nome AS usuario
+            SELECT c.id AS ID, c.texto AS Texto, c.data_comentario AS DataComentario,
+                   c.usuario_id AS UsuarioID, u.nome AS nomeUsuario
             FROM Comentario c
             JOIN Usuario u ON c.usuario_id = u.id
             WHERE c.localizacao_id = ${localId}
@@ -223,31 +214,22 @@ app.get('/api/comentarios/:localId', async (req, res) => {
     } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
-app.get('/api/comentarios/all', async (req, res) => {
-    try {
-        const result = await sql.query`
-            SELECT l.nome AS localNome, c.texto, c.data_comentario, u.nome AS usuario
-            FROM Comentario c
-            JOIN Usuario u ON c.usuario_id = u.id
-            JOIN Localizacao l ON c.localizacao_id = l.id
-            ORDER BY l.nome, c.data_comentario DESC
-        `;
-        const grouped = {};
-        result.recordset.forEach(({ localNome, usuario, texto, data_comentario }) => {
-            if (!grouped[localNome]) grouped[localNome] = [];
-            grouped[localNome].push({ userName: usuario, text: texto, date: data_comentario });
-        });
-        res.json(grouped);
-    } catch (err) { res.status(500).json({ error: err.message }); }
-});
-
 app.post('/api/comentarios', async (req, res) => {
     try {
         const { localId, usuarioId, texto } = req.body;
         await sql.query`
             INSERT INTO Comentario (localizacao_id, usuario_id, texto)
-            VALUES (${localId}, ${usuarioId}, ${texto})
+            VALUES (${parseInt(localId)}, ${parseInt(usuarioId)}, ${texto})
         `;
+        res.json({ success: true });
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.delete('/api/comentarios/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id);
+        const { usuarioId } = req.body;
+        await sql.query`DELETE FROM Comentario WHERE id = ${id} AND usuario_id = ${parseInt(usuarioId)}`;
         res.json({ success: true });
     } catch (err) { res.status(500).json({ error: err.message }); }
 });

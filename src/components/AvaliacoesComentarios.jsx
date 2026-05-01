@@ -39,12 +39,10 @@ function AvaliacoesComentarios({ localId }) {
     fetch(`${API_URL}/api/avaliacoes/local/${resolvedId}`)
       .then(r => r.json())
       .then(avs => {
+        if (!Array.isArray(avs)) return;
         setTotalAvaliacoes(avs.length);
         if (usuarioId) {
-          const minha = avs.find(a =>
-            String(a.usuarioId) === String(usuarioId) ||
-            String(a.usuario?.id) === String(usuarioId)
-          );
+          const minha = avs.find(a => String(a.usuario?.id) === String(usuarioId));
           if (minha) setMinhaAvaliacao(minha.nota);
         }
       }).catch(() => {});
@@ -158,11 +156,11 @@ function AvaliacoesComentarios({ localId }) {
           comentarios.map(c => (
             <div key={c.id} className="ac-comentario">
               <div className="ac-comentario-header">
-                <span className="ac-comentario-autor">{c.nomeUsuario || c.usuario?.nome || 'Usuário'}</span>
+                <span className="ac-comentario-autor">{c.nomeUsuario || 'Usuário'}</span>
                 <span className="ac-comentario-data">
-                  {new Date(c.dataComentario || c.data).toLocaleDateString('pt-BR')}
+                  {new Date(c.dataComentario).toLocaleDateString('pt-BR')}
                 </span>
-                {String(c.usuarioId || c.usuario?.id) === String(usuarioId) && (
+                {String(c.usuarioId) === String(usuarioId) && (
                   <button className="ac-excluir" onClick={() => handleExcluir(c.id)}>Excluir</button>
                 )}
               </div>
