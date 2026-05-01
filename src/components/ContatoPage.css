@@ -291,7 +291,53 @@
 }
 
 /* --- Toast --- */
-.contato-toast { display: none; } /* Ocultando o toast antigo, idealmente seria um componente global */
+.contato-toast {
+  position: fixed;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  z-index: 9999;
+  max-width: 420px;
+  width: 90%;
+  animation: contato-slide-down 0.3s ease;
+}
+
+.contato-toast--success {
+  background: #1a2d1e;
+  border: 1px solid rgba(16,185,129,0.4);
+  color: #6ee7b7;
+}
+
+.contato-toast--error {
+  background: #2d1a1a;
+  border: 1px solid rgba(244,63,94,0.4);
+  color: #fca5a5;
+}
+
+.contato-toast button {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: inherit;
+  font-size: 1.2rem;
+  cursor: pointer;
+  opacity: 0.7;
+  padding: 0;
+}
+.contato-toast button:hover { opacity: 1; }
+
+@keyframes contato-slide-down {
+  from { opacity: 0; transform: translateX(-50%) translateY(-12px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
 
 @media (max-width: 768px) {
   .sobre-grid {
