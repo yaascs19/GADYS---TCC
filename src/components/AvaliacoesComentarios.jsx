@@ -75,12 +75,26 @@ function AvaliacoesComentarios({ localId }) {
     if (!isLoggedIn) { showToast('Faça login para comentar.', 'info'); return; }
     if (!novoComentario.trim()) return;
     setEnviando(true);
+    const texto = novoComentario.trim();
     try {
       const res = await fetch(
-        `${API_URL}/api/comentarios?localId=${resolvedId}&usuarioId=${usuarioId}&texto=${encodeURIComponent(novoComentario.trim())}`,
+        `${API_URL}/api/comentarios?localId=${resolvedId}&usuarioId=${usuarioId}&texto=${encodeURIComponent(texto)}`,
         { method: 'POST' }
       );
-      if (res.ok) { setNovoComentario(''); loadComentarios(); showToast('Comentário enviado!', 'success'); }
+      if (res.ok) {
+        const novoLocal = {
+          id: Date.now(),
+          texto,
+          dataComentario: new Date().toISOString(),
+          usuarioId,
+          nomeUsuario: localStorage.getItem('usuarioNome') || 'Você',
+        };
+        setComentarios(prev => [novoLocal, ...prev]);
+        setNovoComentario('');
+        showToast('Comentário enviado!', 'success');
+      } else {
+        showToast('Erro ao enviar comentário.');
+      }
     } catch { showToast('Erro ao enviar comentário.'); }
     finally { setEnviando(false); }
   };
