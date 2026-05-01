@@ -34,7 +34,7 @@ function ContatoPage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.post(`${API_URL}/api/mensagens`, form);
+      await axios.post(`${API_URL}/api/contato`, form);
       showToast('Mensagem enviada com sucesso!', 'success');
       setForm({ nome: '', email: '', assunto: '', mensagem: '' });
     } catch {

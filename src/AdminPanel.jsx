@@ -15,6 +15,7 @@ function AdminPanel() {
   const [showAddUserModal, setShowAddUserModal] = useState(false)
   const [newUser, setNewUser] = useState({ userName: '', email: '', senha: '', userType: 'usuario' })
   const [siteLocations, setSiteLocations] = useState([])
+  const [trashedLocations, setTrashedLocations] = useState([])
   const [contactMessages, setContactMessages] = useState([])
   const [locationFilter, setLocationFilter] = useState('')
   const [editingLocation, setEditingLocation] = useState(null)
@@ -135,7 +136,7 @@ function AdminPanel() {
 
   const loadContactMessages = async () => {
     try {
-        const response = await fetch(`${API_URL}/api/mensagens`);
+        const response = await fetch(`${API_URL}/api/contato`);
         if(response.ok) {
             const messages = await response.json();
             setContactMessages(messages);
@@ -381,8 +382,8 @@ function AdminPanel() {
   const handleSendReply = async () => {
     if (!replyText.trim()) return
     try {
-      const response = await fetch(`${API_URL}/api/mensagens/responder/${replyModal}`, {
-        method: 'POST',
+      const response = await fetch(`${API_URL}/api/contato/${replyModal}/responder`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ resposta: replyText.trim() })
       })
