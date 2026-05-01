@@ -117,6 +117,8 @@ function PerfilPage() {
         .catch(() => {})
     }
   }, [])
+
+  const handlePhotoChange = async (e) => {
     const file = e.target.files[0]
     if (!file) return
     const data = new FormData()
