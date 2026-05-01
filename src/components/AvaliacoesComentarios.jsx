@@ -88,6 +88,7 @@ function AvaliacoesComentarios({ localId }) {
           dataComentario: new Date().toISOString(),
           usuarioId,
           nomeUsuario: localStorage.getItem('usuarioNome') || 'Você',
+          nota: minhaAvaliacao || null,
         };
         setComentarios(prev => [novoLocal, ...prev]);
         setNovoComentario('');
