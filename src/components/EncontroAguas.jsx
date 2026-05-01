@@ -153,7 +153,10 @@ const EncontroDasAguas = () => {
         if (!local?.informacoesAdicionais) return;
         try {
           const parsed = JSON.parse(local.informacoesAdicionais);
-          if (parsed.secoes) setDados(parsed);
+          if (parsed.secoes) {
+            parsed.secoes = { ...DADOS_FALLBACK.secoes, ...parsed.secoes };
+            setDados(parsed);
+          }
         } catch { /* usa fallback */ }
       })
       .catch(() => {});
