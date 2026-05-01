@@ -42,7 +42,7 @@ function AvaliacoesComentarios({ localId }) {
         if (!Array.isArray(avs)) return;
         setTotalAvaliacoes(avs.length);
         if (usuarioId) {
-          const minha = avs.find(a => String(a.usuario?.id) === String(usuarioId));
+          const minha = avs.find(a => String(a.usuarioId) === String(usuarioId));
           if (minha) setMinhaAvaliacao(minha.nota);
         }
       }).catch(() => {});
