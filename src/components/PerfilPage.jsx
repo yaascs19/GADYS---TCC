@@ -104,13 +104,15 @@ function PerfilPage() {
   }, [])
 
   useEffect(() => {
-    const userEmail = localStorage.getItem('userEmail')
-    if (userEmail && API_URL) {
+    if (API_URL) {
+      const userEmail = localStorage.getItem('userEmail')
+      const userName = localStorage.getItem('userName')
       fetch(`${API_URL}/api/contato`)
         .then(r => r.json())
         .then(msgs => {
           const respondidas = msgs.filter(m =>
-            m.email === userEmail && m.status === 'respondida' && m.resposta
+            (m.email === userEmail || m.nome === userName) &&
+            m.status === 'respondida' && m.resposta
           ).map(m => ({
             ...m,
             resposta: (() => {
