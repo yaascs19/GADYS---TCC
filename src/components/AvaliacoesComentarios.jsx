@@ -245,10 +245,7 @@ function AvaliacoesComentarios({ localId }) {
                   {new Date(c.dataComentario).toLocaleDateString('pt-BR')}
                 </span>
                 {String(c.usuarioId) === String(usuarioId) && (
-                  <>
-                    <button className="ac-editar" onClick={() => handleEditar(c)}>Editar</button>
-                    <button className="ac-excluir" onClick={() => handleExcluir(c.id)}>Excluir</button>
-                  </>
+                  <button className="ac-excluir" onClick={() => handleExcluir(c.id)}>Excluir</button>
                 )}
               </div>
               {editandoId === c.id ? (
