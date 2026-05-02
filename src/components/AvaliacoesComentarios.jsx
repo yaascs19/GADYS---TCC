@@ -22,15 +22,22 @@ function AvaliacoesComentarios({ localId }) {
 
   const [media, setMedia] = useState(0);
   const [totalAvaliacoes, setTotalAvaliacoes] = useState(0);
-  const [minhaAvaliacao, setMinhaAvaliacao] = useState(0);
-  const [hoverStar, setHoverStar] = useState(0);
   const [comentarios, setComentarios] = useState([]);
-  const [novoComentario, setNovoComentario] = useState('');
+  const [toast, setToast] = useState(null);
+
+  // bloco de avaliação/comentário do usuário
+  const [minhaAvaliacao, setMinhaAvaliacao] = useState(0);
+  const [meuComentarioId, setMeuComentarioId] = useState(null);
+  const [hoverStar, setHoverStar] = useState(0);
+  const [notaSelecionada, setNotaSelecionada] = useState(0);
+  const [blocoAberto, setBlocoAberto] = useState(false);
+  const [textoBloco, setTextoBloco] = useState('');
   const [enviando, setEnviando] = useState(false);
+
+  // edição de outros comentários (admin)
   const [editandoId, setEditandoId] = useState(null);
   const [textoEditado, setTextoEditado] = useState('');
   const [salvandoEdicao, setSalvandoEdicao] = useState(false);
-  const [toast, setToast] = useState(null);
 
   const showToast = (msg, type = 'error') => {
     setToast({ msg, type });
@@ -55,8 +62,14 @@ function AvaliacoesComentarios({ localId }) {
   const loadComentarios = () => {
     fetch(`${API_URL}/api/comentarios/local/${resolvedId}`)
       .then(r => r.json())
-      .then(data => setComentarios(Array.isArray(data) ? data : []))
-      .catch(() => {});
+      .then(data => {
+        if (!Array.isArray(data)) return;
+        setComentarios(data);
+        if (usuarioId) {
+          const meu = data.find(c => String(c.usuarioId) === String(usuarioId));
+          if (meu) { setMeuComentarioId(meu.id); setTextoBloco(meu.texto); }
+        }
+      }).catch(() => {});
   };
 
   useEffect(() => {
@@ -65,53 +78,75 @@ function AvaliacoesComentarios({ localId }) {
 
   if (!resolvedId) return <div style={{ color: '#A9B4C2', textAlign: 'center', padding: '3rem' }}>Carregando...</div>;
 
-  const handleAvaliar = async (nota) => {
+  const handleClickEstrela = (n) => {
     if (!isLoggedIn) { showToast('Faça login para avaliar.', 'info'); return; }
+    setNotaSelecionada(n);
+    setBlocoAberto(true);
+  };
+
+  const handleEnviar = async () => {
+    if (!notaSelecionada && !minhaAvaliacao) return;
+    setEnviando(true);
+    const nota = notaSelecionada || minhaAvaliacao;
     try {
+      // salva avaliação
       await fetch(`${API_URL}/api/avaliacoes?localId=${resolvedId}&usuarioId=${usuarioId}&nota=${nota}`, { method: 'POST' });
+
       const jaAvaliou = minhaAvaliacao > 0;
       const novoTotal = jaAvaliou ? totalAvaliacoes : totalAvaliacoes + 1;
-      const somaAtual = media * totalAvaliacoes;
-      const novaSoma = jaAvaliou ? somaAtual - minhaAvaliacao + nota : somaAtual + nota;
+      const novaSoma = (media * totalAvaliacoes) - (jaAvaliou ? minhaAvaliacao : 0) + nota;
       setMinhaAvaliacao(nota);
       if (!jaAvaliou) setTotalAvaliacoes(novoTotal);
       setMedia(novaSoma / novoTotal);
-      showToast('Avaliação salva!', 'success');
-    } catch { showToast('Erro ao salvar avaliação.'); }
-  };
 
-  const handleComentar = async () => {
-    if (!isLoggedIn) { showToast('Faça login para comentar.', 'info'); return; }
-    if (!novoComentario.trim()) return;
-    setEnviando(true);
-    const texto = novoComentario.trim();
-    try {
-      const res = await fetch(
-        `${API_URL}/api/comentarios?localId=${resolvedId}&usuarioId=${usuarioId}&texto=${encodeURIComponent(texto)}`,
-        { method: 'POST' }
-      );
-      if (res.ok) {
-        setComentarios(prev => [{
-          id: Date.now(),
-          texto,
-          dataComentario: new Date().toISOString(),
-          usuarioId,
-          nomeUsuario: localStorage.getItem('usuarioNome') || 'Você',
-          nota: minhaAvaliacao || null,
-        }, ...prev]);
-        setNovoComentario('');
-        showToast('Comentário enviado!', 'success');
-      } else {
-        showToast('Erro ao enviar comentário.');
+      // salva comentário se preenchido
+      if (textoBloco.trim()) {
+        if (meuComentarioId) {
+          // edita comentário existente
+          await fetch(
+            `${API_URL}/api/comentarios/${meuComentarioId}?usuarioId=${usuarioId}&texto=${encodeURIComponent(textoBloco.trim())}`,
+            { method: 'PUT' }
+          );
+          setComentarios(prev => prev.map(c =>
+            c.id === meuComentarioId ? { ...c, texto: textoBloco.trim(), nota } : c
+          ));
+        } else {
+          // cria novo comentário
+          const res = await fetch(
+            `${API_URL}/api/comentarios?localId=${resolvedId}&usuarioId=${usuarioId}&texto=${encodeURIComponent(textoBloco.trim())}`,
+            { method: 'POST' }
+          );
+          if (res.ok) {
+            const novoC = {
+              id: Date.now(),
+              texto: textoBloco.trim(),
+              dataComentario: new Date().toISOString(),
+              usuarioId,
+              nomeUsuario: localStorage.getItem('usuarioNome') || 'Você',
+              nota,
+            };
+            setMeuComentarioId(novoC.id);
+            setComentarios(prev => [novoC, ...prev]);
+          }
+        }
       }
-    } catch { showToast('Erro ao enviar comentário.'); }
+
+      setBlocoAberto(false);
+      setNotaSelecionada(0);
+      showToast('Avaliação salva!', 'success');
+    } catch { showToast('Erro ao salvar.'); }
     finally { setEnviando(false); }
   };
 
-  const handleEditar = (c) => {
-    setEditandoId(c.id);
-    setTextoEditado(c.texto);
+  const handleExcluir = async (comentarioId) => {
+    try {
+      await fetch(`${API_URL}/api/comentarios/${comentarioId}?usuarioId=${usuarioId}`, { method: 'DELETE' });
+      setComentarios(prev => prev.filter(c => c.id !== comentarioId));
+      if (comentarioId === meuComentarioId) { setMeuComentarioId(null); setTextoBloco(''); }
+    } catch { showToast('Erro ao excluir comentário.'); }
   };
+
+  const handleEditar = (c) => { setEditandoId(c.id); setTextoEditado(c.texto); };
 
   const handleSalvarEdicao = async (comentarioId) => {
     if (!textoEditado.trim()) return;
@@ -122,37 +157,26 @@ function AvaliacoesComentarios({ localId }) {
         { method: 'PUT' }
       );
       if (res.ok) {
-        setComentarios(prev => prev.map(c =>
-          c.id === comentarioId ? { ...c, texto: textoEditado.trim() } : c
-        ));
+        setComentarios(prev => prev.map(c => c.id === comentarioId ? { ...c, texto: textoEditado.trim() } : c));
         setEditandoId(null);
         showToast('Comentário editado!', 'success');
-      } else {
-        showToast('Erro ao editar comentário.');
       }
     } catch { showToast('Erro ao editar comentário.'); }
     finally { setSalvandoEdicao(false); }
   };
 
-  const handleExcluir = async (comentarioId) => {
-    try {
-      await fetch(`${API_URL}/api/comentarios/${comentarioId}?usuarioId=${usuarioId}`, { method: 'DELETE' });
-      setComentarios(prev => prev.filter(c => c.id !== comentarioId));
-    } catch { showToast('Erro ao excluir comentário.'); }
-  };
-
-  const Estrelas = ({ valor, interativo = false, tamanho = '1.4rem' }) => (
+  const Estrelas = ({ valor, interativo = false, tamanho = '1.4rem', onSelect }) => (
     <div style={{ display: 'flex', gap: '2px' }}>
       {[1,2,3,4,5].map(n => (
         <span
           key={n}
-          onClick={() => interativo && handleAvaliar(n)}
+          onClick={() => onSelect ? onSelect(n) : interativo && handleClickEstrela(n)}
           onMouseEnter={() => interativo && setHoverStar(n)}
           onMouseLeave={() => interativo && setHoverStar(0)}
           style={{
             fontSize: tamanho,
             cursor: interativo ? 'pointer' : 'default',
-            color: n <= (interativo ? (hoverStar || minhaAvaliacao) : valor) ? '#f59e0b' : '#4b5563',
+            color: n <= (interativo ? (hoverStar || notaSelecionada || minhaAvaliacao) : valor) ? '#f59e0b' : '#4b5563',
             transition: 'color 0.15s'
           }}
         >★</span>
@@ -160,11 +184,11 @@ function AvaliacoesComentarios({ localId }) {
     </div>
   );
 
+  const notaExibida = notaSelecionada || minhaAvaliacao;
+
   return (
     <div className="ac-container">
-      {toast && (
-        <div className={`ac-toast ac-toast--${toast.type}`}>{toast.msg}</div>
-      )}
+      {toast && <div className={`ac-toast ac-toast--${toast.type}`}>{toast.msg}</div>}
 
       {/* Média */}
       <div className="ac-rating-summary">
@@ -175,29 +199,39 @@ function AvaliacoesComentarios({ localId }) {
         </div>
       </div>
 
-      {/* Avaliar */}
-      <div className="ac-avaliar-box">
-        <p>{isLoggedIn ? (minhaAvaliacao > 0 ? 'Sua avaliação (clique para editar):' : 'Avalie este local:') : 'Faça login para avaliar'}</p>
-        {isLoggedIn && <Estrelas valor={minhaAvaliacao} interativo tamanho="2rem" />}
-      </div>
+      {/* Bloco avaliação + comentário */}
+      {isLoggedIn && (
+        <div className="ac-bloco-avaliar">
+          <p className="ac-bloco-label">
+            {minhaAvaliacao > 0 ? 'Sua avaliação (clique para editar):' : 'Avalie este local:'}
+          </p>
+          <Estrelas valor={notaExibida} interativo tamanho="2rem" />
+
+          {blocoAberto && (
+            <>
+              <textarea
+                value={textoBloco}
+                onChange={e => setTextoBloco(e.target.value)}
+                placeholder="Deixe um comentário (opcional)..."
+                rows={3}
+                className="ac-bloco-textarea"
+              />
+              <div className="ac-bloco-actions">
+                <button className="ac-cancelar" onClick={() => { setBlocoAberto(false); setNotaSelecionada(0); }}>
+                  Cancelar
+                </button>
+                <button className="ac-enviar" onClick={handleEnviar} disabled={enviando}>
+                  {enviando ? 'Salvando...' : 'Salvar'}
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      )}
 
       {/* Comentários */}
       <div className="ac-comentarios">
         <h3>Comentários</h3>
-
-        {isLoggedIn && (
-          <div className="ac-form">
-            <textarea
-              value={novoComentario}
-              onChange={e => setNovoComentario(e.target.value)}
-              placeholder="Escreva seu comentário..."
-              rows={3}
-            />
-            <button onClick={handleComentar} disabled={enviando || !novoComentario.trim()}>
-              {enviando ? 'Enviando...' : 'Enviar'}
-            </button>
-          </div>
-        )}
 
         {comentarios.length === 0 ? (
           <p className="ac-sem-comentarios">Nenhum comentário ainda. Seja o primeiro!</p>
@@ -219,11 +253,7 @@ function AvaliacoesComentarios({ localId }) {
               </div>
               {editandoId === c.id ? (
                 <div className="ac-form ac-form--edicao">
-                  <textarea
-                    value={textoEditado}
-                    onChange={e => setTextoEditado(e.target.value)}
-                    rows={3}
-                  />
+                  <textarea value={textoEditado} onChange={e => setTextoEditado(e.target.value)} rows={3} />
                   <div style={{ display: 'flex', gap: '0.5rem' }}>
                     <button onClick={() => handleSalvarEdicao(c.id)} disabled={salvandoEdicao || !textoEditado.trim()}>
                       {salvandoEdicao ? 'Salvando...' : 'Salvar'}

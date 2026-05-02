@@ -61,6 +61,59 @@
   white-space: nowrap;
 }
 
+.ac-bloco-avaliar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem 1.5rem;
+  background: rgba(245,158,11,0.08);
+  border: 1px solid rgba(245,158,11,0.2);
+  border-radius: 12px;
+  margin-bottom: 2rem;
+}
+
+.ac-bloco-label {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #A9B4C2;
+}
+
+.ac-bloco-textarea {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: rgba(255,255,255,0.05);
+  color: #E0E1DD;
+  font-size: 0.95rem;
+  font-family: inherit;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+.ac-bloco-textarea:focus { border-color: #38BDF8; }
+
+.ac-bloco-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.ac-enviar {
+  padding: 0.7rem 2rem;
+  border-radius: 50px;
+  border: none;
+  background: #38BDF8;
+  color: #0d1117;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ac-enviar:hover:not(:disabled) { background: #7dd3fc; }
+.ac-enviar:disabled { opacity: 0.4; cursor: not-allowed; }
+
 .ac-comentarios h3 {
   font-size: 1.4rem;
   font-weight: 600;
