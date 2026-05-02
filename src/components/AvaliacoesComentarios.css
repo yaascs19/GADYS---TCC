@@ -141,7 +141,6 @@
 }
 
 .ac-excluir {
-  margin-left: auto;
   background: rgba(244,63,94,0.1);
   border: 1px solid rgba(244,63,94,0.3);
   color: #f43f5e;
@@ -152,6 +151,33 @@
   transition: all 0.2s;
 }
 .ac-excluir:hover { background: #f43f5e; color: white; }
+
+.ac-editar {
+  background: rgba(56,189,248,0.1);
+  border: 1px solid rgba(56,189,248,0.3);
+  color: #38BDF8;
+  border-radius: 6px;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-left: auto;
+}
+.ac-editar:hover { background: #38BDF8; color: #0d1117; }
+
+.ac-cancelar {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #A9B4C2;
+  border-radius: 50px;
+  padding: 0.7rem 2rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ac-cancelar:hover { background: rgba(255,255,255,0.1); }
+
+.ac-form--edicao { margin-top: 0.5rem; margin-bottom: 0; }
 
 .ac-comentario-texto {
   margin: 0;

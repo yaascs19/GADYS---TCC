@@ -16,6 +16,7 @@ function AvaliacoesComentarios({ localId }) {
       setResolvedId(localId);
     }
   }, [localId]);
+
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
   const usuarioId = localStorage.getItem('usuarioId');
 
@@ -26,6 +27,9 @@ function AvaliacoesComentarios({ localId }) {
   const [comentarios, setComentarios] = useState([]);
   const [novoComentario, setNovoComentario] = useState('');
   const [enviando, setEnviando] = useState(false);
+  const [editandoId, setEditandoId] = useState(null);
+  const [textoEditado, setTextoEditado] = useState('');
+  const [salvandoEdicao, setSalvandoEdicao] = useState(false);
   const [toast, setToast] = useState(null);
 
   const showToast = (msg, type = 'error') => {
@@ -87,15 +91,14 @@ function AvaliacoesComentarios({ localId }) {
         { method: 'POST' }
       );
       if (res.ok) {
-        const novoLocal = {
+        setComentarios(prev => [{
           id: Date.now(),
           texto,
           dataComentario: new Date().toISOString(),
           usuarioId,
           nomeUsuario: localStorage.getItem('usuarioNome') || 'Você',
           nota: minhaAvaliacao || null,
-        };
-        setComentarios(prev => [novoLocal, ...prev]);
+        }, ...prev]);
         setNovoComentario('');
         showToast('Comentário enviado!', 'success');
       } else {
@@ -105,10 +108,36 @@ function AvaliacoesComentarios({ localId }) {
     finally { setEnviando(false); }
   };
 
+  const handleEditar = (c) => {
+    setEditandoId(c.id);
+    setTextoEditado(c.texto);
+  };
+
+  const handleSalvarEdicao = async (comentarioId) => {
+    if (!textoEditado.trim()) return;
+    setSalvandoEdicao(true);
+    try {
+      const res = await fetch(
+        `${API_URL}/api/comentarios/${comentarioId}?usuarioId=${usuarioId}&texto=${encodeURIComponent(textoEditado.trim())}`,
+        { method: 'PUT' }
+      );
+      if (res.ok) {
+        setComentarios(prev => prev.map(c =>
+          c.id === comentarioId ? { ...c, texto: textoEditado.trim() } : c
+        ));
+        setEditandoId(null);
+        showToast('Comentário editado!', 'success');
+      } else {
+        showToast('Erro ao editar comentário.');
+      }
+    } catch { showToast('Erro ao editar comentário.'); }
+    finally { setSalvandoEdicao(false); }
+  };
+
   const handleExcluir = async (comentarioId) => {
     try {
       await fetch(`${API_URL}/api/comentarios/${comentarioId}?usuarioId=${usuarioId}`, { method: 'DELETE' });
-      loadComentarios();
+      setComentarios(prev => prev.filter(c => c.id !== comentarioId));
     } catch { showToast('Erro ao excluir comentário.'); }
   };
 
@@ -182,10 +211,29 @@ function AvaliacoesComentarios({ localId }) {
                   {new Date(c.dataComentario).toLocaleDateString('pt-BR')}
                 </span>
                 {String(c.usuarioId) === String(usuarioId) && (
-                  <button className="ac-excluir" onClick={() => handleExcluir(c.id)}>Excluir</button>
+                  <>
+                    <button className="ac-editar" onClick={() => handleEditar(c)}>Editar</button>
+                    <button className="ac-excluir" onClick={() => handleExcluir(c.id)}>Excluir</button>
+                  </>
                 )}
               </div>
-              <p className="ac-comentario-texto">{c.texto}</p>
+              {editandoId === c.id ? (
+                <div className="ac-form ac-form--edicao">
+                  <textarea
+                    value={textoEditado}
+                    onChange={e => setTextoEditado(e.target.value)}
+                    rows={3}
+                  />
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <button onClick={() => handleSalvarEdicao(c.id)} disabled={salvandoEdicao || !textoEditado.trim()}>
+                      {salvandoEdicao ? 'Salvando...' : 'Salvar'}
+                    </button>
+                    <button className="ac-cancelar" onClick={() => setEditandoId(null)}>Cancelar</button>
+                  </div>
+                </div>
+              ) : (
+                <p className="ac-comentario-texto">{c.texto}</p>
+              )}
             </div>
           ))
         )}
