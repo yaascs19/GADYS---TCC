@@ -148,7 +148,7 @@ function AvaliacoesComentarios({ localId }) {
 
       {/* Avaliar */}
       <div className="ac-avaliar-box">
-        <p>{isLoggedIn ? 'Sua avaliação:' : 'Faça login para avaliar'}</p>
+        <p>{isLoggedIn ? (minhaAvaliacao > 0 ? 'Sua avaliação (clique para editar):' : 'Avalie este local:') : 'Faça login para avaliar'}</p>
         {isLoggedIn && <Estrelas valor={minhaAvaliacao} interativo tamanho="2rem" />}
       </div>
 
