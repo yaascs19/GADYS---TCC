@@ -5,7 +5,7 @@ import { useLocalByRota } from '../hooks/useLocalByRota';
 import AvaliacoesComentarios from './AvaliacoesComentarios';
 
 const carouselImages = [
-  '/images/geral/Ana-Am.jpg',
+  '/images/geral/am-an6.jpg',
   '/images/geral/am-an5.jpg',
 ];
 
