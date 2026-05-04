@@ -10,8 +10,13 @@ const carouselImages = [
 ];
 
 const galleryImages = [
+  { src: '/images/geral/am-an6.jpg', alt: 'Arquipélago de Anavilhanas' },
+  { src: '/images/geral/am-an5.jpg', alt: 'Arquipélago de Anavilhanas' },
   { src: '/images/geral/Ana-Am.jpg', alt: 'Arquipélago de Anavilhanas' },
-  { src: '/images/natureza/anavilhas.jpeg', alt: 'Arquipélago de Anavilhanas' },
+  { src: '/images/geral/am-an1.jpg', alt: 'Arquipélago de Anavilhanas' },
+  { src: '/images/geral/am-an2.jpg', alt: 'Arquipélago de Anavilhanas' },
+  { src: '/images/geral/am-an3.webp', alt: 'Arquipélago de Anavilhanas' },
+  { src: '/images/geral/am-an4.jpg', alt: 'Arquipélago de Anavilhanas' },
 ];
 
 const secoes = {
