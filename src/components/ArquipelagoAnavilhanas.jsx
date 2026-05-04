@@ -174,6 +174,11 @@ const ArquipelagoAnavilhanas = () => {
   const titulo = bdLocal?.nome || 'Arquipélago de Anavilhanas';
   const subtitulo = bdLocal?.descricao || 'Um santuário de biodiversidade nas águas negras do Rio Negro.';
 
+  useEffect(() => {
+    const timer = setTimeout(() => setImagemAtivaIndex(prev => (prev + 1) % carouselImages.length), 5000);
+    return () => clearTimeout(timer);
+  }, [imagemAtivaIndex]);
+
   return (
     <div className="aa-container">
       <div style={{ position: 'relative' }}>
