@@ -6,7 +6,7 @@ import AvaliacoesComentarios from './AvaliacoesComentarios';
 
 const carouselImages = [
   '/images/geral/bum-Am.jpeg',
-  '/images/geral/am-bun9.jpg',
+  '/images/geral/am-bun10.jpg',
 ];
 
 const galleryImages = [
@@ -198,8 +198,7 @@ const Bumbodromo = () => {
         <header className="bum-header">
           {headerImgs.map((img, index) => (
             <img key={img} src={img} alt={titulo}
-              className={`bum-header-carousel-image ${index === imagemAtivaIndex ? 'active' : ''}`}
-              style={index === 1 ? { objectFit: 'contain', objectPosition: 'center' } : {}} />
+              className={`bum-header-carousel-image ${index === imagemAtivaIndex ? 'active' : ''}`} />
           ))}
           <div className="bum-header-text">
             <div className="bum-header-badge">
