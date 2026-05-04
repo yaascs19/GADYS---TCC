@@ -114,6 +114,9 @@ const ConteudoAba = ({ secao }) => (
       </div>
       <div className="bum-image-wrapper">
         <img src={secao.imagem} alt={secao.titulo} className="bum-image" />
+        {secao.id === 'historia' && (
+          <img src="/images/geral/am-bun2.jpeg" alt="Bumbódromo de Parintins" className="bum-image" style={{ marginTop: '1rem' }} />
+        )}
       </div>
     </div>
 
