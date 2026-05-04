@@ -124,7 +124,10 @@ const ConteudoAba = ({ secao }) => (
           </>
         )}
         {secao.id === 'visita' && (
-          <img src="/images/geral/am-bun6.jpeg" alt="Parintins" className="bum-image" style={{ marginTop: '1rem' }} />
+          <>
+            <img src="/images/geral/am-bun6.jpeg" alt="Parintins" className="bum-image" style={{ marginTop: '1rem' }} />
+            <img src="/images/geral/am-bun7.webp" alt="Parintins" className="bum-image" style={{ marginTop: '1rem' }} />
+          </>
         )}
       </div>
     </div>
