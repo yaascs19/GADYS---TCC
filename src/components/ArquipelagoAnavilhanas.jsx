@@ -167,6 +167,7 @@ const Galeria = () => (
 
 const ArquipelagoAnavilhanas = () => {
   const [abaAtiva, setAbaAtiva] = useState('sobre');
+  const [imagemAtivaIndex, setImagemAtivaIndex] = useState(0);
   const navigate = useNavigate();
   const { bdLocal, bdId } = useLocalByRota('/arquipelago-anavilhanas');
 
@@ -176,13 +177,18 @@ const ArquipelagoAnavilhanas = () => {
     ? [bdLocal.imagemUrl.split(',')[0], ...carouselImages.slice(1)]
     : carouselImages;
 
+  useEffect(() => {
+    const timer = setTimeout(() => setImagemAtivaIndex(prev => (prev + 1) % headerImgs.length), 5000);
+    return () => clearTimeout(timer);
+  }, [imagemAtivaIndex, headerImgs.length]);
+
   return (
     <div className="aa-container">
       <div style={{ position: 'relative' }}>
         <header className="aa-header">
           {headerImgs.map((img, index) => (
             <img key={img} src={img} alt={titulo}
-              className={`aa-header-carousel-image ${index === 0 ? 'active' : ''}`} />
+              className={`aa-header-carousel-image ${index === imagemAtivaIndex ? 'active' : ''}`} />
           ))}
           <div className="aa-header-text">
             <h1>{titulo}</h1>
