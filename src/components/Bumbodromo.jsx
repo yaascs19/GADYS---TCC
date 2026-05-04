@@ -24,7 +24,7 @@ const secoes = {
     label: 'A História',
     titulo: 'A Arena do Maior Espetáculo da Amazônia',
     texto: 'O Bumbódromo de Parintins, oficialmente chamado de Centro Cultural e Esportivo Amazonino Mendes, é o palco do maior festival folclórico do Brasil. Inaugurado em 1988, o estádio a céu aberto foi projetado em formato de cabeça de boi e tem capacidade para mais de 35 mil pessoas. Cada junho, a cidade de Parintins — uma ilha no meio do Rio Amazonas — se transforma no epicentro da cultura amazônica.',
-    imagem: '/images/geral/bum-Am.jpeg',
+    imagem: '/images/geral/am-bun1.avif',
     lista: [
       'Inauguração: 1988, durante o governo Amazonino Mendes.',
       'Capacidade: Mais de 35.000 espectadores por noite.',
