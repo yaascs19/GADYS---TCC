@@ -33,7 +33,7 @@ const secoes = {
     label: 'Biodiversidade',
     titulo: 'Um Santuário da Vida Amazônica',
     texto: 'O Parque Nacional de Anavilhanas abriga uma das maiores diversidades biológicas do planeta. Suas águas negras e florestas de igapó criam habitats únicos para espécies que não existem em nenhum outro lugar do mundo.',
-    imagem: '/images/natureza/anavilhas.jpeg',
+    imagem: '/images/geral/am-an1.jpg',
     alt: 'Fauna e flora do Arquipélago de Anavilhanas',
     subsecoes: [
       { titulo: 'Fauna Aquática', texto: 'O Rio Negro abriga mais de 700 espécies de peixes, incluindo o tucunaré, o tambaqui e o pirarucu. Os botos cor-de-rosa e os tucuxis são presença constante nas águas do arquipélago, encantando os visitantes com suas acrobacias.' },
