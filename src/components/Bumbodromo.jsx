@@ -6,7 +6,7 @@ import AvaliacoesComentarios from './AvaliacoesComentarios';
 
 const carouselImages = [
   '/images/geral/bum-Am.jpeg',
-  '/images/geral/pam.jpg',
+  '/images/geral/am-bun8.webp',
 ];
 
 const galleryImages = [
@@ -202,8 +202,8 @@ const Bumbodromo = () => {
           ))}
           <div className="bum-header-text">
             <div className="bum-header-badge">
-              <span className="bum-badge-garantido">● Garantido</span>
               <span className="bum-badge-caprichoso">● Caprichoso</span>
+              <span className="bum-badge-garantido">● Garantido</span>
             </div>
             <h1>{titulo}</h1>
             <p>{subtitulo}</p>
