@@ -184,17 +184,20 @@ const ArquipelagoAnavilhanas = () => {
 
   const titulo = bdLocal?.nome || 'Arquipélago de Anavilhanas';
   const subtitulo = bdLocal?.descricao || 'Um santuário de biodiversidade nas águas negras do Rio Negro.';
+  const imgsCarrossel = bdLocal?.imagemUrl
+    ? [bdLocal.imagemUrl.split(',')[0], ...carouselImages.slice(1)]
+    : carouselImages;
 
   useEffect(() => {
-    const timer = setTimeout(() => setImagemAtivaIndex(prev => (prev + 1) % carouselImages.length), 5000);
+    const timer = setTimeout(() => setImagemAtivaIndex(prev => (prev + 1) % imgsCarrossel.length), 5000);
     return () => clearTimeout(timer);
-  }, [imagemAtivaIndex]);
+  }, [imagemAtivaIndex, imgsCarrossel.length]);
 
   return (
     <div className="aa-container">
       <div style={{ position: 'relative' }}>
         <header className="aa-header">
-          {carouselImages.map((img, index) => (
+          {imgsCarrossel.map((img, index) => (
             <img key={img} src={img} alt={titulo}
               className={`aa-header-carousel-image ${index === imagemAtivaIndex ? 'active' : ''}`} />
           ))}
