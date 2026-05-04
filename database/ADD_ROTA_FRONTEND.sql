@@ -29,6 +29,8 @@ UPDATE Localizacao SET rota_frontend = '/teatro-amazonas'        WHERE nome = 'T
 UPDATE Localizacao SET rota_frontend = '/encontro-aguas'         WHERE nome = 'Encontro das Águas'             AND enviado_por = 'GADYS';
 UPDATE Localizacao SET rota_frontend = '/arquipelago-anavilhanas' WHERE nome = 'Arquipélago de Anavilhanas'   AND enviado_por = 'GADYS';
 UPDATE Localizacao SET rota_frontend = '/amazonico-peixaria'     WHERE nome = 'Amazônico Peixaria Regional'   AND enviado_por = 'GADYS';
+UPDATE Localizacao SET rota_frontend = '/bumbodromo'             WHERE nome = 'Bumbódromo'                    AND enviado_por = 'GADYS';
+UPDATE Localizacao SET rota_frontend = '/cachoeira-santuario'    WHERE nome = 'Cachoeira do Santuário'         AND enviado_por = 'GADYS';
 
 -- CEARÁ
 UPDATE Localizacao SET rota_frontend = '/ceara/jericoacoara'              WHERE nome = 'Jericoacoara'                   AND enviado_por = 'GADYS';
