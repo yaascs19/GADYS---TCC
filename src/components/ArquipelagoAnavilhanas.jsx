@@ -170,6 +170,12 @@ const ArquipelagoAnavilhanas = () => {
   const [imagemAtivaIndex, setImagemAtivaIndex] = useState(0);
   const navigate = useNavigate();
   const { bdLocal, bdId } = useLocalByRota('/arquipelago-anavilhanas');
+  const [bdPronto, setBdPronto] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setBdPronto(true), 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const titulo = bdLocal?.nome || 'Arquipélago de Anavilhanas';
   const subtitulo = bdLocal?.descricao || 'Um santuário de biodiversidade nas águas negras do Rio Negro.';
@@ -187,7 +193,7 @@ const ArquipelagoAnavilhanas = () => {
             <img key={img} src={img} alt={titulo}
               className={`aa-header-carousel-image ${index === imagemAtivaIndex ? 'active' : ''}`} />
           ))}
-          <div className="aa-header-text">
+          <div className="aa-header-text" style={{ opacity: bdPronto ? 1 : 0, transition: 'opacity 0.3s ease' }}>
             <h1>{titulo}</h1>
             <p>{subtitulo}</p>
           </div>
