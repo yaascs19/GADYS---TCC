@@ -178,6 +178,12 @@ const Bumbodromo = () => {
   const [imagemAtivaIndex, setImagemAtivaIndex] = useState(0);
   const navigate = useNavigate();
   const { bdLocal, bdId } = useLocalByRota('/bumbodromo');
+  const [bdPronto, setBdPronto] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setBdPronto(true), 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const titulo = bdLocal?.nome || 'Bumbódromo de Parintins';
   const subtitulo = bdLocal?.descricao || 'O palco do maior festival folclórico do Brasil.';
@@ -200,7 +206,7 @@ const Bumbodromo = () => {
             <img key={img} src={img} alt={titulo}
               className={`bum-header-carousel-image ${index === imagemAtivaIndex ? 'active' : ''}`} />
           ))}
-          <div className="bum-header-text">
+          <div className="bum-header-text" style={{ opacity: bdPronto ? 1 : 0, transition: 'opacity 0.3s ease' }}>
             <div className="bum-header-badge">
               <span className="bum-badge-caprichoso">● Caprichoso</span>
               <span className="bum-badge-garantido">● Garantido</span>
