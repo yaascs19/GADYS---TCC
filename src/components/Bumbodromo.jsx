@@ -12,10 +12,13 @@ const carouselImages = [
 const galleryImages = [
   { src: '/images/geral/bum-Am.jpeg', alt: 'Bumbódromo de Parintins' },
   { src: '/images/geral/pam.jpg', alt: 'Festival de Parintins' },
-  { src: '/images/geral/am-an1.jpg', alt: 'Parintins - Amazonas' },
-  { src: '/images/geral/am-an2.jpg', alt: 'Parintins - Amazonas' },
-  { src: '/images/geral/am-an3.webp', alt: 'Parintins - Amazonas' },
-  { src: '/images/geral/am-an4.jpg', alt: 'Parintins - Amazonas' },
+  { src: '/images/geral/am-bun1.avif', alt: 'Bumbódromo de Parintins' },
+  { src: '/images/geral/am-bun2.jpeg', alt: 'Bumbódromo de Parintins' },
+  { src: '/images/geral/am-bun3.jpeg', alt: 'Festival de Parintins' },
+  { src: '/images/geral/am-bun4.jpeg', alt: 'Festival de Parintins' },
+  { src: '/images/geral/am-bun5.jpg', alt: 'Parintins' },
+  { src: '/images/geral/am-bun6.jpeg', alt: 'Parintins' },
+  { src: '/images/geral/am-bun7.webp', alt: 'Parintins' },
 ];
 
 const secoes = {
