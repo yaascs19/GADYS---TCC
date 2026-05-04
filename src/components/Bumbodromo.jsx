@@ -123,6 +123,9 @@ const ConteudoAba = ({ secao }) => (
             <img src="/images/geral/am-bun4.jpeg" alt="Festival de Parintins" className="bum-image" style={{ marginTop: '1rem' }} />
           </>
         )}
+        {secao.id === 'visita' && (
+          <img src="/images/geral/am-bun6.jpeg" alt="Parintins" className="bum-image" style={{ marginTop: '1rem' }} />
+        )}
       </div>
     </div>
 
