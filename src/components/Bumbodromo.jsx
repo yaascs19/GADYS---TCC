@@ -117,6 +117,9 @@ const ConteudoAba = ({ secao }) => (
         {secao.id === 'historia' && (
           <img src="/images/geral/am-bun2.jpeg" alt="Bumbódromo de Parintins" className="bum-image" style={{ marginTop: '1rem' }} />
         )}
+        {secao.id === 'festival' && (
+          <img src="/images/geral/am-bun3.jpeg" alt="Festival de Parintins" className="bum-image" style={{ marginTop: '1rem' }} />
+        )}
       </div>
     </div>
 
