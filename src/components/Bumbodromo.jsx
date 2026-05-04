@@ -58,7 +58,7 @@ const secoes = {
     label: 'Visite',
     titulo: 'Como Chegar e Viver o Festival',
     texto: 'Parintins fica a cerca de 420 km de Manaus e só é acessível por barco ou avião. O festival acontece na última semana de junho, mas o Bumbódromo pode ser visitado fora do período do festival como ponto turístico.',
-    imagem: '/images/geral/am-an1.jpg',
+    imagem: '/images/geral/am-bun5.jpg',
     subsecoes: [
       {
         titulo: 'Como Chegar',
@@ -118,7 +118,10 @@ const ConteudoAba = ({ secao }) => (
           <img src="/images/geral/am-bun2.jpeg" alt="Bumbódromo de Parintins" className="bum-image" style={{ marginTop: '1rem' }} />
         )}
         {secao.id === 'festival' && (
-          <img src="/images/geral/am-bun3.jpeg" alt="Festival de Parintins" className="bum-image" style={{ marginTop: '1rem' }} />
+          <>
+            <img src="/images/geral/am-bun3.jpeg" alt="Festival de Parintins" className="bum-image" style={{ marginTop: '1rem' }} />
+            <img src="/images/geral/am-bun4.jpeg" alt="Festival de Parintins" className="bum-image" style={{ marginTop: '1rem' }} />
+          </>
         )}
       </div>
     </div>
