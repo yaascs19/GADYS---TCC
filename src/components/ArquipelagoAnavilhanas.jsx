@@ -47,7 +47,7 @@ const secoes = {
     label: 'Visite',
     titulo: 'Como Explorar Anavilhanas',
     texto: 'O Arquipélago de Anavilhanas pode ser explorado a partir de Manaus ou da cidade de Novo Airão, a porta de entrada do parque nacional.',
-    imagem: '/images/geral/Ana-Am.jpg',
+    imagem: '/images/geral/am-an3.webp',
     alt: 'Passeio de barco em Anavilhanas',
     subsecoes: [
       { titulo: 'Como Chegar', texto: 'De Manaus, siga pela AM-352 até Novo Airão (180 km, aprox. 3h). Há também barcos regulares saindo do Porto de Manaus. De Novo Airão, operadoras locais organizam passeios pelo arquipélago.' },
