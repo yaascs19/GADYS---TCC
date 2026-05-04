@@ -34,6 +34,7 @@ const secoes = {
     titulo: 'Um Santuário da Vida Amazônica',
     texto: 'O Parque Nacional de Anavilhanas abriga uma das maiores diversidades biológicas do planeta. Suas águas negras e florestas de igapó criam habitats únicos para espécies que não existem em nenhum outro lugar do mundo.',
     imagem: '/images/geral/am-an1.jpg',
+    imagem2: '/images/geral/am-an2.jpg',
     alt: 'Fauna e flora do Arquipélago de Anavilhanas',
     subsecoes: [
       { titulo: 'Fauna Aquática', texto: 'O Rio Negro abriga mais de 700 espécies de peixes, incluindo o tucunaré, o tambaqui e o pirarucu. Os botos cor-de-rosa e os tucuxis são presença constante nas águas do arquipélago, encantando os visitantes com suas acrobacias.' },
@@ -123,6 +124,7 @@ const ConteudoAba = ({ secao }) => (
       </div>
       <div className="aa-image-wrapper">
         <img src={secao.imagem} alt={secao.alt} className="aa-image" />
+        {secao.imagem2 && <img src={secao.imagem2} alt={secao.alt} className="aa-image" style={{ marginTop: '1rem' }} />}
       </div>
     </div>
 
