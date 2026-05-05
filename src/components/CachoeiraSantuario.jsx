@@ -181,6 +181,12 @@ const CachoeiraSantuario = () => {
   const [imagemAtivaIndex, setImagemAtivaIndex] = useState(0);
   const navigate = useNavigate();
   const { bdLocal, bdId } = useLocalByRota('/cachoeira-santuario');
+  const [bdPronto, setBdPronto] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setBdPronto(true), 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const titulo = bdLocal?.nome || 'Cachoeira do Santuário';
   const subtitulo = bdLocal?.descricao || 'Um santuário natural de águas cristalinas em Presidente Figueiredo.';
@@ -203,7 +209,7 @@ const CachoeiraSantuario = () => {
             <img key={img} src={img} alt={titulo}
               className={`cs-header-carousel-image ${index === imagemAtivaIndex ? 'active' : ''}`} />
           ))}
-          <div className="cs-header-text">
+          <div className="cs-header-text" style={{ opacity: bdPronto ? 1 : 0, transition: 'opacity 0.3s ease' }}>
             <h1>{titulo}</h1>
             <p>{subtitulo}</p>
           </div>
