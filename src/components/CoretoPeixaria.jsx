@@ -18,8 +18,7 @@ const secoes = {
     label: 'Sobre',
     titulo: 'Sabores Amazônicos com Alma de Café',
     texto: 'O Coreto Peixaria & Café Regional é um dos restaurantes mais charmosos de Manaus, unindo a tradição da peixaria amazônica com o aconchego de um café regional. Com um menu repleto de pratos tradicionais e ingredientes frescos, cada refeição é uma celebração das riquezas da região. Desde o peixe fresco dos rios até as especiarias nativas, o Coreto oferece uma experiência gastronômica única no coração da Amazônia.',
-    imagem: '/images/geral/res-Am.jpg',
-    alt: 'Coreto Peixaria & Café Regional',
+    imagem: '/images/geral/am-cp1.jpg',
     lista: [
       'Localização: Manaus — AM.',
       'Especialidade: Peixes frescos dos rios amazônicos e café regional.',
