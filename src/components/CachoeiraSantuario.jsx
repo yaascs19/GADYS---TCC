@@ -18,8 +18,7 @@ const secoes = {
     label: 'Sobre',
     titulo: 'A Joia Escondida da Amazônia',
     texto: 'A Cachoeira do Santuário é uma das mais belas quedas d\'água da região amazônica, localizada em Presidente Figueiredo, município conhecido como a "Terra das Cachoeiras". Com suas piscinas naturais de águas cristalinas e a exuberante floresta ao redor, o local é um verdadeiro santuário natural a apenas 107 km de Manaus.',
-    imagem: '/images/geral/ca-Am.jpg',
-    alt: 'Cachoeira do Santuário - Presidente Figueiredo',
+    imagem: '/images/geral/am-cs1.jpg',
     lista: [
       'Localização: Presidente Figueiredo, a 107 km de Manaus — AM.',
       'Acesso: Trilha de aproximadamente 1,5 km pela floresta.',
