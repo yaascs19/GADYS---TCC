@@ -6,7 +6,7 @@ import AvaliacoesComentarios from './AvaliacoesComentarios';
 
 const carouselImages = [
   '/images/geral/res-Am.jpg',
-  '/images/geral/amcp3.jpg',
+  '/images/geral/am-cp3.jpg',
 ];
 
 const galleryImages = [
