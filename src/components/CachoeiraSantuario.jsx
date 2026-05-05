@@ -123,7 +123,7 @@ const ConteudoAba = ({ secao }) => (
           </>
         )}
         {secao.id === 'visita' && (
-          <img src="/images/geral/am-cs6.jpg" alt="Cachoeira do Santuário" className="cs-image" />
+          <img src="/images/geral/am-cs7.jpg" alt="Cachoeira do Santuário" className="cs-image" />
         )}
       </div>
     </div>
