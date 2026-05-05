@@ -117,6 +117,9 @@ const ConteudoAba = ({ secao }) => (
       </div>
       <div className="cs-image-wrapper">
         <img src={secao.imagem} alt={secao.alt} className="cs-image" />
+        {secao.id === 'natureza' && (
+          <img src="/images/geral/am-cs3.jpg" alt="Cachoeira do Santuário" className="cs-image" />
+        )}
       </div>
     </div>
 
