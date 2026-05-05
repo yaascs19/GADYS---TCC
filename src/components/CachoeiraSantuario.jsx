@@ -31,8 +31,7 @@ const secoes = {
     label: 'Natureza',
     titulo: 'Um Espetáculo de Água e Floresta',
     texto: 'Presidente Figueiredo abriga mais de 100 cachoeiras catalogadas, e a Cachoeira do Santuário se destaca pela beleza singular de suas águas e pela trilha que leva até ela, repleta de fauna e flora amazônicas. O percurso é uma imersão completa na biodiversidade da floresta.',
-    imagem: '/images/geral/ca-Am.jpg',
-    alt: 'Natureza ao redor da Cachoeira do Santuário',
+    imagem: '/images/geral/am-cs2.jpg',
     subsecoes: [
       {
         titulo: 'As Piscinas Naturais',
