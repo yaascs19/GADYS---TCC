@@ -11,6 +11,14 @@ const carouselImages = [
 
 const galleryImages = [
   { src: '/images/geral/ca-Am.jpg', alt: 'Cachoeira do Santuário' },
+  { src: '/images/geral/am-cs13.avif', alt: 'Cachoeira do Santuário' },
+  { src: '/images/geral/am-cs1.jpg', alt: 'Cachoeira do Santuário' },
+  { src: '/images/geral/am-cs2.jpg', alt: 'Cachoeira do Santuário' },
+  { src: '/images/geral/am-cs3.jpg', alt: 'Cachoeira do Santuário' },
+  { src: '/images/geral/am-cs4.jpg', alt: 'Cachoeira do Santuário' },
+  { src: '/images/geral/am-cs10.webp', alt: 'Cachoeira do Santuário' },
+  { src: '/images/geral/am-cs7.jpg', alt: 'Cachoeira do Santuário' },
+  { src: '/images/geral/am-cs12.jpg', alt: 'Cachoeira do Santuário' },
 ];
 
 const secoes = {
