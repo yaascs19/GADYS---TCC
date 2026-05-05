@@ -35,6 +35,7 @@ import AmazonicoPeixaria from './components/AmazonicoPeixaria';
 import ArquipelagoAnavilhanas from './components/ArquipelagoAnavilhanas';
 import Bumbodromo from './components/Bumbodromo';
 import CachoeiraSantuario from './components/CachoeiraSantuario';
+import CoretoPeixaria from './components/CoretoPeixaria';
 
 import Acre from './components/Acre';
 import AcrePontos from './components/AcrePontos';
@@ -142,6 +143,7 @@ function Router() {
           <Route path="/arquipelago-anavilhanas" element={<ArquipelagoAnavilhanas />} />
           <Route path="/bumbodromo" element={<Bumbodromo />} />
           <Route path="/cachoeira-santuario" element={<CachoeiraSantuario />} />
+          <Route path="/coreto-peixaria" element={<CoretoPeixaria />} />
 
           <Route path="/ceara/jericoacoara" element={<Jericoacoara />} />
           <Route path="/ceara/canoa-quebrada" element={<CanoaQuebrada />} />

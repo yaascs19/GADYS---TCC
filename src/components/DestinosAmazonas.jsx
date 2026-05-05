@@ -78,8 +78,8 @@ const DestinosAmazonas = () => {
               <p className="amazonas-destinos-card-description">{item.description}</p>
               <button 
                 className="amazonas-destinos-saibamais"
-                onClick={() => item.id === 1 ? navigate('/encontro-aguas') : item.id === 2 ? navigate('/teatro-amazonas') : item.id === 3 ? navigate('/amazonico-peixaria') : item.id === 4 ? navigate('/arquipelago-anavilhanas') : item.id === 5 ? navigate('/bumbodromo') : item.id === 6 ? navigate('/cachoeira-santuario') : null}
-                style={{ opacity: item.id === 1 || item.id === 2 || item.id === 3 || item.id === 4 || item.id === 5 || item.id === 6 ? 1 : 0.4, cursor: item.id === 1 || item.id === 2 || item.id === 3 || item.id === 4 || item.id === 5 || item.id === 6 ? 'pointer' : 'not-allowed' }}
+                onClick={() => item.id === 1 ? navigate('/encontro-aguas') : item.id === 2 ? navigate('/teatro-amazonas') : item.id === 3 ? navigate('/amazonico-peixaria') : item.id === 4 ? navigate('/arquipelago-anavilhanas') : item.id === 5 ? navigate('/bumbodromo') : item.id === 6 ? navigate('/cachoeira-santuario') : item.id === 7 ? navigate('/coreto-peixaria') : null}
+                style={{ opacity: item.id === 1 || item.id === 2 || item.id === 3 || item.id === 4 || item.id === 5 || item.id === 6 || item.id === 7 ? 1 : 0.4, cursor: item.id === 1 || item.id === 2 || item.id === 3 || item.id === 4 || item.id === 5 || item.id === 6 || item.id === 7 ? 'pointer' : 'not-allowed' }}
               >Saber mais</button>
             </div>
           </div>
