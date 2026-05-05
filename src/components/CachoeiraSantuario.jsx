@@ -52,8 +52,7 @@ const secoes = {
     label: 'Visite',
     titulo: 'Como Chegar e Aproveitar',
     texto: 'A Cachoeira do Santuário é acessível a partir de Manaus pela AM-010, uma das estradas mais bonitas do Amazonas. O passeio pode ser feito em um dia, mas vale a pena pernoitar em Presidente Figueiredo para explorar mais cachoeiras da região.',
-    imagem: '/images/geral/ca-Am.jpg',
-    alt: 'Visitantes na Cachoeira do Santuário',
+    imagem: '/images/geral/am-cs5.jpg',
     subsecoes: [
       {
         titulo: 'Como Chegar',
