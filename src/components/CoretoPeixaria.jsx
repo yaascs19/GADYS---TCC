@@ -32,8 +32,7 @@ const secoes = {
     label: 'Cardápio',
     titulo: 'Da Floresta para a Mesa',
     texto: 'O cardápio do Coreto é uma viagem pelos sabores únicos da Amazônia. Cada prato é preparado com ingredientes frescos e técnicas tradicionais que preservam a essência da culinária regional, combinando o melhor da peixaria com os aromas do café amazônico.',
-    imagem: '/images/geral/res-Am.jpg',
-    alt: 'Pratos do Coreto Peixaria & Café Regional',
+    imagem: '/images/geral/am-cp4.jpeg',
     subsecoes: [
       {
         titulo: 'Peixes da Amazônia',
@@ -123,6 +122,12 @@ const ConteudoAba = ({ secao }) => (
       </div>
       <div className="cp-image-wrapper">
         <img src={secao.imagem} alt={secao.alt} className="cp-image" />
+        {secao.id === 'cardapio' && (
+          <>
+            <img src="/images/geral/am-cp5.jpg" alt="Coreto Peixaria" className="cp-image" />
+            <img src="/images/geral/am-cp6.jpg" alt="Coreto Peixaria" className="cp-image" />
+          </>
+        )}
       </div>
     </div>
 
