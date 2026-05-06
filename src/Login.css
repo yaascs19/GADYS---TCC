@@ -389,11 +389,18 @@
 
 /* --- Responsivo --- */
 @media (max-width: 480px) {
-  .login-container { align-items: center; padding: 2rem 0; }
+  .login-container {
+    align-items: flex-start;
+    padding: 2rem 0;
+    min-height: 100vh;
+    overflow-y: auto;
+  }
 
   .login-form {
-    padding: 2rem 1.25rem; margin: 1.5rem 1rem;
-    border-radius: 16px; max-width: 100%;
+    padding: 2rem 1.25rem;
+    margin: 2rem 1rem;
+    border-radius: 16px;
+    max-width: 100%;
   }
 
   .login-logo { height: 60px; margin-bottom: 0.75rem; }
