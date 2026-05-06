@@ -57,8 +57,7 @@ const secoes = {
     label: 'Visite',
     titulo: 'Como Chegar e Reservar',
     texto: 'O Coreto Peixaria & Café Regional está localizado em Manaus, de fácil acesso pelo centro da cidade. O ambiente aconchegante e a culinária autêntica fazem do Coreto uma parada obrigatória para quem visita a capital amazonense.',
-    imagem: '/images/geral/res-Am.jpg',
-    alt: 'Ambiente do Coreto Peixaria & Café Regional',
+    imagem: '/images/geral/am-cp9.jpg',
     subsecoes: [
       {
         titulo: 'Horários de Funcionamento',
@@ -127,6 +126,12 @@ const ConteudoAba = ({ secao }) => (
             <img src="/images/geral/am-cp5.jpg" alt="Coreto Peixaria" className="cp-image" />
             <img src="/images/geral/am-cp6.jpg" alt="Coreto Peixaria" className="cp-image" />
             <img src="/images/geral/am-cp8.jpg" alt="Coreto Peixaria" className="cp-image" />
+          </>
+        )}
+        {secao.id === 'visita' && (
+          <>
+            <img src="/images/geral/am-cp10.jpg" alt="Coreto Peixaria" className="cp-image" />
+            <img src="/images/geral/am-cp11.jpg" alt="Coreto Peixaria" className="cp-image" />
           </>
         )}
       </div>
