@@ -185,8 +185,15 @@ const Galeria = () => (
 
 const AmazonicoPeixaria = () => {
   const [abaAtiva, setAbaAtiva] = useState('sobre');
+  const [imagemAtivaIndex, setImagemAtivaIndex] = useState(0);
   const navigate = useNavigate();
   const { bdLocal, bdId } = useLocalByRota('/amazonico-peixaria');
+  const [bdPronto, setBdPronto] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setBdPronto(true), 600);
+    return () => clearTimeout(timer);
+  }, []);
 
   const titulo = bdLocal?.nome || 'Amazônico Peixaria Regional';
   const subtitulo = bdLocal?.descricao || 'Os sabores autênticos da Amazônia no coração de Manaus.';
@@ -194,15 +201,22 @@ const AmazonicoPeixaria = () => {
     ? [bdLocal.imagemUrl.split(',')[0], ...carouselImages.slice(1)]
     : carouselImages;
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setImagemAtivaIndex(prev => (prev + 1) % headerImgs.length);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [imagemAtivaIndex, headerImgs.length]);
+
   return (
     <div className="ap-container">
       <div style={{ position: 'relative' }}>
         <header className="ap-header">
           {headerImgs.map((img, index) => (
             <img key={img} src={img} alt={titulo}
-              className={`ap-header-carousel-image ${index === 0 ? 'active' : ''}`} />
+              className={`ap-header-carousel-image ${index === imagemAtivaIndex ? 'active' : ''}`} />
           ))}
-          <div className="ap-header-text">
+          <div className="ap-header-text" style={{ opacity: bdPronto ? 1 : 0, transition: 'opacity 0.3s ease' }}>
             <h1>{titulo}</h1>
             <p style={{ textAlign: 'center', margin: '0 auto' }}>{subtitulo}</p>
           </div>

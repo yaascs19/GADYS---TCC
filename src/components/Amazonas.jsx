@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import './Amazonas.css';
+
+const images = [
+  '/images/geral/amazonas1.avif',
+  '/images/geral/amazonas2.jpg',
+  '/images/geral/amazonas3.1.jpg',
+  '/images/geral/oam.jpg',
+];
 
 const Amazonas = () => {
   const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [isLoading, setIsLoading] = useState(true);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const toggleDarkMode = () => {
     const newDarkMode = !darkMode;
     setDarkMode(newDarkMode);
     localStorage.setItem('darkMode', newDarkMode.toString());
   };
-
-  const images = [
-    '/images/geral/amazonas1.avif',
-    '/images/geral/amazonas2.jpg',
-    '/images/geral/amazonas3.1.jpg',
-    '/images/geral/oam.jpg',
-  ];
-
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   useEffect(() => {
     const firstImage = new Image();
@@ -29,7 +29,7 @@ const Amazonas = () => {
       images.slice(1).forEach(imageSrc => { const img = new Image(); img.src = imageSrc; });
     };
     firstImage.onerror = () => setIsLoading(false);
-  }, [images]);
+  }, []);
 
   useEffect(() => {
     if (isLoading) return;
@@ -41,22 +41,12 @@ const Amazonas = () => {
 
   useEffect(() => {
     if (isLoading) return;
-    const styleSheet = document.createElement('style');
-    styleSheet.type = 'text/css';
-    styleSheet.innerText = `
-      .feature-section-animate { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
-      .feature-section-animate.is-visible { opacity: 1; transform: translateY(0); }
-      .feature-image-container { overflow: hidden; border-radius: 15px; }
-      .feature-image { transition: transform 0.4s ease; }
-      .feature-image-container:hover .feature-image { transform: scale(1.05); }
-    `;
-    document.head.appendChild(styleSheet);
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
     }, { threshold: 0.2 });
     const sections = document.querySelectorAll('.feature-section-animate');
     sections.forEach(section => observer.observe(section));
-    return () => { document.head.removeChild(styleSheet); sections.forEach(section => observer.unobserve(section)); };
+    return () => sections.forEach(section => observer.unobserve(section));
   }, [isLoading]);
 
   const styles = {

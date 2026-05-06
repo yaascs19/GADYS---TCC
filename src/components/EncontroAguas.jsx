@@ -4,8 +4,6 @@ import './EncontroAguas-Visual.css';
 import AvaliacoesComentarios from './AvaliacoesComentarios';
 import { useLocalByRota } from '../hooks/useLocalByRota';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 // --- DADOS HARDCODED (fallback) ---
 const DADOS_FALLBACK = {
   carouselImages: ['/images/geral/en1-Am.jpg', '/images/geral/en2-Am.jpg'],
@@ -54,7 +52,7 @@ const DADOS_FALLBACK = {
 };
 
 // --- COMPONENTES ---
-const HeaderCarousel = ({ images }) => {
+const HeaderCarousel = ({ images, bdPronto, titulo, subtitulo }) => {
   const [idx, setIdx] = useState(0);
   useEffect(() => {
     const t = setTimeout(() => setIdx(i => (i + 1) % images.length), 5000);
@@ -65,9 +63,9 @@ const HeaderCarousel = ({ images }) => {
       {images.map((img, i) => (
         <img key={i} src={img} alt="Encontro das Águas" className={`header-carousel-image ${i === idx ? 'active' : ''}`} />
       ))}
-      <div className="header-text-content">
-        <h1>O Encontro das Águas</h1>
-        <p>Onde dois rios se encontram, mas não se misturam.</p>
+      <div className="header-text-content" style={{ opacity: bdPronto ? 1 : 0, transition: 'opacity 0.3s ease' }}>
+        <h1>{titulo || 'O Encontro das Águas'}</h1>
+        <p>{subtitulo || 'Onde dois rios se encontram, mas não se misturam.'}</p>
       </div>
     </header>
   );
@@ -143,31 +141,32 @@ const GaleriaDeImagens = ({ images }) => (
 const EncontroDasAguas = () => {
   const [abaAtiva, setAbaAtiva] = useState('fenomeno');
   const [dados, setDados] = useState(DADOS_FALLBACK);
+  const [bdPronto, setBdPronto] = useState(false);
   const navigate = useNavigate();
-  const { bdId } = useLocalByRota('/encontro-aguas');
+  const { bdLocal, bdId } = useLocalByRota('/encontro-aguas');
 
   useEffect(() => {
-    fetch(`${API_URL}/api/locais/2`)
-      .then(r => r.json())
-      .then(local => {
-        if (!local?.informacoesAdicionais) return;
-        try {
-          const parsed = JSON.parse(local.informacoesAdicionais);
-          if (parsed.secoes) {
-            parsed.secoes = { ...DADOS_FALLBACK.secoes, ...parsed.secoes };
-            setDados(parsed);
-          }
-        } catch { /* usa fallback */ }
-      })
-      .catch(() => {});
+    const timer = setTimeout(() => setBdPronto(true), 600);
+    return () => clearTimeout(timer);
   }, []);
+
+  useEffect(() => {
+    if (!bdLocal?.informacoesAdicionais) return;
+    try {
+      const parsed = JSON.parse(bdLocal.informacoesAdicionais);
+      if (parsed.secoes) {
+        parsed.secoes = { ...DADOS_FALLBACK.secoes, ...parsed.secoes };
+        setDados(parsed);
+      }
+    } catch { /* usa fallback */ }
+  }, [bdLocal]);
 
   const { carouselImages, galleryImages, secoes } = dados;
 
   return (
     <div className="encontro-visual-container">
       <div style={{ position: 'relative' }}>
-        <HeaderCarousel images={carouselImages} />
+        <HeaderCarousel images={carouselImages} bdPronto={bdPronto} titulo={bdLocal?.nome} subtitulo={bdLocal?.descricao} />
         <button
           onClick={() => navigate('/destinos-amazonas')}
           style={{
