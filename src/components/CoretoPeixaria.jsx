@@ -11,6 +11,15 @@ const carouselImages = [
 
 const galleryImages = [
   { src: '/images/geral/res-Am.jpg', alt: 'Coreto Peixaria & Café Regional' },
+  { src: '/images/geral/am-cp3.jpg', alt: 'Coreto Peixaria & Café Regional' },
+  { src: '/images/geral/am-cp1.jpg', alt: 'Coreto Peixaria & Café Regional' },
+  { src: '/images/geral/am-cp4.jpeg', alt: 'Coreto Peixaria & Café Regional' },
+  { src: '/images/geral/am-cp5.jpg', alt: 'Coreto Peixaria & Café Regional' },
+  { src: '/images/geral/am-cp6.jpg', alt: 'Coreto Peixaria & Café Regional' },
+  { src: '/images/geral/am-cp8.jpg', alt: 'Coreto Peixaria & Café Regional' },
+  { src: '/images/geral/am-cp9.jpg', alt: 'Coreto Peixaria & Café Regional' },
+  { src: '/images/geral/am-cp10.jpg', alt: 'Coreto Peixaria & Café Regional' },
+  { src: '/images/geral/am-cp11.jpg', alt: 'Coreto Peixaria & Café Regional' },
 ];
 
 const secoes = {
