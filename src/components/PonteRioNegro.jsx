@@ -53,8 +53,7 @@ const secoes = {
     label: 'Visite',
     titulo: 'Como Chegar e o Que Ver',
     texto: 'A Ponte Rio Negro pode ser apreciada de vários ângulos — de dentro do carro ao cruzá-la, das margens do Rio Negro ou de barco pelo rio. O pôr do sol visto da ponte ou das margens é um dos espetáculos mais bonitos de Manaus.',
-    imagem: '/images/geral/pn-Am.jpg',
-    alt: 'Vista da Ponte Rio Negro',
+    imagem: '/images/geral/am-pn8.jpg',
     subsecoes: [
       {
         titulo: 'Como Chegar',
@@ -122,6 +121,12 @@ const ConteudoAba = ({ secao }) => (
           <>
             <img src="/images/geral/am-pn4.jpg" alt="Ponte Rio Negro" className="prn-image" />
             <img src="/images/geral/am-pn5.jpg" alt="Ponte Rio Negro" className="prn-image" />
+          </>
+        )}
+        {secao.id === 'visita' && (
+          <>
+            <img src="/images/geral/am-pn6.jpg" alt="Ponte Rio Negro" className="prn-image" />
+            <img src="/images/geral/am-pn9.jpeg" alt="Ponte Rio Negro" className="prn-image" />
           </>
         )}
       </div>
