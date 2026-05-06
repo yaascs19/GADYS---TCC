@@ -185,7 +185,6 @@ function Login({ onLogin }) {
 
           {isRegister && (
             <div className="login-field">
-              <span className="login-field-icon">N</span>
               <input
                 type="text"
                 placeholder="Nome completo"
@@ -197,7 +196,6 @@ function Login({ onLogin }) {
           )}
 
           <div className="login-field">
-            <span className="login-field-icon">@</span>
             <input
               type="email"
               placeholder="Email"
@@ -211,7 +209,6 @@ function Login({ onLogin }) {
           {emailInvalid && <p className="field-error">Email inválido</p>}
 
           <div className="login-field">
-            <span className="login-field-icon">#</span>
             <input
               type="password"
               placeholder="Senha"
@@ -232,7 +229,6 @@ function Login({ onLogin }) {
 
           {isRegister && (
             <div className="login-field">
-              <span className="login-field-icon">#</span>
               <input
                 type="password"
                 placeholder="Confirmar senha"
