@@ -389,10 +389,10 @@
 
 /* --- Responsivo --- */
 @media (max-width: 480px) {
-  .login-container { align-items: flex-start; padding: 1rem 0; }
+  .login-container { align-items: center; padding: 2rem 0; }
 
   .login-form {
-    padding: 2rem 1.25rem; margin: 1rem;
+    padding: 2rem 1.25rem; margin: 1.5rem 1rem;
     border-radius: 16px; max-width: 100%;
   }
 
