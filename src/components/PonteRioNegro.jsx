@@ -19,8 +19,7 @@ const secoes = {
     label: 'Sobre',
     titulo: 'A Ponte que Une o Amazonas',
     texto: 'A Ponte Rio Negro, oficialmente chamada de Ponte Jornalista Phelippe Daou, é uma das maiores obras de engenharia da Amazônia. Com 3,5 km de extensão, a ponte estaiada conecta Manaus a Iranduba, cruzando o majestoso Rio Negro. Inaugurada em 2011, ela transformou a logística da região e se tornou um dos cartões-postais mais imponentes do Amazonas.',
-    imagem: '/images/geral/pn-Am.jpg',
-    alt: 'Ponte Rio Negro - Manaus',
+    imagem: '/images/geral/am-pn2.jpg',
     lista: [
       'Extensão: 3,5 km sobre o Rio Negro.',
       'Inauguração: 24 de outubro de 2011.',
@@ -162,9 +161,18 @@ const Galeria = () => (
 const PonteRioNegro = () => {
   const [abaAtiva, setAbaAtiva] = useState('sobre');
   const [imagemAtivaIndex, setImagemAtivaIndex] = useState(0);
+  const [carregado, setCarregado] = useState(false);
   const navigate = useNavigate();
   const { bdLocal, bdId } = useLocalByRota('/ponte-rio-negro');
   const [bdPronto, setBdPronto] = useState(false);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = carouselImages[0];
+    img.onload = () => setCarregado(true);
+    img.onerror = () => setCarregado(true);
+    carouselImages.slice(1).forEach(src => { const i = new Image(); i.src = src; });
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => setBdPronto(true), 600);
@@ -187,7 +195,7 @@ const PonteRioNegro = () => {
   return (
     <div className="prn-container">
       <div style={{ position: 'relative' }}>
-        <header className="prn-header">
+        <header className="prn-header" style={{ opacity: carregado ? 1 : 0, transition: 'opacity 0.4s ease' }}>
           {headerImgs.map((img, index) => (
             <img key={img} src={img} alt={titulo}
               className={`prn-header-carousel-image ${index === imagemAtivaIndex ? 'active' : ''}`} />
