@@ -32,8 +32,7 @@ const secoes = {
     label: 'Engenharia',
     titulo: 'Uma Obra Monumental',
     texto: 'A Ponte Rio Negro é um marco da engenharia brasileira. Seu projeto desafiou as condições extremas da Amazônia — variação de até 14 metros no nível do rio, ventos intensos e solo instável — para entregar uma estrutura que une beleza e funcionalidade.',
-    imagem: '/images/geral/pn-Am.jpg',
-    alt: 'Estrutura da Ponte Rio Negro',
+    imagem: '/images/geral/am-pn3.jpg',
     subsecoes: [
       {
         titulo: 'Estrutura Estaiada',
