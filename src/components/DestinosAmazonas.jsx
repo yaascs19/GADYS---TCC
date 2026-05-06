@@ -3,6 +3,27 @@ import { useNavigate } from 'react-router-dom';
 import { destinosAmazonasData } from '../data/destinosAmazonasData';
 import './DestinosAmazonas.css';
 import { useLocaisAtivos } from '../hooks/useLocaisAtivos';
+import { useMediasAvaliacoes } from '../hooks/useMediasAvaliacoes';
+
+const rotasPorId = {
+  1: '/encontro-aguas', 2: '/teatro-amazonas', 3: '/amazonico-peixaria',
+  4: '/arquipelago-anavilhanas', 5: '/bumbodromo', 6: '/cachoeira-santuario',
+  7: '/coreto-peixaria', 8: '/ponte-rio-negro',
+};
+
+const Estrelas = ({ media }) => {
+  if (!media) return null;
+  return (
+    <div className="amazonas-destinos-card-rating">
+      <span className="amazonas-destinos-card-stars">
+        {[1,2,3,4,5].map(n => (
+          <span key={n} style={{ color: n <= Math.round(media) ? '#f59e0b' : '#d1d5db' }}>★</span>
+        ))}
+      </span>
+      <span className="amazonas-destinos-card-media">{Number(media).toFixed(1)}</span>
+    </div>
+  );
+};
 
 const DestinosAmazonas = () => {
   const navigate = useNavigate();
@@ -10,6 +31,7 @@ const DestinosAmazonas = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredDestinos, setFilteredDestinos] = useState([]);
   const pontosAtivos = useLocaisAtivos('AM', destinosAmazonasData);
+  const medias = useMediasAvaliacoes();
 
   const categories = ['Todos', 'Lugar Paradisíaco', 'Restaurantes', 'Monumento'];
 
@@ -75,6 +97,7 @@ const DestinosAmazonas = () => {
             <div className="amazonas-destinos-card-content">
               <h2 className="amazonas-destinos-card-title">{item.name}</h2>
               <p className="amazonas-destinos-card-category">{item.category} • {item.location}</p>
+              <Estrelas media={medias[rotasPorId[item.id]]} />
               <p className="amazonas-destinos-card-description">{item.description}</p>
               <button 
                 className="amazonas-destinos-saibamais"

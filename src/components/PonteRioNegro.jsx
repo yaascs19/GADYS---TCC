@@ -11,6 +11,14 @@ const carouselImages = [
 
 const galleryImages = [
   { src: '/images/geral/pn-Am.jpg', alt: 'Ponte Rio Negro' },
+  { src: '/images/geral/am-pn7.jpeg', alt: 'Ponte Rio Negro' },
+  { src: '/images/geral/am-pn2.jpg', alt: 'Ponte Rio Negro' },
+  { src: '/images/geral/am-pn3.jpg', alt: 'Ponte Rio Negro' },
+  { src: '/images/geral/am-pn4.jpg', alt: 'Ponte Rio Negro' },
+  { src: '/images/geral/am-pn5.jpg', alt: 'Ponte Rio Negro' },
+  { src: '/images/geral/am-pn8.jpg', alt: 'Ponte Rio Negro' },
+  { src: '/images/geral/am-pn6.jpg', alt: 'Ponte Rio Negro' },
+  { src: '/images/geral/am-pn9.jpeg', alt: 'Ponte Rio Negro' },
 ];
 
 const secoes = {
