@@ -128,9 +128,12 @@
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  font-size: 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.35);
   pointer-events: none;
   z-index: 1;
+  letter-spacing: 0;
 }
 
 .login-field input {
