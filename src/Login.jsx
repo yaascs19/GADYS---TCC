@@ -169,38 +169,58 @@ function Login({ onLogin }) {
       )}
 
       <div className="login-form">
-        <img src="/images/logos/logo.png" alt="GADYS" className="login-logo" />
-        <h2>{isRegister ? 'Cadastrar' : 'Bem-vindo'}</h2>
 
-        <form onSubmit={handleSubmit}>
+        <div className="login-header">
+          <img src="/images/logos/logo.png" alt="GADYS" className="login-logo" />
+          <h2>{isRegister ? 'Criar conta' : 'Bem-vindo'}</h2>
+          <p className="login-subtitle">{isRegister ? 'Preencha os dados abaixo' : 'Entre na sua conta GADYS'}</p>
+        </div>
+
+        <div className="login-tabs">
+          <button className={!isRegister ? 'active' : ''} onClick={() => setIsRegister(false)}>Entrar</button>
+          <button className={isRegister ? 'active' : ''} onClick={() => setIsRegister(true)}>Cadastrar</button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="login-fields">
+
           {isRegister && (
-            <input
-              type="text"
-              placeholder="Digite seu nome"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
+            <div className="login-field">
+              <span className="login-field-icon">👤</span>
+              <input
+                type="text"
+                placeholder="Nome completo"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+            </div>
           )}
 
-          <input
-            type="email"
-            placeholder="Digite seu email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            onBlur={() => setEmailTouched(true)}
-            required
-            style={{ borderColor: emailInvalid ? '#f43f5e' : '' }}
-          />
+          <div className="login-field">
+            <span className="login-field-icon">✉️</span>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              onBlur={() => setEmailTouched(true)}
+              required
+              style={{ borderColor: emailInvalid ? '#f43f5e' : '' }}
+            />
+          </div>
           {emailInvalid && <p className="field-error">Email inválido</p>}
 
-          <input
-            type="password"
-            placeholder="Digite sua senha"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <div className="login-field">
+            <span className="login-field-icon">🔒</span>
+            <input
+              type="password"
+              placeholder="Senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
           {isRegister && password && (
             <div className="password-strength">
               <div className="password-strength-bar">
@@ -211,40 +231,37 @@ function Login({ onLogin }) {
           )}
 
           {isRegister && (
-            <input
-              type="password"
-              placeholder="Confirme sua senha"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              style={{ borderColor: passwordsMismatch ? '#f43f5e' : confirmPassword && !passwordsMismatch ? '#10b981' : '' }}
-            />
+            <div className="login-field">
+              <span className="login-field-icon">🔑</span>
+              <input
+                type="password"
+                placeholder="Confirmar senha"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                required
+                style={{ borderColor: passwordsMismatch ? '#f43f5e' : confirmPassword && !passwordsMismatch ? '#10b981' : '' }}
+              />
+            </div>
           )}
           {passwordsMismatch && <p className="field-error">Senhas não coincidem</p>}
 
-<button type="submit" disabled={loading}>
-            {loading ? 'Carregando...' : (isRegister ? 'Cadastrar' : 'Entrar')}
+          {!isRegister && (
+            <p className="login-forgot" onClick={() => setShowForgotPassword(true)}>Esqueci minha senha</p>
+          )}
+
+          <button type="submit" className="login-submit" disabled={loading}>
+            {loading
+              ? <span className="login-spinner" />
+              : (isRegister ? 'Criar conta' : 'Entrar')}
           </button>
+
         </form>
 
-        <p className="toggle-form">
-            {isRegister ? 'Já tem conta?' : 'Não tem conta?'}
-            <span onClick={() => setIsRegister(!isRegister)}>
-              {isRegister ? ' Entrar' : ' Cadastrar-se'}
-            </span>
-          </p>
-
-        {!isRegister && (
-          <p className="toggle-form">
-            <span onClick={() => setShowForgotPassword(true)}>Esqueci minha senha</span>
-          </p>
-        )}
-
-        <div className="login-divider"><span>ou</span></div>
+        <div className="login-divider"><span>ou continue com</span></div>
 
         <button type="button" className="google-btn" onClick={() => handleGoogleLogin()}>
-          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="20" />
-          Entrar com Google
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="18" />
+          Google
         </button>
 
       </div>
