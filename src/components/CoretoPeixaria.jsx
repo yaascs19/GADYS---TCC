@@ -126,6 +126,7 @@ const ConteudoAba = ({ secao }) => (
           <>
             <img src="/images/geral/am-cp5.jpg" alt="Coreto Peixaria" className="cp-image" />
             <img src="/images/geral/am-cp6.jpg" alt="Coreto Peixaria" className="cp-image" />
+            <img src="/images/geral/am-cp8.jpg" alt="Coreto Peixaria" className="cp-image" />
           </>
         )}
       </div>
