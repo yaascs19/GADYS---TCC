@@ -118,6 +118,9 @@ const ConteudoAba = ({ secao }) => (
       </div>
       <div className="prn-image-wrapper">
         <img src={secao.imagem} alt={secao.alt} className="prn-image" />
+        {secao.id === 'engenharia' && (
+          <img src="/images/geral/am-pn4.jpg" alt="Ponte Rio Negro" className="prn-image" />
+        )}
       </div>
     </div>
 
