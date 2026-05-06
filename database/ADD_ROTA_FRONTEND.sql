@@ -32,6 +32,7 @@ UPDATE Localizacao SET rota_frontend = '/amazonico-peixaria'     WHERE nome = 'A
 UPDATE Localizacao SET rota_frontend = '/bumbodromo'             WHERE nome = 'Bumbódromo'                    AND enviado_por = 'GADYS';
 UPDATE Localizacao SET rota_frontend = '/cachoeira-santuario'    WHERE nome = 'Cachoeira do Santuário'         AND enviado_por = 'GADYS';
 UPDATE Localizacao SET rota_frontend = '/coreto-peixaria'        WHERE nome = 'Coreto Peixaria & Café Regional' AND enviado_por = 'GADYS';
+UPDATE Localizacao SET rota_frontend = '/ponte-rio-negro'        WHERE nome = 'Ponte Rio Negro'               AND enviado_por = 'GADYS';
 
 -- CEARÁ
 UPDATE Localizacao SET rota_frontend = '/ceara/jericoacoara'              WHERE nome = 'Jericoacoara'                   AND enviado_por = 'GADYS';
