@@ -63,7 +63,7 @@ const secoes = {
       {
         titulo: 'Atrações Próximas',
         itens: [
-          { nome: 'Teatro Amazonas', nota: 4.9, contato: '(92) 3622-1880', site: 'https://www.teatroamazonas.com.br/' },
+          { nome: 'Teatro Amazonas', nota: 4.7, contato: '(92) 3232-1768', site: 'https://www.teatroamazonas.com.br/' },
           { nome: 'Museu do Seringal', nota: 4.7, contato: '(92) 3633-3757', site: 'https://www.instagram.com/' },
           { nome: 'Palácio Rio Negro', nota: 4.6, contato: '(92) 3182-4450', site: 'https://www.instagram.com/' },
         ],
@@ -71,8 +71,8 @@ const secoes = {
       {
         titulo: 'Hotéis Próximos',
         itens: [
-          { nome: 'Juma Ópera Hotel', nota: 4.8, contato: '(92) 3212-3300', site: 'https://www.jumaopera.com.br/' },
-          { nome: 'Hotel Intercity Manaus', nota: 4.5, contato: '(92) 3303-5000', site: 'https://www.intercityhoteis.com.br/' },
+          { nome: 'Juma Ópera Hotel', nota: 4.3, contato: '(92) 99137-4260', site: 'https://www.jumaopera.com.br/' },
+          { nome: 'Hotel Intercity Manaus', nota: 4.7, contato: '(11) 5198-6936', site: 'https://www.intercityhoteis.com.br/' },
           { nome: 'Blue Tree Premium Manaus', nota: 4.5, contato: '(92) 3303-2000', site: 'https://www.bluetree.com.br/' },
         ],
       },

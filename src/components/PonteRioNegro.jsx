@@ -88,8 +88,8 @@ const secoes = {
       {
         titulo: 'Hotéis em Manaus',
         itens: [
-          { nome: 'Juma Ópera Hotel', nota: 4.8, contato: '(92) 3212-3300', site: 'https://www.jumaopera.com.br/' },
-          { nome: 'Hotel Intercity Manaus', nota: 4.5, contato: '(92) 3303-5000', site: 'https://www.intercityhoteis.com.br/' },
+          { nome: 'Juma Ópera Hotel', nota: 4.3, contato: '(92) 99137-4260', site: 'https://www.jumaopera.com.br/' },
+          { nome: 'Hotel Intercity Manaus', nota: 4.7, contato: '(11) 5198-6936', site: 'https://www.intercityhoteis.com.br/' },
           { nome: 'Blue Tree Premium Manaus', nota: 4.5, contato: '(92) 3303-2000', site: 'https://www.bluetree.com.br/' },
         ],
       },
