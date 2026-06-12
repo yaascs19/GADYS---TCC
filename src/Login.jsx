@@ -5,8 +5,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import './Login.css';
 import axios from 'axios';
 
-const RAW_API_URL = import.meta.env.VITE_API_URL;
-const API_URL = RAW_API_URL.replace(/\/$/, '');
+const API_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
 
 const getPasswordStrength = (pwd) => {
   if (!pwd) return null;
