@@ -115,7 +115,6 @@ function AdicionarLocal() {
         <div className="form-column-main">
 
           <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-            <span style={{ fontSize: '2.5rem' }}>📍</span>
             <h1 style={{ marginTop: '0.5rem' }}>Sugerir um Local</h1>
             <p className="form-intro">Conhece um lugar incrível no Brasil? Conta pra gente! Nossa equipe vai analisar e publicar no site.</p>
           </div>
@@ -144,10 +143,10 @@ function AdicionarLocal() {
                 <label className="form-label">Categoria *</label>
                 <select name="subcategoria" value={formData.subcategoria} onChange={handleInputChange} required className="form-select">
                   <option value="">Selecione</option>
-                  <option value="Monumentos">🏛️ Monumento</option>
-                  <option value="Lugar Paradísíaco">🏖️ Lugar Paradisíaco</option>
-                  <option value="Restaurantes">🍽️ Restaurante</option>
-                  <option value="Costume Cultural">🎭 Costume Cultural</option>
+                  <option value="Monumentos">Monumento</option>
+                  <option value="Lugar Paradísíaco">Lugar Paradisíaco</option>
+                  <option value="Restaurantes">Restaurante</option>
+                  <option value="Costume Cultural">Costume Cultural</option>
                 </select>
               </div>
             </div>
@@ -164,12 +163,11 @@ function AdicionarLocal() {
 
             <div className="form-group">
               <label className="form-label">Foto do Local <span style={{ color: '#999', fontWeight: 400 }}>(opcional)</span></label>
-              <label className="image-upload-placeholder" style={{ aspectRatio: '16/7', backgroundImage: imagem ? `url(${imagem})` : 'none', borderRadius: '12px' }}>
+              <label className="image-upload-placeholder" style={{ aspectRatio: '16/5', backgroundImage: imagem ? `url(${imagem})` : 'none', borderRadius: '12px' }}>
                 {uploading && <div className="uploading-overlay">Enviando...</div>}
                 {!imagem && !uploading && (
                   <div style={{ textAlign: 'center', color: '#999' }}>
-                    <div style={{ fontSize: '2rem' }}>📷</div>
-                    <div style={{ fontSize: '0.9rem', marginTop: '0.3rem' }}>Clique para adicionar uma foto</div>
+                    <div style={{ fontSize: '0.9rem' }}>Clique para adicionar uma foto</div>
                   </div>
                 )}
                 {imagem && !uploading && (
@@ -181,7 +179,7 @@ function AdicionarLocal() {
             </div>
 
             <button type="submit" disabled={loading} className="submit-button">
-              {loading ? 'Enviando...' : '📤 Enviar Sugestão'}
+              {loading ? 'Enviando...' : 'Enviar Sugestão'}
             </button>
             <Link to="/" style={{ display: 'block', textAlign: 'center', marginTop: '1.5rem', color: darkMode ? '#aaa' : '#666', textDecoration: 'none' }}>
               ← Voltar para a Home
