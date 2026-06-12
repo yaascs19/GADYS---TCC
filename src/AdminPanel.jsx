@@ -7,8 +7,7 @@ function AdminPanel() {
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
   const [menuOpen, setMenuOpen] = useState(false)
   const [expandedCard, setExpandedCard] = useState(null)
-  const [pendingLocations, setPendingLocations] = useState([])
-  const [activeTab, setActiveTab] = useState('pending')
+  const [activeTab, setActiveTab] = useState('sugestoes')
   const [userAccess, setUserAccess] = useState([])
   const [rankings, setRankings] = useState([])
   const [comments, setComments] = useState({})
@@ -87,22 +86,6 @@ function AdminPanel() {
     }
   }
 
-  const loadPendingLocations = async () => {
-    try {
-      const response = await fetch(`${API_URL}/api/locais/pendentes`)
-      if (response.ok) {
-        const pending = await response.json()
-        setPendingLocations(pending)
-      } else {
-        console.error('Erro ao carregar locais pendentes do servidor')
-        setPendingLocations([])
-      }
-    } catch (error) {
-      console.error('Erro de conexão ao carregar locais pendentes:', error)
-      setPendingLocations([])
-    }
-  }
-
   const loadSiteLocations = async () => {
     try {
       const response = await fetch(`${API_URL}/api/locais`)
@@ -177,7 +160,6 @@ function AdminPanel() {
   }
 
   useEffect(() => {
-    loadPendingLocations()
     loadUsers()
     loadRanking()
     loadComments()
@@ -186,41 +168,6 @@ function AdminPanel() {
     loadContactMessages()
     loadSugestoes()
   }, [])
-
-  const handleApprove = async (id) => {
-    try {
-      const response = await fetch(`${API_URL}/api/locais/aprovar/${id}`, {
-        method: 'POST'
-      })
-      
-      if (response.ok) {
-        showToast('Local aprovado com sucesso!', 'success')
-        loadPendingLocations()
-        loadSiteLocations()
-      } else {
-        showToast('Erro ao aprovar local')
-      }
-    } catch (error) {
-      console.error('Erro de conexão ao aprovar local:', error)
-      showToast('Erro de conexão. Tente novamente.')
-    }
-  }
-
-  const handleReject = (id) => {
-    showConfirm('Tem certeza que deseja rejeitar e excluir este local?', async () => {
-      try {
-        const response = await fetch(`${API_URL}/api/locais/${id}`, { method: 'DELETE' })
-        if (response.ok) {
-          showToast('Local rejeitado e excluído!', 'success')
-          loadPendingLocations()
-        } else {
-          showToast('Erro ao rejeitar local')
-        }
-      } catch (error) {
-        showToast('Erro de conexão. Tente novamente.')
-      }
-    })
-  }
 
   const handleRemoveLocation = (id) => {
     showConfirm('Tem certeza que deseja excluir este local permanentemente? Esta ação não pode ser desfeita!', async () => {
@@ -360,12 +307,6 @@ function AdminPanel() {
     })
   }
 
-  const handleEdit = (id) => {
-    const locationToEdit = pendingLocations.find(location => location.id === id)
-    setEditingLocation({...locationToEdit})
-    setShowEditModal(true)
-  }
-
 
   const handleSaveEdit = async () => {
     if (editingLocation) {
@@ -380,7 +321,7 @@ function AdminPanel() {
                 setShowEditModal(false)
                 setEditingLocation(null)
                 showToast('Local editado com sucesso! Agora você pode aprová-lo.', 'success')
-                loadPendingLocations();
+                loadSiteLocations();
             } else {
                 showToast('Erro ao salvar edição do local.')
             }
@@ -391,13 +332,6 @@ function AdminPanel() {
     }
   }
   
-  const handleSaveAndApprove = async () => {
-    await handleSaveEdit();
-    if (editingLocation) {
-      handleApprove(editingLocation.id);
-    }
-  }
-
   const [replyModal, setReplyModal] = useState(null)
   const [replyText, setReplyText] = useState('')
 
@@ -535,12 +469,6 @@ function AdminPanel() {
         <h1>Painel Administrativo</h1>
         <div className="admin-tabs">
           <button 
-            className={`tab-btn ${activeTab === 'pending' ? 'active' : ''}`}
-            onClick={() => setActiveTab('pending')}
-          >
-            Pendentes ({pendingLocations.length})
-          </button>
-          <button 
             className={`tab-btn ${activeTab === 'users' ? 'active' : ''}`}
             onClick={() => setActiveTab('users')}
           >
@@ -634,53 +562,6 @@ function AdminPanel() {
             ))
           ))}
 
-        {activeTab === 'pending' && (pendingLocations.length === 0 ? (
-            <div className="empty-state-message"><p>Nenhum local pendente.</p></div>
-        ) : pendingLocations.map(location => (
-          <div key={location.id} className="admin-card">
-            <div className="card-header">
-              <h3>{location.nome}</h3>
-              <span className="category-badge PENDENTE">{location.subcategoria}</span>
-            </div>
-            
-            <div className="card-info">
-              <p><strong>Cidade:</strong> {location.cidade}{location.estado ? `, ${location.estado}` : ''}</p>
-              <p><strong>Enviado por:</strong> {location.enviadoPor || 'Anônimo'}</p>
-              <p><strong>Data:</strong> {location.dataCriacao ? new Date(location.dataCriacao).toLocaleDateString('pt-BR') : 'N/A'}</p>
-              {(() => {
-                const match = (location.informacoesAdicionais || '').match(/\[geo_estado:([A-Z]{2})\]/)
-                if (!match) return null
-                return (
-                  <p style={{ background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.4)', borderRadius: '6px', padding: '0.4rem 0.7rem', marginTop: '0.5rem', color: '#f59e0b', fontSize: '0.82rem', fontWeight: '600' }}>
-                    ⚠️ Coordenadas apontam para <strong>{match[1]}</strong>, mas estado informado é <strong>{location.estado}</strong>
-                  </p>
-                )
-              })()}
-            </div>
-
-            <div className="card-actions">
-              <button
-                className="expand-btn"
-                onClick={() => navigate(`/local/${location.id}`)}
-              >
-                Ver
-              </button>
-              <button 
-                className="approve-btn"
-                onClick={() => handleApprove(location.id)}
-              >
-                Aprovar
-              </button>
-              <button 
-                className="reject-btn"
-                onClick={() => handleReject(location.id)}
-              >
-                Rejeitar
-              </button>
-            </div>
-          </div>
-        )))}
-        
         {activeTab === 'locations' && (siteLocations.length === 0 ? (
           <div className="empty-state-message"><p>Nenhum local cadastrado no site.</p></div>
         ) : siteLocations
