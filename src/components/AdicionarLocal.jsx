@@ -43,7 +43,7 @@ function AdicionarLocal() {
     e.preventDefault()
     setLoading(true)
     try {
-      const localData = {
+      const sugestaoData = {
         nome: sanitize(formData.nome),
         descricao: sanitize(formData.descricao),
         endereco: sanitize(formData.endereco),
@@ -51,10 +51,10 @@ function AdicionarLocal() {
         subcategoria: formData.subcategoria,
         imagemUrl: imagem || null,
         enviadoPor: localStorage.getItem('userName') || 'Usuário Anônimo',
-        categoria: 'lugares-visitar',
+        usuarioId: localStorage.getItem('usuarioId') || null,
       }
       const API_URL = import.meta.env.VITE_API_URL || 'https://gadys-backend.onrender.com'
-      await axios.post(`${API_URL}/api/locais?usuarioId=${localStorage.getItem('usuarioId') || ''}`, localData)
+      await axios.post(`${API_URL}/api/sugestoes`, sugestaoData)
       setShowSuccess(true)
       setFormData({ nome: '', subcategoria: '', estado: '', endereco: '', descricao: '' })
       setImagem(null)

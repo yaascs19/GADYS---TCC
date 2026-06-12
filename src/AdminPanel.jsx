@@ -17,6 +17,7 @@ function AdminPanel() {
   const [siteLocations, setSiteLocations] = useState([])
   const [trashedLocations, setTrashedLocations] = useState([])
   const [contactMessages, setContactMessages] = useState([])
+  const [sugestoes, setSugestoes] = useState([])
   const [locationFilter, setLocationFilter] = useState('')
   const [editingLocation, setEditingLocation] = useState(null)
   const [showEditModal, setShowEditModal] = useState(false)
@@ -134,6 +135,31 @@ function AdminPanel() {
     }
   }
 
+  const loadSugestoes = async () => {
+    try {
+      const response = await fetch(`${API_URL}/api/sugestoes`)
+      if (response.ok) setSugestoes(await response.json())
+    } catch (error) { console.error('Erro ao carregar sugestões:', error) }
+  }
+
+  const handleAnalisarSugestao = async (id) => {
+    try {
+      const response = await fetch(`${API_URL}/api/sugestoes/${id}/analisar`, { method: 'POST' })
+      if (response.ok) { showToast('Sugestão marcada como analisada!', 'success'); loadSugestoes() }
+      else showToast('Erro ao atualizar sugestão')
+    } catch { showToast('Erro de conexão.') }
+  }
+
+  const handleDescartarSugestao = (id) => {
+    showConfirm('Descartar esta sugestão?', async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/sugestoes/${id}/descartar`, { method: 'POST' })
+        if (response.ok) { showToast('Sugestão descartada!', 'success'); loadSugestoes() }
+        else showToast('Erro ao descartar sugestão')
+      } catch { showToast('Erro de conexão.') }
+    })
+  }
+
   const loadContactMessages = async () => {
     try {
         const response = await fetch(`${API_URL}/api/contato`);
@@ -158,6 +184,7 @@ function AdminPanel() {
     loadSiteLocations()
     loadTrashedLocations()
     loadContactMessages()
+    loadSugestoes()
   }, [])
 
   const handleApprove = async (id) => {
@@ -537,6 +564,12 @@ function AdminPanel() {
           >
             Mensagens ({contactMessages.filter(m => m.status === 'nova').length})
           </button>
+          <button 
+            className={`tab-btn ${activeTab === 'sugestoes' ? 'active' : ''}`}
+            onClick={() => setActiveTab('sugestoes')}
+          >
+            Sugestões ({sugestoes.filter(s => s.status === 'PENDENTE').length})
+          </button>
         </div>
       </div>
       
@@ -765,6 +798,33 @@ function AdminPanel() {
           </div>
         )))}
         
+        {activeTab === 'sugestoes' && (sugestoes.filter(s => s.status === 'PENDENTE').length === 0 ? (
+          <div className="empty-state-message"><p>Nenhuma sugestão pendente.</p></div>
+        ) : sugestoes.filter(s => s.status === 'PENDENTE').map(s => (
+          <div key={s.id} className="admin-card">
+            <div className="card-header">
+              <h3>{s.nome}</h3>
+              <span className="category-badge PENDENTE">{s.subcategoria}</span>
+            </div>
+            <div className="card-info">
+              <p><strong>Estado:</strong> {s.estado}</p>
+              <p><strong>Endereço:</strong> {s.endereco}</p>
+              <p><strong>Enviado por:</strong> {s.enviadoPor}</p>
+              <p><strong>Data:</strong> {s.dataCriacao ? new Date(s.dataCriacao).toLocaleDateString('pt-BR') : 'N/A'}</p>
+            </div>
+            <div className="card-info" style={{ marginTop: '0.5rem' }}>
+              <p><strong>Descrição:</strong> {s.descricao}</p>
+            </div>
+            {s.imagemUrl && (
+              <img src={s.imagemUrl} alt={s.nome} style={{ width: '100%', borderRadius: '8px', marginTop: '0.75rem', maxHeight: '180px', objectFit: 'cover' }} />
+            )}
+            <div className="card-actions">
+              <button className="approve-btn" onClick={() => handleAnalisarSugestao(s.id)}>Analisada</button>
+              <button className="reject-btn" onClick={() => handleDescartarSugestao(s.id)}>Descartar</button>
+            </div>
+          </div>
+        )))}
+
         {activeTab === 'messages' && (contactMessages.filter(message => message.status === 'nova').length === 0 ? (
           <div className="empty-state-message"><p>Nenhuma mensagem nova.</p></div>
         ) : contactMessages.filter(message => message.status === 'nova').map((message) => (
