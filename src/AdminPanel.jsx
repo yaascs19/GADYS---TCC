@@ -546,17 +546,25 @@ function AdminPanel() {
             </div>
           ) : (
             rankings.map((local, index) => (
-              <div key={index} className="admin-card">
+              <div key={index} className="admin-card" style={{ borderTop: `3px solid ${index === 0 ? '#f59e0b' : index === 1 ? '#9ca3af' : index === 2 ? '#b45309' : '#667eea'}` }}>
                 <div className="card-header">
-                  <h3>#{index + 1} {local.nome}</h3>
-                  <span className={`category-badge ${index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : ''}`}>
-                    {index === 0 ? '🥇 1º Lugar' : index === 1 ? '🥈 2º Lugar' : index === 2 ? '🥉 3º Lugar' : `${index + 1}º`}
+                  <h3>{local.nome}</h3>
+                  <span className={`category-badge ${index === 0 ? 'gold' : index === 1 ? 'silver' : index === 2 ? 'bronze' : ''}`}
+                    style={{ background: index === 0 ? 'rgba(245,158,11,0.15)' : index === 1 ? 'rgba(156,163,175,0.15)' : index === 2 ? 'rgba(180,83,9,0.15)' : 'rgba(102,126,234,0.15)',
+                      color: index === 0 ? '#f59e0b' : index === 1 ? '#9ca3af' : index === 2 ? '#b45309' : '#667eea',
+                      fontWeight: '700', fontSize: '0.85rem' }}>
+                    {index + 1}º lugar
                   </span>
                 </div>
-                
                 <div className="card-info">
-                  <p><strong>Média:</strong> {local.media.toFixed(1)} ({'★'.repeat(Math.floor(local.media)) + '☆'.repeat(5 - Math.floor(local.media))})</p>
-                  <p><strong>Total de Avaliações:</strong> {local.totalAvaliacoes}</p>
+                  <p><strong>Cidade:</strong> {local.cidade}, {local.estado}</p>
+                  <p><strong>Média:</strong> {local.media.toFixed(1)} / 5.0</p>
+                  <div style={{ display: 'flex', gap: '2px', margin: '0.3rem 0' }}>
+                    {[1,2,3,4,5].map(s => (
+                      <span key={s} style={{ fontSize: '1.1rem', color: s <= Math.round(local.media) ? '#f59e0b' : '#d1d5db' }}>★</span>
+                    ))}
+                  </div>
+                  <p><strong>Total de avaliações:</strong> {local.totalAvaliacoes}</p>
                 </div>
               </div>
             ))
