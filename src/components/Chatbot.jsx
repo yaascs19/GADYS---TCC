@@ -95,41 +95,52 @@ export default function Chatbot({ darkMode }) {
     }, 400)
   }
 
-  const bg = darkMode ? '#1e1e2e' : '#ffffff'
+  const bg = darkMode ? 'linear-gradient(160deg, #0f0c29, #1a1a2e)' : '#ffffff'
   const headerBg = 'linear-gradient(135deg, #667eea, #764ba2)'
   const userBubble = 'linear-gradient(135deg, #667eea, #764ba2)'
-  const botBubble = darkMode ? '#2a2a3e' : '#f0f0f0'
-  const textColor = darkMode ? '#e0e0e0' : '#333'
-  const inputBg = darkMode ? '#2a2a3e' : '#f5f5f5'
+  const botBubble = darkMode ? 'rgba(102,126,234,0.12)' : '#f0f2ff'
+  const botBubbleBorder = darkMode ? '1px solid rgba(102,126,234,0.25)' : '1px solid #e0e4ff'
+  const textColor = darkMode ? '#e0e0ff' : '#333'
+  const inputBg = darkMode ? 'rgba(255,255,255,0.07)' : '#f5f5f5'
+  const inputBorder = darkMode ? '1px solid rgba(102,126,234,0.3)' : '1px solid #ddd'
+  const suggBorder = darkMode ? 'rgba(102,126,234,0.5)' : '#764ba2'
+  const suggColor = darkMode ? '#a78bfa' : '#764ba2'
+  const suggHoverBg = darkMode ? 'rgba(102,126,234,0.15)' : '#f0f0ff'
 
   return (
     <div style={{ position: 'fixed', bottom: '1.5rem', right: '1.5rem', zIndex: 9999 }}>
       {open && (
         <div style={{
-          width: '340px', height: '500px', background: bg, borderRadius: '16px',
-          boxShadow: '0 8px 32px rgba(0,0,0,0.25)', display: 'flex', flexDirection: 'column',
-          marginBottom: '0.75rem', overflow: 'hidden'
+          width: '340px', height: '500px',
+          background: bg,
+          borderRadius: '20px',
+          boxShadow: darkMode ? '0 8px 40px rgba(102,126,234,0.25), 0 2px 8px rgba(0,0,0,0.5)' : '0 8px 32px rgba(0,0,0,0.15)',
+          display: 'flex', flexDirection: 'column',
+          marginBottom: '0.75rem', overflow: 'hidden',
+          border: darkMode ? '1px solid rgba(102,126,234,0.2)' : 'none'
         }}>
-          <div style={{ background: headerBg, padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div style={{ background: headerBg, padding: '1rem 1.2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 2px 12px rgba(102,126,234,0.3)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <img src="/images/logos/logo.png" alt="GADYS" style={{ height: '28px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)', padding: '4px' }} />
               <div>
-                <div style={{ color: 'white', fontWeight: '700', fontSize: '0.95rem' }}>Assistente GADYS</div>
-                <div style={{ color: 'rgba(255,255,255,0.8)', fontSize: '0.75rem' }}>Perguntas frequentes</div>
+                <div style={{ color: 'white', fontWeight: '700', fontSize: '0.95rem', letterSpacing: '0.3px' }}>Assistente GADYS</div>
+                <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.72rem', marginTop: '1px' }}>● Online agora</div>
               </div>
             </div>
             <button onClick={() => setOpen(false)} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.2rem', cursor: 'pointer' }}>✕</button>
           </div>
 
-          <div style={{ flex: 1, overflowY: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+          <div style={{ flex: 1, overflowY: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem', scrollbarWidth: 'thin', scrollbarColor: darkMode ? '#667eea #0f0c29' : '#ccc #fff' }}>
             {messages.map((msg, i) => (
               <div key={i} style={{ display: 'flex', justifyContent: msg.role === 'user' ? 'flex-end' : 'flex-start' }}>
                 <div style={{
-                  maxWidth: '80%', padding: '0.6rem 0.9rem',
-                  borderRadius: msg.role === 'user' ? '16px 16px 4px 16px' : '16px 16px 16px 4px',
+                  maxWidth: '80%', padding: '0.65rem 1rem',
+                  borderRadius: msg.role === 'user' ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
                   background: msg.role === 'user' ? userBubble : botBubble,
+                  border: msg.role === 'user' ? 'none' : botBubbleBorder,
                   color: msg.role === 'user' ? 'white' : textColor,
-                  fontSize: '0.88rem', lineHeight: 1.5
+                  fontSize: '0.88rem', lineHeight: 1.6,
+                  boxShadow: msg.role === 'user' ? '0 2px 8px rgba(102,126,234,0.3)' : 'none'
                 }}>
                   {msg.text}
                 </div>
@@ -140,11 +151,14 @@ export default function Chatbot({ darkMode }) {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem', marginTop: '0.5rem' }}>
                 {SUGGESTIONS.map(s => (
                   <button key={s} onClick={() => sendMessage(s)} style={{
-                    background: 'none', border: `1px solid ${darkMode ? '#667eea' : '#764ba2'}`,
-                    borderRadius: '20px', padding: '0.4rem 0.8rem', cursor: 'pointer',
-                    color: darkMode ? '#667eea' : '#764ba2', fontSize: '0.82rem', textAlign: 'left',
-                    transition: 'all 0.2s'
-                  }}>
+                    background: darkMode ? 'rgba(102,126,234,0.08)' : 'white',
+                    border: `1px solid ${suggBorder}`,
+                    borderRadius: '20px', padding: '0.45rem 0.9rem', cursor: 'pointer',
+                    color: suggColor, fontSize: '0.82rem', textAlign: 'left',
+                    transition: 'all 0.2s', fontWeight: '500'
+                  }}
+                  onMouseOver={e => e.currentTarget.style.background = suggHoverBg}
+                  onMouseOut={e => e.currentTarget.style.background = darkMode ? 'rgba(102,126,234,0.08)' : 'white'}>
                     {s}
                   </button>
                 ))}
@@ -153,15 +167,17 @@ export default function Chatbot({ darkMode }) {
             <div ref={bottomRef} />
           </div>
 
-          <div style={{ padding: '0.75rem', borderTop: darkMode ? '1px solid #333' : '1px solid #eee', display: 'flex', gap: '0.5rem' }}>
+          <div style={{ padding: '0.75rem 1rem', borderTop: darkMode ? '1px solid rgba(102,126,234,0.2)' : '1px solid #eee', display: 'flex', gap: '0.5rem', background: darkMode ? 'rgba(0,0,0,0.2)' : '#fafafa' }}>
             <input
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && sendMessage()}
               placeholder="Digite sua dúvida..."
               style={{
-                flex: 1, padding: '0.6rem 0.9rem', borderRadius: '20px', border: 'none',
-                background: inputBg, color: textColor, fontSize: '0.88rem', outline: 'none'
+                flex: 1, padding: '0.6rem 1rem', borderRadius: '20px',
+                border: inputBorder, background: inputBg,
+                color: textColor, fontSize: '0.88rem', outline: 'none',
+                transition: 'border 0.2s'
               }}
             />
             <button onClick={() => sendMessage()} style={{
