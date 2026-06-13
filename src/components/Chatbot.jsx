@@ -1,4 +1,10 @@
 import { useState, useRef, useEffect } from 'react'
+import { GoogleGenerativeAI } from '@google/generative-ai'
+
+const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_KEY)
+const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
+
+const SYSTEM_CONTEXT = `Você é o assistente virtual do GADYS, uma plataforma de turismo brasileiro. Responda de forma simpática e objetiva em português. Seja breve — máximo 2 parágrafos. Se perguntarem sobre funcionalidades do site, oriente o usuário. Se não souber, indique a página de Contato.`
 
 const FAQ = [
   {
@@ -32,6 +38,10 @@ const FAQ = [
   {
     keywords: ['mapa', 'localização', 'onde fica'],
     answer: 'No menu, clique em "Mapa" para ver todos os destinos no mapa interativo. Você pode clicar em cada marcador para ver detalhes do local.'
+  },
+  {
+    keywords: ['especial', 'conhecer o brasil', 'brasil', 'por que visitar', 'viajar'],
+    answer: 'O Brasil é um país de dimensões continentais com uma diversidade incrível! De praias paradisíacas no Nordeste à floresta Amazônica, do barroco histórico de Minas Gerais ao cosmopolitismo de São Paulo. Cada estado tem sua própria cultura, culinária e paisagens únicas que fazem do Brasil um destino inesquecível.'
   },
   {
     keywords: ['estados', 'regiões', 'brasil'],
@@ -68,7 +78,7 @@ const SUGGESTIONS = [
   'Como sugerir um local?',
   'Como avaliar um lugar?',
   'Como criar uma conta?',
-  'Esqueci minha senha',
+  'O que tem de especial em conhecer o Brasil?',
 ]
 
 export default function Chatbot({ darkMode }) {
@@ -78,21 +88,36 @@ export default function Chatbot({ darkMode }) {
   ])
   const [input, setInput] = useState('')
   const [showSuggestions, setShowSuggestions] = useState(true)
+  const [loading, setLoading] = useState(false)
   const bottomRef = useRef(null)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
   }, [messages])
 
-  const sendMessage = (text) => {
+  const sendMessage = async (text) => {
     const msg = (text || input).trim()
-    if (!msg) return
+    if (!msg || loading) return
     setInput('')
     setShowSuggestions(false)
     setMessages(prev => [...prev, { role: 'user', text: msg }])
-    setTimeout(() => {
-      setMessages(prev => [...prev, { role: 'bot', text: getAnswer(msg) }])
-    }, 400)
+
+    const faqAnswer = getAnswer(msg)
+    if (faqAnswer !== FALLBACK) {
+      setTimeout(() => setMessages(prev => [...prev, { role: 'bot', text: faqAnswer }]), 400)
+      return
+    }
+
+    setLoading(true)
+    try {
+      const result = await model.generateContent(SYSTEM_CONTEXT + '\n\nUsuário: ' + msg)
+      const reply = result.response.text()
+      setMessages(prev => [...prev, { role: 'bot', text: reply }])
+    } catch {
+      setMessages(prev => [...prev, { role: 'bot', text: 'Não consegui responder agora. Tente a página de Contato!' }])
+    } finally {
+      setLoading(false)
+    }
   }
 
   const bg = darkMode ? 'linear-gradient(160deg, #0f0c29, #1a1a2e)' : '#ffffff'
@@ -162,6 +187,13 @@ export default function Chatbot({ darkMode }) {
                     {s}
                   </button>
                 ))}
+              </div>
+            )}
+            {loading && (
+              <div style={{ display: 'flex', justifyContent: 'flex-start' }}>
+                <div style={{ padding: '0.65rem 1rem', borderRadius: '18px 18px 18px 4px', background: botBubble, border: botBubbleBorder, color: textColor, fontSize: '0.88rem' }}>
+                  Digitando...
+                </div>
               </div>
             )}
             <div ref={bottomRef} />
