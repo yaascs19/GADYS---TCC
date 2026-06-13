@@ -101,12 +101,6 @@ export default function Chatbot({ darkMode }) {
     setShowSuggestions(false)
     setMessages(prev => [...prev, { role: 'user', text: msg }])
 
-    const faqAnswer = getAnswer(msg)
-    if (faqAnswer !== FALLBACK) {
-      setTimeout(() => setMessages(prev => [...prev, { role: 'bot', text: faqAnswer }]), 400)
-      return
-    }
-
     setLoading(true)
     try {
       const res = await fetch(GROQ_URL, {
