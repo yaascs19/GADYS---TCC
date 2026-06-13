@@ -39,11 +39,11 @@ const FAQ = [
     answer: 'No menu, clique em "Mapa" para ver todos os destinos no mapa interativo. Você pode clicar em cada marcador para ver detalhes do local.'
   },
   {
-    keywords: ['especial', 'conhecer o brasil', 'brasil', 'por que visitar', 'viajar'],
+    keywords: ['especial', 'conhecer o brasil', 'por que visitar'],
     answer: 'O Brasil é um país de dimensões continentais com uma diversidade incrível! De praias paradisíacas no Nordeste à floresta Amazônica, do barroco histórico de Minas Gerais ao cosmopolitismo de São Paulo. Cada estado tem sua própria cultura, culinária e paisagens únicas que fazem do Brasil um destino inesquecível.'
   },
   {
-    keywords: ['estados', 'regiões', 'brasil'],
+    keywords: ['estados brasileiros', 'quais estados', 'regiões do brasil'],
     answer: 'O GADYS cobre diversos estados brasileiros como Amazonas, Pará, Ceará, Rio de Janeiro, São Paulo, Minas Gerais, Espírito Santo e mais. Acesse pelo menu "Estados Brasileiros".'
   },
   {
