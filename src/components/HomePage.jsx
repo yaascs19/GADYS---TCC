@@ -6,6 +6,7 @@ function HomePage() {
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('darkMode') === 'true'
   })
+  const [menuOpen, setMenuOpen] = useState(false)
   const [isLoggedIn] = useState(() => {
     return localStorage.getItem('isLoggedIn') === 'true'
   })
