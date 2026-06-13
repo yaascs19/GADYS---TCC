@@ -80,10 +80,12 @@ function PerfilPage() {
   }, [])
 
   useEffect(() => {
+    const usuarioId = localStorage.getItem('usuarioId')
+    const userName = localStorage.getItem('userName')
+
     fetch(`${API_URL}/api/locais`)
       .then(r => r.json())
       .then(async locais => {
-        const userName = localStorage.getItem('userName')
         const meus = locais.filter(l =>
           isAdmin ? l.enviadoPor === 'GADYS' : l.enviadoPor === userName
         )
@@ -102,6 +104,18 @@ function PerfilPage() {
         setUserStats(prev => ({ ...prev, locaisAdicionados: aprovados.length }))
       })
       .catch(() => {})
+
+    if (usuarioId) {
+      fetch(`${API_URL}/api/avaliacoes/usuario/${usuarioId}`)
+        .then(r => r.json())
+        .then(avaliacoes => setUserStats(prev => ({ ...prev, avaliacoes: avaliacoes.length })))
+        .catch(() => {})
+
+      fetch(`${API_URL}/api/comentarios/usuario/${usuarioId}`)
+        .then(r => r.json())
+        .then(comentarios => setUserStats(prev => ({ ...prev, comentarios: comentarios.length })))
+        .catch(() => {})
+    }
   }, [])
 
   useEffect(() => {
