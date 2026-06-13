@@ -404,20 +404,14 @@ function AdminPanel() {
         </div>
       )}
       <header style={{
-        background: darkMode ? 'rgba(15, 12, 41, 0.8)' : '#1a237e',
-        backdropFilter: 'blur(30px)',
-        padding: '0.75rem 1rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
+        background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
+        padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between',
+        alignItems: 'center', position: 'sticky', top: 0, zIndex: 100,
         borderBottom: '1px solid rgba(255,255,255,0.1)'
       }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <img onClick={() => navigate('/')} src="/images/logos/logo.png" alt="GADYS" style={{ height: '36px', background: 'linear-gradient(135deg, #667eea, #764ba2)', borderRadius: '50%', padding: '6px', cursor: 'pointer', flexShrink: 0 }} />
-          <span style={{ fontSize: '1.3rem', fontWeight: '700', letterSpacing: '1px', color: 'white' }}>GADYS</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <img onClick={() => navigate('/')} style={{cursor:'pointer', height:'40px', background:'linear-gradient(135deg,#667eea,#764ba2)', borderRadius:'50%', padding:'8px'}} src="/images/logos/logo.png" alt="GADYS" />
+          <span style={{ fontSize: '1.5rem', fontWeight: '700', color: 'white' }}>GADYS</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <button onClick={() => { const n = !darkMode; setDarkMode(n); localStorage.setItem('darkMode', n) }} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>
@@ -430,7 +424,7 @@ function AdminPanel() {
           </div>
         </div>
         {menuOpen && <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000 }} onClick={() => setMenuOpen(false)} />}
-        <ul className="nav-links" style={{
+        <ul style={{
           position: 'fixed', top: 0, right: menuOpen ? 0 : '-100%', width: '300px', height: '100vh',
           background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', justifyContent: 'flex-start',
@@ -440,15 +434,13 @@ function AdminPanel() {
             { label: 'Início', path: '/' },
             { label: 'Lugares', path: '/lugares' },
             { label: 'Mapa', path: '/mapa' },
-            { label: 'Adicionar Local', path: '/adicionar-local' },
+            { label: 'Dê sugestões', path: '/adicionar-local' },
             { label: 'Meu Perfil', path: '/perfil' },
             { label: 'Sobre', path: '/sobre' },
             { label: 'Contato', path: '/contato' },
           ].map(({ label, path }) => (
             <li key={path}>
               <a href="#" onClick={(e) => { e.preventDefault(); navigate(path); setMenuOpen(false) }}
-                onMouseOver={(e) => e.target.style.background = 'rgba(255,255,255,0.1)'}
-                onMouseOut={(e) => e.target.style.background = 'transparent'}
                 style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '5px', display: 'block' }}>
                 {label}
               </a>
@@ -456,10 +448,8 @@ function AdminPanel() {
           ))}
           <li>
             <a href="#" onClick={(e) => { e.preventDefault(); setMenuOpen(false) }}
-              onMouseOver={(e) => e.target.style.background = 'rgba(255,215,0,0.15)'}
-              onMouseOut={(e) => e.target.style.background = 'transparent'}
               style={{ color: '#ffd700', textDecoration: 'none', padding: '0.5rem 1rem', fontWeight: '700', borderRadius: '5px', display: 'block' }}>
-              ⚙️ Painel Admin (atual)
+              Painel Admin (atual)
             </a>
           </li>
         </ul>
