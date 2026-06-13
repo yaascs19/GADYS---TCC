@@ -14,7 +14,7 @@ import RedefinirSenha from './RedefinirSenha';
 import MapaLeaflet from './components/MapaLeaflet';
 import AdicionarLocal from './components/AdicionarLocal';
 import AdminPanel from './AdminPanel';
-import TranslateButton from './components/TranslateButton';
+import Chatbot from './components/Chatbot';
 
 import LocalDetalhe from './components/LocalDetalhe';
 import EditarLocal from './components/EditarLocal';
@@ -112,6 +112,7 @@ function Router() {
       <BrowserRouter>
         <ScrollToTop />
         <TranslateButton />
+        <Chatbot darkMode={typeof window !== 'undefined' && localStorage.getItem('darkMode') === 'true'} />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/sobre" element={<SobrePage />} />
