@@ -121,6 +121,7 @@ export default function Chatbot({ darkMode }) {
         })
       })
       const data = await res.json()
+      console.log('Groq response:', JSON.stringify(data))
       const reply = data?.choices?.[0]?.message?.content || 'Não consegui responder agora. Tente a página de Contato!'
       setMessages(prev => [...prev, { role: 'bot', text: reply }])
     } catch {
