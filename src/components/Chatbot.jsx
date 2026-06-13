@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${import.meta.env.VITE_GEMINI_KEY}`
+const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions'
+const GROQ_KEY = import.meta.env.VITE_GROQ_KEY
 
 const SYSTEM_CONTEXT = `Você é o assistente virtual do GADYS, uma plataforma de turismo brasileiro. Responda de forma simpática e objetiva em português. Seja breve — máximo 2 parágrafos. Se perguntarem sobre funcionalidades do site, oriente o usuário. Se não souber, indique a página de Contato.`
 
@@ -108,15 +109,19 @@ export default function Chatbot({ darkMode }) {
 
     setLoading(true)
     try {
-      const res = await fetch(GEMINI_URL, {
+      const res = await fetch(GROQ_URL, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
         body: JSON.stringify({
-          contents: [{ role: 'user', parts: [{ text: SYSTEM_CONTEXT + '\n\nUsuário: ' + msg }] }]
+          model: 'llama3-8b-8192',
+          messages: [
+            { role: 'system', content: SYSTEM_CONTEXT },
+            { role: 'user', content: msg }
+          ]
         })
       })
       const data = await res.json()
-      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Não consegui responder agora. Tente a página de Contato!'
+      const reply = data?.choices?.[0]?.message?.content || 'Não consegui responder agora. Tente a página de Contato!'
       setMessages(prev => [...prev, { role: 'bot', text: reply }])
     } catch {
       setMessages(prev => [...prev, { role: 'bot', text: 'Não consegui responder agora. Tente a página de Contato!' }])
