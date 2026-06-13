@@ -80,86 +80,61 @@ function HomePage() {
       minHeight: '100vh',
       overflowX: 'hidden'
     }}>
-      <header className="header" style={{
-        background: darkMode ? 'rgba(15, 12, 41, 0.8)' : '#1a237e',
-        backdropFilter: 'blur(30px)',
-        padding: '1rem 2rem',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
+            <header style={{
+        background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
+        padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between',
+        alignItems: 'center', position: 'sticky', top: 0, zIndex: 100,
         borderBottom: '1px solid rgba(255,255,255,0.1)'
       }}>
-        <nav className="nav" style={{ display: 'contents' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <img onClick={() => navigate('/')} style={{cursor:'pointer', height:'40px', background:'linear-gradient(135deg,#667eea,#764ba2)', borderRadius:'50%', padding:'8px'}} src="/images/logos/logo.png" alt="GADYS" className="logo" />
-            <span style={{ fontSize: '1.5rem', fontWeight: '700', letterSpacing: '1px', color: 'white' }}>GADYS</span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <img onClick={() => navigate('/')} style={{cursor:'pointer', height:'40px', background:'linear-gradient(135deg,#667eea,#764ba2)', borderRadius:'50%', padding:'8px'}} src="/images/logos/logo.png" alt="GADYS" />
+          <span style={{ fontSize: '1.5rem', fontWeight: '700', color: 'white' }}>GADYS</span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <button onClick={toggleDarkMode} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>
+            {darkMode ? '☀️' : '🌙'}
+          </button>
+          <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', zIndex: 1002 }} onClick={() => setMenuOpen(!menuOpen)}>
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
+            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
           </div>
-          <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
-            <button 
-              onClick={(e) => {e.preventDefault(); toggleDarkMode()}} 
-              style={{background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer'}}
-            >
-              {darkMode ? '☀️' : '🌙'}
-            </button>
-
-            <div className="hamburger" onClick={() => document.querySelector('.nav-links').classList.toggle('active')}>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-          </div>
-          <div className="nav-overlay" onClick={() => document.querySelector('.nav-links').classList.remove('active')}></div>
-          <ul className="nav-links" style={{paddingTop: '5rem', justifyContent: 'flex-start', gap: '2rem'}}>
-            <li><a href="#" style={{color: '#ccc', cursor: 'not-allowed'}} onClick={(e) => e.preventDefault()}>Início (atual)</a></li>
-            <li className="dropdown">
-              <a href="#features" onClick={(e) => {e.preventDefault(); document.getElementById('features')?.scrollIntoView({behavior: 'smooth'})}}>Estados Brasileiros ▼</a>
-              <div className="dropdown-content">
-                <Link to="/acre" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Acre</Link>
-                <a href="#">Alagoas</a>
-                <Link to="/amapa" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amapá</Link>
-                <Link to="/amazonas-estado" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Amazonas</Link>
-                <a href="#">Bahia</a>
-                <Link to="/ceara" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Ceará</Link>
-                <a href="#">Distrito Federal</a>
-                <Link to="/espirito-santo" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Espírito Santo</Link>
-                <a href="#">Goiás</a>
-                <a href="#">Maranhão</a>
-                <a href="#">Mato Grosso</a>
-                <a href="#">Mato Grosso do Sul</a>
-                <Link to="/minas-gerais" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Minas Gerais</Link>
-                <Link to="/para" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Pará</Link>
-                <a href="#">Paraíba</a>
-                <a href="#">Paraná</a>
-                <a href="#">Pernambuco</a>
-                <a href="#">Piauí</a>
-                <Link to="/rio-de-janeiro" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rio de Janeiro</Link>
-                <a href="#">Rio Grande do Norte</a>
-                <a href="#">Rio Grande do Sul</a>
-                <Link to="/rondonia" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Rondônia</Link>
-                <Link to="/roraima" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Roraima</Link>
-                <a href="#">Santa Catarina</a>
-                <Link to="/sao-paulo" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>São Paulo</Link>
-                <a href="#">Sergipe</a>
-                <Link to="/tocantins" onClick={() => document.querySelector('.nav-links').classList.remove('active')} style={{ color: 'black', textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' }}>Tocantins</Link>
-              </div>
+        </div>
+        {menuOpen && <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000 }} onClick={() => setMenuOpen(false)} />}
+        <ul style={{
+          position: 'fixed', top: 0, right: menuOpen ? 0 : '-100%', width: '300px', height: '100vh',
+          background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', justifyContent: 'flex-start',
+          margin: 0, padding: '2rem 0', listStyle: 'none', transition: 'right 0.3s ease', zIndex: 1001, overflowY: 'auto'
+        }}>
+          {[
+            { label: 'Início', path: '/' },
+            { label: 'Lugares', path: '/lugares' },
+            { label: 'Mapa', path: '/mapa' },
+            { label: 'Dê sugestões', path: '/adicionar-local' },
+            { label: 'Meu Perfil', path: '/perfil' },
+            { label: 'Sobre', path: '/sobre' },
+            { label: 'Contato', path: '/contato' },
+          ].map(({ label, path }) => (
+            <li key={path}>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate(path); setMenuOpen(false) }}
+                style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '5px', display: 'block' }}>
+                {label}
+              </a>
             </li>
-            <li><a href="#" onClick={() => {navigate('/lugares'); document.querySelector('.nav-links').classList.remove('active')}}>Lugares</a></li>
-            <li><a href="#" onClick={() => {navigate('/mapa'); document.querySelector('.nav-links').classList.remove('active')}}>Mapa</a></li>
-            <li><a href="#" onClick={() => {navigate('/adicionar-local'); document.querySelector('.nav-links').classList.remove('active')}}>Adicionar Local</a></li>
-            {(localStorage.getItem('userType') || '').toUpperCase() === 'ADM' && (
-              <li><a href="#" onClick={() => {navigate('/painel-adm'); document.querySelector('.nav-links').classList.remove('active')}}>Administração</a></li>
-            )}
-            <li><a href="#" onClick={() => {navigate('/perfil'); document.querySelector('.nav-links').classList.remove('active')}}>Meu Perfil</a></li>
-            <li><a href="#" onClick={() => {navigate('/sobre'); document.querySelector('.nav-links').classList.remove('active')}}>Sobre</a></li>
-            <li><a href="#" onClick={() => {navigate('/contato'); document.querySelector('.nav-links').classList.remove('active')}}>Contato</a></li>
-          </ul>
-        </nav>
+          ))}
+          {(localStorage.getItem('userType') || '').toUpperCase() === 'ADM' && (
+            <li>
+              <a href="#" onClick={(e) => { e.preventDefault(); navigate('/painel-adm'); setMenuOpen(false) }}
+                style={{ color: '#ffd700', textDecoration: 'none', padding: '0.5rem 1rem', fontWeight: '700', borderRadius: '5px', display: 'block' }}>
+                Painel Admin
+              </a>
+            </li>
+          )}
+        </ul>
       </header>
 
-      <main className="main">
+            <main className="main">
         <section className="hero">
           <div className="carousel">
             <div className="carousel-slide active">

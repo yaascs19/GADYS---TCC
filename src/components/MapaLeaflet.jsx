@@ -226,7 +226,7 @@ function MapaLeaflet() {
           {[
             { label: 'Início', path: '/' },
             { label: 'Lugares', path: '/lugares' },
-            { label: 'Adicionar Local', path: '/adicionar-local' },
+            { label: 'Dê sugestões', path: '/adicionar-local' },
             { label: isLoggedIn ? 'Meu Perfil' : 'Entrar', path: isLoggedIn ? '/perfil' : '/login' },
             { label: 'Sobre', path: '/sobre' },
             { label: 'Contato', path: '/contato' },

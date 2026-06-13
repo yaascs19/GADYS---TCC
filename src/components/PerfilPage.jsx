@@ -216,7 +216,7 @@ function PerfilPage() {
             { label: 'Início', path: '/' },
             { label: 'Lugares', path: '/lugares' },
             { label: 'Mapa', path: '/mapa' },
-            { label: 'Adicionar Local', path: '/adicionar-local' },
+            { label: 'Dê sugestões', path: '/adicionar-local' },
             { label: 'Sobre', path: '/sobre' },
             { label: 'Contato', path: '/contato' },
           ].map(({ label, path }) => (
@@ -303,7 +303,7 @@ function PerfilPage() {
           <div className="actions-card">
             <h3 className="card-header">Ações Rápidas</h3>
             <div className="actions-grid">
-              <Link to="/adicionar-local" className="action-button add-place-button">Adicionar Local</Link>
+              <Link to="/adicionar-local" className="action-button add-place-button">Dê sugestões</Link>
               <Link to="#" className="action-button my-reviews-button">Minhas Avaliações</Link>
               <Link to="/" className="action-button home-page-button">Página Inicial</Link>
             </div>

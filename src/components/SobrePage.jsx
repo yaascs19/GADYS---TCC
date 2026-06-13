@@ -60,7 +60,7 @@ function SobrePage() {
             { label: 'Início', path: '/' },
             { label: 'Lugares', path: '/lugares' },
             { label: 'Mapa', path: '/mapa' },
-            { label: 'Adicionar Local', path: '/adicionar-local' },
+            { label: 'Dê sugestões', path: '/adicionar-local' },
             { label: isLoggedIn ? 'Meu Perfil' : 'Entrar', path: isLoggedIn ? '/perfil' : '/login' },
             { label: 'Contato', path: '/contato' },
           ].map(({ label, path }) => (
