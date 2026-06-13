@@ -108,7 +108,7 @@ export default function Chatbot({ darkMode }) {
   const suggHoverBg = darkMode ? 'rgba(102,126,234,0.15)' : '#f0f0ff'
 
   return (
-    <div style={{ position: 'fixed', bottom: '1.5rem', right: '1.5rem', zIndex: 9999 }}>
+    <div style={{ position: 'fixed', bottom: '1.5rem', left: '1.5rem', zIndex: 9999 }}>
       {open && (
         <div style={{
           width: '340px', height: '500px',
