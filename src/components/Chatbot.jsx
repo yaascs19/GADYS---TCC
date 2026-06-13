@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 
 const GEMINI_KEY = import.meta.env.VITE_GEMINI_KEY
-const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_KEY}`
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_KEY}`
 
 const SYSTEM_CONTEXT = `Você é o assistente virtual do GADYS, um site de turismo brasileiro. 
 Responda dúvidas e reclamações dos usuários de forma simpática e objetiva em português.
@@ -39,9 +39,11 @@ export default function Chatbot({ darkMode }) {
         })
       })
       const data = await res.json()
+      console.log('Gemini response:', JSON.stringify(data))
       const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Desculpe, não consegui responder. Tente novamente.'
       setMessages(prev => [...prev, { role: 'bot', text: reply }])
-    } catch {
+    } catch (err) {
+      console.error('Gemini error:', err)
       setMessages(prev => [...prev, { role: 'bot', text: 'Erro ao conectar. Tente novamente.' }])
     } finally {
       setLoading(false)
