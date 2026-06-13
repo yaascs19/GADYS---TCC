@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
-import { GoogleGenerativeAI } from '@google/generative-ai'
 
-const genAI = new GoogleGenerativeAI(import.meta.env.VITE_GEMINI_KEY)
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' })
+const GEMINI_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${import.meta.env.VITE_GEMINI_KEY}`
 
 const SYSTEM_CONTEXT = `Você é o assistente virtual do GADYS, uma plataforma de turismo brasileiro. Responda de forma simpática e objetiva em português. Seja breve — máximo 2 parágrafos. Se perguntarem sobre funcionalidades do site, oriente o usuário. Se não souber, indique a página de Contato.`
 
@@ -110,8 +108,15 @@ export default function Chatbot({ darkMode }) {
 
     setLoading(true)
     try {
-      const result = await model.generateContent(SYSTEM_CONTEXT + '\n\nUsuário: ' + msg)
-      const reply = result.response.text()
+      const res = await fetch(GEMINI_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ role: 'user', parts: [{ text: SYSTEM_CONTEXT + '\n\nUsuário: ' + msg }] }]
+        })
+      })
+      const data = await res.json()
+      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Não consegui responder agora. Tente a página de Contato!'
       setMessages(prev => [...prev, { role: 'bot', text: reply }])
     } catch {
       setMessages(prev => [...prev, { role: 'bot', text: 'Não consegui responder agora. Tente a página de Contato!' }])
