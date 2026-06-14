@@ -352,8 +352,9 @@ function AdminPanel() {
   const [confirmModal, setConfirmModal] = useState(null)
 
   const CATEGORIAS_FIXAS = ['Monumentos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural']
+  const [categoriasCustomCriadas, setCategoriasCustomCriadas] = useState([])
 
-  const isCategoriaCustom = (sub) => sub && !CATEGORIAS_FIXAS.includes(sub)
+  const isCategoriaCustom = (sub) => sub && !CATEGORIAS_FIXAS.includes(sub) && !categoriasCustomCriadas.includes(sub)
 
   const handleCriarCategoria = async (nome, estado) => {
     try {
@@ -362,8 +363,10 @@ function AdminPanel() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nome, estado })
       })
-      if (res.ok) showToast(`Categoria "${nome}" criada para ${estado}!`, 'success')
-      else { const d = await res.json(); showToast(d || 'Erro ao criar categoria.') }
+      if (res.ok) {
+        showToast(`Categoria "${nome}" criada para ${estado}!`, 'success')
+        setCategoriasCustomCriadas(prev => [...prev, nome])
+      } else { const d = await res.json(); showToast(d || 'Erro ao criar categoria.') }
     } catch { showToast('Erro de conexão.') }
   }
 
