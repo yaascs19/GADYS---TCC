@@ -290,7 +290,7 @@ function PerfilPage() {
                     </div>
                     <div className="mensagem-respondida-body">
                       <p className="mensagem-original"><span>Sua mensagem:</span> {msg.mensagem}</p>
-                      <p className="mensagem-resposta"><span>Resposta:</span> {msg.resposta}</p>
+                      <p className="mensagem-resposta"><span>Resposta:</span> <span style={{ whiteSpace: 'pre-wrap' }}>{msg.resposta}</span></p>
                     </div>
                   </div>
                 ))}
