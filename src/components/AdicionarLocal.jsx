@@ -36,7 +36,7 @@ function AdicionarLocal() {
       const nomeEstado = ESTADOS_NOMES[formData.estado] || formData.estado
       const query = `${formData.nome}, ${nomeEstado}, Brasil`
       const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&addressdetails=1&countrycodes=br`,
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&addressdetails=1`,
         { headers: { 'Accept-Language': 'pt-BR', 'User-Agent': 'GADYS-TCC/1.0' } }
       )
       const data = await res.json()
