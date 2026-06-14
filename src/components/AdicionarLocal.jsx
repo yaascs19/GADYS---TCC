@@ -10,6 +10,8 @@ function AdicionarLocal() {
   const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
   const [menuOpen, setMenuOpen] = useState(false)
   const [formData, setFormData] = useState({ nome: '', subcategoria: '', estado: '', endereco: '', descricao: '' })
+  const [enderecoGeradoIA, setEnderecoGeradoIA] = useState(false)
+  const [buscandoEndereco, setBuscandoEndereco] = useState(false)
   const [imagem, setImagem] = useState(null)
   const [uploading, setUploading] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
@@ -22,6 +24,32 @@ function AdicionarLocal() {
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
+    if (name === 'endereco') setEnderecoGeradoIA(false)
+  }
+
+  const buscarEnderecoIA = async () => {
+    if (!formData.nome || !formData.estado) return
+    setBuscandoEndereco(true)
+    try {
+      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${import.meta.env.VITE_GROQ_KEY}` },
+        body: JSON.stringify({
+          model: 'llama-3.3-70b-versatile',
+          messages: [
+            { role: 'system', content: 'Voce e um especialista em enderecos do Brasil. Responda APENAS com o endereco completo, sem explicacoes.' },
+            { role: 'user', content: `Qual o endereco completo de "${formData.nome}" no estado ${formData.estado}, Brasil? Responda apenas com o endereco no formato: Rua/Av, numero, cidade - UF. Se nao souber, escreva apenas: nao encontrado.` }
+          ]
+        })
+      })
+      const data = await res.json()
+      const endereco = data?.choices?.[0]?.message?.content?.trim() || ''
+      if (endereco && !endereco.toLowerCase().includes('nao encontrado')) {
+        setFormData(prev => ({ ...prev, endereco }))
+        setEnderecoGeradoIA(true)
+      }
+    } catch {}
+    finally { setBuscandoEndereco(false) }
   }
 
   const handleImageUpload = async (e) => {
@@ -153,7 +181,18 @@ function AdicionarLocal() {
 
             <div className="form-group">
               <label className="form-label">Endereço *</label>
-              <input type="text" name="endereco" value={formData.endereco} onChange={handleInputChange} required className="form-input" placeholder="Ex: Av. das Cataratas, km 18, Foz do Iguaçu - PR" />
+              <div style={{ display: 'flex', gap: '0.5rem' }}>
+                <input type="text" name="endereco" value={formData.endereco} onChange={handleInputChange} required className="form-input" placeholder="Ex: Av. das Cataratas, km 18, Foz do Iguaçu - PR" style={{ flex: 1 }} />
+                <button type="button" onClick={buscarEnderecoIA} disabled={buscandoEndereco || !formData.nome || !formData.estado} className="submit-button"
+                  style={{ width: 'auto', padding: '0 1rem', marginTop: 0, fontSize: '0.8rem', whiteSpace: 'nowrap', opacity: (!formData.nome || !formData.estado) ? 0.5 : 1 }}>
+                  {buscandoEndereco ? 'Buscando...' : 'Buscar com IA'}
+                </button>
+              </div>
+              {enderecoGeradoIA && (
+                <small style={{ color: '#f59e0b', marginTop: '0.3rem', display: 'block' }}>
+                  Endereço gerado por IA — verifique antes de enviar.
+                </small>
+              )}
             </div>
 
             <div className="form-group">
