@@ -3,16 +3,31 @@ import { useNavigate } from 'react-router-dom'
 
 const ESTADOS = [
   { label: 'Acre', path: '/acre' },
+  { label: 'Alagoas', path: '/alagoas' },
   { label: 'Amapá', path: '/amapa' },
   { label: 'Amazonas', path: '/amazonas' },
+  { label: 'Bahia', path: '/bahia' },
   { label: 'Ceará', path: '/ceara' },
+  { label: 'Distrito Federal', path: '/distrito-federal' },
   { label: 'Espírito Santo', path: '/espirito-santo' },
+  { label: 'Goiás', path: '/goias' },
+  { label: 'Maranhão', path: '/maranhao' },
+  { label: 'Mato Grosso', path: '/mato-grosso' },
+  { label: 'Mato Grosso do Sul', path: '/mato-grosso-do-sul' },
   { label: 'Minas Gerais', path: '/minas-gerais' },
   { label: 'Pará', path: '/para' },
+  { label: 'Paraíba', path: '/paraiba' },
+  { label: 'Paraná', path: '/parana' },
+  { label: 'Pernambuco', path: '/pernambuco' },
+  { label: 'Piauí', path: '/piaui' },
   { label: 'Rio de Janeiro', path: '/rio-de-janeiro' },
+  { label: 'Rio Grande do Norte', path: '/rio-grande-do-norte' },
+  { label: 'Rio Grande do Sul', path: '/rio-grande-do-sul' },
   { label: 'Rondônia', path: '/rondonia' },
   { label: 'Roraima', path: '/roraima' },
+  { label: 'Santa Catarina', path: '/santa-catarina' },
   { label: 'São Paulo', path: '/sao-paulo' },
+  { label: 'Sergipe', path: '/sergipe' },
   { label: 'Tocantins', path: '/tocantins' },
 ]
 
@@ -76,7 +91,7 @@ export default function NavbarShared({ darkMode, toggleDarkMode, paginaAtual }) 
             Estados Brasileiros {estadosOpen ? '▲' : '▼'}
           </button>
           {estadosOpen && (
-            <ul style={{ listStyle: 'none', margin: 0, padding: '0.25rem 0', background: 'rgba(255,255,255,0.07)', borderRadius: '8px', marginInline: '1rem' }}>
+            <ul style={{ listStyle: 'none', margin: '0.25rem 1rem 0', padding: '0.25rem 0', background: 'rgba(255,255,255,0.07)', borderRadius: '8px', maxHeight: '220px', overflowY: 'auto' }}>
               {ESTADOS.map(({ label, path }) => (
                 <li key={path}>
                   <a href="#" onClick={(e) => { e.preventDefault(); navigate(path); setMenuOpen(false); setEstadosOpen(false) }}
