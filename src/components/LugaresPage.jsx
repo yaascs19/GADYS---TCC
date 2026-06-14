@@ -63,7 +63,7 @@ function LugaresPage() {
             </div>
           </div>
         ))}
-        {locaisBanco.filter(l => l.status === 'ATIVO').map((lugar, i) => (
+        {locaisBanco.filter(l => l.status === 'ATIVO').slice(0, 0).map((lugar, i) => (
           <div key={`banco-${lugar.id}`} className="lp-card" style={{ animationDelay: `${(lugaresEstaticos.length + i) * 0.08}s` }}>
             <div className="lp-card-image-container">
               {lugar.imagemUrl
