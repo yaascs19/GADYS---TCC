@@ -31,20 +31,22 @@ function AdicionarLocal() {
     if (!formData.nome || !formData.estado) return
     setBuscandoEndereco(true)
     try {
-      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${import.meta.env.VITE_GROQ_KEY}` },
-        body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          messages: [
-            { role: 'system', content: 'Voce e um especialista em enderecos do Brasil. Responda APENAS com o endereco completo, sem explicacoes.' },
-            { role: 'user', content: `Qual o endereco completo de "${formData.nome}" no estado ${formData.estado}, Brasil? Responda apenas com o endereco no formato: Rua/Av, numero, cidade - UF. Se nao souber, escreva apenas: nao encontrado.` }
-          ]
-        })
-      })
+      const query = `${formData.nome}, ${formData.estado}, Brasil`
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&addressdetails=1&countrycodes=br`,
+        { headers: { 'Accept-Language': 'pt-BR', 'User-Agent': 'GADYS-TCC/1.0' } }
+      )
       const data = await res.json()
-      const endereco = data?.choices?.[0]?.message?.content?.trim() || ''
-      if (endereco && !endereco.toLowerCase().includes('nao encontrado')) {
+      if (data.length > 0) {
+        const addr = data[0].address
+        const partes = [
+          addr.road || addr.pedestrian || addr.path,
+          addr.house_number,
+          addr.suburb || addr.neighbourhood,
+          addr.city || addr.town || addr.village,
+          addr.state_code || addr.state
+        ].filter(Boolean)
+        const endereco = partes.join(', ')
         setFormData(prev => ({ ...prev, endereco }))
         setEnderecoGeradoIA(true)
       }
@@ -185,12 +187,12 @@ function AdicionarLocal() {
                 <input type="text" name="endereco" value={formData.endereco} onChange={handleInputChange} required className="form-input" placeholder="Ex: Av. das Cataratas, km 18, Foz do Iguaçu - PR" style={{ flex: 1 }} />
                 <button type="button" onClick={buscarEnderecoIA} disabled={buscandoEndereco || !formData.nome || !formData.estado} className="submit-button"
                   style={{ width: 'auto', padding: '0 1rem', marginTop: 0, fontSize: '0.8rem', whiteSpace: 'nowrap', opacity: (!formData.nome || !formData.estado) ? 0.5 : 1 }}>
-                  {buscandoEndereco ? 'Buscando...' : 'Buscar com IA'}
+                  {buscandoEndereco ? 'Buscando...' : 'Buscar endereço'}
                 </button>
               </div>
               {enderecoGeradoIA && (
-                <small style={{ color: '#f59e0b', marginTop: '0.3rem', display: 'block' }}>
-                  Endereço gerado por IA — verifique antes de enviar.
+                <small style={{ color: '#10b981', marginTop: '0.3rem', display: 'block' }}>
+                  Endereço encontrado automaticamente — verifique se está correto.
                 </small>
               )}
             </div>
