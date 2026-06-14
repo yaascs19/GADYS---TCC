@@ -243,6 +243,11 @@ function LocalDetalhe() {
           )}
         </main>
       </div>
+      {local.enviadoPor && !['GADYS', 'Admin', 'admin'].includes(local.enviadoPor) && (
+        <p style={{ textAlign: 'center', color: '#A9B4C2', fontSize: '0.8rem', padding: '1rem 0 1.5rem' }}>
+          Sugerido por <strong style={{ color: '#38BDF8' }}>{local.enviadoPor}</strong>
+        </p>
+      )}
     </div>
   );
 }

@@ -602,7 +602,7 @@ function AdminPanel() {
             ...(investigarModal.imagensLateraisVisite || []),
           ].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(',') || null,
           coordenadas: investigarConteudo.coordenadas || investigarModal.coordenadas || null,
-          enviadoPor: 'GADYS'
+          enviadoPor: investigarModal.enviadoPor || 'GADYS'
         })
       })
       if (response.ok) {
