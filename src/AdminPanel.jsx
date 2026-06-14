@@ -394,16 +394,11 @@ function AdminPanel() {
       }
       const data = await res.json()
       const text = data?.choices?.[0]?.message?.content || ''
-      const removeEmojis = (str) => str ? str.replace(/[^\p{L}\p{N}\p{P}\p{Z}\n]/gu, '').replace(/\s+/g, ' ').trim() : str
-      const cleanObj = (obj) => {
-        if (typeof obj === 'string') return removeEmojis(obj)
-        if (Array.isArray(obj)) return obj.map(item => typeof item === 'object' ? cleanObj(item) : item)
-        if (typeof obj === 'object' && obj !== null) return Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, cleanObj(v)]))
-        return obj
-      }
       try {
         const parsed = JSON.parse(text)
-        setInvestigarConteudo(cleanObj(parsed))
+        // normaliza chave hosteis (Groq pode retornar hostels, hoteis, hotels, etc)
+        const hosteis = parsed.hosteis || parsed.hostels || parsed.hoteis || parsed.hotels || parsed.hospedagem || []
+        setInvestigarConteudo({ ...parsed, hosteis })
       } catch {
         setInvestigarConteudo({ erro: 'Resposta da IA em formato invalido. Tente novamente.' })
       }
