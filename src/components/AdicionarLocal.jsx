@@ -49,7 +49,7 @@ function AdicionarLocal() {
         descricao: sanitize(formData.descricao),
         endereco: sanitize(formData.endereco),
         estado: formData.estado,
-        subcategoria: formData.subcategoria,
+        subcategoria: formData.subcategoria === 'Outros' ? (formData.outraCategoria || 'Outros') : formData.subcategoria,
         imagemUrl: imagem || null,
         enviadoPor: localStorage.getItem('userName') || 'Usuário Anônimo',
         usuarioId: localStorage.getItem('usuarioId') || null,
@@ -57,7 +57,7 @@ function AdicionarLocal() {
       const API_URL = import.meta.env.VITE_API_URL || 'https://gadys-backend.onrender.com'
       await axios.post(`${API_URL}/api/sugestoes`, sugestaoData)
       setShowSuccess(true)
-      setFormData({ nome: '', subcategoria: '', estado: '', endereco: '', descricao: '' })
+      setFormData({ nome: '', subcategoria: '', estado: '', endereco: '', descricao: '', outraCategoria: '' })
       setImagem(null)
       window.scrollTo(0, 0)
     } catch (error) {
@@ -121,9 +121,17 @@ function AdicionarLocal() {
                   <option value="Lugar Paradísíaco">Lugar Paradisíaco</option>
                   <option value="Restaurantes">Restaurante</option>
                   <option value="Costume Cultural">Costume Cultural</option>
+                  <option value="Outros">Outros</option>
                 </select>
               </div>
             </div>
+
+            {formData.subcategoria === 'Outros' && (
+              <div className="form-group">
+                <label className="form-label">Qual categoria? *</label>
+                <input type="text" name="outraCategoria" value={formData.outraCategoria || ''} onChange={handleInputChange} required className="form-input" placeholder="Ex: Parque, Cachoeira, Museu..." />
+              </div>
+            )}
 
             <div className="form-group">
               <label className="form-label">Endereço *</label>
