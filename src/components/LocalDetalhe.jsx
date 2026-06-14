@@ -30,7 +30,7 @@ const SecaoRica = ({ secao }) => (
     <div className="local-text-image-split">
       <div className="local-text">
         <h2>{secao.titulo}</h2>
-        <p>{secao.texto}</p>
+        {secao.texto && <p>{secao.texto}</p>}
         {secao.lista && (
           <ul style={{ paddingLeft: '1.2rem', lineHeight: 1.8 }}>
             {secao.lista.map((item, i) => (
@@ -39,9 +39,9 @@ const SecaoRica = ({ secao }) => (
           </ul>
         )}
         {secao.subsecoes && secao.subsecoes.map((sub, i) => (
-          <div key={i} style={{ marginTop: '1.5rem' }}>
-            <h3 style={{ color: '#fff', fontSize: '1.1rem', marginBottom: '0.5rem' }}>{sub.titulo}</h3>
-            <p style={{ fontWeight: 300, lineHeight: 1.7 }}>{sub.texto}</p>
+          <div key={i} style={{ marginTop: '1.5rem', background: 'rgba(56,189,248,0.06)', border: '1px solid rgba(56,189,248,0.2)', borderRadius: '8px', padding: '1.25rem' }}>
+            <h3 style={{ color: '#fff', fontSize: '1.05rem', marginBottom: '0.5rem' }}>{sub.titulo}</h3>
+            <p style={{ fontWeight: 300, lineHeight: 1.7, margin: 0 }}>{sub.texto}</p>
           </div>
         ))}
       </div>
@@ -186,7 +186,14 @@ function LocalDetalhe() {
         }}>{toast.msg}</div>
       )}
       <div style={{ position: 'relative' }}>
-        <HeaderCarousel images={carrossel.length > 0 ? carrossel : [imagens[0]]} nome={local.nome} cidade={local.cidade} estado={local.estado} />
+        {imagens.length > 0
+          ? <HeaderCarousel images={carrossel.length > 0 ? carrossel : [imagens[0]]} nome={local.nome} cidade={local.cidade} estado={local.estado} />
+          : (
+            <header className="local-detalhe-header" style={{ background: 'linear-gradient(135deg,#1a237e,#4a148c)', minHeight: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="local-header-text"><h1>{local.nome}</h1><p>{local.cidade}, {local.estado}</p></div>
+            </header>
+          )
+        }
         <button onClick={() => navigate(-1)} style={{
           position: 'absolute', top: '2rem', left: '2rem', zIndex: 10,
           background: 'rgba(255,255,255,0.2)', border: '2px solid white',
