@@ -1,6 +1,101 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './AdminPanel.css'
+
+function PreviewAbas({ investigarConteudo, investigarModal }) {
+  const [aba, setAba] = useState('sobre')
+  const abas = ['sobre', 'visite', 'fotos']
+  const labels = { sobre: 'Sobre', visite: 'Visite', fotos: 'Fotos' }
+  return (
+    <div style={{ padding: '0 2rem' }}>
+      <nav style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', borderBottom: '1px solid #2d2d4e', marginBottom: '3rem' }}>
+        {abas.map(a => (
+          <button key={a} onClick={() => setAba(a)} style={{
+            fontSize: '1rem', fontWeight: 500, background: 'transparent', border: 'none',
+            cursor: 'pointer', padding: '0.5rem 1rem 1rem',
+            color: aba === a ? '#fff' : '#A9B4C2',
+            borderBottom: aba === a ? '3px solid #38BDF8' : '3px solid transparent',
+            transition: 'color 0.3s', fontFamily: 'inherit'
+          }}>{labels[a]}</button>
+        ))}
+      </nav>
+
+      {aba === 'sobre' && (
+        <section style={{ animation: 'fadeIn 0.6s ease', marginBottom: '3rem' }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '3rem', flexWrap: 'wrap' }}>
+            <div style={{ flex: '1.5', minWidth: '300px' }}>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 600, color: '#fff', marginBottom: '1.5rem' }}>Sobre o Local</h2>
+              <p style={{ lineHeight: 1.7, fontWeight: 300, marginBottom: '1.5rem' }}>{investigarConteudo.descricao}</p>
+              <p style={{ lineHeight: 1.7, fontWeight: 300 }}>{investigarConteudo.historia}</p>
+              <div style={{ marginTop: '2rem' }}>
+                <div style={{ background: '#2d2d4e', padding: '1rem', borderRadius: '6px', marginBottom: '0.8rem', borderLeft: '3px solid #38BDF8' }}>
+                  <strong style={{ color: '#fff' }}>Estado:</strong> {investigarModal.estado}
+                </div>
+                {investigarModal.endereco && (
+                  <div style={{ background: '#2d2d4e', padding: '1rem', borderRadius: '6px', borderLeft: '3px solid #38BDF8' }}>
+                    <strong style={{ color: '#fff' }}>Endereço:</strong> {investigarModal.endereco}
+                  </div>
+                )}
+              </div>
+            </div>
+            <div style={{ flex: 1, minWidth: '280px' }}>
+              {investigarModal.imagemUrl
+                ? <img src={investigarModal.imagemUrl} alt={investigarConteudo.titulo} style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }} />
+                : <div style={{ width: '100%', aspectRatio: '4/3', borderRadius: '8px', background: 'linear-gradient(135deg,#1a4a2e,#0d2b1a)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem' }}>🌎</div>
+              }
+            </div>
+          </div>
+          <div style={{ marginTop: '2.5rem', background: '#2d2d4e', padding: '1.5rem', borderRadius: '8px', borderLeft: '4px solid #38BDF8' }}>
+            <h3 style={{ color: '#fff', margin: '0 0 0.75rem', fontSize: '1.2rem' }}>✨ Curiosidades</h3>
+            <p style={{ margin: 0, lineHeight: 1.7, fontWeight: 300 }}>{investigarConteudo.curiosidades}</p>
+          </div>
+        </section>
+      )}
+
+      {aba === 'visite' && (
+        <section style={{ animation: 'fadeIn 0.6s ease', marginBottom: '3rem' }}>
+          <h2 style={{ fontSize: '1.8rem', fontWeight: 600, color: '#fff', marginBottom: '2rem' }}>Informações Práticas</h2>
+          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '3rem', flexWrap: 'wrap' }}>
+            <div style={{ flex: '1.5', minWidth: '300px' }}>
+              {[
+                { titulo: '🕐 Horário de Funcionamento', texto: investigarConteudo.horario },
+                { titulo: '💰 Preço / Entrada', texto: investigarConteudo.preco },
+                { titulo: '📍 Localização', texto: investigarModal.endereco || investigarModal.estado },
+              ].filter(c => c.texto).map((card, i) => (
+                <div key={i} style={{ background: '#2d2d4e', padding: '1.5rem', borderRadius: '8px', marginBottom: '1.5rem', borderLeft: '4px solid #38BDF8' }}>
+                  <h3 style={{ color: '#fff', margin: '0 0 0.5rem', fontSize: '1.1rem' }}>{card.titulo}</h3>
+                  <p style={{ margin: 0, lineHeight: 1.6, fontWeight: 300 }}>{card.texto}</p>
+                </div>
+              ))}
+            </div>
+            <div style={{ flex: 1, minWidth: '280px' }}>
+              {investigarModal.imagemUrl && (
+                <img src={investigarModal.imagemUrl} alt={investigarConteudo.titulo} style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }} />
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {aba === 'fotos' && (
+        <section style={{ animation: 'fadeIn 0.6s ease', marginBottom: '3rem', textAlign: 'center' }}>
+          <h2 style={{ fontSize: '2rem', fontWeight: 600, color: '#fff', marginBottom: '2.5rem' }}>Fotos</h2>
+          {investigarModal.imagemUrl ? (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: '1rem' }}>
+              {investigarModal.imagemUrl.split(',').map((img, i) => (
+                <div key={i} style={{ overflow: 'hidden', borderRadius: '8px', boxShadow: '0 8px 20px rgba(0,0,0,0.25)', aspectRatio: '4/3' }}>
+                  <img src={img.trim()} alt={`Foto ${i+1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p style={{ color: '#A9B4C2', fontStyle: 'italic' }}>Nenhuma foto disponível ainda.</p>
+          )}
+        </section>
+      )}
+    </div>
+  )
+}
 
 function AdminPanel() {
   const navigate = useNavigate()
@@ -465,104 +560,64 @@ function AdminPanel() {
       {investigarModal && (
         <div className="modal-overlay" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null) }}>
           <div onClick={e => e.stopPropagation()} style={{
-            background: '#1a1a2e', color: '#E0E1DD',
-            width: '95vw', maxWidth: '900px', maxHeight: '90vh',
-            overflowY: 'auto', borderRadius: '16px',
-            boxShadow: '0 25px 60px rgba(0,0,0,0.7)',
+            width: '95vw', maxWidth: '1000px', maxHeight: '92vh', overflowY: 'auto',
+            borderRadius: '16px', boxShadow: '0 25px 60px rgba(0,0,0,0.8)',
+            backgroundColor: '#1a1a2e', color: '#E0E1DD',
             fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
           }}>
 
-            {/* Header hero */}
+            {/* ── HEADER HERO ── */}
             <div style={{
-              position: 'relative', height: '280px', display: 'flex',
-              alignItems: 'center', justifyContent: 'center',
-              background: investigarModal.imagemUrl
-                ? `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(${investigarModal.imagemUrl}) center/cover`
-                : 'linear-gradient(135deg,#667eea,#764ba2)',
-              borderRadius: '16px 16px 0 0', textAlign: 'center', padding: '2rem'
+              position: 'relative', height: '320px', display: 'flex',
+              flexDirection: 'column', justifyContent: 'center', alignItems: 'center',
+              textAlign: 'center', overflow: 'hidden', marginBottom: 0,
+              borderRadius: '16px 16px 0 0'
             }}>
-              <div>
-                <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: '#fff', margin: '0 0 0.5rem', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+              <div style={{
+                position: 'absolute', inset: 0, zIndex: 1,
+                background: investigarModal.imagemUrl
+                  ? `url(${investigarModal.imagemUrl}) center/cover`
+                  : 'linear-gradient(135deg,#1a4a2e,#0d2b1a)'
+              }} />
+              <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)', zIndex: 2 }} />
+              <div style={{ position: 'relative', zIndex: 3 }}>
+                <h1 style={{ fontSize: '2.8rem', fontWeight: 700, color: '#fff', textShadow: '0 2px 10px rgba(0,0,0,0.5)', margin: '0 0 0.5rem' }}>
                   {investigarLoading ? investigarModal.nome : (investigarConteudo?.titulo || investigarModal.nome)}
                 </h1>
-                <p style={{ color: 'rgba(255,255,255,0.85)', margin: 0, fontSize: '1rem' }}>
-                  {investigarModal.estado}
+                <p style={{ fontSize: '1.1rem', fontWeight: 300, color: 'rgba(255,255,255,0.85)', margin: '0 0 1rem', textShadow: '0 1px 8px rgba(0,0,0,0.5)' }}>
+                  {investigarConteudo?.descricao?.split('.')[0] || investigarModal.estado}
                 </p>
-                <span style={{ display: 'inline-block', marginTop: '0.75rem', background: 'rgba(255,255,255,0.2)', padding: '4px 14px', borderRadius: '50px', fontSize: '0.8rem', color: '#fff' }}>
-                  Preview — como vai aparecer no site
+                <span style={{ background: 'rgba(56,189,248,0.25)', border: '1px solid rgba(56,189,248,0.5)', color: '#38BDF8', padding: '4px 16px', borderRadius: '50px', fontSize: '0.8rem', fontWeight: 600 }}>
+                  PREVIEW
                 </span>
               </div>
             </div>
 
             {investigarLoading && (
-              <div style={{ textAlign: 'center', padding: '3rem', color: '#A9B4C2' }}>
-                <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🤖</div>
-                Gerando conteúdo com IA...
+              <div style={{ textAlign: 'center', padding: '4rem', color: '#A9B4C2' }}>
+                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>🤖</div>
+                <p style={{ margin: 0 }}>Gerando conteúdo com IA...</p>
               </div>
             )}
 
             {investigarConteudo?.erro && (
-              <div style={{ padding: '2rem', textAlign: 'center', color: '#f43f5e' }}>
-                {investigarConteudo.erro}
-              </div>
+              <div style={{ padding: '2rem', textAlign: 'center', color: '#f43f5e' }}>{investigarConteudo.erro}</div>
             )}
 
             {investigarConteudo && !investigarConteudo.erro && (
-              <div style={{ padding: '2rem' }}>
-
-                {/* Tabs simuladas */}
-                <nav style={{ display: 'flex', gap: '1.5rem', borderBottom: '1px solid #2d2d4e', marginBottom: '2rem' }}>
-                  {['Sobre', 'Informações Práticas'].map((t, i) => (
-                    <span key={t} style={{
-                      padding: '0.5rem 1rem 1rem', fontWeight: 500, cursor: 'default',
-                      color: i === 0 ? '#fff' : '#A9B4C2',
-                      borderBottom: i === 0 ? '3px solid #38BDF8' : '3px solid transparent'
-                    }}>{t}</span>
-                  ))}
-                </nav>
-
-                {/* Sobre */}
-                <section style={{ marginBottom: '2.5rem' }}>
-                  <h2 style={{ fontSize: '1.6rem', fontWeight: 600, color: '#fff', marginBottom: '1rem' }}>Sobre o Local</h2>
-                  <p style={{ lineHeight: 1.8, color: '#c8d0dc', marginBottom: '1rem' }}>{investigarConteudo.descricao}</p>
-                  <p style={{ lineHeight: 1.8, color: '#A9B4C2' }}>{investigarConteudo.historia}</p>
-                </section>
-
-                {/* Curiosidades */}
-                <section style={{ marginBottom: '2.5rem', background: 'rgba(56,189,248,0.07)', border: '1px solid rgba(56,189,248,0.15)', borderRadius: '12px', padding: '1.5rem' }}>
-                  <h2 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#38BDF8', marginBottom: '0.75rem' }}>✨ Curiosidades</h2>
-                  <p style={{ lineHeight: 1.8, color: '#c8d0dc', margin: 0 }}>{investigarConteudo.curiosidades}</p>
-                </section>
-
-                {/* Info cards */}
-                <section>
-                  <h2 style={{ fontSize: '1.6rem', fontWeight: 600, color: '#fff', marginBottom: '1rem' }}>Informações Práticas</h2>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: '1rem' }}>
-                    {[{icon:'🕐', label:'Horário', val: investigarConteudo.horario},
-                      {icon:'💰', label:'Preço', val: investigarConteudo.preco},
-                      {icon:'📍', label:'Endereço', val: investigarModal.endereco || investigarModal.estado}
-                    ].map(({icon, label, val}) => val && (
-                      <div key={label} style={{ background: '#2d2d4e', padding: '1.25rem', borderRadius: '8px', borderLeft: '4px solid #38BDF8' }}>
-                        <h3 style={{ margin: '0 0 0.4rem', fontSize: '0.95rem', color: '#fff' }}>{icon} {label}</h3>
-                        <p style={{ margin: 0, color: '#A9B4C2', fontSize: '0.9rem', lineHeight: 1.5 }}>{val}</p>
-                      </div>
-                    ))}
-                  </div>
-                </section>
-              </div>
+              <PreviewAbas investigarConteudo={investigarConteudo} investigarModal={investigarModal} />
             )}
 
-            {/* Ações */}
-            <div style={{ display: 'flex', gap: '0.75rem', padding: '1.5rem 2rem', borderTop: '1px solid #2d2d4e' }}>
+            {/* RODAPÉ */}
+            <div style={{ display: 'flex', gap: '0.75rem', padding: '1.5rem 2rem', borderTop: '1px solid #2d2d4e', marginTop: investigarConteudo && !investigarConteudo.erro ? 0 : '1rem' }}>
               {investigarConteudo && !investigarConteudo.erro && (
                 <button className="approve-btn" style={{ flex: 1 }} onClick={handlePublicarLocal}>
                   🚀 Publicar Local
                 </button>
               )}
-              <button className="expand-btn" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null) }}>
-                Fechar
-              </button>
+              <button className="expand-btn" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null) }}>Fechar</button>
             </div>
+
           </div>
         </div>
       )}
