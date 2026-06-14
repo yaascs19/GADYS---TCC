@@ -10,8 +10,6 @@ function AdicionarLocal() {
   const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
   const [menuOpen, setMenuOpen] = useState(false)
   const [formData, setFormData] = useState({ nome: '', subcategoria: '', estado: '', endereco: '', descricao: '' })
-  const [enderecoGeradoIA, setEnderecoGeradoIA] = useState(false)
-  const [buscandoEndereco, setBuscandoEndereco] = useState(false)
   const [imagem, setImagem] = useState(null)
   const [uploading, setUploading] = useState(false)
   const [showSuccess, setShowSuccess] = useState(false)
@@ -24,30 +22,6 @@ function AdicionarLocal() {
   const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
-    if (name === 'endereco') setEnderecoGeradoIA(false)
-  }
-
-  const ESTADOS_NOMES = {'AC':'Acre','AL':'Alagoas','AP':'Amapá','AM':'Amazonas','BA':'Bahia','CE':'Ceará','DF':'Distrito Federal','ES':'Espírito Santo','GO':'Goiás','MA':'Maranhão','MT':'Mato Grosso','MS':'Mato Grosso do Sul','MG':'Minas Gerais','PA':'Pará','PB':'Paraíba','PR':'Paraná','PE':'Pernambuco','PI':'Piauí','RJ':'Rio de Janeiro','RN':'Rio Grande do Norte','RS':'Rio Grande do Sul','RO':'Rondônia','RR':'Roraima','SC':'Santa Catarina','SP':'São Paulo','SE':'Sergipe','TO':'Tocantins'}
-
-  const buscarEnderecoIA = async () => {
-    if (!formData.nome || !formData.estado) return
-    setBuscandoEndereco(true)
-    try {
-      const nomeEstado = ESTADOS_NOMES[formData.estado] || formData.estado
-      const query = `${formData.nome}, ${nomeEstado}, Brasil`
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&addressdetails=1`,
-        { headers: { 'Accept-Language': 'pt-BR', 'User-Agent': 'GADYS-TCC/1.0' } }
-      )
-      const data = await res.json()
-      console.log('Nominatim:', JSON.stringify(data))
-      if (data.length > 0) {
-        const endereco = data[0].display_name.split(',').slice(0, 4).join(',').trim()
-        setFormData(prev => ({ ...prev, endereco }))
-        setEnderecoGeradoIA(true)
-      }
-    } catch {}
-    finally { setBuscandoEndereco(false) }
   }
 
   const handleImageUpload = async (e) => {
@@ -179,18 +153,7 @@ function AdicionarLocal() {
 
             <div className="form-group">
               <label className="form-label">Endereço *</label>
-              <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <input type="text" name="endereco" value={formData.endereco} onChange={handleInputChange} required className="form-input" placeholder="Ex: Av. das Cataratas, km 18, Foz do Iguaçu - PR" style={{ flex: 1 }} />
-                <button type="button" onClick={buscarEnderecoIA} disabled={buscandoEndereco || !formData.nome || !formData.estado} className="submit-button"
-                  style={{ width: 'auto', padding: '0 1rem', marginTop: 0, fontSize: '0.8rem', whiteSpace: 'nowrap', opacity: (!formData.nome || !formData.estado) ? 0.5 : 1 }}>
-                  {buscandoEndereco ? 'Buscando...' : 'Buscar endereço'}
-                </button>
-              </div>
-              {enderecoGeradoIA && (
-                <small style={{ color: '#10b981', marginTop: '0.3rem', display: 'block' }}>
-                  Endereço encontrado automaticamente — verifique se está correto.
-                </small>
-              )}
+              <input type="text" name="endereco" value={formData.endereco} onChange={handleInputChange} required className="form-input" placeholder="Ex: Av. das Cataratas, km 18, Foz do Iguaçu - PR" />
             </div>
 
             <div className="form-group">

@@ -1087,7 +1087,13 @@ function AdminPanel() {
             </div>
             <div className="card-info">
               <p><strong>Estado:</strong> {s.estado}</p>
-              <p><strong>Endereço:</strong> {s.endereco}</p>
+              <p><strong>Endereço:</strong> {s.endereco}
+                {(() => {
+                  const end = (s.endereco || '').trim()
+                  const invalido = !end || end.length < 5 || /^[^a-zA-ZÀ-ÿ]+$/.test(end) || /^(n[aã]o sei|nao|\.|\?|lala|xxx|teste|aaa|bbb|ccc|ddd)/i.test(end)
+                  return invalido ? <span style={{ marginLeft: '0.5rem', background: 'rgba(239,68,68,0.15)', color: '#ef4444', borderRadius: '6px', padding: '2px 8px', fontSize: '0.75rem', fontWeight: '600' }}>Endereço inválido</span> : null
+                })()}
+              </p>
               <p><strong>Enviado por:</strong> {s.enviadoPor}</p>
               <p><strong>Data:</strong> {s.dataCriacao ? new Date(s.dataCriacao).toLocaleDateString('pt-BR') : 'N/A'}</p>
             </div>
