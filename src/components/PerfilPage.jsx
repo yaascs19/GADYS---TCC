@@ -72,7 +72,7 @@ function PerfilPage() {
         .then(usuario => {
           if (usuario?.email) {
             localStorage.setItem('userEmail', usuario.email)
-            setProfileData(prev => ({ ...prev, email: usuario.email }))
+            setProfileData(prev => ({ ...prev, email: usuario.email, foto: usuario.fotoPerfil || prev.foto }))
           }
         })
         .catch(() => {})
@@ -140,6 +140,18 @@ function PerfilPage() {
     }
   }, [])
 
+  const saveFotoBackend = async (foto) => {
+    const usuarioId = localStorage.getItem('usuarioId')
+    if (!usuarioId) return
+    try {
+      await fetch(`${API_URL}/api/usuarios/${usuarioId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fotoPerfil: foto })
+      })
+    } catch {}
+  }
+
   const handlePhotoChange = async (e) => {
     const file = e.target.files[0]
     if (!file) return
@@ -152,6 +164,7 @@ function PerfilPage() {
       const newData = { ...profileData, foto: json.secure_url }
       setProfileData(newData)
       saveProfile(newData)
+      saveFotoBackend(json.secure_url)
       setShowPhotoOptions(false)
     } catch { showToast('Erro ao fazer upload da foto.') }
   }
@@ -160,6 +173,7 @@ function PerfilPage() {
     const newData = { ...profileData, foto: emoji }
     setProfileData(newData)
     saveProfile(newData)
+    saveFotoBackend(emoji)
     setShowPhotoOptions(false)
   }
 
@@ -168,6 +182,7 @@ function PerfilPage() {
       const newData = { ...profileData, foto: urlInput.trim() }
       setProfileData(newData)
       saveProfile(newData)
+      saveFotoBackend(urlInput.trim())
       setUrlInput('')
       setShowPhotoOptions(false)
     }

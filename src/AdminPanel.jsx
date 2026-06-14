@@ -1207,7 +1207,10 @@ function AdminPanel() {
             
             <div className="card-info">
               <p><strong>Email:</strong> {maskEmail(user.email)}</p>
-              <p><strong>Cadastrado em:</strong> {new Date(user.dataCadastro).toLocaleDateString() || 'N/A'}</p>
+              <p><strong>Cadastrado em:</strong> {user.dataCadastro ? new Date(user.dataCadastro).toLocaleDateString('pt-BR') : 'N/A'}</p>
+              <p><strong>Último acesso:</strong> {user.ultimoAcesso ? new Date(user.ultimoAcesso).toLocaleString('pt-BR') : 'Nunca'}</p>
+              <p><strong>Total de acessos:</strong> {user.totalAcessos ?? 0}</p>
+              <p><strong>IP:</strong> {user.ipAcesso || 'N/A'}</p>
             </div>
 
             <div className="card-actions">
