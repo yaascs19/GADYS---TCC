@@ -490,6 +490,37 @@ function AdminPanel() {
   const handlePublicarLocal = async () => {
     if (!investigarConteudo || !investigarModal) return
     try {
+      const informacoesAdicionais = JSON.stringify({
+        secoes: {
+          sobre: {
+            label: 'Sobre',
+            titulo: investigarConteudo.titulo || investigarModal.nome,
+            texto: investigarConteudo.descricao,
+            imagem: (investigarModal.imagensLateraisSobre || [investigarModal.imagemUrlLateral].filter(Boolean))[0] || '',
+            subsecoes: [
+              investigarConteudo.historia ? { titulo: 'Hist\u00f3ria', texto: investigarConteudo.historia } : null,
+              investigarConteudo.curiosidades ? { titulo: 'Curiosidades', texto: investigarConteudo.curiosidades } : null,
+            ].filter(Boolean),
+          },
+          visite: {
+            label: 'Visite',
+            titulo: 'Informa\u00e7\u00f5es Pr\u00e1ticas',
+            texto: '',
+            imagem: (investigarModal.imagensLateraisVisite || [])[0] || '',
+            subsecoes: [
+              investigarConteudo.horario ? { titulo: 'Hor\u00e1rio de Funcionamento', texto: investigarConteudo.horario } : null,
+              investigarConteudo.preco ? { titulo: 'Pre\u00e7o / Entrada', texto: investigarConteudo.preco } : null,
+              investigarModal.endereco ? { titulo: 'Localiza\u00e7\u00e3o', texto: investigarModal.endereco } : null,
+            ].filter(Boolean),
+            recomendacoes: (investigarConteudo.hosteis?.length > 0)
+              ? [{ titulo: 'Hot\u00e9is', itens: investigarConteudo.hosteis }]
+              : [],
+          },
+          fotos: { label: 'Fotos' },
+          avaliacoes: { label: 'Avalia\u00e7\u00f5es' },
+        }
+      })
+
       const response = await fetch(`${API_URL}/api/locais`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -502,7 +533,7 @@ function AdminPanel() {
           categoria: 'lugares-visitar',
           horarioFuncionamento: investigarConteudo.horario,
           preco: investigarConteudo.preco,
-          informacoesAdicionais: investigarConteudo.historia + '\n\nCuriosidades: ' + investigarConteudo.curiosidades,
+          informacoesAdicionais,
           imagemUrl: investigarModal.imagemUrl || null,
           coordenadas: investigarConteudo.coordenadas || investigarModal.coordenadas || null,
           enviadoPor: 'GADYS'
