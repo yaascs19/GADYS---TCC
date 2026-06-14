@@ -181,7 +181,7 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
               </div>
               {conteudo.hosteis?.length > 0 && (
                 <div style={{ marginTop: '2.5rem', borderTop: '1px solid #2d2d4e', paddingTop: '2.5rem' }}>
-                  <h3 style={{ fontSize: '1.4rem', fontWeight: 600, color: '#fff', marginBottom: '1.5rem', paddingBottom: '0.5rem', borderBottom: '2px solid #2d2d4e' }}>🏨 Onde se Hospedar</h3>
+                  <h3 style={{ fontSize: '1.4rem', fontWeight: 600, color: '#fff', marginBottom: '1.5rem', paddingBottom: '0.5rem', borderBottom: '2px solid #2d2d4e' }}>Onde se Hospedar</h3>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: '1.5rem' }}>
                     {conteudo.hosteis.map((h, i) => (
                       <div key={i} style={{ background: '#2d2d4e', borderRadius: '8px', padding: '1.5rem', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
@@ -395,10 +395,15 @@ function AdminPanel() {
       const data = await res.json()
       const text = data?.choices?.[0]?.message?.content || ''
       const removeEmojis = (str) => str ? str.replace(/[^\p{L}\p{N}\p{P}\p{Z}\n]/gu, '').replace(/\s+/g, ' ').trim() : str
+      const cleanObj = (obj) => {
+        if (typeof obj === 'string') return removeEmojis(obj)
+        if (Array.isArray(obj)) return obj.map(item => typeof item === 'object' ? cleanObj(item) : item)
+        if (typeof obj === 'object' && obj !== null) return Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, cleanObj(v)]))
+        return obj
+      }
       try {
         const parsed = JSON.parse(text)
-        const clean = Object.fromEntries(Object.entries(parsed).map(([k, v]) => [k, typeof v === 'string' ? removeEmojis(v) : v]))
-        setInvestigarConteudo(clean)
+        setInvestigarConteudo(cleanObj(parsed))
       } catch {
         setInvestigarConteudo({ erro: 'Resposta da IA em formato invalido. Tente novamente.' })
       }
