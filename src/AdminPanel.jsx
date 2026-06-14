@@ -160,13 +160,13 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId,
               </div>
               <div style={{ marginBottom: '1rem' }}>
                 <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Imagens Laterais</label>
-                {(modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean)).map((url, i) => (
+                {(modal.imagensLateraisSobre || [modal.imagemUrlLateral].filter(Boolean)).map((url, i) => (
                   <div key={i} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <div style={{ flex: 1 }}><ImagemUploader url={url} onChange={u => { const arr = [...(modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean))]; arr[i] = u; setModal({ ...modal, imagensLaterais: arr, imagemUrlLateral: arr[0] || '' }) }} /></div>
-                    <button type="button" className="editor-slot-remove" onClick={() => { const arr = (modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean)).filter((_, j) => j !== i); setModal({ ...modal, imagensLaterais: arr, imagemUrlLateral: arr[0] || '' }) }}>×</button>
+                    <div style={{ flex: 1 }}><ImagemUploader url={url} onChange={u => { const arr = [...(modal.imagensLateraisSobre || [modal.imagemUrlLateral].filter(Boolean))]; arr[i] = u; setModal({ ...modal, imagensLateraisSobre: arr, imagemUrlLateral: arr[0] || '' }) }} /></div>
+                    <button type="button" className="editor-slot-remove" onClick={() => { const arr = (modal.imagensLateraisSobre || [modal.imagemUrlLateral].filter(Boolean)).filter((_, j) => j !== i); setModal({ ...modal, imagensLateraisSobre: arr, imagemUrlLateral: arr[0] || '' }) }}>×</button>
                   </div>
                 ))}
-                <button type="button" className="editor-slot-add-bottom" onClick={() => setModal({ ...modal, imagensLaterais: [...(modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean)), ''] })}>+ imagem</button>
+                <button type="button" className="editor-slot-add-bottom" onClick={() => setModal({ ...modal, imagensLateraisSobre: [...(modal.imagensLateraisSobre || [modal.imagemUrlLateral].filter(Boolean)), ''] })}>+ imagem</button>
               </div>
             </>
           ) : (
@@ -211,11 +211,11 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId,
               <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Preço</label>
               <input className="editor-inline-input" value={conteudo.preco || ''} onChange={e => setConteudo({ ...conteudo, preco: e.target.value })} placeholder="Preço / entrada" style={{ marginBottom: '1.5rem' }} />
               <div style={{ marginTop: '1.5rem' }}>
-                <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>Hotéis / Hostels</label>
+                <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>Hotéis</label>
                 {(conteudo.hosteis || []).map((h, i) => (
                   <div key={i} style={{ marginBottom: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
-                      <label style={{ fontSize: '0.7rem', color: '#A9B4C2' }}>HOSTEL {i+1}</label>
+                      <label style={{ fontSize: '0.7rem', color: '#A9B4C2' }}>HOTEL {i+1}</label>
                       <button type="button" className="editor-slot-remove" onClick={() => setConteudo({ ...conteudo, hosteis: conteudo.hosteis.filter((_, j) => j !== i) })}>×</button>
                     </div>
                     {['nome','nota','contato','site'].map(f => (
@@ -229,13 +229,13 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId,
               </div>
               <div style={{ marginTop: '1.5rem' }}>
                 <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>Imagens Laterais (Visite)</label>
-                {(modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean)).map((url, i) => (
+                {(modal.imagensLateraisVisite || []).map((url, i) => (
                   <div key={i} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }}>
-                    <div style={{ flex: 1 }}><ImagemUploader url={url} onChange={u => { const arr = [...(modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean))]; arr[i] = u; setModal({ ...modal, imagensLaterais: arr, imagemUrlLateral: arr[0] || '' }) }} /></div>
-                    <button type="button" className="editor-slot-remove" onClick={() => { const arr = (modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean)).filter((_, j) => j !== i); setModal({ ...modal, imagensLaterais: arr, imagemUrlLateral: arr[0] || '' }) }}>×</button>
+                    <div style={{ flex: 1 }}><ImagemUploader url={url} onChange={u => { const arr = [...(modal.imagensLateraisVisite || [])]; arr[i] = u; setModal({ ...modal, imagensLateraisVisite: arr }) }} /></div>
+                    <button type="button" className="editor-slot-remove" onClick={() => { const arr = (modal.imagensLateraisVisite || []).filter((_, j) => j !== i); setModal({ ...modal, imagensLateraisVisite: arr }) }}>×</button>
                   </div>
                 ))}
-                <button type="button" className="editor-slot-add-bottom" onClick={() => setModal({ ...modal, imagensLaterais: [...(modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean)), ''] })}>+ imagem</button>
+                <button type="button" className="editor-slot-add-bottom" onClick={() => setModal({ ...modal, imagensLateraisVisite: [...(modal.imagensLateraisVisite || []), ''] })}>+ imagem</button>
               </div>
             </>
           ) : (
@@ -255,12 +255,14 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId,
                   ))}
                 </div>
                 <div style={{ flex: 1, minWidth: '280px' }}>
-                  {(modal.imagemUrlLateral || modal.imagemUrl) && <img src={(modal.imagemUrlLateral || modal.imagemUrl.split(',')[0]).trim()} alt={conteudo.titulo} style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }} />}
+                  {(modal.imagensLateraisVisite || []).filter(Boolean).map((url, i) => (
+                    <img key={i} src={url} alt={conteudo.titulo} style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)', marginBottom: '0.75rem' }} />
+                  ))}
                 </div>
               </div>
               {conteudo.hosteis?.length > 0 && (
                 <div style={{ marginTop: '2.5rem', borderTop: '1px solid #2d2d4e', paddingTop: '2.5rem' }}>
-                  <h3 style={{ fontSize: '1.4rem', fontWeight: 600, color: '#fff', marginBottom: '1.5rem', paddingBottom: '0.5rem', borderBottom: '2px solid #2d2d4e' }}>Onde se Hospedar</h3>
+                  <h3 style={{ fontSize: '1.4rem', fontWeight: 600, color: '#fff', marginBottom: '1.5rem', paddingBottom: '0.5rem', borderBottom: '2px solid #2d2d4e' }}>Hotéis</h3>
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: '1.5rem' }}>
                     {conteudo.hosteis.map((h, i) => (
                       <div key={i} style={{ background: '#2d2d4e', borderRadius: '8px', padding: '1.5rem', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
