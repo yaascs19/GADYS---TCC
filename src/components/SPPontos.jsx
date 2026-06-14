@@ -10,6 +10,7 @@ const pontosTuristicos = [
     nome: 'MASP',
     cidade: 'São Paulo - SP',
     categoria: 'Costume Cultural',
+    descricao: 'O Museu de Arte de São Paulo é um dos mais importantes da América Latina, com um acervo de mais de 11 mil obras entre pinturas, esculturas e fotografias.',
     imagem: '/sp.jpg',
   },
   {
@@ -17,6 +18,7 @@ const pontosTuristicos = [
     nome: 'Teatro Municipal',
     cidade: 'São Paulo - SP',
     categoria: 'Costume Cultural',
+    descricao: 'Inaugurado em 1911, é um dos símbolos culturais de São Paulo. Sua arquitetura ecletiça inspira na Ópera de Paris e recebe espetáculos de ópera, balé e música clássica.',
     imagem: '/images/geral/Teatro_Municipal_de_São_Paulo_8.jpg',
   },
   {
@@ -32,6 +34,7 @@ const pontosTuristicos = [
     nome: 'Edifício Copan',
     cidade: 'São Paulo - SP',
     categoria: 'Monumentos',
+    descricao: 'Projetado por Oscar Niemeyer, o Copan é um ícone da arquitetura modernista brasileira. Com sua forma ondulada única, abriga mais de 1.100 apartamentos no centro de SP.',
     imagem: '/images/monumentos/copan.webp',
   },
   {
@@ -47,6 +50,7 @@ const pontosTuristicos = [
     nome: 'Pinacoteca',
     cidade: 'São Paulo - SP',
     categoria: 'Costume Cultural',
+    descricao: 'O museu de artes visuais mais antigo de São Paulo, fundado em 1905, com um acervo de mais de 10 mil obras focadas na produção brasileira dos séculos XIX e XX.',
     imagem: '/sp.jpg',
   },
   {
@@ -54,6 +58,7 @@ const pontosTuristicos = [
     nome: 'Avenida Paulista',
     cidade: 'São Paulo - SP',
     categoria: 'Monumentos',
+    descricao: 'O coração financeiro e cultural de São Paulo. Aos domingos vira calçadão, recebendo ciclistas, artistas e feiras. Abriga o MASP, centros culturais e instituições financeiras.',
     imagem: '/sp.jpg',
   },
   {
@@ -84,7 +89,7 @@ const SPPontos = () => {
     if (searchTerm) {
       result = result.filter(item =>
         item.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.descricao.toLowerCase().includes(searchTerm.toLowerCase())
+        (item.descricao || '').toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     setFilteredPontos(result);
