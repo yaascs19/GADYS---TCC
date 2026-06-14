@@ -286,20 +286,20 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId,
           {editando && (
             <div style={{ marginBottom: '1.5rem', textAlign: 'left' }}>
               <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>Fotos</label>
-              {(modal.imagemUrl ? modal.imagemUrl.split(',').filter(u => u.trim()) : []).map((url, i) => (
-                <div key={i} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }}>
-                  <div style={{ flex: 1 }}><ImagemUploader url={url} onChange={u => { const arr = modal.imagemUrl.split(',').filter(x => x.trim()); arr[i] = u; setModal({ ...modal, imagemUrl: arr.join(',') }) }} /></div>
-                  <button type="button" className="editor-slot-remove" onClick={() => { const arr = modal.imagemUrl.split(',').filter((_, j) => j !== i); setModal({ ...modal, imagemUrl: arr.join(',') }) }}>×</button>
+              {slots.map((slot, i) => (
+                <div key={slot.id} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }}>
+                  <div style={{ flex: 1 }}><ImagemUploader url={slot.url} onChange={u => setSlots(prev => prev.map(s => s.id === slot.id ? { ...s, url: u } : s))} /></div>
+                  <button type="button" className="editor-slot-remove" onClick={() => setSlots(prev => prev.filter(s => s.id !== slot.id))}>×</button>
                 </div>
               ))}
-              <button type="button" className="editor-slot-add-bottom" onClick={() => { const arr = modal.imagemUrl ? modal.imagemUrl.split(',').filter(u => u.trim()) : []; setModal({ ...modal, imagemUrl: [...arr, ''].join(',') }) }}>+ foto</button>
+              <button type="button" className="editor-slot-add-bottom" onClick={() => setSlots(prev => [...prev, { id: suid(), url: '' }])}>+ foto</button>
             </div>
           )}
-          {modal.imagemUrl ? (
+          {slots.filter(s => s.url).length > 0 ? (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: '1rem' }}>
-              {modal.imagemUrl.split(',').filter(u => u.trim()).map((img, i) => (
-                <div key={i} style={{ overflow: 'hidden', borderRadius: '8px', boxShadow: '0 8px 20px rgba(0,0,0,0.25)', aspectRatio: '4/3' }}>
-                  <img src={img.trim()} alt={`Foto ${i+1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              {slots.filter(s => s.url).map((s, i) => (
+                <div key={s.id} style={{ overflow: 'hidden', borderRadius: '8px', boxShadow: '0 8px 20px rgba(0,0,0,0.25)', aspectRatio: '4/3' }}>
+                  <img src={s.url} alt={`Foto ${i+1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
               ))}
             </div>
