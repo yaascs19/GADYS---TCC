@@ -467,6 +467,18 @@ function AdminPanel() {
 
   const handleInvestigar = async (sugestao) => {
     setInvestigarModal(sugestao)
+    setLocalPublicadoId(null)
+
+    // Se tem rascunho salvo, carrega sem chamar a IA
+    if (sugestao.rascunhoConteudo) {
+      try {
+        const rascunho = JSON.parse(sugestao.rascunhoConteudo)
+        setInvestigarConteudo(rascunho)
+        setInvestigarLoading(false)
+        return
+      } catch {}
+    }
+
     setInvestigarConteudo(null)
     setInvestigarLoading(true)
     try {
@@ -478,7 +490,7 @@ function AdminPanel() {
           response_format: { type: 'json_object' },
           messages: [
             { role: 'system', content: 'Voce e um especialista em turismo brasileiro. Responda APENAS com um JSON valido, sem texto fora do JSON, sem markdown, sem emojis, sem asteriscos, sem bullets.' },
-            { role: 'user', content: `Pesquise sobre o local turistico "${sugestao.nome}" em ${sugestao.estado}, Brasil. Retorne um JSON com exatamente estas chaves: titulo, descricao, historia, curiosidades, horario, preco, coordenadas (formato "lat,lng" com coordenadas reais do local), hosteis (array com 3 objetos, cada um com: nome, nota (numero de 4.0 a 5.0), contato (telefone brasileiro), site (url real)).` }
+            { role: 'user', content: `Pesquise sobre o local turistico "${sugestao.nome}" em ${sugestao.estado}, Brasil. Retorne um JSON com exatamente estas chaves: titulo, cidade (nome da cidade onde fica o local), descricao, historia, curiosidades, horario, preco, coordenadas (formato "lat,lng" com coordenadas reais do local), hosteis (array com 3 objetos, cada um com: nome, nota (numero de 4.0 a 5.0), contato (telefone brasileiro), site (url real)).` }
           ]
         })
       })
@@ -504,6 +516,21 @@ function AdminPanel() {
     } finally {
       setInvestigarLoading(false)
     }
+  }
+
+  const handleSalvarRascunho = async () => {
+    if (!investigarConteudo || !investigarModal) return
+    try {
+      const res = await fetch(`${API_URL}/api/sugestoes/${investigarModal.id}/rascunho`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rascunhoConteudo: JSON.stringify(investigarConteudo) })
+      })
+      if (res.ok) {
+        showToast('Rascunho salvo!', 'success')
+        loadSugestoes()
+      } else showToast('Erro ao salvar rascunho.')
+    } catch { showToast('Erro de conexão.') }
   }
 
   const handlePublicarLocal = async () => {
@@ -546,6 +573,7 @@ function AdminPanel() {
         body: JSON.stringify({
           nome: investigarConteudo.titulo || investigarModal.nome,
           descricao: investigarConteudo.descricao,
+          cidade: investigarConteudo.cidade || '',
           estado: investigarModal.estado,
           endereco: investigarModal.endereco,
           subcategoria: investigarModal.subcategoria || 'Lugar Paradisiaco',
@@ -904,11 +932,16 @@ function AdminPanel() {
             )}
 
             {/* RODAPÉ */}
-            <div style={{ display: 'flex', gap: '0.75rem', padding: '1.5rem 2rem', borderTop: '1px solid #2d2d4e', marginTop: investigarConteudo && !investigarConteudo.erro ? 0 : '1rem' }}>
+            <div style={{ display: 'flex', gap: '0.75rem', padding: '1.5rem 2rem', borderTop: '1px solid #2d2d4e', marginTop: investigarConteudo && !investigarConteudo.erro ? 0 : '1rem', flexWrap: 'wrap' }}>
               {investigarConteudo && !investigarConteudo.erro && (
-                <button className="approve-btn" style={{ flex: 1 }} onClick={handlePublicarLocal}>
-                  Publicar Local
-                </button>
+                <>
+                  <button className="editor-btn-save" onClick={handleSalvarRascunho}>
+                    Salvar Rascunho
+                  </button>
+                  <button className="approve-btn" style={{ flex: 1 }} onClick={handlePublicarLocal}>
+                    Publicar Local
+                  </button>
+                </>
               )}
               <button className="expand-btn" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null) }}>Fechar</button>
             </div>
@@ -1020,7 +1053,7 @@ function AdminPanel() {
             className={`tab-btn ${activeTab === 'sugestoes' ? 'active' : ''}`}
             onClick={() => setActiveTab('sugestoes')}
           >
-            Sugestões ({sugestoes.filter(s => s.status === 'PENDENTE').length})
+            Sugestões ({sugestoes.filter(s => s.status === 'PENDENTE' || s.status === 'RASCUNHO').length})
           </button>
         </div>
       </div>
@@ -1211,9 +1244,9 @@ function AdminPanel() {
           </div>
         )))}
         
-        {activeTab === 'sugestoes' && (sugestoes.filter(s => s.status === 'PENDENTE').length === 0 ? (
+        {activeTab === 'sugestoes' && (sugestoes.filter(s => s.status === 'PENDENTE' || s.status === 'RASCUNHO').length === 0 ? (
           <div className="empty-state-message"><p>Nenhuma sugestão pendente.</p></div>
-        ) : sugestoes.filter(s => s.status === 'PENDENTE').map(s => (
+        ) : sugestoes.filter(s => s.status === 'PENDENTE' || s.status === 'RASCUNHO').map(s => (
           <div key={s.id} className="admin-card">
             <div className="card-header">
               <h3>{s.nome}</h3>
@@ -1247,7 +1280,12 @@ function AdminPanel() {
               <img src={s.imagemUrl} alt={s.nome} style={{ width: '100%', borderRadius: '8px', marginTop: '0.75rem', maxHeight: '180px', objectFit: 'cover' }} />
             )}
             <div className="card-actions">
-              <button className="expand-btn" onClick={() => handleInvestigar(s)}>Investigar com IA</button>
+              <button className="expand-btn" onClick={() => handleInvestigar(s)} style={{ position: 'relative' }}>
+                {s.rascunhoConteudo && (
+                  <span style={{ position: 'absolute', top: '-6px', right: '-6px', background: '#f59e0b', borderRadius: '50%', width: '12px', height: '12px', display: 'block' }} title="Tem rascunho salvo" />
+                )}
+                {s.rascunhoConteudo ? 'Continuar Edição' : 'Investigar com IA'}
+              </button>
               <button className="reject-btn" onClick={() => handleDescartarSugestao(s.id)}>Descartar</button>
             </div>
           </div>
