@@ -1,96 +1,195 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './AdminPanel.css'
+import AvaliacoesComentarios from './components/AvaliacoesComentarios'
 
-function PreviewAbas({ investigarConteudo, investigarModal }) {
+function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId }) {
   const [aba, setAba] = useState('sobre')
-  const abas = ['sobre', 'visite', 'fotos']
-  const labels = { sobre: 'Sobre', visite: 'Visite', fotos: 'Fotos' }
+  const [editando, setEditando] = useState(false)
+  const abas = ['sobre', 'visite', 'fotos', 'avaliacoes']
+  const labels = { sobre: 'Sobre', visite: 'Visite', fotos: 'Fotos', avaliacoes: 'Avaliações' }
+
+  const es = {
+    width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(56,189,248,0.3)',
+    borderRadius: '8px', color: '#E0E1DD', fontFamily: 'inherit', fontSize: '0.9rem',
+    padding: '0.75rem', resize: 'vertical', outline: 'none', boxSizing: 'border-box'
+  }
+  const cardStyle = { background: '#2d2d4e', padding: '1.5rem', borderRadius: '8px', marginBottom: '1.5rem', borderLeft: '4px solid #38BDF8' }
+
+  const Field = ({ label, campo, area, src, setSrc }) => (
+    <div style={{ marginBottom: '1rem' }}>
+      <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.3rem' }}>{label}</label>
+      {area
+        ? <textarea value={src ? src[campo] || '' : conteudo[campo] || ''} onChange={e => src ? setSrc({ ...src, [campo]: e.target.value }) : setConteudo({ ...conteudo, [campo]: e.target.value })} rows={4} style={es} />
+        : <input value={src ? src[campo] || '' : conteudo[campo] || ''} onChange={e => src ? setSrc({ ...src, [campo]: e.target.value }) : setConteudo({ ...conteudo, [campo]: e.target.value })} style={{ ...es, padding: '0.5rem 0.75rem' }} />
+      }
+    </div>
+  )
   return (
     <div style={{ padding: '0 2rem' }}>
-      <nav style={{ display: 'flex', justifyContent: 'center', gap: '1.5rem', borderBottom: '1px solid #2d2d4e', marginBottom: '3rem' }}>
-        {abas.map(a => (
-          <button key={a} onClick={() => setAba(a)} style={{
-            fontSize: '1rem', fontWeight: 500, background: 'transparent', border: 'none',
-            cursor: 'pointer', padding: '0.5rem 1rem 1rem',
-            color: aba === a ? '#fff' : '#A9B4C2',
-            borderBottom: aba === a ? '3px solid #38BDF8' : '3px solid transparent',
-            transition: 'color 0.3s', fontFamily: 'inherit'
-          }}>{labels[a]}</button>
-        ))}
-      </nav>
+      <div style={{ display: 'flex', alignItems: 'flex-end', borderBottom: '1px solid #2d2d4e', marginBottom: '0' }}>
+        <nav style={{ display: 'flex', gap: '1.5rem', flex: 1 }}>
+          {abas.map(a => (
+            <button key={a} onClick={() => setAba(a)} style={{
+              fontSize: '1rem', fontWeight: 500, background: 'transparent', border: 'none',
+              cursor: 'pointer', padding: '0.5rem 1rem 1rem',
+              color: aba === a ? '#fff' : '#A9B4C2',
+              borderBottom: aba === a ? '3px solid #38BDF8' : '3px solid transparent',
+              transition: 'color 0.3s', fontFamily: 'inherit'
+            }}>{labels[a]}</button>
+          ))}
+        </nav>
+        {aba !== 'avaliacoes' && (
+          <button onClick={() => setEditando(!editando)} style={{
+            marginBottom: '0.5rem', padding: '0.4rem 1rem', borderRadius: '8px',
+            border: '1px solid rgba(56,189,248,0.4)',
+            background: editando ? '#38BDF8' : 'transparent',
+            color: editando ? '#0d1117' : '#38BDF8',
+            cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600
+          }}>{editando ? '✓ Concluído' : '✏️ Editar'}</button>
+        )}
+      </div>
 
+      {/* ABA SOBRE */}
       {aba === 'sobre' && (
-        <section style={{ animation: 'fadeIn 0.6s ease', marginBottom: '3rem' }}>
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '3rem', flexWrap: 'wrap' }}>
-            <div style={{ flex: '1.5', minWidth: '300px' }}>
-              <h2 style={{ fontSize: '1.8rem', fontWeight: 600, color: '#fff', marginBottom: '1.5rem' }}>Sobre o Local</h2>
-              <p style={{ lineHeight: 1.7, fontWeight: 300, marginBottom: '1.5rem' }}>{investigarConteudo.descricao}</p>
-              <p style={{ lineHeight: 1.7, fontWeight: 300 }}>{investigarConteudo.historia}</p>
-              <div style={{ marginTop: '2rem' }}>
-                <div style={{ background: '#2d2d4e', padding: '1rem', borderRadius: '6px', marginBottom: '0.8rem', borderLeft: '3px solid #38BDF8' }}>
-                  <strong style={{ color: '#fff' }}>Estado:</strong> {investigarModal.estado}
-                </div>
-                {investigarModal.endereco && (
-                  <div style={{ background: '#2d2d4e', padding: '1rem', borderRadius: '6px', borderLeft: '3px solid #38BDF8' }}>
-                    <strong style={{ color: '#fff' }}>Endereço:</strong> {investigarModal.endereco}
+        <section style={{ marginBottom: '3rem', paddingTop: '2rem' }}>
+          {editando ? (
+            <>
+              <Field label="Título" campo="titulo" />
+              <Field label="Descrição" campo="descricao" area />
+              <Field label="História" campo="historia" area />
+              <Field label="Curiosidades" campo="curiosidades" area />
+              <Field label="Estado" campo="estado" src={modal} setSrc={setModal} />
+              <Field label="Endereço" campo="endereco" src={modal} setSrc={setModal} />
+              <Field label="URL da Imagem" campo="imagemUrl" src={modal} setSrc={setModal} />
+            </>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '3rem', flexWrap: 'wrap' }}>
+              <div style={{ flex: '1.5', minWidth: '300px' }}>
+                <h2 style={{ fontSize: '1.8rem', fontWeight: 600, color: '#fff', marginBottom: '1.5rem' }}>Sobre o Local</h2>
+                <p style={{ lineHeight: 1.7, fontWeight: 300, marginBottom: '1.5rem' }}>{conteudo.descricao}</p>
+                <p style={{ lineHeight: 1.7, fontWeight: 300 }}>{conteudo.historia}</p>
+                <div style={{ marginTop: '2rem' }}>
+                  <div style={{ background: '#2d2d4e', padding: '1rem', borderRadius: '6px', marginBottom: '0.8rem', borderLeft: '3px solid #38BDF8' }}>
+                    <strong style={{ color: '#fff' }}>Estado:</strong> {modal.estado}
                   </div>
-                )}
+                  {modal.endereco && (
+                    <div style={{ background: '#2d2d4e', padding: '1rem', borderRadius: '6px', borderLeft: '3px solid #38BDF8' }}>
+                      <strong style={{ color: '#fff' }}>Endereço:</strong> {modal.endereco}
+                    </div>
+                  )}
+                </div>
+                <div style={{ marginTop: '2rem', ...cardStyle }}>
+                  <h3 style={{ color: '#fff', margin: '0 0 0.75rem', fontSize: '1.1rem' }}>✨ Curiosidades</h3>
+                  <p style={{ margin: 0, lineHeight: 1.7, fontWeight: 300 }}>{conteudo.curiosidades}</p>
+                </div>
+              </div>
+              <div style={{ flex: 1, minWidth: '280px' }}>
+                {modal.imagemUrl
+                  ? <img src={modal.imagemUrl.split(',')[0].trim()} alt={conteudo.titulo} style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }} />
+                  : <div style={{ width: '100%', aspectRatio: '4/3', borderRadius: '8px', background: 'linear-gradient(135deg,#1a4a2e,#0d2b1a)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem' }}>🌎</div>
+                }
               </div>
             </div>
-            <div style={{ flex: 1, minWidth: '280px' }}>
-              {investigarModal.imagemUrl
-                ? <img src={investigarModal.imagemUrl} alt={investigarConteudo.titulo} style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }} />
-                : <div style={{ width: '100%', aspectRatio: '4/3', borderRadius: '8px', background: 'linear-gradient(135deg,#1a4a2e,#0d2b1a)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem' }}>🌎</div>
-              }
-            </div>
-          </div>
-          <div style={{ marginTop: '2.5rem', background: '#2d2d4e', padding: '1.5rem', borderRadius: '8px', borderLeft: '4px solid #38BDF8' }}>
-            <h3 style={{ color: '#fff', margin: '0 0 0.75rem', fontSize: '1.2rem' }}>✨ Curiosidades</h3>
-            <p style={{ margin: 0, lineHeight: 1.7, fontWeight: 300 }}>{investigarConteudo.curiosidades}</p>
-          </div>
+          )}
         </section>
       )}
 
+      {/* ABA VISITE */}
       {aba === 'visite' && (
-        <section style={{ animation: 'fadeIn 0.6s ease', marginBottom: '3rem' }}>
-          <h2 style={{ fontSize: '1.8rem', fontWeight: 600, color: '#fff', marginBottom: '2rem' }}>Informações Práticas</h2>
-          <div style={{ display: 'flex', alignItems: 'flex-start', gap: '3rem', flexWrap: 'wrap' }}>
-            <div style={{ flex: '1.5', minWidth: '300px' }}>
-              {[
-                { titulo: '🕐 Horário de Funcionamento', texto: investigarConteudo.horario },
-                { titulo: '💰 Preço / Entrada', texto: investigarConteudo.preco },
-                { titulo: '📍 Localização', texto: investigarModal.endereco || investigarModal.estado },
-              ].filter(c => c.texto).map((card, i) => (
-                <div key={i} style={{ background: '#2d2d4e', padding: '1.5rem', borderRadius: '8px', marginBottom: '1.5rem', borderLeft: '4px solid #38BDF8' }}>
-                  <h3 style={{ color: '#fff', margin: '0 0 0.5rem', fontSize: '1.1rem' }}>{card.titulo}</h3>
-                  <p style={{ margin: 0, lineHeight: 1.6, fontWeight: 300 }}>{card.texto}</p>
+        <section style={{ marginBottom: '3rem', paddingTop: '2rem' }}>
+          {editando ? (
+            <>
+              <Field label="Horário" campo="horario" area />
+              <Field label="Preço" campo="preco" />
+              <div style={{ marginTop: '1.5rem' }}>
+                <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>Hotéis / Hostels</label>
+                {(conteudo.hosteis || []).map((h, i) => (
+                  <div key={i} style={{ marginBottom: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)' }}>
+                    <label style={{ fontSize: '0.7rem', color: '#A9B4C2', display: 'block', marginBottom: '0.5rem' }}>HOSTEL {i+1}</label>
+                    {['nome','nota','contato','site'].map(f => (
+                      <input key={f} placeholder={f} value={h[f] || ''}
+                        onChange={e => { const arr = [...(conteudo.hosteis||[])]; arr[i] = { ...arr[i], [f]: e.target.value }; setConteudo({ ...conteudo, hosteis: arr }) }}
+                        style={{ ...es, padding: '0.4rem 0.75rem', marginBottom: '0.4rem', resize: 'none' }} />
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 600, color: '#fff', marginBottom: '2rem' }}>Informações Práticas</h2>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: '3rem', flexWrap: 'wrap' }}>
+                <div style={{ flex: '1.5', minWidth: '300px' }}>
+                  {[
+                    { titulo: '🕐 Horário de Funcionamento', texto: conteudo.horario },
+                    { titulo: '💰 Preço / Entrada', texto: conteudo.preco },
+                    { titulo: '📍 Localização', texto: modal.endereco || modal.estado },
+                  ].filter(c => c.texto).map((card, i) => (
+                    <div key={i} style={cardStyle}>
+                      <h3 style={{ color: '#fff', margin: '0 0 0.5rem', fontSize: '1.1rem' }}>{card.titulo}</h3>
+                      <p style={{ margin: 0, lineHeight: 1.6, fontWeight: 300 }}>{card.texto}</p>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
-            <div style={{ flex: 1, minWidth: '280px' }}>
-              {investigarModal.imagemUrl && (
-                <img src={investigarModal.imagemUrl} alt={investigarConteudo.titulo} style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }} />
+                <div style={{ flex: 1, minWidth: '280px' }}>
+                  {modal.imagemUrl && <img src={modal.imagemUrl.split(',')[0].trim()} alt={conteudo.titulo} style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }} />}
+                </div>
+              </div>
+              {conteudo.hosteis?.length > 0 && (
+                <div style={{ marginTop: '2.5rem', borderTop: '1px solid #2d2d4e', paddingTop: '2.5rem' }}>
+                  <h3 style={{ fontSize: '1.4rem', fontWeight: 600, color: '#fff', marginBottom: '1.5rem', paddingBottom: '0.5rem', borderBottom: '2px solid #2d2d4e' }}>🏨 Onde se Hospedar</h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: '1.5rem' }}>
+                    {conteudo.hosteis.map((h, i) => (
+                      <div key={i} style={{ background: '#2d2d4e', borderRadius: '8px', padding: '1.5rem', boxShadow: '0 4px 15px rgba(0,0,0,0.2)' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                          <a href={h.site} target="_blank" rel="noopener noreferrer" style={{ fontWeight: 600, fontSize: '1rem', color: '#fff', textDecoration: 'none' }}>{h.nome}</a>
+                          <span style={{ color: '#FFD700', fontWeight: 700 }}>{h.nota} ★</span>
+                        </div>
+                        <span style={{ fontFamily: 'monospace', background: '#1a1a2e', padding: '0.3rem 0.7rem', borderRadius: '4px', fontSize: '0.85rem', color: '#E0E1DD', display: 'block' }}>{h.contato}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               )}
-            </div>
-          </div>
+            </>
+          )}
         </section>
       )}
 
+      {/* ABA FOTOS */}
       {aba === 'fotos' && (
-        <section style={{ animation: 'fadeIn 0.6s ease', marginBottom: '3rem', textAlign: 'center' }}>
-          <h2 style={{ fontSize: '2rem', fontWeight: 600, color: '#fff', marginBottom: '2.5rem' }}>Fotos</h2>
-          {investigarModal.imagemUrl ? (
+        <section style={{ marginBottom: '3rem', paddingTop: '2rem', textAlign: 'center' }}>
+          <h2 style={{ fontSize: '2rem', fontWeight: 600, color: '#fff', marginBottom: '1rem' }}>Fotos</h2>
+          {editando && (
+            <div style={{ marginBottom: '1.5rem', textAlign: 'left' }}>
+              <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.3rem' }}>URLs das imagens (separadas por vírgula)</label>
+              <input value={modal.imagemUrl || ''} onChange={e => setModal({ ...modal, imagemUrl: e.target.value })} style={{ ...es, padding: '0.6rem 0.75rem', resize: 'none' }} />
+            </div>
+          )}
+          {modal.imagemUrl ? (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: '1rem' }}>
-              {investigarModal.imagemUrl.split(',').map((img, i) => (
+              {modal.imagemUrl.split(',').filter(u => u.trim()).map((img, i) => (
                 <div key={i} style={{ overflow: 'hidden', borderRadius: '8px', boxShadow: '0 8px 20px rgba(0,0,0,0.25)', aspectRatio: '4/3' }}>
                   <img src={img.trim()} alt={`Foto ${i+1}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
               ))}
             </div>
           ) : (
-            <p style={{ color: '#A9B4C2', fontStyle: 'italic' }}>Nenhuma foto disponível ainda.</p>
+            <p style={{ color: '#A9B4C2', fontStyle: 'italic' }}>Nenhuma foto. Cole URLs acima para adicionar.</p>
           )}
+        </section>
+      )}
+
+      {/* ABA AVALIAÇÕES */}
+      {aba === 'avaliacoes' && (
+        <section style={{ marginBottom: '3rem', paddingTop: '2rem' }}>
+          {localPublicadoId
+            ? <AvaliacoesComentarios localId={localPublicadoId} />
+            : <p style={{ color: '#A9B4C2', fontStyle: 'italic', textAlign: 'center', padding: '3rem 0' }}>
+                Publique o local primeiro para habilitar avaliações.
+              </p>
+          }
         </section>
       )}
     </div>
@@ -115,6 +214,7 @@ function AdminPanel() {
   const [investigarModal, setInvestigarModal] = useState(null)
   const [investigarLoading, setInvestigarLoading] = useState(false)
   const [investigarConteudo, setInvestigarConteudo] = useState(null)
+  const [localPublicadoId, setLocalPublicadoId] = useState(null)
   const [locationFilter, setLocationFilter] = useState('')
   const [editingLocation, setEditingLocation] = useState(null)
   const [showEditModal, setShowEditModal] = useState(false)
@@ -229,7 +329,7 @@ function AdminPanel() {
           response_format: { type: 'json_object' },
           messages: [
             { role: 'system', content: 'Voce e um especialista em turismo brasileiro. Responda APENAS com um JSON valido, sem texto fora do JSON, sem markdown.' },
-            { role: 'user', content: `Pesquise sobre o local turistico "${sugestao.nome}" em ${sugestao.estado}, Brasil. Retorne um JSON com exatamente estas chaves: titulo, descricao, historia, curiosidades, horario, preco, coordenadas (formato "lat,lng" com coordenadas reais do local).` }
+            { role: 'user', content: `Pesquise sobre o local turistico "${sugestao.nome}" em ${sugestao.estado}, Brasil. Retorne um JSON com exatamente estas chaves: titulo, descricao, historia, curiosidades, horario, preco, coordenadas (formato "lat,lng" com coordenadas reais do local), hosteis (array com 3 objetos, cada um com: nome, nota (numero de 4.0 a 5.0), contato (telefone brasileiro), site (url real)).` }
           ]
         })
       })
@@ -280,8 +380,7 @@ function AdminPanel() {
         await fetch(`${API_URL}/api/locais/aprovar/${local.id}`, { method: 'POST' })
         await fetch(`${API_URL}/api/sugestoes/${investigarModal.id}/analisar`, { method: 'POST' })
         showToast('Local publicado com sucesso!', 'success')
-        setInvestigarModal(null)
-        setInvestigarConteudo(null)
+        setLocalPublicadoId(local.id)
         loadSugestoes()
         loadSiteLocations()
       } else {
@@ -558,7 +657,7 @@ function AdminPanel() {
       )}
 
       {investigarModal && (
-        <div className="modal-overlay" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null) }}>
+        <div className="modal-overlay" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null) }}>
           <div onClick={e => e.stopPropagation()} style={{
             width: '95vw', maxWidth: '1000px', maxHeight: '92vh', overflowY: 'auto',
             borderRadius: '16px', boxShadow: '0 25px 60px rgba(0,0,0,0.8)',
@@ -605,7 +704,13 @@ function AdminPanel() {
             )}
 
             {investigarConteudo && !investigarConteudo.erro && (
-              <PreviewAbas investigarConteudo={investigarConteudo} investigarModal={investigarModal} />
+              <PreviewAbas
+                conteudo={investigarConteudo}
+                setConteudo={setInvestigarConteudo}
+                modal={investigarModal}
+                setModal={setInvestigarModal}
+                localPublicadoId={localPublicadoId}
+              />
             )}
 
             {/* RODAPÉ */}
@@ -615,7 +720,7 @@ function AdminPanel() {
                   🚀 Publicar Local
                 </button>
               )}
-              <button className="expand-btn" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null) }}>Fechar</button>
+              <button className="expand-btn" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null) }}>Fechar</button>
             </div>
 
           </div>
