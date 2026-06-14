@@ -47,6 +47,9 @@ const SecaoRica = ({ secao }) => (
       </div>
       <div className="local-image-wrapper">
         {secao.imagem && <img src={secao.imagem} alt={secao.titulo} className="local-image" />}
+        {secao.imagensExtras && secao.imagensExtras.map((img, i) => (
+          <img key={i} src={img} alt={`${secao.titulo} ${i + 1}`} className="local-image" style={{ marginTop: '1rem' }} />
+        ))}
       </div>
     </div>
     {secao.recomendacoes && secao.recomendacoes.length > 0 && (
@@ -146,7 +149,16 @@ function LocalDetalhe() {
     if (parsed?.secoes) dadosRicos = parsed;
   } catch { /* local simples */ }
 
-  const carrossel = imagens.slice(0, 2).length > 0 ? imagens.slice(0, 2) : imagens.slice(0, 1);
+  // carrossel: prefere carouselImages do JSON, senão primeiras 2 do imagemUrl
+  const carrossel = dadosRicos?.carouselImages?.length > 0
+    ? dadosRicos.carouselImages
+    : imagens.slice(0, 2);
+
+  // galeria: prefere galleryImages do JSON, senão todas as imagens do imagemUrl
+  const galeriaImages = dadosRicos?.galleryImages?.length > 0
+    ? dadosRicos.galleryImages
+    : imagens;
+
   const imagemSobre = imagens[2] || imagens[0];
   const imagensVisite = imagens.slice(3, 5);
 
@@ -223,7 +235,7 @@ function LocalDetalhe() {
           {!dadosRicos && aba === 'visite' && <AbaVisite local={local} imagensVisite={imagensVisite} />}
 
           {/* FOTOS */}
-          {(aba === 'fotos') && <AbaGaleria images={imagens} />}
+          {(aba === 'fotos') && <AbaGaleria images={dadosRicos ? galeriaImages : imagens} />}
 
           {/* AVALIAÇÕES */}
           {aba === 'avaliacoes' && (
