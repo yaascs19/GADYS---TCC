@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import NavbarShared from './NavbarShared'
 import './ContatoPage.css'
 
 function MapaLeaflet() {
   const navigate = useNavigate()
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
-  const [menuOpen, setMenuOpen] = useState(false)
   const [categoria, setCategoria] = useState('todas')
   const [preco, setPreco] = useState('todos')
   const [distancia, setDistancia] = useState(5000)
@@ -241,64 +241,7 @@ function MapaLeaflet() {
   return (
     <div className={`contato-page${darkMode ? ' dark' : ''}`}>
 
-      <header style={{
-        background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
-        padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between',
-        alignItems: 'center', position: 'sticky', top: 0, zIndex: 100,
-        borderBottom: '1px solid rgba(255,255,255,0.1)'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <img onClick={() => navigate('/')} style={{cursor:'pointer', height:'40px', background:'linear-gradient(135deg,#667eea,#764ba2)', borderRadius:'50%', padding:'8px'}} src="/images/logos/logo.png" alt="GADYS"  />
-          <span style={{ fontSize: '1.5rem', fontWeight: '700', color: 'white' }}>GADYS</span>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <button onClick={toggleTheme} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>
-            {darkMode ? '☀️' : '🌙'}
-          </button>
-          <div style={{ display: 'flex', flexDirection: 'column', cursor: 'pointer', zIndex: 1002 }} onClick={() => setMenuOpen(!menuOpen)}>
-            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
-            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
-            <span style={{ width: '25px', height: '3px', background: 'white', margin: '3px 0' }} />
-          </div>
-        </div>
-        {menuOpen && <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000 }} onClick={() => setMenuOpen(false)} />}
-        <ul style={{
-          position: 'fixed', top: 0, right: menuOpen ? 0 : '-100%', width: '300px', height: '100vh',
-          background: darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e',
-          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', justifyContent: 'flex-start',
-          margin: 0, padding: '2rem 0', listStyle: 'none', transition: 'right 0.3s ease', zIndex: 1001, overflowY: 'auto'
-        }}>
-          {[
-            { label: 'Início', path: '/' },
-            { label: 'Lugares', path: '/lugares' },
-            { label: 'Dê sugestões', path: '/adicionar-local' },
-            { label: isLoggedIn ? 'Meu Perfil' : 'Entrar', path: isLoggedIn ? '/perfil' : '/login' },
-            { label: 'Sobre', path: '/sobre' },
-            { label: 'Contato', path: '/contato' },
-          ].map(({ label, path }) => (
-            <li key={path}>
-              <a href="#" onClick={(e) => { e.preventDefault(); navigate(path); setMenuOpen(false) }}
-                style={{ color: 'white', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '5px', display: 'block' }}>
-                {label}
-              </a>
-            </li>
-          ))}
-          <li>
-            <a href="#" onClick={(e) => e.preventDefault()}
-              style={{ color: '#ccc', textDecoration: 'none', padding: '0.5rem 1rem', borderRadius: '5px', display: 'block', cursor: 'default' }}>
-              Mapa (atual)
-            </a>
-          </li>
-          {isAdmin && (
-            <li>
-              <a href="#" onClick={(e) => { e.preventDefault(); navigate('/painel-adm'); setMenuOpen(false) }}
-                style={{ color: '#ffd700', textDecoration: 'none', padding: '0.5rem 1rem', fontWeight: '700', borderRadius: '5px', display: 'block' }}>
-                Painel Admin
-              </a>
-            </li>
-          )}
-        </ul>
-      </header>
+      <NavbarShared darkMode={darkMode} toggleDarkMode={toggleTheme} paginaAtual={window.location.pathname} />
 
       <header className="contato-hero">
         <h1>Mapa Interativo</h1>
