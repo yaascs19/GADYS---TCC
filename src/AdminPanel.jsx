@@ -16,6 +16,26 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
   }
   const cardStyle = { background: '#2d2d4e', padding: '1.5rem', borderRadius: '8px', marginBottom: '1.5rem', borderLeft: '4px solid #38BDF8' }
 
+  const fileToBase64 = (file) => new Promise((resolve) => {
+    const reader = new FileReader()
+    reader.onload = e => resolve(e.target.result)
+    reader.readAsDataURL(file)
+  })
+
+  const handleUploadImagens = async (e) => {
+    const files = Array.from(e.target.files)
+    const bases = await Promise.all(files.map(fileToBase64))
+    const atual = modal.imagemUrl ? modal.imagemUrl.split(',').filter(u => u.trim()) : []
+    setModal({ ...modal, imagemUrl: [...atual, ...bases].join(',') })
+  }
+
+  const handleUploadHero = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    const base = await fileToBase64(file)
+    setModal({ ...modal, imagemUrlHero: base })
+  }
+
   const Field = ({ label, campo, area, src, setSrc }) => (
     <div style={{ marginBottom: '1rem' }}>
       <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.3rem' }}>{label}</label>
@@ -61,7 +81,30 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
               <Field label="Curiosidades" campo="curiosidades" area />
               <Field label="Estado" campo="estado" src={modal} setSrc={setModal} />
               <Field label="Endereço" campo="endereco" src={modal} setSrc={setModal} />
-              <Field label="URL da Imagem" campo="imagemUrl" src={modal} setSrc={setModal} />
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Imagem de Fundo do Título (Hero)</label>
+                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <label style={{ padding: '0.5rem 1rem', background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.4)', borderRadius: '8px', color: '#38BDF8', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}>
+                    📁 Selecionar do dispositivo
+                    <input type="file" accept="image/*" onChange={handleUploadHero} style={{ display: 'none' }} />
+                  </label>
+                  <span style={{ color: '#A9B4C2', fontSize: '0.8rem' }}>ou</span>
+                  <input placeholder="URL da imagem hero..." value={modal.imagemUrlHero || ''} onChange={e => setModal({ ...modal, imagemUrlHero: e.target.value })} style={{ ...es, padding: '0.5rem 0.75rem', flex: 1, minWidth: '200px' }} />
+                </div>
+                {(modal.imagemUrlHero) && <img src={modal.imagemUrlHero} style={{ marginTop: '0.5rem', height: '80px', borderRadius: '6px', objectFit: 'cover' }} />}
+              </div>
+              <div style={{ marginBottom: '1rem' }}>
+                <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Imagem Lateral (Sobre / Visite)</label>
+                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
+                  <label style={{ padding: '0.5rem 1rem', background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.4)', borderRadius: '8px', color: '#38BDF8', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}>
+                    📁 Selecionar do dispositivo
+                    <input type="file" accept="image/*" onChange={async e => { const b = await fileToBase64(e.target.files[0]); setModal({ ...modal, imagemUrlLateral: b }) }} style={{ display: 'none' }} />
+                  </label>
+                  <span style={{ color: '#A9B4C2', fontSize: '0.8rem' }}>ou</span>
+                  <input placeholder="URL da imagem lateral..." value={modal.imagemUrlLateral || ''} onChange={e => setModal({ ...modal, imagemUrlLateral: e.target.value })} style={{ ...es, padding: '0.5rem 0.75rem', flex: 1, minWidth: '200px' }} />
+                </div>
+                {(modal.imagemUrlLateral) && <img src={modal.imagemUrlLateral} style={{ marginTop: '0.5rem', height: '80px', borderRadius: '6px', objectFit: 'cover' }} />}
+              </div>
             </>
           ) : (
             <div style={{ display: 'flex', alignItems: 'flex-start', gap: '3rem', flexWrap: 'wrap' }}>
@@ -85,8 +128,8 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
                 </div>
               </div>
               <div style={{ flex: 1, minWidth: '280px' }}>
-                {modal.imagemUrl
-                  ? <img src={modal.imagemUrl.split(',')[0].trim()} alt={conteudo.titulo} style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }} />
+                {(modal.imagemUrlLateral || modal.imagemUrl)
+                  ? <img src={(modal.imagemUrlLateral || modal.imagemUrl.split(',')[0]).trim()} alt={conteudo.titulo} style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }} />
                   : <div style={{ width: '100%', aspectRatio: '4/3', borderRadius: '8px', background: 'linear-gradient(135deg,#1a4a2e,#0d2b1a)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem' }}>🌎</div>
                 }
               </div>
@@ -133,7 +176,7 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
                   ))}
                 </div>
                 <div style={{ flex: 1, minWidth: '280px' }}>
-                  {modal.imagemUrl && <img src={modal.imagemUrl.split(',')[0].trim()} alt={conteudo.titulo} style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }} />}
+                  {(modal.imagemUrlLateral || modal.imagemUrl) && <img src={(modal.imagemUrlLateral || modal.imagemUrl.split(',')[0]).trim()} alt={conteudo.titulo} style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }} />}
                 </div>
               </div>
               {conteudo.hosteis?.length > 0 && (
@@ -163,8 +206,18 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
           <h2 style={{ fontSize: '2rem', fontWeight: 600, color: '#fff', marginBottom: '1rem' }}>Fotos</h2>
           {editando && (
             <div style={{ marginBottom: '1.5rem', textAlign: 'left' }}>
-              <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.3rem' }}>URLs das imagens (separadas por vírgula)</label>
-              <input value={modal.imagemUrl || ''} onChange={e => setModal({ ...modal, imagemUrl: e.target.value })} style={{ ...es, padding: '0.6rem 0.75rem', resize: 'none' }} />
+              <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.5rem' }}>Adicionar Fotos</label>
+              <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
+                <label style={{ padding: '0.5rem 1rem', background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.4)', borderRadius: '8px', color: '#38BDF8', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}>
+                  📁 Selecionar do dispositivo
+                  <input type="file" accept="image/*" multiple onChange={handleUploadImagens} style={{ display: 'none' }} />
+                </label>
+                <span style={{ color: '#A9B4C2', fontSize: '0.8rem' }}>ou cole URLs separadas por vírgula:</span>
+              </div>
+              <input value={modal.imagemUrl || ''} onChange={e => setModal({ ...modal, imagemUrl: e.target.value })} placeholder="https://... , https://..." style={{ ...es, padding: '0.6rem 0.75rem', resize: 'none' }} />
+              {modal.imagemUrl && (
+                <button onClick={() => setModal({ ...modal, imagemUrl: '' })} style={{ marginTop: '0.5rem', background: 'none', border: 'none', color: '#f43f5e', cursor: 'pointer', fontSize: '0.8rem' }}>Limpar tudo</button>
+              )}
             </div>
           )}
           {modal.imagemUrl ? (
@@ -674,8 +727,8 @@ function AdminPanel() {
             }}>
               <div style={{
                 position: 'absolute', inset: 0, zIndex: 1,
-                background: investigarModal.imagemUrl
-                  ? `url(${investigarModal.imagemUrl}) center/cover`
+                background: (investigarModal.imagemUrlHero || investigarModal.imagemUrl)
+                  ? `url(${(investigarModal.imagemUrlHero || investigarModal.imagemUrl.split(',')[0]).trim()}) center/cover`
                   : 'linear-gradient(135deg,#1a4a2e,#0d2b1a)'
               }} />
               <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)', zIndex: 2 }} />
