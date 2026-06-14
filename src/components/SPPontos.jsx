@@ -127,7 +127,7 @@ const SPPontos = () => {
         {filteredPontos.map(ponto => (
           <div key={ponto.id} className="sp-pontos-card">
             <div className="sp-pontos-card-image-container">
-              <img src={ponto.imagem} alt={ponto.nome} className="sp-pontos-card-image" />
+              {ponto.imagem ? <img src={ponto.imagem} alt={ponto.nome} className="sp-pontos-card-image" /> : <div className="sp-pontos-card-image" style={{background:"linear-gradient(135deg,#667eea,#764ba2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"3rem",height:"100%"}}>🗺️</div>}
             </div>
             <div className="sp-pontos-card-content">
               <h2 className="sp-pontos-card-title">{ponto.nome}</h2>

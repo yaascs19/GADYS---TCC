@@ -61,7 +61,7 @@ const MGPontos = () => {
         {filteredPontos.map(ponto => (
           <div key={ponto.id} className="sudeste-pontos-card">
             <div className="sudeste-pontos-card-image-container">
-              <img src={ponto.imagem} alt={ponto.nome} className="sudeste-pontos-card-image" />
+              {ponto.imagem ? <img src={ponto.imagem} alt={ponto.nome} className="sudeste-pontos-card-image" /> : <div className="sudeste-pontos-card-image" style={{background:"linear-gradient(135deg,#667eea,#764ba2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"3rem",height:"100%"}}>🗺️</div>}
             </div>
             <div className="sudeste-pontos-card-content">
               <h2 className="sudeste-pontos-card-title">{ponto.nome}</h2>

@@ -159,7 +159,10 @@ const RJPontos = () => {
         {filteredPontos.map(ponto => (
           <div key={ponto.id} className="rj-pontos-card">
             <div className="rj-pontos-card-image-container">
-              <img src={ponto.imagem} alt={ponto.nome} className="rj-pontos-card-image" />
+              {ponto.imagem
+                ? <img src={ponto.imagem} alt={ponto.nome} className="rj-pontos-card-image" />
+                : <div className="rj-pontos-card-image" style={{ background: 'linear-gradient(135deg,#667eea,#764ba2)', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'3rem', height:'100%' }}>🗺️</div>
+              }
             </div>
             <div className="rj-pontos-card-content">
               <h2 className="rj-pontos-card-title">{ponto.nome}</h2>

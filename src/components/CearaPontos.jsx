@@ -135,7 +135,7 @@ const CearaPontos = () => {
         {filteredPontos.map(ponto => (
           <div key={ponto.id} className="ce-pontos-card">
             <div className="ce-pontos-card-image-container">
-              <img src={ponto.imagem} alt={ponto.nome} className="ce-pontos-card-image" />
+              {ponto.imagem ? <img src={ponto.imagem} alt={ponto.nome} className="ce-pontos-card-image" /> : <div className="ce-pontos-card-image" style={{background:"linear-gradient(135deg,#667eea,#764ba2)",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"3rem",height:"100%"}}>🗺️</div>}
             </div>
             <div className="ce-pontos-card-content">
               <h2 className="ce-pontos-card-title">{ponto.nome}</h2>

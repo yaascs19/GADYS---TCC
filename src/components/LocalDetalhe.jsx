@@ -125,6 +125,7 @@ function LocalDetalhe() {
   const [local, setLocal] = useState(null);
   const [aba, setAba] = useState('sobre');
   const [loading, setLoading] = useState(true);
+  const [toast, setToast] = useState(null);
 
   useEffect(() => {
     fetch(`${API_URL}/api/locais/${id}`)

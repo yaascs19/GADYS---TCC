@@ -27,7 +27,7 @@ export function useLocaisAtivos(siglaEstado, pontosTuristicos) {
             cidade: l.cidade,
             categoria: l.subcategoria,
             descricao: l.descricao,
-            imagem: l.imagemUrl ? l.imagemUrl.split(',')[0] : '',
+            imagem: l.imagemUrl ? l.imagemUrl.split(',')[0].trim() : null,
           }));
         setPontosAtivos([...estaticosAtivos, ...novosDoBD]);
       })
