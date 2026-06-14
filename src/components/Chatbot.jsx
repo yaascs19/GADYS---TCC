@@ -3,7 +3,7 @@ import { useState, useRef, useEffect } from 'react'
 const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions'
 const GROQ_KEY = import.meta.env.VITE_GROQ_KEY
 
-const SYSTEM_CONTEXT = `Você é o assistente virtual do GADYS, uma plataforma de turismo brasileiro. Responda de forma simpática e objetiva em português brasileiro correto, prestando atenção ao uso correto de artigos (o, a, os, as) e concordância nominal e verbal. Seja breve — máximo 2 parágrafos. Se não souber, indique a página de Contato.
+const SYSTEM_CONTEXT = `Você é o assistente virtual do GADYS, uma plataforma de turismo brasileiro. Responda de forma simpática e objetiva em português brasileiro correto, prestando atenção ao uso correto de artigos (o, a, os, as) e concordância nominal e verbal. Seja breve — máximo 2 parágrafos. Nunca use markdown, asteriscos, bullets ou formatação especial. Responda em texto simples. Se não souber, indique a página de Contato.
 
 INFORMAÇÕES SOBRE O GADYS:
 
