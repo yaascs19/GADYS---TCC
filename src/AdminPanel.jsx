@@ -394,8 +394,11 @@ function AdminPanel() {
       }
       const data = await res.json()
       const text = data?.choices?.[0]?.message?.content || ''
+      const removeEmojis = (str) => str ? str.replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F000}-\u{1FFFF}]/gu, '').replace(/\s+/g, ' ').trim() : str
       try {
-        setInvestigarConteudo(JSON.parse(text))
+        const parsed = JSON.parse(text)
+        const clean = Object.fromEntries(Object.entries(parsed).map(([k, v]) => [k, typeof v === 'string' ? removeEmojis(v) : v]))
+        setInvestigarConteudo(clean)
       } catch {
         setInvestigarConteudo({ erro: 'Resposta da IA em formato invalido. Tente novamente.' })
       }
