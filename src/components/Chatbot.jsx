@@ -185,6 +185,10 @@ export default function Chatbot({ darkMode }) {
           model: 'llama-3.3-70b-versatile',
           messages: [
             { role: 'system', content: SYSTEM_CONTEXT },
+            ...messages.filter(m => m.role !== 'bot' || messages.indexOf(m) > 0).map(m => ({
+              role: m.role === 'user' ? 'user' : 'assistant',
+              content: m.text
+            })),
             { role: 'user', content: msg }
           ]
         })
