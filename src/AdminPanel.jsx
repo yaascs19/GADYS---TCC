@@ -134,7 +134,7 @@ function AdminPanel() {
           response_format: { type: 'json_object' },
           messages: [
             { role: 'system', content: 'Voce e um especialista em turismo brasileiro. Responda APENAS com um JSON valido, sem texto fora do JSON, sem markdown.' },
-            { role: 'user', content: `Pesquise sobre o local turistico "${sugestao.nome}" em ${sugestao.estado}, Brasil. Retorne um JSON com exatamente estas chaves: titulo, descricao, historia, curiosidades, horario, preco.` }
+            { role: 'user', content: `Pesquise sobre o local turistico "${sugestao.nome}" em ${sugestao.estado}, Brasil. Retorne um JSON com exatamente estas chaves: titulo, descricao, historia, curiosidades, horario, preco, coordenadas (formato "lat,lng" com coordenadas reais do local).` }
           ]
         })
       })
@@ -176,7 +176,7 @@ function AdminPanel() {
           preco: investigarConteudo.preco,
           informacoesAdicionais: investigarConteudo.historia + '\n\nCuriosidades: ' + investigarConteudo.curiosidades,
           imagemUrl: investigarModal.imagemUrl || null,
-          coordenadas: investigarModal.coordenadas || null,
+          coordenadas: investigarConteudo.coordenadas || investigarModal.coordenadas || null,
           enviadoPor: 'GADYS'
         })
       })
@@ -464,53 +464,104 @@ function AdminPanel() {
 
       {investigarModal && (
         <div className="modal-overlay" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null) }}>
-          <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: '680px', maxHeight: '85vh', overflowY: 'auto' }}>
-            <h2>🔍 Investigar com IA — {investigarModal.nome}</h2>
+          <div onClick={e => e.stopPropagation()} style={{
+            background: '#1a1a2e', color: '#E0E1DD',
+            width: '95vw', maxWidth: '900px', maxHeight: '90vh',
+            overflowY: 'auto', borderRadius: '16px',
+            boxShadow: '0 25px 60px rgba(0,0,0,0.7)',
+            fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+          }}>
+
+            {/* Header hero */}
+            <div style={{
+              position: 'relative', height: '280px', display: 'flex',
+              alignItems: 'center', justifyContent: 'center',
+              background: investigarModal.imagemUrl
+                ? `linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url(${investigarModal.imagemUrl}) center/cover`
+                : 'linear-gradient(135deg,#667eea,#764ba2)',
+              borderRadius: '16px 16px 0 0', textAlign: 'center', padding: '2rem'
+            }}>
+              <div>
+                <h1 style={{ fontSize: '2.2rem', fontWeight: 700, color: '#fff', margin: '0 0 0.5rem', textShadow: '0 2px 10px rgba(0,0,0,0.5)' }}>
+                  {investigarLoading ? investigarModal.nome : (investigarConteudo?.titulo || investigarModal.nome)}
+                </h1>
+                <p style={{ color: 'rgba(255,255,255,0.85)', margin: 0, fontSize: '1rem' }}>
+                  {investigarModal.estado}
+                </p>
+                <span style={{ display: 'inline-block', marginTop: '0.75rem', background: 'rgba(255,255,255,0.2)', padding: '4px 14px', borderRadius: '50px', fontSize: '0.8rem', color: '#fff' }}>
+                  Preview — como vai aparecer no site
+                </span>
+              </div>
+            </div>
 
             {investigarLoading && (
-              <p style={{ textAlign: 'center', color: 'var(--text-secondary)', padding: '2rem 0' }}>Gerando conteúdo com IA...</p>
-            )}
-
-            {investigarConteudo?.erro && (
-              <p style={{ color: 'var(--rose-danger)', textAlign: 'center' }}>{investigarConteudo.erro}</p>
-            )}
-
-            {investigarConteudo && !investigarConteudo.erro && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div style={{ background: 'rgba(102,126,234,0.1)', border: '1px solid rgba(102,126,234,0.3)', borderRadius: '10px', padding: '1rem' }}>
-                  <strong style={{ color: '#818cf8', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Título</strong>
-                  <p style={{ margin: '0.4rem 0 0', fontSize: '1.1rem', fontWeight: 700 }}>{investigarConteudo.titulo}</p>
-                </div>
-                <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '1rem' }}>
-                  <strong style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Descrição</strong>
-                  <p style={{ margin: '0.4rem 0 0', lineHeight: 1.7, color: 'var(--text-secondary)' }}>{investigarConteudo.descricao}</p>
-                </div>
-                <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '1rem' }}>
-                  <strong style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>História</strong>
-                  <p style={{ margin: '0.4rem 0 0', lineHeight: 1.7, color: 'var(--text-secondary)' }}>{investigarConteudo.historia}</p>
-                </div>
-                <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '1rem' }}>
-                  <strong style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Curiosidades</strong>
-                  <p style={{ margin: '0.4rem 0 0', lineHeight: 1.7, color: 'var(--text-secondary)' }}>{investigarConteudo.curiosidades}</p>
-                </div>
-                <div style={{ display: 'flex', gap: '1rem' }}>
-                  <div style={{ flex: 1, background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', borderRadius: '10px', padding: '1rem' }}>
-                    <strong style={{ color: '#10b981', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Horário</strong>
-                    <p style={{ margin: '0.4rem 0 0' }}>{investigarConteudo.horario}</p>
-                  </div>
-                  <div style={{ flex: 1, background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.3)', borderRadius: '10px', padding: '1rem' }}>
-                    <strong style={{ color: '#f59e0b', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Preço</strong>
-                    <p style={{ margin: '0.4rem 0 0' }}>{investigarConteudo.preco}</p>
-                  </div>
-                </div>
+              <div style={{ textAlign: 'center', padding: '3rem', color: '#A9B4C2' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>🤖</div>
+                Gerando conteúdo com IA...
               </div>
             )}
 
-            <div className="modal-actions" style={{ marginTop: '1.5rem' }}>
+            {investigarConteudo?.erro && (
+              <div style={{ padding: '2rem', textAlign: 'center', color: '#f43f5e' }}>
+                {investigarConteudo.erro}
+              </div>
+            )}
+
+            {investigarConteudo && !investigarConteudo.erro && (
+              <div style={{ padding: '2rem' }}>
+
+                {/* Tabs simuladas */}
+                <nav style={{ display: 'flex', gap: '1.5rem', borderBottom: '1px solid #2d2d4e', marginBottom: '2rem' }}>
+                  {['Sobre', 'Informações Práticas'].map((t, i) => (
+                    <span key={t} style={{
+                      padding: '0.5rem 1rem 1rem', fontWeight: 500, cursor: 'default',
+                      color: i === 0 ? '#fff' : '#A9B4C2',
+                      borderBottom: i === 0 ? '3px solid #38BDF8' : '3px solid transparent'
+                    }}>{t}</span>
+                  ))}
+                </nav>
+
+                {/* Sobre */}
+                <section style={{ marginBottom: '2.5rem' }}>
+                  <h2 style={{ fontSize: '1.6rem', fontWeight: 600, color: '#fff', marginBottom: '1rem' }}>Sobre o Local</h2>
+                  <p style={{ lineHeight: 1.8, color: '#c8d0dc', marginBottom: '1rem' }}>{investigarConteudo.descricao}</p>
+                  <p style={{ lineHeight: 1.8, color: '#A9B4C2' }}>{investigarConteudo.historia}</p>
+                </section>
+
+                {/* Curiosidades */}
+                <section style={{ marginBottom: '2.5rem', background: 'rgba(56,189,248,0.07)', border: '1px solid rgba(56,189,248,0.15)', borderRadius: '12px', padding: '1.5rem' }}>
+                  <h2 style={{ fontSize: '1.2rem', fontWeight: 600, color: '#38BDF8', marginBottom: '0.75rem' }}>✨ Curiosidades</h2>
+                  <p style={{ lineHeight: 1.8, color: '#c8d0dc', margin: 0 }}>{investigarConteudo.curiosidades}</p>
+                </section>
+
+                {/* Info cards */}
+                <section>
+                  <h2 style={{ fontSize: '1.6rem', fontWeight: 600, color: '#fff', marginBottom: '1rem' }}>Informações Práticas</h2>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: '1rem' }}>
+                    {[{icon:'🕐', label:'Horário', val: investigarConteudo.horario},
+                      {icon:'💰', label:'Preço', val: investigarConteudo.preco},
+                      {icon:'📍', label:'Endereço', val: investigarModal.endereco || investigarModal.estado}
+                    ].map(({icon, label, val}) => val && (
+                      <div key={label} style={{ background: '#2d2d4e', padding: '1.25rem', borderRadius: '8px', borderLeft: '4px solid #38BDF8' }}>
+                        <h3 style={{ margin: '0 0 0.4rem', fontSize: '0.95rem', color: '#fff' }}>{icon} {label}</h3>
+                        <p style={{ margin: 0, color: '#A9B4C2', fontSize: '0.9rem', lineHeight: 1.5 }}>{val}</p>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              </div>
+            )}
+
+            {/* Ações */}
+            <div style={{ display: 'flex', gap: '0.75rem', padding: '1.5rem 2rem', borderTop: '1px solid #2d2d4e' }}>
               {investigarConteudo && !investigarConteudo.erro && (
-                <button className="approve-btn" onClick={handlePublicarLocal}>Publicar Local</button>
+                <button className="approve-btn" style={{ flex: 1 }} onClick={handlePublicarLocal}>
+                  🚀 Publicar Local
+                </button>
               )}
-              <button className="expand-btn" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null) }}>Fechar</button>
+              <button className="expand-btn" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null) }}>
+                Fechar
+              </button>
             </div>
           </div>
         </div>
