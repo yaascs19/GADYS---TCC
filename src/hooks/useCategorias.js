@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 
 const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '');
 
+const CATEGORIAS_FIXAS = ['Todos', 'Monumentos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural'];
+
 export function useCategorias(siglaEstado) {
-  const [categorias, setCategorias] = useState(['Todos']);
+  const [categorias, setCategorias] = useState(CATEGORIAS_FIXAS);
 
   useEffect(() => {
     Promise.all([
