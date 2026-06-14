@@ -67,6 +67,7 @@ const pontosTuristicos = [
     cidade: 'Vila Madalena - SP',
     categoria: 'Costume Cultural',
     descricao: 'Famoso beco coberto de grafites e arte urbana, símbolo da cena artística alternativa paulistana.',
+    imagem: '/images/geral/bat.webp',
   },
 ];
 
