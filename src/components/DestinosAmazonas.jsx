@@ -103,8 +103,12 @@ const DestinosAmazonas = () => {
               <p className="amazonas-destinos-card-description">{item.description}</p>
               <button 
                 className="amazonas-destinos-saibamais"
-                onClick={() => rotasPorId[item.id] && navigate(rotasPorId[item.id])}
-                style={{ opacity: temPagina(item.id) ? 1 : 0.4, cursor: temPagina(item.id) ? 'pointer' : 'not-allowed' }}
+                onClick={() => {
+                  if (item.rota) navigate(item.rota);
+                  else if (rotasPorId[item.id]) navigate(rotasPorId[item.id]);
+                  else if (item.bdId != null) navigate(`/local/${item.bdId}`);
+                }}
+                style={{ opacity: item.rota || temPagina(item.id) || item.bdId != null ? 1 : 0.4, cursor: item.rota || temPagina(item.id) || item.bdId != null ? 'pointer' : 'not-allowed' }}
               >Saber mais</button>
             </div>
           </div>

@@ -22,12 +22,13 @@ export function useLocaisAtivos(siglaEstado, pontosTuristicos) {
           .filter(l => !nomesEstaticos.has(l.nome.toLowerCase().trim()))
           .map(l => ({
             id: `bd-${l.id}`,
-            bdId: l.id,
+            bdId: l.rotaFrontend ? null : l.id,
             nome: l.nome,
             cidade: l.cidade,
             categoria: l.subcategoria,
             descricao: l.descricao,
             imagem: l.imagemUrl ? l.imagemUrl.split(',')[0].trim() : null,
+            rota: l.rotaFrontend || null,
           }));
         setPontosAtivos([...estaticosAtivos, ...novosDoBD]);
       })
