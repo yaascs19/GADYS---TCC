@@ -144,8 +144,8 @@ function PerfilPage() {
     const usuarioId = localStorage.getItem('usuarioId')
     if (!usuarioId) return
     try {
-      await fetch(`${API_URL}/api/usuarios/${usuarioId}`, {
-        method: 'PUT',
+      await fetch(`${API_URL}/api/usuarios/${usuarioId}/foto`, {
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fotoPerfil: foto })
       })
