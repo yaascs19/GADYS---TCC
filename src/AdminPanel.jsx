@@ -473,7 +473,9 @@ function AdminPanel() {
     if (sugestao.rascunhoConteudo) {
       try {
         const rascunho = JSON.parse(sugestao.rascunhoConteudo)
-        setInvestigarConteudo(rascunho)
+        const { _modal, ...conteudo } = rascunho
+        if (_modal) setInvestigarModal(prev => ({ ...prev, ..._modal }))
+        setInvestigarConteudo(conteudo)
         setInvestigarLoading(false)
         return
       } catch {}
@@ -521,10 +523,22 @@ function AdminPanel() {
   const handleSalvarRascunho = async () => {
     if (!investigarConteudo || !investigarModal) return
     try {
+      const payload = {
+        ...investigarConteudo,
+        _modal: {
+          imagemUrlHero: investigarModal.imagemUrlHero,
+          imagemUrlLateral: investigarModal.imagemUrlLateral,
+          imagensLateraisSobre: investigarModal.imagensLateraisSobre,
+          imagensLateraisVisite: investigarModal.imagensLateraisVisite,
+          imagemUrl: investigarModal.imagemUrl,
+          endereco: investigarModal.endereco,
+          estado: investigarModal.estado,
+        }
+      }
       const res = await fetch(`${API_URL}/api/sugestoes/${investigarModal.id}/rascunho`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ rascunhoConteudo: JSON.stringify(investigarConteudo) })
+        body: JSON.stringify({ rascunhoConteudo: JSON.stringify(payload) })
       })
       if (res.ok) {
         showToast('Rascunho salvo!', 'success')
@@ -873,10 +887,7 @@ function AdminPanel() {
       )}
 
       {investigarModal && (
-        <div className="modal-overlay" onClick={async () => {
-          if (investigarConteudo && !investigarConteudo.erro) await handleSalvarRascunho()
-          setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null)
-        }}>
+        <div className="modal-overlay" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null) }}>
           <div onClick={e => e.stopPropagation()} style={{
             width: '95vw', maxWidth: '1000px', maxHeight: '92vh', overflowY: 'auto',
             borderRadius: '16px', boxShadow: '0 25px 60px rgba(0,0,0,0.8)',
@@ -930,7 +941,7 @@ function AdminPanel() {
                 setModal={setInvestigarModal}
                 localPublicadoId={localPublicadoId}
                 onPublicar={handlePublicarLocal}
-                onFechar={async () => { if (investigarConteudo && !investigarConteudo.erro) await handleSalvarRascunho(); setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null) }}
+                onFechar={() => { setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null) }}
               />
             )}
 
@@ -946,10 +957,7 @@ function AdminPanel() {
                   </button>
                 </>
               )}
-              <button className="expand-btn" onClick={async () => {
-                if (investigarConteudo && !investigarConteudo.erro) await handleSalvarRascunho()
-                setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null)
-              }}>Fechar</button>
+              <button className="expand-btn" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null) }}>Fechar</button>
             </div>
 
           </div>
