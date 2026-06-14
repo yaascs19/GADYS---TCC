@@ -145,7 +145,8 @@ function AdminPanel() {
       }
       const data = await res.json()
       const text = data?.choices?.[0]?.message?.content || ''
-      const jsonMatch = text.match(/{[\s\S]*}/)
+      console.log('Groq raw response:', text)
+      const jsonMatch = text.match(/```(?:json)?\s*({[\s\S]*?})\s*```/) || text.match(/{[\s\S]*}/)
       if (jsonMatch) {
         try {
           setInvestigarConteudo(JSON.parse(jsonMatch[0]))
