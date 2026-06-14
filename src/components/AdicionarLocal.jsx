@@ -6,6 +6,7 @@ import './AdicionarLocal.css'
 
 function AdicionarLocal() {
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
+  const toggleDarkMode = () => { const n = !darkMode; setDarkMode(n); localStorage.setItem('darkMode', n) }
   const navigate = useNavigate()
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
   const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
