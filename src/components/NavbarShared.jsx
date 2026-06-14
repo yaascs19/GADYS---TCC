@@ -73,7 +73,7 @@ export default function NavbarShared({ darkMode, toggleDarkMode, paginaAtual }) 
         justifyContent: 'flex-start', margin: 0, padding: '2rem 0', listStyle: 'none',
         transition: 'right 0.3s ease', zIndex: 1001, overflowY: 'auto'
       }}>
-        {LINKS.map(({ label, path }) => (
+        {LINKS.slice(0, 1).map(({ label, path }) => (
           <li key={path} style={{ width: '100%', textAlign: 'center' }}>
             <a href="#" onClick={(e) => { e.preventDefault(); navigate(path); setMenuOpen(false) }}
               style={{ color: paginaAtual === path ? '#38BDF8' : 'white', textDecoration: 'none', padding: '0.6rem 1rem', borderRadius: '5px', display: 'block', fontWeight: paginaAtual === path ? 700 : 400 }}>
@@ -103,6 +103,15 @@ export default function NavbarShared({ darkMode, toggleDarkMode, paginaAtual }) 
             </ul>
           )}
         </li>
+
+        {LINKS.slice(1).map(({ label, path }) => (
+          <li key={path} style={{ width: '100%', textAlign: 'center' }}>
+            <a href="#" onClick={(e) => { e.preventDefault(); navigate(path); setMenuOpen(false) }}
+              style={{ color: paginaAtual === path ? '#38BDF8' : 'white', textDecoration: 'none', padding: '0.6rem 1rem', borderRadius: '5px', display: 'block', fontWeight: paginaAtual === path ? 700 : 400 }}>
+              {label}
+            </a>
+          </li>
+        ))}
 
         {isAdmin && (
           <li style={{ width: '100%', textAlign: 'center' }}>
