@@ -165,9 +165,9 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '3rem', flexWrap: 'wrap' }}>
                 <div style={{ flex: '1.5', minWidth: '300px' }}>
                   {[
-                    { titulo: '🕐 Horário de Funcionamento', texto: conteudo.horario },
-                    { titulo: '💰 Preço / Entrada', texto: conteudo.preco },
-                    { titulo: '📍 Localização', texto: modal.endereco || modal.estado },
+                    { titulo: 'Horário de Funcionamento', texto: conteudo.horario },
+                    { titulo: 'Preço / Entrada', texto: conteudo.preco },
+                    { titulo: 'Localização', texto: modal.endereco || modal.estado },
                   ].filter(c => c.texto).map((card, i) => (
                     <div key={i} style={cardStyle}>
                       <h3 style={{ color: '#fff', margin: '0 0 0.5rem', fontSize: '1.1rem' }}>{card.titulo}</h3>
