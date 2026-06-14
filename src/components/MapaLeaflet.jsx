@@ -11,6 +11,7 @@ function MapaLeaflet() {
   const [distancia, setDistancia] = useState(5000)
   const [userLocation, setUserLocation] = useState(null)
   const [lugaresVisiveis, setLugaresVisiveis] = useState([])
+  const [locaisBanco, setLocaisBanco] = useState([])
   const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
   const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true'
 
@@ -138,6 +139,33 @@ function MapaLeaflet() {
       } catch (e) {}
     })
   }
+
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_API_URL}/api/locais`)
+      .then(r => r.ok ? r.json() : [])
+      .then(data => {
+        if (Array.isArray(data)) setLocaisBanco(data.filter(l => l.status === 'ATIVO' && l.coordenadas))
+      })
+      .catch(() => {})
+  }, [])
+
+  useEffect(() => {
+    const locaisMapeados = locaisBanco.map(l => {
+      const [lat, lng] = l.coordenadas.split(',').map(parseFloat)
+      return {
+        nome: l.nome,
+        lat,
+        lng,
+        cor: '#667eea',
+        cidade: l.estado || '',
+        categoria: l.subcategoria || 'Lugar Paradísíaco',
+        preco: l.preco?.toLowerCase().includes('gratu') ? 'gratuito' : 'pago'
+      }
+    }).filter(l => !isNaN(l.lat) && !isNaN(l.lng))
+    const todos = [...lugares, ...locaisMapeados]
+    setLugaresVisiveis(todos)
+    if (window.currentMap) adicionarMarcadores(todos, window.currentMap)
+  }, [locaisBanco])
 
   useEffect(() => {
     setLugaresVisiveis(lugares)

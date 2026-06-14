@@ -17,9 +17,6 @@ function AdminPanel() {
   const [trashedLocations, setTrashedLocations] = useState([])
   const [contactMessages, setContactMessages] = useState([])
   const [sugestoes, setSugestoes] = useState([])
-  const [investigarModal, setInvestigarModal] = useState(null)
-  const [investigarLoading, setInvestigarLoading] = useState(false)
-  const [investigarConteudo, setInvestigarConteudo] = useState(null)
   const [locationFilter, setLocationFilter] = useState('')
   const [editingLocation, setEditingLocation] = useState(null)
   const [showEditModal, setShowEditModal] = useState(false)
@@ -121,76 +118,7 @@ function AdminPanel() {
     }
   }
 
-  const handleInvestigar = async (sugestao) => {
-    setInvestigarModal(sugestao)
-    setInvestigarConteudo(null)
-    setInvestigarLoading(true)
-    try {
-      const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${import.meta.env.VITE_GROQ_KEY}` },
-        body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          messages: [
-            { role: 'system', content: 'Voce e um especialista em turismo brasileiro. Responda sempre em portugues brasileiro correto, sem markdown, sem asteriscos, sem bullets.' },
-            { role: 'user', content: `Pesquise sobre o local turistico "${sugestao.nome}" localizado em ${sugestao.estado}, Brasil. Endereco informado: ${sugestao.endereco || 'nao informado'}. Gere as seguintes informacoes em JSON com exatamente estas chaves: { "titulo": "nome oficial do local", "descricao": "descricao completa e envolvente de 3 paragrafos", "historia": "historia e contexto cultural em 2 paragrafos", "curiosidades": "3 curiosidades interessantes em texto corrido", "horario": "horario de funcionamento estimado", "preco": "gratuito ou valor estimado" }. Responda APENAS com o JSON, sem texto antes ou depois.` }
-          ]
-        })
-      })
-      const data = await res.json()
-      const text = data?.choices?.[0]?.message?.content || ''
-      const jsonMatch = text.match(/{[\s\S]*}/)
-      if (jsonMatch) {
-        setInvestigarConteudo(JSON.parse(jsonMatch[0]))
-      } else {
-        setInvestigarConteudo({ erro: 'Nao foi possivel gerar conteudo. Tente novamente.' })
-      }
-    } catch {
-      setInvestigarConteudo({ erro: 'Erro ao conectar com a IA.' })
-    } finally {
-      setInvestigarLoading(false)
-    }
-  }
-
-  const handlePublicarLocal = async () => {
-    if (!investigarConteudo || !investigarModal) return
-    try {
-      const response = await fetch(`${API_URL}/api/locais`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          nome: investigarConteudo.titulo || investigarModal.nome,
-          descricao: investigarConteudo.descricao,
-          estado: investigarModal.estado,
-          endereco: investigarModal.endereco,
-          subcategoria: investigarModal.subcategoria || 'Lugar Paradisiaco',
-          categoria: 'lugares-visitar',
-          horarioFuncionamento: investigarConteudo.horario,
-          preco: investigarConteudo.preco,
-          informacoesAdicionais: investigarConteudo.historia + '\n\nCuriosidades: ' + investigarConteudo.curiosidades,
-          imagemUrl: investigarModal.imagemUrl || null,
-          coordenadas: investigarModal.coordenadas || null,
-          enviadoPor: 'GADYS'
-        })
-      })
-      if (response.ok) {
-        const local = await response.json()
-        await fetch(`${API_URL}/api/locais/aprovar/${local.id}`, { method: 'POST' })
-        await fetch(`${API_URL}/api/sugestoes/${investigarModal.id}/analisar`, { method: 'POST' })
-        showToast('Local publicado com sucesso!', 'success')
-        setInvestigarModal(null)
-        setInvestigarConteudo(null)
-        loadSugestoes()
-        loadSiteLocations()
-      } else {
-        showToast('Erro ao publicar local.')
-      }
-    } catch {
-      showToast('Erro de conexao.')
-    }
-  }
-
-    const loadSugestoes = async () => {
+  const loadSugestoes = async () => {
     try {
       const response = await fetch(`${API_URL}/api/sugestoes`)
       if (response.ok) setSugestoes(await response.json())
@@ -450,60 +378,6 @@ function AdminPanel() {
             <div className="modal-actions">
               <button className="reject-btn" onClick={() => { confirmModal.onConfirm(); setConfirmModal(null) }}>Confirmar</button>
               <button className="expand-btn" onClick={() => setConfirmModal(null)}>Cancelar</button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {investigarModal && (
-        <div className="modal-overlay" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null) }}>
-          <div className="modal-content" onClick={e => e.stopPropagation()} style={{ maxWidth: '680px', maxHeight: '85vh', overflowY: 'auto' }}>
-            <h2>🔍 Investigar com IA — {investigarModal.nome}</h2>
-
-            {investigarLoading && (
-              <p style={{ textAlign: 'center', color: 'var(--text-secondary)', padding: '2rem 0' }}>Gerando conteúdo com IA...</p>
-            )}
-
-            {investigarConteudo?.erro && (
-              <p style={{ color: 'var(--rose-danger)', textAlign: 'center' }}>{investigarConteudo.erro}</p>
-            )}
-
-            {investigarConteudo && !investigarConteudo.erro && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                <div style={{ background: 'rgba(102,126,234,0.1)', border: '1px solid rgba(102,126,234,0.3)', borderRadius: '10px', padding: '1rem' }}>
-                  <strong style={{ color: '#818cf8', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Título</strong>
-                  <p style={{ margin: '0.4rem 0 0', fontSize: '1.1rem', fontWeight: 700 }}>{investigarConteudo.titulo}</p>
-                </div>
-                <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '1rem' }}>
-                  <strong style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Descrição</strong>
-                  <p style={{ margin: '0.4rem 0 0', lineHeight: 1.7, color: 'var(--text-secondary)' }}>{investigarConteudo.descricao}</p>
-                </div>
-                <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '1rem' }}>
-                  <strong style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>História</strong>
-                  <p style={{ margin: '0.4rem 0 0', lineHeight: 1.7, color: 'var(--text-secondary)' }}>{investigarConteudo.historia}</p>
-                </div>
-                <div style={{ background: 'rgba(255,255,255,0.03)', borderRadius: '10px', padding: '1rem' }}>
-                  <strong style={{ color: 'var(--text-secondary)', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Curiosidades</strong>
-                  <p style={{ margin: '0.4rem 0 0', lineHeight: 1.7, color: 'var(--text-secondary)' }}>{investigarConteudo.curiosidades}</p>
-                </div>
-                <div style={{ display: 'flex', gap: '1rem' }}>
-                  <div style={{ flex: 1, background: 'rgba(16,185,129,0.1)', border: '1px solid rgba(16,185,129,0.3)', borderRadius: '10px', padding: '1rem' }}>
-                    <strong style={{ color: '#10b981', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Horário</strong>
-                    <p style={{ margin: '0.4rem 0 0' }}>{investigarConteudo.horario}</p>
-                  </div>
-                  <div style={{ flex: 1, background: 'rgba(245,158,11,0.1)', border: '1px solid rgba(245,158,11,0.3)', borderRadius: '10px', padding: '1rem' }}>
-                    <strong style={{ color: '#f59e0b', fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Preço</strong>
-                    <p style={{ margin: '0.4rem 0 0' }}>{investigarConteudo.preco}</p>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            <div className="modal-actions" style={{ marginTop: '1.5rem' }}>
-              {investigarConteudo && !investigarConteudo.erro && (
-                <button className="approve-btn" onClick={handlePublicarLocal}>Publicar Local</button>
-              )}
-              <button className="expand-btn" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null) }}>Fechar</button>
             </div>
           </div>
         </div>
@@ -824,7 +698,7 @@ function AdminPanel() {
               <img src={s.imagemUrl} alt={s.nome} style={{ width: '100%', borderRadius: '8px', marginTop: '0.75rem', maxHeight: '180px', objectFit: 'cover' }} />
             )}
             <div className="card-actions">
-              <button className="expand-btn" onClick={() => handleInvestigar(s)}>Investigar com IA</button>
+              <button className="expand-btn" onClick={() => window.open(`https://www.google.com/search?q=${encodeURIComponent(s.nome + ' ' + s.estado + ' turismo')}`, '_blank')}>Investigar</button>
               <button className="reject-btn" onClick={() => handleDescartarSugestao(s.id)}>Descartar</button>
             </div>
           </div>
