@@ -170,6 +170,23 @@ function MapaLeaflet() {
     if (preco !== 'todos') filtrados = filtrados.filter(l => l.preco === preco)
     if (lat !== null && lng !== null) {
       filtrados = filtrados.filter(l => calcularDistancia(lat, lng, l.lat, l.lng) <= distancia)
+      if (window.currentMap) {
+        if (window.raioCircle) window.currentMap.removeLayer(window.raioCircle)
+        window.raioCircle = window.L.circle([lat, lng], {
+          radius: distancia * 1000,
+          color: '#667eea',
+          fillColor: '#667eea',
+          fillOpacity: 0.08,
+          weight: 2,
+          dashArray: '6 4'
+        }).addTo(window.currentMap)
+        window.currentMap.fitBounds(window.raioCircle.getBounds())
+      }
+    } else {
+      if (window.currentMap && window.raioCircle) {
+        window.currentMap.removeLayer(window.raioCircle)
+        window.raioCircle = null
+      }
     }
     setLugaresVisiveis(filtrados)
     if (window.currentMap) adicionarMarcadores(filtrados, window.currentMap)
