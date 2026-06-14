@@ -40,6 +40,7 @@ function AdicionarLocal() {
         { headers: { 'Accept-Language': 'pt-BR', 'User-Agent': 'GADYS-TCC/1.0' } }
       )
       const data = await res.json()
+      console.log('Nominatim:', JSON.stringify(data))
       if (data.length > 0) {
         const endereco = data[0].display_name.split(',').slice(0, 4).join(',').trim()
         setFormData(prev => ({ ...prev, endereco }))
