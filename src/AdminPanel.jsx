@@ -1,52 +1,119 @@
 import { useState, useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './AdminPanel.css'
+import './components/EditarLocal.css'
 import AvaliacoesComentarios from './components/AvaliacoesComentarios'
 
-function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId }) {
+const CLOUD_NAME = 'dybpie9aa'
+const UPLOAD_PRESET = 'gadys_tcc'
+
+let _sid = 0
+const suid = () => ++_sid
+
+const ImageSlot = ({ slot, uploading, large, onUpload, onRemove, canRemove }) => {
+  const ref = useRef()
+  return (
+    <div className="editor-slot-wrapper">
+      <div
+        className={`editor-image-thumb ${large ? 'editor-image-large' : ''}`}
+        style={{ backgroundImage: slot.url ? `url(${slot.url})` : 'none', cursor: 'pointer' }}
+        onClick={() => ref.current.click()}
+      >
+        {uploading ? <span>⏳</span> : <span>{slot.url ? '🔄' : '+ Foto'}</span>}
+        <input ref={ref} type="file" accept="image/*" style={{ display: 'none' }} onChange={e => onUpload(e, slot.id)} />
+      </div>
+      {canRemove && <button type="button" className="editor-slot-remove" onClick={() => onRemove(slot.id)}>×</button>}
+    </div>
+  )
+}
+
+const ImagemUploader = ({ url, onChange }) => {
+  const ref = useRef()
+  const [uploading, setUploading] = useState(false)
+  const handleUpload = async (e) => {
+    const file = e.target.files[0]
+    if (!file) return
+    setUploading(true)
+    const data = new FormData()
+    data.append('file', file)
+    data.append('upload_preset', UPLOAD_PRESET)
+    try {
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: data })
+      const json = await res.json()
+      onChange(json.secure_url)
+    } catch { alert('Erro ao fazer upload.') }
+    finally { setUploading(false) }
+  }
+  return (
+    <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+      <div onClick={() => ref.current.click()} style={{
+        width: '120px', height: '80px', borderRadius: '8px', cursor: 'pointer',
+        border: '2px dashed rgba(56,189,248,0.4)', backgroundSize: 'cover',
+        backgroundPosition: 'center', backgroundImage: url ? `url(${url})` : 'none',
+        backgroundColor: 'rgba(255,255,255,0.04)', display: 'flex',
+        alignItems: 'center', justifyContent: 'center', flexShrink: 0,
+        fontSize: '0.75rem', color: '#38BDF8'
+      }}>
+        {uploading ? '⏳' : url ? '🔄' : '+ foto'}
+        <input ref={ref} type="file" accept="image/*" style={{ display: 'none' }} onChange={handleUpload} />
+      </div>
+      <input className="editor-inline-input" value={url || ''} onChange={e => onChange(e.target.value)} placeholder="ou cole uma URL..." style={{ flex: 1 }} />
+    </div>
+  )
+}
+
+function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId, onPublicar, onFechar }) {
   const [aba, setAba] = useState('sobre')
   const [editando, setEditando] = useState(false)
+  const [uploadingId, setUploadingId] = useState(null)
   const abas = ['sobre', 'visite', 'fotos', 'avaliacoes']
   const labels = { sobre: 'Sobre', visite: 'Visite', fotos: 'Fotos', avaliacoes: 'Avaliações' }
 
-  const es = {
-    width: '100%', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(56,189,248,0.3)',
-    borderRadius: '8px', color: '#E0E1DD', fontFamily: 'inherit', fontSize: '0.9rem',
-    padding: '0.75rem', resize: 'vertical', outline: 'none', boxSizing: 'border-box'
-  }
-  const cardStyle = { background: '#2d2d4e', padding: '1.5rem', borderRadius: '8px', marginBottom: '1.5rem', borderLeft: '4px solid #38BDF8' }
-
-  const fileToBase64 = (file) => new Promise((resolve) => {
-    const reader = new FileReader()
-    reader.onload = e => resolve(e.target.result)
-    reader.readAsDataURL(file)
+  // slots de imagem (lateral + galeria)
+  const [slots, setSlots] = useState(() => {
+    const imgs = modal.imagemUrl ? modal.imagemUrl.split(',').map(u => u.trim()).filter(Boolean) : []
+    return imgs.length > 0 ? imgs.map(url => ({ id: suid(), url })) : [{ id: suid(), url: '' }]
   })
 
-  const handleUploadImagens = async (e) => {
-    const files = Array.from(e.target.files)
-    const bases = await Promise.all(files.map(fileToBase64))
-    const atual = modal.imagemUrl ? modal.imagemUrl.split(',').filter(u => u.trim()) : []
-    setModal({ ...modal, imagemUrl: [...atual, ...bases].join(',') })
-  }
+  const [heroUrl, setHeroUrl] = useState(modal.imagemUrlHero || modal.imagemUrl?.split(',')[0] || '')
+  const [lateralUrl, setLateralUrl] = useState(modal.imagemUrlLateral || '')
 
-  const handleUploadHero = async (e) => {
+  // sincroniza slots -> modal.imagemUrl
+  useEffect(() => {
+    setModal(prev => ({ ...prev, imagemUrl: slots.map(s => s.url).filter(Boolean).join(',') }))
+  }, [slots])
+
+  useEffect(() => { setModal(prev => ({ ...prev, imagemUrlHero: heroUrl })) }, [heroUrl])
+  useEffect(() => { setModal(prev => ({ ...prev, imagemUrlLateral: lateralUrl })) }, [lateralUrl])
+
+  const handleImageUpload = async (e, slotId) => {
     const file = e.target.files[0]
     if (!file) return
-    const base = await fileToBase64(file)
-    setModal({ ...modal, imagemUrlHero: base })
+    setUploadingId(slotId)
+    const data = new FormData()
+    data.append('file', file)
+    data.append('upload_preset', UPLOAD_PRESET)
+    try {
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, { method: 'POST', body: data })
+      const json = await res.json()
+      setSlots(prev => prev.map(s => s.id === slotId ? { ...s, url: json.secure_url } : s))
+    } catch { alert('Erro ao fazer upload.') }
+    finally { setUploadingId(null) }
   }
 
-  const Field = ({ label, campo, area, src, setSrc }) => (
-    <div style={{ marginBottom: '1rem' }}>
-      <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.3rem' }}>{label}</label>
-      {area
-        ? <textarea value={src ? src[campo] || '' : conteudo[campo] || ''} onChange={e => src ? setSrc({ ...src, [campo]: e.target.value }) : setConteudo({ ...conteudo, [campo]: e.target.value })} rows={4} style={es} />
-        : <input value={src ? src[campo] || '' : conteudo[campo] || ''} onChange={e => src ? setSrc({ ...src, [campo]: e.target.value }) : setConteudo({ ...conteudo, [campo]: e.target.value })} style={{ ...es, padding: '0.5rem 0.75rem' }} />
-      }
-    </div>
-  )
+  const cardStyle = { background: '#2d2d4e', padding: '1.5rem', borderRadius: '8px', marginBottom: '1.5rem', borderLeft: '4px solid #38BDF8' }
   return (
     <div style={{ padding: '0 2rem' }}>
+      {editando && (
+        <div className="editor-toolbar" style={{ position: 'sticky', top: 0, zIndex: 200 }}>
+          <span className="editor-toolbar-label">✏️ Modo Edição — Preview IA</span>
+          <div className="editor-toolbar-actions">
+            <button className="editor-btn-save" onClick={() => setEditando(false)}>✓ Concluído</button>
+            {onPublicar && <button className="editor-btn-approve" onClick={onPublicar}>✓ Publicar Local</button>}
+            {onFechar && <button className="editor-btn-cancel" onClick={onFechar}>Fechar</button>}
+          </div>
+        </div>
+      )}
       <div style={{ display: 'flex', alignItems: 'flex-end', borderBottom: '1px solid #2d2d4e', marginBottom: '0' }}>
         <nav style={{ display: 'flex', gap: '1.5rem', flex: 1 }}>
           {abas.map(a => (
@@ -66,7 +133,7 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
             background: editando ? '#38BDF8' : 'transparent',
             color: editando ? '#0d1117' : '#38BDF8',
             cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600
-          }}>{editando ? 'Concluído' : 'Editar'}</button>
+          }}>{editando ? '✕ Sair da Edição' : '✏️ Editar'}</button>
         )}
       </div>
 
@@ -75,35 +142,25 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
         <section style={{ marginBottom: '3rem', paddingTop: '2rem' }}>
           {editando ? (
             <>
-              <Field label="Título" campo="titulo" />
-              <Field label="Descrição" campo="descricao" area />
-              <Field label="História" campo="historia" area />
-              <Field label="Curiosidades" campo="curiosidades" area />
-              <Field label="Estado" campo="estado" src={modal} setSrc={setModal} />
-              <Field label="Endereço" campo="endereco" src={modal} setSrc={setModal} />
+              <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem', marginTop: '0.5rem' }}>Título</label>
+              <input className="editor-inline-input" style={{ fontSize: '1.4rem', fontWeight: 600, color: '#fff', marginBottom: '1rem' }} value={conteudo.titulo || ''} onChange={e => setConteudo({ ...conteudo, titulo: e.target.value })} placeholder="Título" />
+              <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Descrição</label>
+              <textarea className="editor-inline-textarea" value={conteudo.descricao || ''} onChange={e => setConteudo({ ...conteudo, descricao: e.target.value })} placeholder="Descrição..." rows={3} />
+              <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>História</label>
+              <textarea className="editor-inline-textarea" value={conteudo.historia || ''} onChange={e => setConteudo({ ...conteudo, historia: e.target.value })} placeholder="História..." rows={4} />
+              <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Curiosidades</label>
+              <textarea className="editor-inline-textarea" value={conteudo.curiosidades || ''} onChange={e => setConteudo({ ...conteudo, curiosidades: e.target.value })} placeholder="Curiosidades..." rows={3} />
+              <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Estado</label>
+              <input className="editor-inline-input" value={modal.estado || ''} onChange={e => setModal({ ...modal, estado: e.target.value })} placeholder="Estado" style={{ marginBottom: '1rem' }} />
+              <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Endereço</label>
+              <input className="editor-inline-input" value={modal.endereco || ''} onChange={e => setModal({ ...modal, endereco: e.target.value })} placeholder="Endereço" style={{ marginBottom: '1rem' }} />
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Imagem de Fundo do Título (Hero)</label>
-                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
-                  <label style={{ padding: '0.5rem 1rem', background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.4)', borderRadius: '8px', color: '#38BDF8', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}>
-                    Selecionar do dispositivo
-                    <input type="file" accept="image/*" onChange={handleUploadHero} style={{ display: 'none' }} />
-                  </label>
-                  <span style={{ color: '#A9B4C2', fontSize: '0.8rem' }}>ou</span>
-                  <input placeholder="URL da imagem hero..." value={modal.imagemUrlHero || ''} onChange={e => setModal({ ...modal, imagemUrlHero: e.target.value })} style={{ ...es, padding: '0.5rem 0.75rem', flex: 1, minWidth: '200px' }} />
-                </div>
-                {(modal.imagemUrlHero) && <img src={modal.imagemUrlHero} style={{ marginTop: '0.5rem', height: '80px', borderRadius: '6px', objectFit: 'cover' }} />}
+                <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Imagem Hero</label>
+                <ImagemUploader url={modal.imagemUrlHero || ''} onChange={url => setModal({ ...modal, imagemUrlHero: url })} />
               </div>
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Imagem Lateral (Sobre / Visite)</label>
-                <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
-                  <label style={{ padding: '0.5rem 1rem', background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.4)', borderRadius: '8px', color: '#38BDF8', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}>
-                    Selecionar do dispositivo
-                    <input type="file" accept="image/*" onChange={async e => { const b = await fileToBase64(e.target.files[0]); setModal({ ...modal, imagemUrlLateral: b }) }} style={{ display: 'none' }} />
-                  </label>
-                  <span style={{ color: '#A9B4C2', fontSize: '0.8rem' }}>ou</span>
-                  <input placeholder="URL da imagem lateral..." value={modal.imagemUrlLateral || ''} onChange={e => setModal({ ...modal, imagemUrlLateral: e.target.value })} style={{ ...es, padding: '0.5rem 0.75rem', flex: 1, minWidth: '200px' }} />
-                </div>
-                {(modal.imagemUrlLateral) && <img src={modal.imagemUrlLateral} style={{ marginTop: '0.5rem', height: '80px', borderRadius: '6px', objectFit: 'cover' }} />}
+                <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Imagem Lateral</label>
+                <ImagemUploader url={modal.imagemUrlLateral || ''} onChange={url => setModal({ ...modal, imagemUrlLateral: url })} />
               </div>
             </>
           ) : (
@@ -143,17 +200,19 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
         <section style={{ marginBottom: '3rem', paddingTop: '2rem' }}>
           {editando ? (
             <>
-              <Field label="Horário" campo="horario" area />
-              <Field label="Preço" campo="preco" />
+              <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem', marginTop: '0.5rem' }}>Horário</label>
+              <textarea className="editor-inline-textarea" value={conteudo.horario || ''} onChange={e => setConteudo({ ...conteudo, horario: e.target.value })} placeholder="Horário de funcionamento..." rows={2} />
+              <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.25rem' }}>Preço</label>
+              <input className="editor-inline-input" value={conteudo.preco || ''} onChange={e => setConteudo({ ...conteudo, preco: e.target.value })} placeholder="Preço / entrada" style={{ marginBottom: '1.5rem' }} />
               <div style={{ marginTop: '1.5rem' }}>
                 <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>Hotéis / Hostels</label>
                 {(conteudo.hosteis || []).map((h, i) => (
                   <div key={i} style={{ marginBottom: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)' }}>
                     <label style={{ fontSize: '0.7rem', color: '#A9B4C2', display: 'block', marginBottom: '0.5rem' }}>HOSTEL {i+1}</label>
                     {['nome','nota','contato','site'].map(f => (
-                      <input key={f} placeholder={f} value={h[f] || ''}
+                      <input key={f} className="editor-inline-input" placeholder={f} value={h[f] || ''}
                         onChange={e => { const arr = [...(conteudo.hosteis||[])]; arr[i] = { ...arr[i], [f]: e.target.value }; setConteudo({ ...conteudo, hosteis: arr }) }}
-                        style={{ ...es, padding: '0.4rem 0.75rem', marginBottom: '0.4rem', resize: 'none' }} />
+                        style={{ marginBottom: '0.4rem' }} />
                     ))}
                   </div>
                 ))}
@@ -207,14 +266,7 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
           {editando && (
             <div style={{ marginBottom: '1.5rem', textAlign: 'left' }}>
               <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.5rem' }}>Adicionar Fotos</label>
-              <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
-                <label style={{ padding: '0.5rem 1rem', background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.4)', borderRadius: '8px', color: '#38BDF8', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}>
-                  Selecionar do dispositivo
-                  <input type="file" accept="image/*" multiple onChange={handleUploadImagens} style={{ display: 'none' }} />
-                </label>
-                <span style={{ color: '#A9B4C2', fontSize: '0.8rem' }}>ou cole URLs separadas por vírgula:</span>
-              </div>
-              <input value={modal.imagemUrl || ''} onChange={e => setModal({ ...modal, imagemUrl: e.target.value })} placeholder="https://... , https://..." style={{ ...es, padding: '0.6rem 0.75rem', resize: 'none' }} />
+                <input className="editor-inline-input" value={modal.imagemUrl || ''} onChange={e => setModal({ ...modal, imagemUrl: e.target.value })} placeholder="URLs separadas por vírgula: https://... , https://..." style={{ marginBottom: '0.5rem' }} />
               {modal.imagemUrl && (
                 <button onClick={() => setModal({ ...modal, imagemUrl: '' })} style={{ marginTop: '0.5rem', background: 'none', border: 'none', color: '#f43f5e', cursor: 'pointer', fontSize: '0.8rem' }}>Limpar tudo</button>
               )}
@@ -766,6 +818,8 @@ function AdminPanel() {
                 modal={investigarModal}
                 setModal={setInvestigarModal}
                 localPublicadoId={localPublicadoId}
+                onPublicar={handlePublicarLocal}
+                onFechar={() => { setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null) }}
               />
             )}
 
