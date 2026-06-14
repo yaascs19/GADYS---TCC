@@ -99,7 +99,6 @@ const RJPontos = () => {
   const pontosAtivos = useLocaisAtivos('RJ', pontosTuristicos);
   const categorias = useCategorias('RJ');
 
-  const categorias = useCategorias('RJ');
 
   useEffect(() => {
     let result = pontosAtivos;
