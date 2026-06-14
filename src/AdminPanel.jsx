@@ -496,7 +496,7 @@ function AdminPanel() {
             label: 'Sobre',
             titulo: investigarConteudo.titulo || investigarModal.nome,
             texto: investigarConteudo.descricao,
-            imagem: (investigarModal.imagensLateraisSobre || [investigarModal.imagemUrlLateral].filter(Boolean))[0] || '',
+            imagem: (investigarModal.imagensLateraisSobre || [investigarModal.imagemUrlHero, investigarModal.imagemUrlLateral].filter(Boolean))[0] || '',
             subsecoes: [
               investigarConteudo.historia ? { titulo: 'Hist\u00f3ria', texto: investigarConteudo.historia } : null,
               investigarConteudo.curiosidades ? { titulo: 'Curiosidades', texto: investigarConteudo.curiosidades } : null,
@@ -534,7 +534,12 @@ function AdminPanel() {
           horarioFuncionamento: investigarConteudo.horario,
           preco: investigarConteudo.preco,
           informacoesAdicionais,
-          imagemUrl: investigarModal.imagemUrl || null,
+          imagemUrl: [
+            investigarModal.imagemUrlHero || '',
+            ...(investigarModal.imagensLateraisSobre || [investigarModal.imagemUrlLateral].filter(Boolean)),
+            ...(investigarModal.imagemUrl ? investigarModal.imagemUrl.split(',').map(u => u.trim()) : []),
+            ...(investigarModal.imagensLateraisVisite || []),
+          ].filter(Boolean).filter((v, i, a) => a.indexOf(v) === i).join(',') || null,
           coordenadas: investigarConteudo.coordenadas || investigarModal.coordenadas || null,
           enviadoPor: 'GADYS'
         })
