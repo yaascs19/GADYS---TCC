@@ -225,7 +225,7 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId,
                     ))}
                   </div>
                 ))}
-                <button type="button" className="editor-slot-add-bottom" onClick={() => setConteudo({ ...conteudo, hosteis: [...(conteudo.hosteis || []), { nome: '', nota: 4.5, contato: '', site: '' }] })}>+ hostel</button>
+                <button type="button" className="editor-slot-add-bottom" onClick={() => setConteudo({ ...conteudo, hosteis: [...(conteudo.hosteis || []), { nome: '', nota: 4.5, contato: '', site: '' }] })}>+ hotel</button>
               </div>
               <div style={{ marginTop: '1.5rem' }}>
                 <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>Imagens Laterais (Visite)</label>
@@ -292,7 +292,7 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId,
                   <button type="button" className="editor-slot-remove" onClick={() => { const arr = modal.imagemUrl.split(',').filter((_, j) => j !== i); setModal({ ...modal, imagemUrl: arr.join(',') }) }}>×</button>
                 </div>
               ))}
-              <button type="button" className="editor-slot-add-bottom" onClick={() => setModal({ ...modal, imagemUrl: modal.imagemUrl ? modal.imagemUrl + ',' : '' })}>+ foto</button>
+              <button type="button" className="editor-slot-add-bottom" onClick={() => { const arr = modal.imagemUrl ? modal.imagemUrl.split(',').filter(u => u.trim()) : []; setModal({ ...modal, imagemUrl: [...arr, ''].join(',') }) }}>+ foto</button>
             </div>
           )}
           {modal.imagemUrl ? (
