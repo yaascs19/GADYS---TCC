@@ -38,15 +38,11 @@ function AdicionarLocal() {
       )
       const data = await res.json()
       if (data.length > 0) {
-        const addr = data[0].address
-        const partes = [
-          addr.road || addr.pedestrian || addr.path,
-          addr.house_number,
-          addr.suburb || addr.neighbourhood,
-          addr.city || addr.town || addr.village,
-          addr.state_code || addr.state
-        ].filter(Boolean)
-        const endereco = partes.join(', ')
+        const endereco = data[0].display_name
+          .split(',')
+          .slice(0, 4)
+          .join(',')
+          .trim()
         setFormData(prev => ({ ...prev, endereco }))
         setEnderecoGeradoIA(true)
       }
