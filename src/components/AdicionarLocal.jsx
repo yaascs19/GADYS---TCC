@@ -27,22 +27,21 @@ function AdicionarLocal() {
     if (name === 'endereco') setEnderecoGeradoIA(false)
   }
 
+  const ESTADOS_NOMES = {'AC':'Acre','AL':'Alagoas','AP':'Amapá','AM':'Amazonas','BA':'Bahia','CE':'Ceará','DF':'Distrito Federal','ES':'Espírito Santo','GO':'Goiás','MA':'Maranhão','MT':'Mato Grosso','MS':'Mato Grosso do Sul','MG':'Minas Gerais','PA':'Pará','PB':'Paraíba','PR':'Paraná','PE':'Pernambuco','PI':'Piauí','RJ':'Rio de Janeiro','RN':'Rio Grande do Norte','RS':'Rio Grande do Sul','RO':'Rondônia','RR':'Roraima','SC':'Santa Catarina','SP':'São Paulo','SE':'Sergipe','TO':'Tocantins'}
+
   const buscarEnderecoIA = async () => {
     if (!formData.nome || !formData.estado) return
     setBuscandoEndereco(true)
     try {
-      const query = `${formData.nome}, ${formData.estado}, Brasil`
+      const nomeEstado = ESTADOS_NOMES[formData.estado] || formData.estado
+      const query = `${formData.nome}, ${nomeEstado}, Brasil`
       const res = await fetch(
         `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(query)}&format=json&limit=1&addressdetails=1&countrycodes=br`,
         { headers: { 'Accept-Language': 'pt-BR', 'User-Agent': 'GADYS-TCC/1.0' } }
       )
       const data = await res.json()
       if (data.length > 0) {
-        const endereco = data[0].display_name
-          .split(',')
-          .slice(0, 4)
-          .join(',')
-          .trim()
+        const endereco = data[0].display_name.split(',').slice(0, 4).join(',').trim()
         setFormData(prev => ({ ...prev, endereco }))
         setEnderecoGeradoIA(true)
       }
