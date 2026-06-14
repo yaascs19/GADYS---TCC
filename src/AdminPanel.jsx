@@ -66,7 +66,7 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
             background: editando ? '#38BDF8' : 'transparent',
             color: editando ? '#0d1117' : '#38BDF8',
             cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600
-          }}>{editando ? '✓ Concluído' : '✏️ Editar'}</button>
+          }}>{editando ? 'Concluído' : 'Editar'}</button>
         )}
       </div>
 
@@ -85,7 +85,7 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
                 <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Imagem de Fundo do Título (Hero)</label>
                 <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
                   <label style={{ padding: '0.5rem 1rem', background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.4)', borderRadius: '8px', color: '#38BDF8', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}>
-                    📁 Selecionar do dispositivo
+                    Selecionar do dispositivo
                     <input type="file" accept="image/*" onChange={handleUploadHero} style={{ display: 'none' }} />
                   </label>
                   <span style={{ color: '#A9B4C2', fontSize: '0.8rem' }}>ou</span>
@@ -97,7 +97,7 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
                 <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Imagem Lateral (Sobre / Visite)</label>
                 <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap' }}>
                   <label style={{ padding: '0.5rem 1rem', background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.4)', borderRadius: '8px', color: '#38BDF8', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}>
-                    📁 Selecionar do dispositivo
+                    Selecionar do dispositivo
                     <input type="file" accept="image/*" onChange={async e => { const b = await fileToBase64(e.target.files[0]); setModal({ ...modal, imagemUrlLateral: b }) }} style={{ display: 'none' }} />
                   </label>
                   <span style={{ color: '#A9B4C2', fontSize: '0.8rem' }}>ou</span>
@@ -123,14 +123,14 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
                   )}
                 </div>
                 <div style={{ marginTop: '2rem', ...cardStyle }}>
-                  <h3 style={{ color: '#fff', margin: '0 0 0.75rem', fontSize: '1.1rem' }}>✨ Curiosidades</h3>
+                  <h3 style={{ color: '#fff', margin: '0 0 0.75rem', fontSize: '1.1rem' }}>Curiosidades</h3>
                   <p style={{ margin: 0, lineHeight: 1.7, fontWeight: 300 }}>{conteudo.curiosidades}</p>
                 </div>
               </div>
               <div style={{ flex: 1, minWidth: '280px' }}>
                 {(modal.imagemUrlLateral || modal.imagemUrl)
                   ? <img src={(modal.imagemUrlLateral || modal.imagemUrl.split(',')[0]).trim()} alt={conteudo.titulo} style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }} />
-                  : <div style={{ width: '100%', aspectRatio: '4/3', borderRadius: '8px', background: 'linear-gradient(135deg,#1a4a2e,#0d2b1a)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem' }}>🌎</div>
+                  : <div style={{ width: '100%', aspectRatio: '4/3', borderRadius: '8px', background: 'linear-gradient(135deg,#1a4a2e,#0d2b1a)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem' }}></div>
                 }
               </div>
             </div>
@@ -209,7 +209,7 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId 
               <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.5rem' }}>Adicionar Fotos</label>
               <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center', flexWrap: 'wrap', marginBottom: '0.75rem' }}>
                 <label style={{ padding: '0.5rem 1rem', background: 'rgba(56,189,248,0.15)', border: '1px solid rgba(56,189,248,0.4)', borderRadius: '8px', color: '#38BDF8', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600 }}>
-                  📁 Selecionar do dispositivo
+                  Selecionar do dispositivo
                   <input type="file" accept="image/*" multiple onChange={handleUploadImagens} style={{ display: 'none' }} />
                 </label>
                 <span style={{ color: '#A9B4C2', fontSize: '0.8rem' }}>ou cole URLs separadas por vírgula:</span>
@@ -773,7 +773,7 @@ function AdminPanel() {
             <div style={{ display: 'flex', gap: '0.75rem', padding: '1.5rem 2rem', borderTop: '1px solid #2d2d4e', marginTop: investigarConteudo && !investigarConteudo.erro ? 0 : '1rem' }}>
               {investigarConteudo && !investigarConteudo.erro && (
                 <button className="approve-btn" style={{ flex: 1 }} onClick={handlePublicarLocal}>
-                  🚀 Publicar Local
+                  Publicar Local
                 </button>
               )}
               <button className="expand-btn" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null) }}>Fechar</button>
