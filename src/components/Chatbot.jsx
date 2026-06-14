@@ -21,7 +21,64 @@ INFORMAÇÕES SOBRE O GADYS:
 
 7. REGRAS DO SITE: Respeito entre usuários nos comentários. Sugestões de locais passam por análise antes de serem publicadas. Contas podem ser inativadas por comportamento inadequado. O conteúdo deve ser relacionado a turismo brasileiro.
 
-8. CONTATO E SUPORTE: Para dúvidas, reclamações ou sugestões, o usuário pode acessar a página "Contato" no menu e preencher o formulário. A equipe responde pelo próprio site.`
+8. CONTATO E SUPORTE: Para dúvidas, reclamações ou sugestões, o usuário pode acessar a página "Contato" no menu e preencher o formulário. A equipe responde pelo próprio site.
+
+9. PÁGINAS DISPONÍVEIS NO SITE:
+- Página inicial: apresenta destaques e navegação geral
+- Lugares: lista todos os destinos cadastrados com filtros por categoria
+- Mapa: mapa interativo com todos os locais marcados
+- Dê sugestões: formulário para sugerir novos locais
+- Meu Perfil: dados do usuário, estatísticas e locais adicionados
+- Sobre: informações sobre o projeto GADYS
+- Contato: formulário de contato com a equipe
+
+10. LOCAIS DISPONÍVEIS POR ESTADO:
+
+AMAZONAS:
+- Teatro Amazonas (Monumento histórico em Manaus)
+- Encontro das Águas (Fenômeno natural em Manaus onde os rios Negro e Solimões se encontram)
+- Arquipélago de Anavilhanas (Maior arquipélago fluvial do mundo)
+- Bumbódromo (Estádio do Festival de Parintins)
+- Peixaria Amazônico Regional (Restaurante tradicional em Manaus)
+- Peixaria Coreto (Restaurante tradicional em Manaus)
+- Ponte Rio Negro (Maior ponte do Brasil)
+
+CEARÁ:
+- Beach Park (Maior parque aquático da América Latina, em Aquiraz)
+- Canoa Quebrada (Praia famosa pelas falésias vermelhas)
+- Centro Histórico de Fortaleza (Monumentos e cultura da capital)
+- Chapada do Araripe (Parque nacional com fósseis e natureza)
+- Dragão do Mar (Centro cultural em Fortaleza)
+- Jericoacoara (Praia paradisíaca famosa mundialmente)
+- Praia do Futuro (Praia urbana de Fortaleza)
+- Serra de Baturité (Serra com clima ameno e cultura caipira)
+
+ESPÍRITO SANTO:
+- Guarapari (Cidade litorânea com praias de areia radioativa)
+- Pedra Azul (Formação rochosa única na Serra Capixaba)
+
+MINAS GERAIS:
+- Inhotim (Maior museu de arte contemporânea a céu aberto do mundo, em Brumadinho)
+- Ouro Preto (Cidade histórica, Patrimônio da Humanidade)
+
+PARÁ:
+- Cachoeira Santuário (Cachoeira em ambiente de floresta)
+
+ACRE:
+- Centro Histórico de Rio Branco
+- Parque Chandless (Parque estadual com floresta preservada)
+
+AMAPÁ:
+- Fortaleza de São José de Macapá (Monumento histórico do século XVIII)
+
+RONDÔNIA:
+- Ferrovia Madeira-Mamoré (Conhecida como Ferrovia do Diabo, em Porto Velho)
+
+RORAIMA:
+- Monte Roraima (Ponto mais alto do Brasil, com 2.875 metros)
+
+TOCANTINS:
+- Jalapão (Parque estadual com dunas, fervedouros e cachoeiras)`
 
 const FAQ = [
   {
