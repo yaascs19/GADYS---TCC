@@ -101,6 +101,9 @@ function ContatoPage() {
                 <label>E-mail</label>
                 <input type="email" placeholder="seu@email.com" value={form.email}
                   onChange={e => setForm({ ...form, email: e.target.value })} required />
+                <small style={{ color: '#f59e0b', fontSize: '0.75rem', marginTop: '0.35rem', display: 'block' }}>
+                  ⚠️ Use o e-mail cadastrado no site para receber a resposta.
+                </small>
               </div>
             </div>
             <div className="contato-field">
