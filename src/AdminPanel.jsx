@@ -698,7 +698,7 @@ function AdminPanel() {
               <img src={s.imagemUrl} alt={s.nome} style={{ width: '100%', borderRadius: '8px', marginTop: '0.75rem', maxHeight: '180px', objectFit: 'cover' }} />
             )}
             <div className="card-actions">
-              <button className="approve-btn" onClick={() => handleAnalisarSugestao(s.id)}>Analisada</button>
+              <button className="expand-btn" onClick={() => window.open(`https://www.google.com/search?q=${encodeURIComponent(s.nome + ' ' + s.estado + ' turismo')}`, '_blank')}>Investigar</button>
               <button className="reject-btn" onClick={() => handleDescartarSugestao(s.id)}>Descartar</button>
             </div>
           </div>
