@@ -137,16 +137,27 @@ function AdminPanel() {
           ]
         })
       })
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}))
+        console.error('Groq error:', res.status, errData)
+        setInvestigarConteudo({ erro: `Erro da IA: ${errData?.error?.message || res.status}` })
+        return
+      }
       const data = await res.json()
       const text = data?.choices?.[0]?.message?.content || ''
       const jsonMatch = text.match(/{[\s\S]*}/)
       if (jsonMatch) {
-        setInvestigarConteudo(JSON.parse(jsonMatch[0]))
+        try {
+          setInvestigarConteudo(JSON.parse(jsonMatch[0]))
+        } catch {
+          setInvestigarConteudo({ erro: 'Resposta da IA em formato invalido. Tente novamente.' })
+        }
       } else {
         setInvestigarConteudo({ erro: 'Nao foi possivel gerar conteudo. Tente novamente.' })
       }
-    } catch {
-      setInvestigarConteudo({ erro: 'Erro ao conectar com a IA.' })
+    } catch (e) {
+      console.error('Erro ao chamar Groq:', e)
+      setInvestigarConteudo({ erro: 'Erro ao conectar com a IA: ' + e.message })
     } finally {
       setInvestigarLoading(false)
     }
