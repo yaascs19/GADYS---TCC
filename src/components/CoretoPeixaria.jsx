@@ -188,17 +188,22 @@ const CoretoPeixaria = () => {
   const navigate = useNavigate();
   const { bdLocal, bdId } = useLocalByRota('/coreto-peixaria');
   const [bdPronto, setBdPronto] = useState(false);
+  const [secoesAtivas, setSecoesAtivas] = useState(secoes);
+  const [headerImgs, setHeaderImgs] = useState(carouselImages);
+
+  useEffect(() => { const t = setTimeout(() => setBdPronto(true), 600); return () => clearTimeout(t); }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => setBdPronto(true), 600);
-    return () => clearTimeout(timer);
-  }, []);
+    if (!bdLocal?.informacoesAdicionais) return;
+    try {
+      const parsed = JSON.parse(bdLocal.informacoesAdicionais);
+      if (parsed.secoes) setSecoesAtivas({ ...secoes, ...parsed.secoes });
+      if (parsed.carouselImages) setHeaderImgs(parsed.carouselImages);
+    } catch {}
+  }, [bdLocal]);
 
   const titulo = bdLocal?.nome || 'Coreto Peixaria & Café Regional';
   const subtitulo = bdLocal?.descricao || 'Sabores amazônicos com alma de café no coração de Manaus.';
-  const headerImgs = bdLocal?.imagemUrl
-    ? [bdLocal.imagemUrl.split(',')[0], ...carouselImages.slice(1)]
-    : carouselImages;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -235,16 +240,16 @@ const CoretoPeixaria = () => {
 
       <div className="cp-content-wrapper">
         <nav className="cp-nav">
-          {Object.keys(secoes).map((key) => (
+          {Object.keys(secoesAtivas).map((key) => (
             <button key={key} onClick={() => setAbaAtiva(key)} className={abaAtiva === key ? 'active' : ''}>
-              {secoes[key].label}
+              {secoesAtivas[key].label}
             </button>
           ))}
         </nav>
         <main className="cp-main">
           {abaAtiva === 'fotos' ? <Galeria /> :
            abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> :
-           <ConteudoAba secao={secoes[abaAtiva]} />}
+           <ConteudoAba secao={secoesAtivas[abaAtiva]} />}
         </main>
       </div>
     </div>

@@ -183,6 +183,8 @@ const PonteRioNegro = () => {
   const navigate = useNavigate();
   const { bdLocal, bdId } = useLocalByRota('/ponte-rio-negro');
   const [bdPronto, setBdPronto] = useState(false);
+  const [secoesAtivas, setSecoesAtivas] = useState(secoes);
+  const [headerImgs, setHeaderImgs] = useState(carouselImages);
 
   useEffect(() => {
     const img = new Image();
@@ -192,16 +194,19 @@ const PonteRioNegro = () => {
     carouselImages.slice(1).forEach(src => { const i = new Image(); i.src = src; });
   }, []);
 
+  useEffect(() => { const t = setTimeout(() => setBdPronto(true), 600); return () => clearTimeout(t); }, []);
+
   useEffect(() => {
-    const timer = setTimeout(() => setBdPronto(true), 600);
-    return () => clearTimeout(timer);
-  }, []);
+    if (!bdLocal?.informacoesAdicionais) return;
+    try {
+      const parsed = JSON.parse(bdLocal.informacoesAdicionais);
+      if (parsed.secoes) setSecoesAtivas({ ...secoes, ...parsed.secoes });
+      if (parsed.carouselImages) setHeaderImgs(parsed.carouselImages);
+    } catch {}
+  }, [bdLocal]);
 
   const titulo = bdLocal?.nome || 'Ponte Rio Negro';
   const subtitulo = bdLocal?.descricao || 'A maior ponte estaiada da América Latina sobre o Rio Negro.';
-  const headerImgs = bdLocal?.imagemUrl
-    ? [bdLocal.imagemUrl.split(',')[0], ...carouselImages.slice(1)]
-    : carouselImages;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -238,16 +243,16 @@ const PonteRioNegro = () => {
 
       <div className="prn-content-wrapper">
         <nav className="prn-nav">
-          {Object.keys(secoes).map((key) => (
+          {Object.keys(secoesAtivas).map((key) => (
             <button key={key} onClick={() => setAbaAtiva(key)} className={abaAtiva === key ? 'active' : ''}>
-              {secoes[key].label}
+              {secoesAtivas[key].label}
             </button>
           ))}
         </nav>
         <main className="prn-main">
           {abaAtiva === 'fotos' ? <Galeria /> :
            abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> :
-           <ConteudoAba secao={secoes[abaAtiva]} />}
+           <ConteudoAba secao={secoesAtivas[abaAtiva]} />}
         </main>
       </div>
     </div>

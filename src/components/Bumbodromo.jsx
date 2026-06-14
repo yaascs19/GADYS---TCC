@@ -179,17 +179,22 @@ const Bumbodromo = () => {
   const navigate = useNavigate();
   const { bdLocal, bdId } = useLocalByRota('/bumbodromo');
   const [bdPronto, setBdPronto] = useState(false);
+  const [secoesAtivas, setSecoesAtivas] = useState(secoes);
+  const [headerImgs, setHeaderImgs] = useState(carouselImages);
+
+  useEffect(() => { const t = setTimeout(() => setBdPronto(true), 600); return () => clearTimeout(t); }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => setBdPronto(true), 600);
-    return () => clearTimeout(timer);
-  }, []);
+    if (!bdLocal?.informacoesAdicionais) return;
+    try {
+      const parsed = JSON.parse(bdLocal.informacoesAdicionais);
+      if (parsed.secoes) setSecoesAtivas({ ...secoes, ...parsed.secoes });
+      if (parsed.carouselImages) setHeaderImgs(parsed.carouselImages);
+    } catch {}
+  }, [bdLocal]);
 
   const titulo = bdLocal?.nome || 'Bumbódromo de Parintins';
   const subtitulo = bdLocal?.descricao || 'O palco do maior festival folclórico do Brasil.';
-  const headerImgs = bdLocal?.imagemUrl
-    ? [bdLocal.imagemUrl.split(',')[0], ...carouselImages.slice(1)]
-    : carouselImages;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -230,20 +235,20 @@ const Bumbodromo = () => {
 
       <div className="bum-content-wrapper">
         <nav className="bum-nav">
-          {Object.keys(secoes).map((key) => (
+          {Object.keys(secoesAtivas).map((key) => (
             <button
               key={key}
               onClick={() => setAbaAtiva(key)}
               className={abaAtiva === key ? 'active' : ''}
             >
-              {secoes[key].label}
+              {secoesAtivas[key].label}
             </button>
           ))}
         </nav>
         <main className="bum-main">
           {abaAtiva === 'fotos' ? <Galeria /> :
            abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> :
-           <ConteudoAba secao={secoes[abaAtiva]} />}
+           <ConteudoAba secao={secoesAtivas[abaAtiva]} />}
         </main>
       </div>
     </div>

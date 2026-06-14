@@ -217,14 +217,22 @@ const Galeria = () => (
 
 const TeatroAmazonas = () => {
   const [abaAtiva, setAbaAtiva] = useState('historia');
+  const [secoesAtivas, setSecoesAtivas] = useState(secoes);
+  const [headerImgs, setHeaderImgs] = useState(carouselImages);
   const navigate = useNavigate();
   const { bdLocal, bdId } = useLocalByRota('/teatro-amazonas');
 
+  useEffect(() => {
+    if (!bdLocal?.informacoesAdicionais) return;
+    try {
+      const parsed = JSON.parse(bdLocal.informacoesAdicionais);
+      if (parsed.secoes) setSecoesAtivas({ ...secoes, ...parsed.secoes });
+      if (parsed.carouselImages) setHeaderImgs(parsed.carouselImages);
+    } catch {}
+  }, [bdLocal]);
+
   const titulo = bdLocal?.nome || 'Teatro Amazonas';
   const subtitulo = bdLocal?.descricao || 'Um palácio de arte erguido no coração da floresta.';
-  const headerImgs = bdLocal?.imagemUrl
-    ? [bdLocal.imagemUrl.split(',')[0], ...carouselImages.slice(1)]
-    : carouselImages;
 
   return (
     <div className="ta-container">
@@ -253,18 +261,18 @@ const TeatroAmazonas = () => {
       </div>
       <div className="ta-content-wrapper">
         <nav className="ta-nav">
-          {Object.keys(secoes).map((key) => (
+          {Object.keys(secoesAtivas).map((key) => (
             <button
               key={key}
               onClick={() => setAbaAtiva(key)}
               className={abaAtiva === key ? 'active' : ''}
             >
-              {secoes[key].label}
+              {secoesAtivas[key].label}
             </button>
           ))}
         </nav>
         <main className="ta-main">
-          {abaAtiva === 'fotos' ? <Galeria /> : abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> : <ConteudoAba secao={secoes[abaAtiva]} />}
+          {abaAtiva === 'fotos' ? <Galeria /> : abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> : <ConteudoAba secao={secoesAtivas[abaAtiva]} />}
         </main>
       </div>
     </div>

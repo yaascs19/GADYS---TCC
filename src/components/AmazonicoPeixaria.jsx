@@ -189,17 +189,22 @@ const AmazonicoPeixaria = () => {
   const navigate = useNavigate();
   const { bdLocal, bdId } = useLocalByRota('/amazonico-peixaria');
   const [bdPronto, setBdPronto] = useState(false);
+  const [secoesAtivas, setSecoesAtivas] = useState(secoes);
+  const [headerImgs, setHeaderImgs] = useState(carouselImages);
+
+  useEffect(() => { const t = setTimeout(() => setBdPronto(true), 600); return () => clearTimeout(t); }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => setBdPronto(true), 600);
-    return () => clearTimeout(timer);
-  }, []);
+    if (!bdLocal?.informacoesAdicionais) return;
+    try {
+      const parsed = JSON.parse(bdLocal.informacoesAdicionais);
+      if (parsed.secoes) setSecoesAtivas({ ...secoes, ...parsed.secoes });
+      if (parsed.carouselImages) setHeaderImgs(parsed.carouselImages);
+    } catch {}
+  }, [bdLocal]);
 
   const titulo = bdLocal?.nome || 'Amazônico Peixaria Regional';
   const subtitulo = bdLocal?.descricao || 'Os sabores autênticos da Amazônia no coração de Manaus.';
-  const headerImgs = bdLocal?.imagemUrl
-    ? [bdLocal.imagemUrl.split(',')[0], ...carouselImages.slice(1)]
-    : carouselImages;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -227,14 +232,14 @@ const AmazonicoPeixaria = () => {
       </div>
       <div className="ap-content-wrapper">
         <nav className="ap-nav">
-          {Object.keys(secoes).map(key => (
+          {Object.keys(secoesAtivas).map(key => (
             <button key={key} onClick={() => setAbaAtiva(key)} className={abaAtiva === key ? 'active' : ''}>
-              {secoes[key].label}
+              {secoesAtivas[key].label}
             </button>
           ))}
         </nav>
         <main className="ap-main">
-          {abaAtiva === 'fotos' ? <Galeria /> : abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> : <ConteudoAba secao={secoes[abaAtiva]} />}
+          {abaAtiva === 'fotos' ? <Galeria /> : abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> : <ConteudoAba secao={secoesAtivas[abaAtiva]} />}
         </main>
       </div>
     </div>

@@ -173,20 +173,25 @@ const Galeria = () => (
 const ArquipelagoAnavilhanas = () => {
   const [abaAtiva, setAbaAtiva] = useState('sobre');
   const [imagemAtivaIndex, setImagemAtivaIndex] = useState(0);
+  const [secoesAtivas, setSecoesAtivas] = useState(secoes);
+  const [imgsCarrossel, setImgsCarrossel] = useState(carouselImages);
   const navigate = useNavigate();
   const { bdLocal, bdId } = useLocalByRota('/arquipelago-anavilhanas');
   const [bdPronto, setBdPronto] = useState(false);
 
+  useEffect(() => { const t = setTimeout(() => setBdPronto(true), 600); return () => clearTimeout(t); }, []);
+
   useEffect(() => {
-    const timer = setTimeout(() => setBdPronto(true), 600);
-    return () => clearTimeout(timer);
-  }, []);
+    if (!bdLocal?.informacoesAdicionais) return;
+    try {
+      const parsed = JSON.parse(bdLocal.informacoesAdicionais);
+      if (parsed.secoes) setSecoesAtivas({ ...secoes, ...parsed.secoes });
+      if (parsed.carouselImages) setImgsCarrossel(parsed.carouselImages);
+    } catch {}
+  }, [bdLocal]);
 
   const titulo = bdLocal?.nome || 'Arquipélago de Anavilhanas';
   const subtitulo = bdLocal?.descricao || 'Um santuário de biodiversidade nas águas negras do Rio Negro.';
-  const imgsCarrossel = bdLocal?.imagemUrl
-    ? [bdLocal.imagemUrl.split(',')[0], ...carouselImages.slice(1)]
-    : carouselImages;
 
   useEffect(() => {
     const timer = setTimeout(() => setImagemAtivaIndex(prev => (prev + 1) % imgsCarrossel.length), 5000);
@@ -212,14 +217,14 @@ const ArquipelagoAnavilhanas = () => {
       </div>
       <div className="aa-content-wrapper">
         <nav className="aa-nav">
-          {Object.keys(secoes).map(key => (
+          {Object.keys(secoesAtivas).map(key => (
             <button key={key} onClick={() => setAbaAtiva(key)} className={abaAtiva === key ? 'active' : ''}>
-              {secoes[key].label}
+              {secoesAtivas[key].label}
             </button>
           ))}
         </nav>
         <main className="aa-main">
-          {abaAtiva === 'fotos' ? <Galeria /> : abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> : <ConteudoAba secao={secoes[abaAtiva]} />}
+          {abaAtiva === 'fotos' ? <Galeria /> : abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> : <ConteudoAba secao={secoesAtivas[abaAtiva]} />}
         </main>
       </div>
     </div>

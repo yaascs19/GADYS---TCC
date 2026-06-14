@@ -93,24 +93,32 @@ const Galeria = ({ images }) => (
 
 const SudestePontoDetalheBase = ({ config }) => {
   const [abaAtiva, setAbaAtiva] = useState(Object.keys(config.secoes)[0]);
+  const [secoes, setSecoes] = useState(config.secoes);
+  const [carouselImages, setCarouselImages] = useState(config.carouselImages);
   const navigate = useNavigate();
   const rota = window.location.pathname;
   const { bdLocal, bdId } = useLocalByRota(rota);
 
+  useEffect(() => {
+    if (!bdLocal?.informacoesAdicionais) return;
+    try {
+      const parsed = JSON.parse(bdLocal.informacoesAdicionais);
+      if (parsed.secoes) setSecoes({ ...config.secoes, ...parsed.secoes });
+      if (parsed.carouselImages) setCarouselImages(parsed.carouselImages);
+    } catch { /* usa config estático */ }
+  }, [bdLocal]);
+
   const titulo = bdLocal?.nome || config.titulo;
   const subtitulo = bdLocal?.descricao || config.subtitulo;
-  const carouselImages = bdLocal?.imagemUrl
-    ? [bdLocal.imagemUrl.split(',')[0], ...config.carouselImages.slice(1)]
-    : config.carouselImages;
 
   return (
     <div className="sudeste-ponto-container">
       <HeaderCarousel images={carouselImages} titulo={titulo} subtitulo={subtitulo} onVoltar={() => navigate(config.voltarRota)} />
       <div className="sudeste-ponto-content-wrapper">
         <nav className="sudeste-ponto-nav">
-          {Object.keys(config.secoes).map(key => (
+          {Object.keys(secoes).map(key => (
             <button key={key} onClick={() => setAbaAtiva(key)} className={abaAtiva === key ? 'active' : ''}>
-              {config.secoes[key].label}
+              {secoes[key].label}
             </button>
           ))}
           <button onClick={() => setAbaAtiva('avaliacoes')} className={abaAtiva === 'avaliacoes' ? 'active' : ''}>
@@ -118,7 +126,7 @@ const SudestePontoDetalheBase = ({ config }) => {
           </button>
         </nav>
         <main className="sudeste-ponto-main">
-          {abaAtiva === 'fotos' ? <Galeria images={config.galeriaImages} /> : abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> : <ConteudoAba secao={config.secoes[abaAtiva]} />}
+          {abaAtiva === 'fotos' ? <Galeria images={config.galeriaImages} /> : abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> : <ConteudoAba secao={secoes[abaAtiva]} />}
         </main>
       </div>
       <footer className="sudeste-ponto-footer">
