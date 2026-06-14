@@ -131,9 +131,10 @@ function AdminPanel() {
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${import.meta.env.VITE_GROQ_KEY}` },
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
+          response_format: { type: 'json_object' },
           messages: [
-            { role: 'system', content: 'Voce e um especialista em turismo brasileiro. Responda sempre em portugues brasileiro correto, sem markdown, sem asteriscos, sem bullets.' },
-            { role: 'user', content: `Pesquise sobre o local turistico "${sugestao.nome}" localizado em ${sugestao.estado}, Brasil. Endereco informado: ${sugestao.endereco || 'nao informado'}. Gere as seguintes informacoes em JSON com exatamente estas chaves: { "titulo": "nome oficial do local", "descricao": "descricao completa e envolvente de 3 paragrafos", "historia": "historia e contexto cultural em 2 paragrafos", "curiosidades": "3 curiosidades interessantes em texto corrido", "horario": "horario de funcionamento estimado", "preco": "gratuito ou valor estimado" }. Responda APENAS com o JSON, sem texto antes ou depois.` }
+            { role: 'system', content: 'Voce e um especialista em turismo brasileiro. Responda APENAS com um JSON valido, sem texto fora do JSON, sem markdown.' },
+            { role: 'user', content: `Pesquise sobre o local turistico "${sugestao.nome}" em ${sugestao.estado}, Brasil. Retorne um JSON com exatamente estas chaves: titulo, descricao, historia, curiosidades, horario, preco.` }
           ]
         })
       })
@@ -145,16 +146,10 @@ function AdminPanel() {
       }
       const data = await res.json()
       const text = data?.choices?.[0]?.message?.content || ''
-      console.log('Groq raw response:', text)
-      const jsonMatch = text.match(/```(?:json)?\s*({[\s\S]*?})\s*```/) || text.match(/{[\s\S]*}/)
-      if (jsonMatch) {
-        try {
-          setInvestigarConteudo(JSON.parse(jsonMatch[0]))
-        } catch {
-          setInvestigarConteudo({ erro: 'Resposta da IA em formato invalido. Tente novamente.' })
-        }
-      } else {
-        setInvestigarConteudo({ erro: 'Nao foi possivel gerar conteudo. Tente novamente.' })
+      try {
+        setInvestigarConteudo(JSON.parse(text))
+      } catch {
+        setInvestigarConteudo({ erro: 'Resposta da IA em formato invalido. Tente novamente.' })
       }
     } catch (e) {
       console.error('Erro ao chamar Groq:', e)
