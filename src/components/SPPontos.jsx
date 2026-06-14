@@ -11,7 +11,7 @@ const pontosTuristicos = [
     cidade: 'São Paulo - SP',
     categoria: 'Costume Cultural',
     descricao: 'O Museu de Arte de São Paulo é um dos mais importantes da América Latina, com um acervo de mais de 11 mil obras entre pinturas, esculturas e fotografias.',
-    imagem: '/sp.jpg',
+    imagem: '/images/geral/masp.jpg',
   },
   {
     id: 'teatro-municipal',
@@ -43,7 +43,7 @@ const pontosTuristicos = [
     cidade: 'São Paulo - SP',
     categoria: 'Lugar Paradísíaco',
     descricao: 'O Central Park paulistano, com museus, lagos e espaços de lazer no coração da cidade.',
-    imagem: '/sp.jpg',
+    imagem: '/images/geral/pqibi.webp',
   },
   {
     id: 'pinacoteca',
@@ -51,7 +51,7 @@ const pontosTuristicos = [
     cidade: 'São Paulo - SP',
     categoria: 'Costume Cultural',
     descricao: 'O museu de artes visuais mais antigo de São Paulo, fundado em 1905, com um acervo de mais de 10 mil obras focadas na produção brasileira dos séculos XIX e XX.',
-    imagem: '/sp.jpg',
+    imagem: '/images/geral/pina.webp',
   },
   {
     id: 'avenida-paulista',
@@ -59,7 +59,7 @@ const pontosTuristicos = [
     cidade: 'São Paulo - SP',
     categoria: 'Monumentos',
     descricao: 'O coração financeiro e cultural de São Paulo. Aos domingos vira calçadão, recebendo ciclistas, artistas e feiras. Abriga o MASP, centros culturais e instituições financeiras.',
-    imagem: '/sp.jpg',
+    imagem: '/images/geral/paulista.jpg',
   },
   {
     id: 'beco-batman',
@@ -67,7 +67,6 @@ const pontosTuristicos = [
     cidade: 'Vila Madalena - SP',
     categoria: 'Costume Cultural',
     descricao: 'Famoso beco coberto de grafites e arte urbana, símbolo da cena artística alternativa paulistana.',
-    imagem: '/sp.jpg',
   },
 ];
 
