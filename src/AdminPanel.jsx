@@ -159,8 +159,14 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId,
                 <ImagemUploader url={modal.imagemUrlHero || ''} onChange={url => setModal({ ...modal, imagemUrlHero: url })} />
               </div>
               <div style={{ marginBottom: '1rem' }}>
-                <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Imagem Lateral</label>
-                <ImagemUploader url={modal.imagemUrlLateral || ''} onChange={url => setModal({ ...modal, imagemUrlLateral: url })} />
+                <label style={{ display: 'block', fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Imagens Laterais</label>
+                {(modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean)).map((url, i) => (
+                  <div key={i} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <div style={{ flex: 1 }}><ImagemUploader url={url} onChange={u => { const arr = [...(modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean))]; arr[i] = u; setModal({ ...modal, imagensLaterais: arr, imagemUrlLateral: arr[0] || '' }) }} /></div>
+                    <button type="button" className="editor-slot-remove" onClick={() => { const arr = (modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean)).filter((_, j) => j !== i); setModal({ ...modal, imagensLaterais: arr, imagemUrlLateral: arr[0] || '' }) }}>×</button>
+                  </div>
+                ))}
+                <button type="button" className="editor-slot-add-bottom" onClick={() => setModal({ ...modal, imagensLaterais: [...(modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean)), ''] })}>+ imagem</button>
               </div>
             </>
           ) : (
@@ -187,7 +193,7 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId,
               <div style={{ flex: 1, minWidth: '280px' }}>
                 {(modal.imagemUrlLateral || modal.imagemUrl)
                   ? <img src={(modal.imagemUrlLateral || modal.imagemUrl.split(',')[0]).trim()} alt={conteudo.titulo} style={{ width: '100%', borderRadius: '8px', boxShadow: '0 10px 25px rgba(0,0,0,0.3)' }} />
-                  : <div style={{ width: '100%', aspectRatio: '4/3', borderRadius: '8px', background: 'linear-gradient(135deg,#1a4a2e,#0d2b1a)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '4rem' }}></div>
+                  : null
                 }
               </div>
             </div>
@@ -208,7 +214,10 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId,
                 <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>Hotéis / Hostels</label>
                 {(conteudo.hosteis || []).map((h, i) => (
                   <div key={i} style={{ marginBottom: '1rem', padding: '1rem', background: 'rgba(255,255,255,0.03)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.08)' }}>
-                    <label style={{ fontSize: '0.7rem', color: '#A9B4C2', display: 'block', marginBottom: '0.5rem' }}>HOSTEL {i+1}</label>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                      <label style={{ fontSize: '0.7rem', color: '#A9B4C2' }}>HOSTEL {i+1}</label>
+                      <button type="button" className="editor-slot-remove" onClick={() => setConteudo({ ...conteudo, hosteis: conteudo.hosteis.filter((_, j) => j !== i) })}>×</button>
+                    </div>
                     {['nome','nota','contato','site'].map(f => (
                       <input key={f} className="editor-inline-input" placeholder={f} value={h[f] || ''}
                         onChange={e => { const arr = [...(conteudo.hosteis||[])]; arr[i] = { ...arr[i], [f]: e.target.value }; setConteudo({ ...conteudo, hosteis: arr }) }}
@@ -216,6 +225,17 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId,
                     ))}
                   </div>
                 ))}
+                <button type="button" className="editor-slot-add-bottom" onClick={() => setConteudo({ ...conteudo, hosteis: [...(conteudo.hosteis || []), { nome: '', nota: 4.5, contato: '', site: '' }] })}>+ hostel</button>
+              </div>
+              <div style={{ marginTop: '1.5rem' }}>
+                <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>Imagens Laterais (Visite)</label>
+                {(modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean)).map((url, i) => (
+                  <div key={i} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    <div style={{ flex: 1 }}><ImagemUploader url={url} onChange={u => { const arr = [...(modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean))]; arr[i] = u; setModal({ ...modal, imagensLaterais: arr, imagemUrlLateral: arr[0] || '' }) }} /></div>
+                    <button type="button" className="editor-slot-remove" onClick={() => { const arr = (modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean)).filter((_, j) => j !== i); setModal({ ...modal, imagensLaterais: arr, imagemUrlLateral: arr[0] || '' }) }}>×</button>
+                  </div>
+                ))}
+                <button type="button" className="editor-slot-add-bottom" onClick={() => setModal({ ...modal, imagensLaterais: [...(modal.imagensLaterais || [modal.imagemUrlLateral].filter(Boolean)), ''] })}>+ imagem</button>
               </div>
             </>
           ) : (
@@ -265,11 +285,14 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId,
           <h2 style={{ fontSize: '2rem', fontWeight: 600, color: '#fff', marginBottom: '1rem' }}>Fotos</h2>
           {editando && (
             <div style={{ marginBottom: '1.5rem', textAlign: 'left' }}>
-              <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.5rem' }}>Adicionar Fotos</label>
-                <input className="editor-inline-input" value={modal.imagemUrl || ''} onChange={e => setModal({ ...modal, imagemUrl: e.target.value })} placeholder="URLs separadas por vírgula: https://... , https://..." style={{ marginBottom: '0.5rem' }} />
-              {modal.imagemUrl && (
-                <button onClick={() => setModal({ ...modal, imagemUrl: '' })} style={{ marginTop: '0.5rem', background: 'none', border: 'none', color: '#f43f5e', cursor: 'pointer', fontSize: '0.8rem' }}>Limpar tudo</button>
-              )}
+              <label style={{ fontSize: '0.75rem', color: '#38BDF8', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'block', marginBottom: '0.75rem' }}>Fotos</label>
+              {(modal.imagemUrl ? modal.imagemUrl.split(',').filter(u => u.trim()) : []).map((url, i) => (
+                <div key={i} style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', marginBottom: '0.5rem' }}>
+                  <div style={{ flex: 1 }}><ImagemUploader url={url} onChange={u => { const arr = modal.imagemUrl.split(',').filter(x => x.trim()); arr[i] = u; setModal({ ...modal, imagemUrl: arr.join(',') }) }} /></div>
+                  <button type="button" className="editor-slot-remove" onClick={() => { const arr = modal.imagemUrl.split(',').filter((_, j) => j !== i); setModal({ ...modal, imagemUrl: arr.join(',') }) }}>×</button>
+                </div>
+              ))}
+              <button type="button" className="editor-slot-add-bottom" onClick={() => setModal({ ...modal, imagemUrl: modal.imagemUrl ? modal.imagemUrl + ',' : '' })}>+ foto</button>
             </div>
           )}
           {modal.imagemUrl ? (
@@ -281,7 +304,7 @@ function PreviewAbas({ conteudo, setConteudo, modal, setModal, localPublicadoId,
               ))}
             </div>
           ) : (
-            <p style={{ color: '#A9B4C2', fontStyle: 'italic' }}>Nenhuma foto. Cole URLs acima para adicionar.</p>
+            <p style={{ color: '#A9B4C2', fontStyle: 'italic' }}>Nenhuma foto ainda.</p>
           )}
         </section>
       )}
