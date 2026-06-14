@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SudestePontos.css';
 import { useLocaisAtivos } from '../../hooks/useLocaisAtivos';
+import { useCategorias } from '../../hooks/useCategorias';
 
 const CATEGORIES = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
 
@@ -37,7 +38,7 @@ const SudestePontosBase = ({ config }) => {
         <input type="text" placeholder={config.placeholder} value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)} className="sudeste-pontos-search-bar" />
         <div className="sudeste-pontos-filter-buttons">
-          {CATEGORIES.map(cat => (
+          {categorias.map(cat => (
             <button key={cat} onClick={() => setSelectedCategory(cat)}
               className={`sudeste-pontos-button ${selectedCategory === cat ? 'active' : ''}`}>
               {cat}

@@ -351,6 +351,22 @@ function AdminPanel() {
   const [toast, setToast] = useState(null)
   const [confirmModal, setConfirmModal] = useState(null)
 
+  const CATEGORIAS_FIXAS = ['Monumentos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural']
+
+  const isCategoriaCustom = (sub) => sub && !CATEGORIAS_FIXAS.includes(sub)
+
+  const handleCriarCategoria = async (nome, estado) => {
+    try {
+      const res = await fetch(`${API_URL}/api/categorias`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ nome, estado })
+      })
+      if (res.ok) showToast(`Categoria "${nome}" criada para ${estado}!`, 'success')
+      else { const d = await res.json(); showToast(d || 'Erro ao criar categoria.') }
+    } catch { showToast('Erro de conexão.') }
+  }
+
   const ICONS = { success: '✓', error: '✕', info: 'ℹ' }
 
   const maskEmail = (email) => {
@@ -1202,6 +1218,15 @@ function AdminPanel() {
             </div>
             <div className="card-info">
               <p><strong>Estado:</strong> {s.estado}</p>
+              {isCategoriaCustom(s.subcategoria) && (
+                <div style={{ margin: '0.5rem 0', padding: '0.6rem 0.9rem', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.4)', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
+                  <span style={{ fontSize: '0.85rem', color: '#fbbf24' }}>⚠️ Categoria <strong>"{s.subcategoria}"</strong> não existe no site</span>
+                  <button
+                    onClick={() => handleCriarCategoria(s.subcategoria, s.estado)}
+                    style={{ background: '#fbbf24', color: '#000', border: 'none', borderRadius: '6px', padding: '0.3rem 0.75rem', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', whiteSpace: 'nowrap' }}
+                  >+ Criar categoria</button>
+                </div>
+              )}
               <p><strong>Endereço:</strong> {s.endereco}
                 {(() => {
                   const end = (s.endereco || '').trim()

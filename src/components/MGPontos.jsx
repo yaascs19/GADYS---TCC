@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './sudeste/SudestePontos.css';
 import { useLocaisAtivos } from '../hooks/useLocaisAtivos';
+import { useCategorias } from '../hooks/useCategorias';
 
 const pontos = [
   { id: 'ouro-preto', nome: 'Ouro Preto', cidade: 'Ouro Preto - MG', categoria: 'Monumentos', descricao: 'Patrimônio Mundial da UNESCO, a cidade mais bem preservada do barroco brasileiro, com igrejas douradas, museus e a história da Inconfidência Mineira.', imagem: '/images/monumentos/ouro.jpeg', rota: '/mg/ouro-preto' },
@@ -22,6 +23,7 @@ const MGPontos = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
   const pontosAtivos = useLocaisAtivos('MG', pontos);
+  const categorias = useCategorias('MG');
 
   useEffect(() => {
     let result = pontosAtivos;
@@ -48,7 +50,7 @@ const MGPontos = () => {
         <input type="text" placeholder="O que você quer descobrir em Minas?" value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)} className="sudeste-pontos-search-bar" />
         <div className="sudeste-pontos-filter-buttons">
-          {CATEGORIES.map(cat => (
+          {categorias.map(cat => (
             <button key={cat} onClick={() => setSelectedCategory(cat)}
               className={`sudeste-pontos-button ${selectedCategory === cat ? 'active' : ''}`}>
               {cat}

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CearaPontos.css';
 import { useLocaisAtivos } from '../hooks/useLocaisAtivos';
+import { useCategorias } from '../hooks/useCategorias';
 
 const pontosTuristicos = [
   {

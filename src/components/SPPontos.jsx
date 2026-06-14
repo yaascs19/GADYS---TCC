@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './SPPontos.css';
 import { useLocaisAtivos } from '../hooks/useLocaisAtivos';
+import { useCategorias } from '../hooks/useCategorias';
 
 const pontosTuristicos = [
   {
@@ -71,8 +72,9 @@ const SPPontos = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
   const pontosAtivos = useLocaisAtivos('SP', pontosTuristicos);
+  const categorias = useCategorias('SP');
 
-  const categories = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
+  // categorias via hook
 
   useEffect(() => {
     let result = pontosAtivos;
@@ -111,7 +113,7 @@ const SPPontos = () => {
           className="sp-pontos-search-bar"
         />
         <div className="sp-pontos-filter-buttons">
-          {categories.map(category => (
+          {categorias.map(category => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}

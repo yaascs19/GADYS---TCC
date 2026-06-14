@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './sudeste/SudestePontos.css';
 import { useLocaisAtivos } from '../hooks/useLocaisAtivos';
+import { useCategorias } from '../hooks/useCategorias';
 
 const pontos = [
   { id: 'pedra-azul-es', nome: 'Pedra Azul', cidade: 'Domingos Martins - ES', categoria: 'Lugar Paradísíaco', descricao: 'Uma das formações rochosas mais belas do Brasil, com 1.822 metros de altitude e trilhas que revelam vistas deslumbrantes da Serra Capixaba.', imagem: '/images/natureza/veadeiros.jpeg', rota: '/es/pedra-azul' },
@@ -22,6 +23,7 @@ const ESPontos = () => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
   const pontosAtivos = useLocaisAtivos('ES', pontos);
+  const categorias = useCategorias('ES');
 
   useEffect(() => {
     let result = pontosAtivos;
@@ -48,7 +50,7 @@ const ESPontos = () => {
         <input type="text" placeholder="O que você quer descobrir no Espírito Santo?" value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)} className="sudeste-pontos-search-bar" />
         <div className="sudeste-pontos-filter-buttons">
-          {CATEGORIES.map(cat => (
+          {categorias.map(cat => (
             <button key={cat} onClick={() => setSelectedCategory(cat)}
               className={`sudeste-pontos-button ${selectedCategory === cat ? 'active' : ''}`}>
               {cat}

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './NortePontos.css';
 import { useLocaisAtivos } from '../../hooks/useLocaisAtivos';
-
-const CATEGORIES = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
+import { useCategorias } from '../../hooks/useCategorias';
 
 const NortePontosBase = ({ config }) => {
   const navigate = useNavigate();
@@ -11,6 +10,7 @@ const NortePontosBase = ({ config }) => {
   const [selectedCategory, setSelectedCategory] = useState('Todos');
   const [filteredPontos, setFilteredPontos] = useState([]);
   const pontosAtivos = useLocaisAtivos(config.estado, config.pontos);
+  const categorias = useCategorias(config.estado);
 
   useEffect(() => {
     let result = pontosAtivos;
@@ -37,7 +37,7 @@ const NortePontosBase = ({ config }) => {
         <input type="text" placeholder={config.placeholder} value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)} className="norte-pontos-search-bar" />
         <div className="norte-pontos-filter-buttons">
-          {CATEGORIES.map(cat => (
+          {categorias.map(cat => (
             <button key={cat} onClick={() => setSelectedCategory(cat)}
               className={`norte-pontos-button ${selectedCategory === cat ? 'active' : ''}`}>
               {cat}
