@@ -491,8 +491,8 @@ function AdminPanel() {
           model: 'llama-3.3-70b-versatile',
           response_format: { type: 'json_object' },
           messages: [
-            { role: 'system', content: 'Voce e um especialista em turismo brasileiro. Responda APENAS com um JSON valido, sem texto fora do JSON, sem markdown, sem emojis, sem asteriscos, sem bullets.' },
-            { role: 'user', content: `Pesquise sobre o local turistico "${sugestao.nome}" em ${sugestao.estado}, Brasil. Retorne um JSON com exatamente estas chaves: titulo, cidade (nome da cidade onde fica o local), descricao, historia, curiosidades, horario, preco, coordenadas (formato "lat,lng" com coordenadas reais do local), hosteis (array com 3 objetos, cada um com: nome, nota (numero de 4.0 a 5.0), contato (telefone brasileiro), site (url real)).` }
+            { role: 'system', content: 'Voce e um especialista em turismo brasileiro. Responda APENAS com um JSON valido, sem texto fora do JSON, sem markdown, sem emojis, sem asteriscos, sem bullets. Use acentuacao correta em portugues brasileiro em todos os campos de texto.' },
+            { role: 'user', content: `Pesquise sobre o local turistico "${sugestao.nome}" em ${sugestao.estado}, Brasil. Retorne um JSON com exatamente estas chaves: titulo, cidade (nome correto da cidade com acentuacao em portugues, ex: "São Paulo", "Manaus"), descricao, historia, curiosidades, horario, preco, coordenadas (formato "lat,lng" com coordenadas reais do local), hosteis (array com 3 objetos, cada um com: nome, nota (numero de 4.0 a 5.0), contato (telefone brasileiro), site (url real)).` }
           ]
         })
       })
