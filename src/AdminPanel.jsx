@@ -873,7 +873,10 @@ function AdminPanel() {
       )}
 
       {investigarModal && (
-        <div className="modal-overlay" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null) }}>
+        <div className="modal-overlay" onClick={async () => {
+          if (investigarConteudo && !investigarConteudo.erro) await handleSalvarRascunho()
+          setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null)
+        }}>
           <div onClick={e => e.stopPropagation()} style={{
             width: '95vw', maxWidth: '1000px', maxHeight: '92vh', overflowY: 'auto',
             borderRadius: '16px', boxShadow: '0 25px 60px rgba(0,0,0,0.8)',
@@ -927,7 +930,7 @@ function AdminPanel() {
                 setModal={setInvestigarModal}
                 localPublicadoId={localPublicadoId}
                 onPublicar={handlePublicarLocal}
-                onFechar={() => { setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null) }}
+                onFechar={async () => { if (investigarConteudo && !investigarConteudo.erro) await handleSalvarRascunho(); setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null) }}
               />
             )}
 
@@ -943,7 +946,10 @@ function AdminPanel() {
                   </button>
                 </>
               )}
-              <button className="expand-btn" onClick={() => { setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null) }}>Fechar</button>
+              <button className="expand-btn" onClick={async () => {
+                if (investigarConteudo && !investigarConteudo.erro) await handleSalvarRascunho()
+                setInvestigarModal(null); setInvestigarConteudo(null); setLocalPublicadoId(null)
+              }}>Fechar</button>
             </div>
 
           </div>
