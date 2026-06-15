@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
 import { LanguageProvider } from './context/LanguageContext';
 import useImagePreload from './hooks/useImagePreload';
 import HomePage from './components/HomePage';
@@ -108,7 +107,6 @@ function Router() {
 
   return (
     <GoogleOAuthProvider clientId="718473050325-48u7v2l4msc6mv99tj220gvfk3t8a9sl.apps.googleusercontent.com">
-    <GoogleReCaptchaProvider reCaptchaKey="6LfPpbwsAAAAAHbgACqCKa86SB7mIThT6gmZZoCV">
     <LanguageProvider>
       <BrowserRouter>
         <ScrollToTop />
@@ -186,7 +184,6 @@ function Router() {
         </Routes>
       </BrowserRouter>
     </LanguageProvider>
-    </GoogleReCaptchaProvider>
     </GoogleOAuthProvider>
   );
 }

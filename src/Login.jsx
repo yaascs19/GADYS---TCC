@@ -1,6 +1,5 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGoogleReCaptcha } from 'react-google-recaptcha-v3';
 import { useGoogleLogin } from '@react-oauth/google';
 import './Login.css';
 import axios from 'axios';
@@ -28,7 +27,6 @@ const ICONS = { success: '✓', error: '✕', info: 'ℹ' };
 
 function Login({ onLogin }) {
   const navigate = useNavigate();
-  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const [email, setEmail] = useState('');
   const [emailTouched, setEmailTouched] = useState(false);
@@ -95,10 +93,8 @@ function Login({ onLogin }) {
     e.preventDefault();
     if (cooldown) { showToast('Aguarde antes de tentar novamente.', 'info'); return; }
     if (failedAttempts >= MAX_ATTEMPTS) { showToast('Muitas tentativas. Tente novamente mais tarde.', 'error'); return; }
-    if (!executeRecaptcha) { showToast('reCAPTCHA não carregado. Recarregue a página.', 'error'); return; }
     setLoading(true);
     try {
-      const recaptchaToken = await executeRecaptcha(isRegister ? 'cadastro' : 'login');
       if (isRegister) {
         if (!name) { showToast('Preencha o nome!'); setLoading(false); return; }
         if (!isValidEmail(email)) { showToast('Email inválido!'); setLoading(false); return; }
@@ -107,7 +103,7 @@ function Login({ onLogin }) {
 
         const response = await axios.post(
           `${API_URL}/api/auth/cadastrar`,
-          { nome: name, email, senha: password, tipoUsuario: 'USUARIO', recaptchaToken }
+          { nome: name, email, senha: password, tipoUsuario: 'USUARIO' }
         );
 
         if (response.data.sucesso) {
@@ -122,7 +118,7 @@ function Login({ onLogin }) {
         if (email && password) {
           const response = await axios.post(
             `${API_URL}/api/auth/login`,
-            { email, senha: password, recaptchaToken }
+            { email, senha: password }
           );
 
           if (response.data.sucesso) {
