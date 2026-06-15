@@ -244,10 +244,6 @@ function PerfilPage() {
             <h3 className="card-header">Minhas Estatísticas</h3>
             <div className="stats-grid">
               <div className="stat-item">
-                <p className="stat-value">{userStats.locaisAdicionados}</p>
-                <p className="stat-label">Locais Adicionados</p>
-              </div>
-              <div className="stat-item">
                 <p className="stat-value">{userStats.avaliacoes}</p>
                 <p className="stat-label">Avaliações Feitas</p>
               </div>
