@@ -100,7 +100,7 @@ const Acre = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/amazonas1.avif" alt="Floresta amazônica no Acre" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/ac4.webp" alt="Floresta amazônica no Acre" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Natureza Intocada</h2>
@@ -110,7 +110,7 @@ const Acre = () => {
 
         <section style={{...styles.featureSection, flexDirection: 'row-reverse'}} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/amazonas2.jpg" alt="Cultura acreana" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/ac5.jpg" alt="Cultura acreana" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Cultura e Resistência</h2>
@@ -120,7 +120,7 @@ const Acre = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/amazonas3.1.jpg" alt="Rio Acre em Rio Branco" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/ac6.webp" alt="Rio Acre em Rio Branco" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Rio Acre e Seus Encantos</h2>
