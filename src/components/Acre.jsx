@@ -9,10 +9,9 @@ const Acre = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const images = [
-    '/images/geral/amazonas1.avif',
-    '/images/geral/amazonas2.jpg',
-    '/images/geral/amazonas3.1.jpg',
-    '/images/geral/oam.jpg',
+    '/images/geral/ac1.webp',
+    '/images/geral/ac2.jpeg',
+    '/images/geral/ac3.jpg',
   ];
 
   const toggleDarkMode = () => {
