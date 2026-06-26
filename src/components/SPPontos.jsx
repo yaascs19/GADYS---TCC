@@ -118,7 +118,7 @@ const SPPontos = () => {
           className="sp-pontos-search-bar"
         />
         <div className="sp-pontos-filter-buttons">
-          {categorias.map(category => (
+          {(categorias ?? []).map(category => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}

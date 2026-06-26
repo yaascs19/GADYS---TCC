@@ -145,7 +145,7 @@ const RJPontos = () => {
           className="rj-pontos-search-bar"
         />
         <div className="rj-pontos-filter-buttons">
-          {categorias.map(category => (
+          {(categorias ?? []).map(category => (
             <button 
               key={category}
               onClick={() => setSelectedCategory(category)}

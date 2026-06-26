@@ -50,7 +50,7 @@ const MGPontos = () => {
         <input type="text" placeholder="O que você quer descobrir em Minas?" value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)} className="sudeste-pontos-search-bar" />
         <div className="sudeste-pontos-filter-buttons">
-          {categorias.map(cat => (
+          {(categorias ?? []).map(cat => (
             <button key={cat} onClick={() => setSelectedCategory(cat)}
               className={`sudeste-pontos-button ${selectedCategory === cat ? 'active' : ''}`}>
               {cat}

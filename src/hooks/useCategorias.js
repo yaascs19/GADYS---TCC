@@ -2,19 +2,17 @@ import { useState, useEffect } from 'react';
 
 const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '');
 
-const CATEGORIAS_FIXAS = ['Todos', 'Monumentos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural'];
-
 export function useCategorias(siglaEstado) {
-  const [categorias, setCategorias] = useState(CATEGORIAS_FIXAS);
+  const [categorias, setCategorias] = useState(null);
 
   useEffect(() => {
     Promise.all([
       fetch(`${API_URL}/api/categorias/globais`).then(r => r.ok ? r.json() : []).catch(() => []),
-      siglaEstado ? fetch(`${API_URL}/api/categorias/${siglaEstado}`).then(r => r.ok ? r.json() : []).catch(() => []) : Promise.resolve([])
+      siglaEstado ? fetch(`${API_URL}/api/categorias/estado/${siglaEstado}`).then(r => r.ok ? r.json() : []).catch(() => []) : Promise.resolve([])
     ]).then(([globais, locais]) => {
-      const nomes = [...new Set([...globais, ...locais].map(c => c.nome))]
-      setCategorias(['Todos', ...nomes])
-    })
+      const nomes = [...new Set([...globais, ...locais].map(c => c.nome))];
+      setCategorias(['Todos', ...nomes]);
+    });
   }, [siglaEstado]);
 
   return categorias;

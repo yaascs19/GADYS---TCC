@@ -37,7 +37,7 @@ const NortePontosBase = ({ config }) => {
         <input type="text" placeholder={config.placeholder} value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)} className="norte-pontos-search-bar" />
         <div className="norte-pontos-filter-buttons">
-          {categorias.map(cat => (
+          {(categorias ?? []).map(cat => (
             <button key={cat} onClick={() => setSelectedCategory(cat)}
               className={`norte-pontos-button ${selectedCategory === cat ? 'active' : ''}`}>
               {cat}
