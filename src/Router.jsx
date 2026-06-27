@@ -1,78 +1,104 @@
 import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { LanguageProvider } from './context/LanguageContext';
 import useImagePreload from './hooks/useImagePreload';
-import HomePage from './components/HomePage';
-import SobrePage from './components/SobrePage';
-import LugaresPage from './components/LugaresPage';
-import PerfilPage from './components/PerfilPage';
-import ContatoPage from './components/ContatoPage';
-import Login from './Login';
-import RedefinirSenha from './RedefinirSenha';
-import MapaLeaflet from './components/MapaLeaflet';
-import AdicionarLocal from './components/AdicionarLocal';
-import AdminPanel from './AdminPanel';
 import TranslateButton from './components/TranslateButton';
 import Chatbot from './components/Chatbot';
 
-import LocalDetalhe from './components/LocalDetalhe';
-import EditarLocal from './components/EditarLocal';
+const HomePage = lazy(() => import('./components/HomePage'));
+const SobrePage = lazy(() => import('./components/SobrePage'));
+const LugaresPage = lazy(() => import('./components/LugaresPage'));
+const PerfilPage = lazy(() => import('./components/PerfilPage'));
+const ContatoPage = lazy(() => import('./components/ContatoPage'));
+const Login = lazy(() => import('./Login'));
+const RedefinirSenha = lazy(() => import('./RedefinirSenha'));
+const MapaLeaflet = lazy(() => import('./components/MapaLeaflet'));
+const AdicionarLocal = lazy(() => import('./components/AdicionarLocal'));
+const AdminPanel = lazy(() => import('./AdminPanel'));
+const LocalDetalhe = lazy(() => import('./components/LocalDetalhe'));
+const EditarLocal = lazy(() => import('./components/EditarLocal'));
 
-import Para from './components/Para';
-import DestinosPara from './components/DestinosPara';
-import RioDeJaneiro from './components/RioDeJaneiro';
-import RJPontos from './components/RJPontos';
-import SaoPaulo from './components/SaoPaulo';
-import SPPontos from './components/SPPontos';
-import Ceara from './components/Ceara';
-import CearaPontos from './components/CearaPontos';
-import Amazonas from './components/Amazonas';
-import DestinosAmazonas from './components/DestinosAmazonas';
-import EncontroAguas from './components/EncontroAguas';
-import TeatroAmazonas from './components/TeatroAmazonas';
-import AmazonicoPeixaria from './components/AmazonicoPeixaria';
-import ArquipelagoAnavilhanas from './components/ArquipelagoAnavilhanas';
-import Bumbodromo from './components/Bumbodromo';
-import CachoeiraSantuario from './components/CachoeiraSantuario';
-import CoretoPeixaria from './components/CoretoPeixaria';
-import PonteRioNegro from './components/PonteRioNegro';
+const Para = lazy(() => import('./components/Para'));
+const DestinosPara = lazy(() => import('./components/DestinosPara'));
+const RioDeJaneiro = lazy(() => import('./components/RioDeJaneiro'));
+const RJPontos = lazy(() => import('./components/RJPontos'));
+const SaoPaulo = lazy(() => import('./components/SaoPaulo'));
+const SPPontos = lazy(() => import('./components/SPPontos'));
+const Ceara = lazy(() => import('./components/Ceara'));
+const CearaPontos = lazy(() => import('./components/CearaPontos'));
+const Amazonas = lazy(() => import('./components/Amazonas'));
+const DestinosAmazonas = lazy(() => import('./components/DestinosAmazonas'));
+const EncontroAguas = lazy(() => import('./components/EncontroAguas'));
+const TeatroAmazonas = lazy(() => import('./components/TeatroAmazonas'));
+const AmazonicoPeixaria = lazy(() => import('./components/AmazonicoPeixaria'));
+const ArquipelagoAnavilhanas = lazy(() => import('./components/ArquipelagoAnavilhanas'));
+const Bumbodromo = lazy(() => import('./components/Bumbodromo'));
+const CachoeiraSantuario = lazy(() => import('./components/CachoeiraSantuario'));
+const CoretoPeixaria = lazy(() => import('./components/CoretoPeixaria'));
+const PonteRioNegro = lazy(() => import('./components/PonteRioNegro'));
 
-import Acre from './components/Acre';
-import AcrePontos from './components/AcrePontos';
-import Amapa from './components/Amapa';
-import AmapaPontos from './components/AmapaPontos';
-import Rondonia from './components/Rondonia';
-import RondoniaPontos from './components/RondoniaPontos';
-import Roraima from './components/Roraima';
-import RoraimaPontos from './components/RoraimaPontos';
-import Tocantins from './components/Tocantins';
-import TocantinsPontos from './components/TocantinsPontos';
+const Acre = lazy(() => import('./components/Acre'));
+const AcrePontos = lazy(() => import('./components/AcrePontos'));
+const Amapa = lazy(() => import('./components/Amapa'));
+const AmapaPontos = lazy(() => import('./components/AmapaPontos'));
+const Rondonia = lazy(() => import('./components/Rondonia'));
+const RondoniaPontos = lazy(() => import('./components/RondoniaPontos'));
+const Roraima = lazy(() => import('./components/Roraima'));
+const RoraimaPontos = lazy(() => import('./components/RoraimaPontos'));
+const Tocantins = lazy(() => import('./components/Tocantins'));
+const TocantinsPontos = lazy(() => import('./components/TocantinsPontos'));
 
-import ParqueChandless from './components/norte/acre/ParqueChandless';
-import CentroHistoricoRioBranco from './components/norte/acre/CentroHistoricoRioBranco';
-import FortalezaSaoJoseMacapa from './components/norte/amapa/FortalezaSaoJoseMacapa';
-import FerroviaMadeiraMamore from './components/norte/rondonia/FerroviaMadeiraMamore';
-import MonteRoraima from './components/norte/roraima/MonteRoraima';
-import Jalapao from './components/norte/tocantins/Jalapao';
+const ParqueChandless = lazy(() => import('./components/norte/acre/ParqueChandless'));
+const CentroHistoricoRioBranco = lazy(() => import('./components/norte/acre/CentroHistoricoRioBranco'));
+const FortalezaSaoJoseMacapa = lazy(() => import('./components/norte/amapa/FortalezaSaoJoseMacapa'));
+const FerroviaMadeiraMamore = lazy(() => import('./components/norte/rondonia/FerroviaMadeiraMamore'));
+const MonteRoraima = lazy(() => import('./components/norte/roraima/MonteRoraima'));
+const Jalapao = lazy(() => import('./components/norte/tocantins/Jalapao'));
 
-import Jericoacoara from './components/ceara/Jericoacoara';
-import CanoaQuebrada from './components/ceara/CanoaQuebrada';
-import DragaoDoMar from './components/ceara/DragaoDoMar';
-import BeachPark from './components/ceara/BeachPark';
-import PraiaDoFuturo from './components/ceara/PraiaDoFuturo';
-import SerraDeBaturite from './components/ceara/SerraDeBaturite';
-import ChapadaDoAraripe from './components/ceara/ChapadaDoAraripe';
-import CentroHistoricoFortaleza from './components/ceara/CentroHistoricoFortaleza';
+const Jericoacoara = lazy(() => import('./components/ceara/Jericoacoara'));
+const CanoaQuebrada = lazy(() => import('./components/ceara/CanoaQuebrada'));
+const DragaoDoMar = lazy(() => import('./components/ceara/DragaoDoMar'));
+const BeachPark = lazy(() => import('./components/ceara/BeachPark'));
+const PraiaDoFuturo = lazy(() => import('./components/ceara/PraiaDoFuturo'));
+const SerraDeBaturite = lazy(() => import('./components/ceara/SerraDeBaturite'));
+const ChapadaDoAraripe = lazy(() => import('./components/ceara/ChapadaDoAraripe'));
+const CentroHistoricoFortaleza = lazy(() => import('./components/ceara/CentroHistoricoFortaleza'));
 
-import MinasGerais from './components/MinasGerais';
-import MGPontos from './components/MGPontos';
-import EspiritoSanto from './components/EspiritoSanto';
-import ESPontos from './components/ESPontos';
-import OuroPreto from './components/sudeste/mg/OuroPreto';
-import Inhotim from './components/sudeste/mg/Inhotim';
-import PedraAzulES from './components/sudeste/es/PedraAzulES';
-import Guarapari from './components/sudeste/es/Guarapari';
+const MinasGerais = lazy(() => import('./components/MinasGerais'));
+const MGPontos = lazy(() => import('./components/MGPontos'));
+const EspiritoSanto = lazy(() => import('./components/EspiritoSanto'));
+const ESPontos = lazy(() => import('./components/ESPontos'));
+const OuroPreto = lazy(() => import('./components/sudeste/mg/OuroPreto'));
+const Inhotim = lazy(() => import('./components/sudeste/mg/Inhotim'));
+const PedraAzulES = lazy(() => import('./components/sudeste/es/PedraAzulES'));
+const Guarapari = lazy(() => import('./components/sudeste/es/Guarapari'));
+
+const ROUTE_IMAGES = {
+  '/': ['/images/geral/amazonas1.avif', '/sp.jpg', '/rj.jpeg'],
+  '/sao-paulo': ['/sp.jpg', '/images/monumentos/copan.webp'],
+  '/sp-pontos': ['/images/monumentos/copan.webp', '/images/monumentos/mercadaosp.jpg'],
+  '/rio-de-janeiro': ['/rj.jpeg', '/images/monumentos/cristo.webp'],
+  '/rj-pontos': ['/images/monumentos/cristo.webp', '/images/geral/cr-rj.webp'],
+  '/amazonas': ['/images/geral/amazonas1.avif', '/images/geral/eam.jpg'],
+  '/ceara': ['/images/geral/CearaInicio.jpg'],
+};
+
+const PageLoader = () => (
+  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#0d1117' }}>
+    <div style={{ width: 40, height: 40, border: '3px solid rgba(56,189,248,0.2)', borderTop: '3px solid #38BDF8', borderRadius: '50%', animation: 'spin 0.8s linear infinite' }} />
+    <style>{`@keyframes spin { to { transform: rotate(360deg) } }`}</style>
+  </div>
+);
+
+function ImagePreloader() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const images = ROUTE_IMAGES[pathname];
+    if (images) images.forEach(src => { new Image().src = src; });
+  }, [pathname]);
+  return null;
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -101,7 +127,7 @@ function AdminRoute({ children }) {
 }
 
 function Router() {
-  useImagePreload(['/rj.jpeg', '/ama.jpg', '/sp.jpg']);
+  useImagePreload(['/rj.jpeg', '/images/geral/amazonas1.avif', '/sp.jpg', '/images/monumentos/copan.webp', '/images/geral/CearaInicio.jpg']);
 
   useEffect(() => { checkSession() }, []);
 
@@ -110,77 +136,77 @@ function Router() {
     <LanguageProvider>
       <BrowserRouter>
         <ScrollToTop />
+        <ImagePreloader />
         <TranslateButton />
         <Chatbot darkMode={typeof window !== 'undefined' && localStorage.getItem('darkMode') === 'true'} />
         <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/sobre" element={<SobrePage />} />
-          <Route path="/lugares" element={<LugaresPage />} />
-          <Route path="/perfil" element={<PerfilPage />} />
-          <Route path="/contato" element={<ContatoPage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/redefinir-senha" element={<RedefinirSenha />} />
-          <Route path="/mapa" element={<MapaLeaflet />} />
-          <Route path="/adicionar-local" element={<AdicionarLocal />} />
-          <Route path="/painel-adm" element={<AdminRoute><AdminPanel /></AdminRoute>} />
-          <Route path="/admin/editar-local/:id" element={<AdminRoute><EditarLocal /></AdminRoute>} />
+          <Route path="/" element={<Suspense fallback={<PageLoader />}><HomePage /></Suspense>} />
+          <Route path="/sobre" element={<Suspense fallback={<PageLoader />}><SobrePage /></Suspense>} />
+          <Route path="/lugares" element={<Suspense fallback={<PageLoader />}><LugaresPage /></Suspense>} />
+          <Route path="/perfil" element={<Suspense fallback={<PageLoader />}><PerfilPage /></Suspense>} />
+          <Route path="/contato" element={<Suspense fallback={<PageLoader />}><ContatoPage /></Suspense>} />
+          <Route path="/login" element={<Suspense fallback={<PageLoader />}><Login /></Suspense>} />
+          <Route path="/redefinir-senha" element={<Suspense fallback={<PageLoader />}><RedefinirSenha /></Suspense>} />
+          <Route path="/mapa" element={<Suspense fallback={<PageLoader />}><MapaLeaflet /></Suspense>} />
+          <Route path="/adicionar-local" element={<Suspense fallback={<PageLoader />}><AdicionarLocal /></Suspense>} />
+          <Route path="/painel-adm" element={<AdminRoute><Suspense fallback={<PageLoader />}><AdminPanel /></Suspense></AdminRoute>} />
+          <Route path="/admin/editar-local/:id" element={<AdminRoute><Suspense fallback={<PageLoader />}><EditarLocal /></Suspense></AdminRoute>} />
+          <Route path="/local/:id" element={<Suspense fallback={<PageLoader />}><LocalDetalhe /></Suspense>} />
 
-          <Route path="/local/:id" element={<LocalDetalhe />} />
+          <Route path="/para" element={<Suspense fallback={<PageLoader />}><Para /></Suspense>} />
+          <Route path="/destinos-para" element={<Suspense fallback={<PageLoader />}><DestinosPara /></Suspense>} />
+          <Route path="/rio-de-janeiro" element={<Suspense fallback={<PageLoader />}><RioDeJaneiro /></Suspense>} />
+          <Route path="/rj-pontos" element={<Suspense fallback={<PageLoader />}><RJPontos /></Suspense>} />
+          <Route path="/sao-paulo" element={<Suspense fallback={<PageLoader />}><SaoPaulo /></Suspense>} />
+          <Route path="/sp-pontos" element={<Suspense fallback={<PageLoader />}><SPPontos /></Suspense>} />
+          <Route path="/ceara" element={<Suspense fallback={<PageLoader />}><Ceara /></Suspense>} />
+          <Route path="/ceara-pontos" element={<Suspense fallback={<PageLoader />}><CearaPontos /></Suspense>} />
+          <Route path="/amazonas" element={<Suspense fallback={<PageLoader />}><Amazonas /></Suspense>} />
+          <Route path="/amazonas-estado" element={<Suspense fallback={<PageLoader />}><Amazonas /></Suspense>} />
+          <Route path="/destinos-amazonas" element={<Suspense fallback={<PageLoader />}><DestinosAmazonas /></Suspense>} />
+          <Route path="/encontro-aguas" element={<Suspense fallback={<PageLoader />}><EncontroAguas /></Suspense>} />
+          <Route path="/teatro-amazonas" element={<Suspense fallback={<PageLoader />}><TeatroAmazonas /></Suspense>} />
+          <Route path="/amazonico-peixaria" element={<Suspense fallback={<PageLoader />}><AmazonicoPeixaria /></Suspense>} />
+          <Route path="/arquipelago-anavilhanas" element={<Suspense fallback={<PageLoader />}><ArquipelagoAnavilhanas /></Suspense>} />
+          <Route path="/bumbodromo" element={<Suspense fallback={<PageLoader />}><Bumbodromo /></Suspense>} />
+          <Route path="/cachoeira-santuario" element={<Suspense fallback={<PageLoader />}><CachoeiraSantuario /></Suspense>} />
+          <Route path="/coreto-peixaria" element={<Suspense fallback={<PageLoader />}><CoretoPeixaria /></Suspense>} />
+          <Route path="/ponte-rio-negro" element={<Suspense fallback={<PageLoader />}><PonteRioNegro /></Suspense>} />
 
-          <Route path="/para" element={<Para />} />
-          <Route path="/destinos-para" element={<DestinosPara />} />
-          <Route path="/rio-de-janeiro" element={<RioDeJaneiro />} />
-          <Route path="/rj-pontos" element={<RJPontos />} />
-          <Route path="/sao-paulo" element={<SaoPaulo />} />
-          <Route path="/sp-pontos" element={<SPPontos />} />
-          <Route path="/ceara" element={<Ceara />} />
-          <Route path="/ceara-pontos" element={<CearaPontos />} />
-          <Route path="/amazonas" element={<Amazonas />} />
-          <Route path="/amazonas-estado" element={<Amazonas />} />
-          <Route path="/destinos-amazonas" element={<DestinosAmazonas />} />
-          <Route path="/encontro-aguas" element={<EncontroAguas />} />
-          <Route path="/teatro-amazonas" element={<TeatroAmazonas />} />
-          <Route path="/amazonico-peixaria" element={<AmazonicoPeixaria />} />
-          <Route path="/arquipelago-anavilhanas" element={<ArquipelagoAnavilhanas />} />
-          <Route path="/bumbodromo" element={<Bumbodromo />} />
-          <Route path="/cachoeira-santuario" element={<CachoeiraSantuario />} />
-          <Route path="/coreto-peixaria" element={<CoretoPeixaria />} />
-          <Route path="/ponte-rio-negro" element={<PonteRioNegro />} />
+          <Route path="/ceara/jericoacoara" element={<Suspense fallback={<PageLoader />}><Jericoacoara /></Suspense>} />
+          <Route path="/ceara/canoa-quebrada" element={<Suspense fallback={<PageLoader />}><CanoaQuebrada /></Suspense>} />
+          <Route path="/ceara/dragao-do-mar" element={<Suspense fallback={<PageLoader />}><DragaoDoMar /></Suspense>} />
+          <Route path="/ceara/beach-park" element={<Suspense fallback={<PageLoader />}><BeachPark /></Suspense>} />
+          <Route path="/ceara/praia-do-futuro" element={<Suspense fallback={<PageLoader />}><PraiaDoFuturo /></Suspense>} />
+          <Route path="/ceara/serra-de-baturite" element={<Suspense fallback={<PageLoader />}><SerraDeBaturite /></Suspense>} />
+          <Route path="/ceara/chapada-do-araripe" element={<Suspense fallback={<PageLoader />}><ChapadaDoAraripe /></Suspense>} />
+          <Route path="/ceara/centro-historico-fortaleza" element={<Suspense fallback={<PageLoader />}><CentroHistoricoFortaleza /></Suspense>} />
 
-          <Route path="/ceara/jericoacoara" element={<Jericoacoara />} />
-          <Route path="/ceara/canoa-quebrada" element={<CanoaQuebrada />} />
-          <Route path="/ceara/dragao-do-mar" element={<DragaoDoMar />} />
-          <Route path="/ceara/beach-park" element={<BeachPark />} />
-          <Route path="/ceara/praia-do-futuro" element={<PraiaDoFuturo />} />
-          <Route path="/ceara/serra-de-baturite" element={<SerraDeBaturite />} />
-          <Route path="/ceara/chapada-do-araripe" element={<ChapadaDoAraripe />} />
-          <Route path="/ceara/centro-historico-fortaleza" element={<CentroHistoricoFortaleza />} />
+          <Route path="/acre" element={<Suspense fallback={<PageLoader />}><Acre /></Suspense>} />
+          <Route path="/acre-pontos" element={<Suspense fallback={<PageLoader />}><AcrePontos /></Suspense>} />
+          <Route path="/acre/parque-chandless" element={<Suspense fallback={<PageLoader />}><ParqueChandless /></Suspense>} />
+          <Route path="/acre/centro-historico" element={<Suspense fallback={<PageLoader />}><CentroHistoricoRioBranco /></Suspense>} />
+          <Route path="/amapa" element={<Suspense fallback={<PageLoader />}><Amapa /></Suspense>} />
+          <Route path="/amapa-pontos" element={<Suspense fallback={<PageLoader />}><AmapaPontos /></Suspense>} />
+          <Route path="/amapa/fortaleza-sao-jose" element={<Suspense fallback={<PageLoader />}><FortalezaSaoJoseMacapa /></Suspense>} />
+          <Route path="/rondonia" element={<Suspense fallback={<PageLoader />}><Rondonia /></Suspense>} />
+          <Route path="/rondonia-pontos" element={<Suspense fallback={<PageLoader />}><RondoniaPontos /></Suspense>} />
+          <Route path="/rondonia/ferrovia-madeira-mamore" element={<Suspense fallback={<PageLoader />}><FerroviaMadeiraMamore /></Suspense>} />
+          <Route path="/roraima" element={<Suspense fallback={<PageLoader />}><Roraima /></Suspense>} />
+          <Route path="/roraima-pontos" element={<Suspense fallback={<PageLoader />}><RoraimaPontos /></Suspense>} />
+          <Route path="/roraima/monte-roraima" element={<Suspense fallback={<PageLoader />}><MonteRoraima /></Suspense>} />
+          <Route path="/tocantins" element={<Suspense fallback={<PageLoader />}><Tocantins /></Suspense>} />
+          <Route path="/tocantins-pontos" element={<Suspense fallback={<PageLoader />}><TocantinsPontos /></Suspense>} />
+          <Route path="/tocantins/jalapao" element={<Suspense fallback={<PageLoader />}><Jalapao /></Suspense>} />
 
-          <Route path="/acre" element={<Acre />} />
-          <Route path="/acre-pontos" element={<AcrePontos />} />
-          <Route path="/acre/parque-chandless" element={<ParqueChandless />} />
-          <Route path="/acre/centro-historico" element={<CentroHistoricoRioBranco />} />
-          <Route path="/amapa" element={<Amapa />} />
-          <Route path="/amapa-pontos" element={<AmapaPontos />} />
-          <Route path="/amapa/fortaleza-sao-jose" element={<FortalezaSaoJoseMacapa />} />
-          <Route path="/rondonia" element={<Rondonia />} />
-          <Route path="/rondonia-pontos" element={<RondoniaPontos />} />
-          <Route path="/rondonia/ferrovia-madeira-mamore" element={<FerroviaMadeiraMamore />} />
-          <Route path="/roraima" element={<Roraima />} />
-          <Route path="/roraima-pontos" element={<RoraimaPontos />} />
-          <Route path="/roraima/monte-roraima" element={<MonteRoraima />} />
-          <Route path="/tocantins" element={<Tocantins />} />
-          <Route path="/tocantins-pontos" element={<TocantinsPontos />} />
-          <Route path="/tocantins/jalapao" element={<Jalapao />} />
-
-          <Route path="/minas-gerais" element={<MinasGerais />} />
-          <Route path="/mg-pontos" element={<MGPontos />} />
-          <Route path="/mg/ouro-preto" element={<OuroPreto />} />
-          <Route path="/mg/inhotim" element={<Inhotim />} />
-          <Route path="/espirito-santo" element={<EspiritoSanto />} />
-          <Route path="/es-pontos" element={<ESPontos />} />
-          <Route path="/es/pedra-azul" element={<PedraAzulES />} />
-          <Route path="/es/guarapari" element={<Guarapari />} />
+          <Route path="/minas-gerais" element={<Suspense fallback={<PageLoader />}><MinasGerais /></Suspense>} />
+          <Route path="/mg-pontos" element={<Suspense fallback={<PageLoader />}><MGPontos /></Suspense>} />
+          <Route path="/mg/ouro-preto" element={<Suspense fallback={<PageLoader />}><OuroPreto /></Suspense>} />
+          <Route path="/mg/inhotim" element={<Suspense fallback={<PageLoader />}><Inhotim /></Suspense>} />
+          <Route path="/espirito-santo" element={<Suspense fallback={<PageLoader />}><EspiritoSanto /></Suspense>} />
+          <Route path="/es-pontos" element={<Suspense fallback={<PageLoader />}><ESPontos /></Suspense>} />
+          <Route path="/es/pedra-azul" element={<Suspense fallback={<PageLoader />}><PedraAzulES /></Suspense>} />
+          <Route path="/es/guarapari" element={<Suspense fallback={<PageLoader />}><Guarapari /></Suspense>} />
         </Routes>
       </BrowserRouter>
     </LanguageProvider>
