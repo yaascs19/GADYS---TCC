@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { useCategorias } from './hooks/useCategorias'
 import { useNavigate } from 'react-router-dom'
 import './AdminPanel.css'
 import './components/EditarLocal.css'
@@ -352,6 +353,7 @@ function AdminPanel() {
   const [confirmModal, setConfirmModal] = useState(null)
 
   const CATEGORIAS_FIXAS = ['Monumentos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural']
+  const categoriasDisponiveis = useCategorias()
   const [categoriasCustomCriadas, setCategoriasCustomCriadas] = useState([])
 
   const isCategoriaCustom = (sub) => sub && !CATEGORIAS_FIXAS.includes(sub) && !categoriasCustomCriadas.includes(sub)
@@ -1091,10 +1093,9 @@ function AdminPanel() {
             className="filter-select"
           >
             <option value="">Todas as categorias</option>
-            <option value="Monumentos">Monumentos</option>
-            <option value="Lugar Paradísíaco">Lugar Paradísíaco</option>
-            <option value="Restaurantes">Restaurantes</option>
-            <option value="Costume Cultural">Costume Cultural</option>
+            {(categoriasDisponiveis || CATEGORIAS_FIXAS).filter(c => c !== 'Todos').map(cat => (
+              <option key={cat} value={cat}>{cat}</option>
+            ))}
           </select>
         </div>
       )}
