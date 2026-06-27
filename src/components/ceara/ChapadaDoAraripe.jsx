@@ -4,18 +4,18 @@ import CearaPontoBase from '../CearaPontoBase';
 const config = {
   titulo: 'Chapada do Araripe',
   subtitulo: 'Fontes cristalinas, fósseis e biodiversidade única.',
-  carouselImages: ['/images/geral/Ceara2.webp', '/images/geral/Ceara3.jpg'],
+  carouselImages: ['/images/geral/chapada.webp', '/images/geral/chapada.webp'],
   galeriaImages: [
-    { src: '/images/geral/Ceara2.webp', alt: 'Chapada do Araripe' },
-    { src: '/images/geral/Ceara3.jpg', alt: 'Fontes da Chapada' },
-    { src: '/images/geral/Ceara1.webp', alt: 'Natureza da Chapada' },
+    { src: '/images/geral/chapada.webp', alt: 'Chapada do Araripe' },
+    { src: '/images/geral/chapada.webp', alt: 'Fontes da Chapada' },
+    { src: '/images/geral/chapada.webp', alt: 'Natureza da Chapada' },
   ],
   secoes: {
     sobre: {
       label: 'Sobre',
       titulo: 'O Tesouro Paleontológico do Brasil',
       texto: 'A Chapada do Araripe é um planalto sedimentar que se estende pelos estados do Ceará, Pernambuco e Piauí. Com altitude média de 900 metros, a região abriga um dos mais importantes sítios paleontológicos do mundo, com fósseis de dinossauros e peixes pré-históricos. Além disso, a chapada é famosa pelas fontes de água cristalina que brotam naturalmente do solo.',
-      imagem: '/images/geral/Ceara2.webp',
+      imagem: '/images/geral/chapada.webp',
       alt: 'Vista da Chapada do Araripe',
       lista: [
         'Localização: Crato e Juazeiro do Norte, sul do Ceará.',
@@ -27,7 +27,7 @@ const config = {
       label: 'Experiências',
       titulo: 'Natureza e Ciência na Chapada',
       texto: 'A Chapada do Araripe combina beleza natural, história geológica e espiritualidade em um destino único no Brasil.',
-      imagem: '/images/geral/Ceara3.jpg',
+      imagem: '/images/geral/chapada.webp',
       alt: 'Fontes da Chapada do Araripe',
       subsecoes: [
         { titulo: 'Fontes e Balneários', texto: 'As fontes de água doce que brotam da chapada formam balneários naturais de beleza rara. A Fonte do Caldas, a Bica do Ipu e o Balneário do Caldas são os mais visitados.' },
@@ -39,7 +39,7 @@ const config = {
       label: 'Visite',
       titulo: 'Como Visitar a Chapada do Araripe',
       texto: 'A Chapada do Araripe é acessível a partir de Crato ou Juazeiro do Norte, no sul do Ceará.',
-      imagem: '/images/geral/Ceara1.webp',
+      imagem: '/images/geral/chapada.webp',
       alt: 'Estrada da Chapada do Araripe',
       subsecoes: [
         { titulo: 'Como Chegar', texto: 'De Fortaleza, há voos e ônibus para Juazeiro do Norte (aprox. 6h de ônibus). De carro, siga pela BR-116 Sul. O aeroporto de Juazeiro do Norte tem voos regulares.' },

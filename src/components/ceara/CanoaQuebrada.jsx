@@ -4,18 +4,18 @@ import CearaPontoBase from '../CearaPontoBase';
 const config = {
   titulo: 'Canoa Quebrada',
   subtitulo: 'Falésias vermelhas, areia branca e vida noturna animada.',
-  carouselImages: ['/images/geral/Ceara2.webp', '/images/geral/Ceara3.jpg'],
+  carouselImages: ['/images/geral/CE_-_Canoa_Quebrada_-_Falésia.jpg', '/images/geral/CE_-_Canoa_Quebrada_-_Falésia.jpg'],
   galeriaImages: [
-    { src: '/images/geral/Ceara2.webp', alt: 'Canoa Quebrada falésias' },
-    { src: '/images/geral/Ceara3.jpg', alt: 'Canoa Quebrada praia' },
-    { src: '/images/geral/Ceara1.webp', alt: 'Canoa Quebrada vista' },
+    { src: '/images/geral/CE_-_Canoa_Quebrada_-_Falésia.jpg', alt: 'Canoa Quebrada falésias' },
+    { src: '/images/geral/CE_-_Canoa_Quebrada_-_Falésia.jpg', alt: 'Canoa Quebrada praia' },
+    { src: '/images/geral/CE_-_Canoa_Quebrada_-_Falésia.jpg', alt: 'Canoa Quebrada vista' },
   ],
   secoes: {
     sobre: {
       label: 'Sobre',
       titulo: 'As Falésias Vermelhas do Ceará',
       texto: 'Canoa Quebrada é uma das praias mais famosas do Nordeste brasileiro. Suas imponentes falésias de arenito vermelho contrastam com a areia branca e o mar azul-turquesa, criando uma paisagem de tirar o fôlego. A vila, que já foi um vilarejo de pescadores, hoje é um destino cosmopolita com restaurantes, bares e uma vida noturna vibrante na famosa Broadway.',
-      imagem: '/images/geral/Ceara2.webp',
+      imagem: '/images/geral/CE_-_Canoa_Quebrada_-_Falésia.jpg',
       alt: 'Falésias vermelhas de Canoa Quebrada',
       lista: [
         'Localização: Aracati, a 164 km de Fortaleza.',
@@ -27,7 +27,7 @@ const config = {
       label: 'Experiências',
       titulo: 'O Que Fazer em Canoa Quebrada',
       texto: 'De passeios de buggy pelas falésias a noites animadas na Broadway, Canoa Quebrada tem muito a oferecer para todos os gostos.',
-      imagem: '/images/geral/Ceara3.jpg',
+      imagem: '/images/geral/CE_-_Canoa_Quebrada_-_Falésia.jpg',
       alt: 'Passeio de buggy em Canoa Quebrada',
       subsecoes: [
         { titulo: 'Passeio de Buggy', texto: 'Os buggys percorrem as falésias e praias vizinhas, como Majorlândia e Quixaba. É a forma mais emocionante de explorar a região e contemplar as formações rochosas de perto.' },
@@ -39,7 +39,7 @@ const config = {
       label: 'Visite',
       titulo: 'Planeje Sua Visita',
       texto: 'Canoa Quebrada é acessível e bem estruturada para receber turistas durante todo o ano.',
-      imagem: '/images/geral/Ceara1.webp',
+      imagem: '/images/geral/CE_-_Canoa_Quebrada_-_Falésia.jpg',
       alt: 'Vista de Canoa Quebrada',
       subsecoes: [
         { titulo: 'Como Chegar', texto: 'De Fortaleza, há ônibus regulares até Aracati (2h30). De lá, táxis e vans fazem o trajeto até a praia (20 min). De carro, siga pela CE-040.' },

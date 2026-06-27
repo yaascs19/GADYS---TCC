@@ -4,18 +4,18 @@ import CearaPontoBase from '../CearaPontoBase';
 const config = {
   titulo: 'Centro Dragão do Mar',
   subtitulo: 'O coração cultural de Fortaleza.',
-  carouselImages: ['/images/geral/CearaInicio.jpg', '/images/geral/ceara.webp'],
+  carouselImages: ['/images/geral/teatro-dragao-do-mar.jpg', '/images/geral/teatro-dragao-do-mar.jpg'],
   galeriaImages: [
-    { src: '/images/geral/CearaInicio.jpg', alt: 'Centro Dragão do Mar' },
-    { src: '/images/geral/ceara.webp', alt: 'Dragão do Mar noturno' },
-    { src: '/images/geral/Ceara3.jpg', alt: 'Fortaleza' },
+    { src: '/images/geral/teatro-dragao-do-mar.jpg', alt: 'Centro Dragão do Mar' },
+    { src: '/images/geral/teatro-dragao-do-mar.jpg', alt: 'Dragão do Mar noturno' },
+    { src: '/images/geral/teatro-dragao-do-mar.jpg', alt: 'Fortaleza' },
   ],
   secoes: {
     sobre: {
       label: 'Sobre',
       titulo: 'Arte e Cultura no Coração de Fortaleza',
       texto: 'O Centro Cultural Dragão do Mar é o maior complexo cultural do Ceará e um dos mais importantes do Brasil. Inaugurado em 1999, o espaço homenageia Francisco José do Nascimento, o "Dragão do Mar", jangadeiro cearense que se recusou a transportar escravos. Com arquitetura moderna e arrojada, o centro abriga museus, teatro, planetário, cinema e espaços de convivência.',
-      imagem: '/images/geral/CearaInicio.jpg',
+      imagem: '/images/geral/teatro-dragao-do-mar.jpg',
       alt: 'Fachada do Centro Dragão do Mar',
       lista: [
         'Localização: Praia de Iracema, Fortaleza - CE.',
@@ -27,7 +27,7 @@ const config = {
       label: 'Experiências',
       titulo: 'O Que Explorar no Dragão do Mar',
       texto: 'O complexo oferece uma programação cultural intensa e diversificada, com exposições, espetáculos e eventos ao longo de todo o ano.',
-      imagem: '/images/geral/ceara.webp',
+      imagem: '/images/geral/teatro-dragao-do-mar.jpg',
       alt: 'Interior do Dragão do Mar',
       subsecoes: [
         { titulo: 'Museu de Arte Contemporânea (MAC)', texto: 'O MAC Ceará ocupa um dos espaços mais emblemáticos do centro, com exposições permanentes e temporárias de artistas locais, nacionais e internacionais.' },
@@ -39,7 +39,7 @@ const config = {
       label: 'Visite',
       titulo: 'Como Visitar',
       texto: 'O Centro Dragão do Mar está localizado na Praia de Iracema, uma das regiões mais charmosas de Fortaleza, com fácil acesso por transporte público.',
-      imagem: '/images/geral/Ceara3.jpg',
+      imagem: '/images/geral/teatro-dragao-do-mar.jpg',
       alt: 'Região da Praia de Iracema',
       subsecoes: [
         { titulo: 'Horários e Ingressos', texto: 'O centro funciona de terça a domingo, das 10h às 21h30. A entrada é gratuita para os espaços externos. Museus e planetário têm ingressos a partir de R$ 10.' },

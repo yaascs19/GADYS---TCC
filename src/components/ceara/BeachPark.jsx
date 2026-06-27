@@ -4,18 +4,18 @@ import CearaPontoBase from '../CearaPontoBase';
 const config = {
   titulo: 'Beach Park',
   subtitulo: 'O maior parque aquático da América Latina.',
-  carouselImages: ['/images/geral/ceara.webp', '/images/geral/Ceara1.webp'],
+  carouselImages: ['/images/geral/beach.webp', '/images/geral/beach.webp'],
   galeriaImages: [
-    { src: '/images/geral/ceara.webp', alt: 'Beach Park' },
-    { src: '/images/geral/Ceara1.webp', alt: 'Beach Park toboágua' },
-    { src: '/images/geral/Ceara2.webp', alt: 'Beach Park piscinas' },
+    { src: '/images/geral/beach.webp', alt: 'Beach Park' },
+    { src: '/images/geral/beach.webp', alt: 'Beach Park toboágua' },
+    { src: '/images/geral/beach.webp', alt: 'Beach Park piscinas' },
   ],
   secoes: {
     sobre: {
       label: 'Sobre',
       titulo: 'Diversão Sem Limites no Ceará',
       texto: 'O Beach Park é o maior parque aquático da América Latina e um dos maiores do mundo. Localizado em Aquiraz, a apenas 27 km de Fortaleza, o complexo reúne toboáguas radicais, piscinas de ondas, atrações para crianças e uma praia privativa com estrutura completa. É o destino perfeito para famílias que buscam adrenalina e diversão.',
-      imagem: '/images/geral/ceara.webp',
+      imagem: '/images/geral/beach.webp',
       alt: 'Vista aérea do Beach Park',
       lista: [
         'Localização: Aquiraz, a 27 km de Fortaleza.',
@@ -27,7 +27,7 @@ const config = {
       label: 'Experiências',
       titulo: 'Adrenalina e Diversão para Todos',
       texto: 'Com mais de 20 atrações aquáticas, o Beach Park tem opções para todas as idades e perfis de visitantes.',
-      imagem: '/images/geral/Ceara1.webp',
+      imagem: '/images/geral/beach.webp',
       alt: 'Toboágua do Beach Park',
       subsecoes: [
         { titulo: 'Insano e Atrações Radicais', texto: 'O Insano, com seus 41 metros de altura, foi por anos o toboágua mais alto do mundo. Para os amantes de adrenalina, há também o Boomerang, o Aqualoop e o Master Blaster.' },
@@ -39,7 +39,7 @@ const config = {
       label: 'Visite',
       titulo: 'Planeje Seu Dia no Beach Park',
       texto: 'Para aproveitar ao máximo, chegue cedo e planeje as atrações com antecedência.',
-      imagem: '/images/geral/Ceara2.webp',
+      imagem: '/images/geral/beach.webp',
       alt: 'Entrada do Beach Park',
       subsecoes: [
         { titulo: 'Ingressos e Horários', texto: 'O parque funciona de quarta a domingo e feriados, das 11h às 17h. Ingressos a partir de R$ 180 (adulto) e R$ 90 (meia). Compre online com antecedência para garantir desconto.' },

@@ -4,18 +4,18 @@ import CearaPontoBase from '../CearaPontoBase';
 const config = {
   titulo: 'Praia do Futuro',
   subtitulo: 'A praia mais popular de Fortaleza.',
-  carouselImages: ['/images/geral/Ceara3.jpg', '/images/geral/Ceara2.webp'],
+  carouselImages: ['/images/geral/Futuro.jpeg', '/images/geral/Futuro.jpeg'],
   galeriaImages: [
-    { src: '/images/geral/Ceara3.jpg', alt: 'Praia do Futuro' },
-    { src: '/images/geral/Ceara2.webp', alt: 'Praia do Futuro barracas' },
-    { src: '/images/geral/ceara.webp', alt: 'Praia do Futuro mar' },
+    { src: '/images/geral/Futuro.jpeg', alt: 'Praia do Futuro' },
+    { src: '/images/geral/Futuro.jpeg', alt: 'Praia do Futuro barracas' },
+    { src: '/images/geral/Futuro.jpeg', alt: 'Praia do Futuro mar' },
   ],
   secoes: {
     sobre: {
       label: 'Sobre',
       titulo: 'O Coração das Praias de Fortaleza',
       texto: 'A Praia do Futuro é a mais popular e movimentada de Fortaleza. Com 8 km de extensão, águas mornas e barracas estruturadas, ela é o destino favorito dos fortalezenses para um dia de sol e mar. As famosas barracas de frutos do mar, com música ao vivo e serviço completo, são o grande atrativo do lugar.',
-      imagem: '/images/geral/Ceara3.jpg',
+      imagem: '/images/geral/Futuro.jpeg',
       alt: 'Vista da Praia do Futuro',
       lista: [
         'Localização: Zona Leste de Fortaleza, a 8 km do centro.',
@@ -27,7 +27,7 @@ const config = {
       label: 'Experiências',
       titulo: 'Um Dia Perfeito na Praia do Futuro',
       texto: 'A Praia do Futuro oferece muito mais do que sol e mar. As barracas são verdadeiros complexos de lazer com piscinas, shows e gastronomia.',
-      imagem: '/images/geral/Ceara2.webp',
+      imagem: '/images/geral/Futuro.jpeg',
       alt: 'Barracas da Praia do Futuro',
       subsecoes: [
         { titulo: 'As Barracas Famosas', texto: 'As barracas da Praia do Futuro são famosas em todo o Brasil. Chico do Caranguejo, Crocobeach e Barraca do Meio são algumas das mais tradicionais, com frutos do mar frescos e música ao vivo.' },
@@ -39,7 +39,7 @@ const config = {
       label: 'Visite',
       titulo: 'Como Aproveitar a Praia do Futuro',
       texto: 'A Praia do Futuro é acessível e bem estruturada, com opções para todos os bolsos.',
-      imagem: '/images/geral/ceara.webp',
+      imagem: '/images/geral/Futuro.jpeg',
       alt: 'Praia do Futuro ao entardecer',
       subsecoes: [
         { titulo: 'Como Chegar', texto: 'De ônibus, pegue as linhas que passam pela Av. Zezé Diogo. De carro ou aplicativo, siga pela Av. Dioguinho. Há estacionamento nas barracas.' },

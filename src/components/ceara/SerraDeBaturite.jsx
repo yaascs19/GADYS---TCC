@@ -4,18 +4,18 @@ import CearaPontoBase from '../CearaPontoBase';
 const config = {
   titulo: 'Serra de Baturité',
   subtitulo: 'Clima ameno, cachoeiras e café no coração do Ceará.',
-  carouselImages: ['/images/geral/Ceara1.webp', '/images/geral/CearaInicio.jpg'],
+  carouselImages: ['/images/geral/serra.jpg', '/images/geral/serra.jpg'],
   galeriaImages: [
-    { src: '/images/geral/Ceara1.webp', alt: 'Serra de Baturité' },
-    { src: '/images/geral/CearaInicio.jpg', alt: 'Baturité cachoeira' },
-    { src: '/images/geral/ceara.webp', alt: 'Baturité paisagem' },
+    { src: '/images/geral/serra.jpg', alt: 'Serra de Baturité' },
+    { src: '/images/geral/serra.jpg', alt: 'Baturité cachoeira' },
+    { src: '/images/geral/serra.jpg', alt: 'Baturité paisagem' },
   ],
   secoes: {
     sobre: {
       label: 'Sobre',
       titulo: 'O Oásis Verde do Ceará',
       texto: 'A Serra de Baturité é um verdadeiro oásis no semiárido cearense. Com altitude de até 1.114 metros, a região desfruta de um clima ameno e úmido, com temperaturas que raramente ultrapassam 25°C. A vegetação exuberante, as cachoeiras cristalinas e as plantações de café e banana criam uma paisagem completamente diferente do restante do estado.',
-      imagem: '/images/geral/Ceara1.webp',
+      imagem: '/images/geral/serra.jpg',
       alt: 'Vista da Serra de Baturité',
       lista: [
         'Localização: A 100 km de Fortaleza, na Região Maciço de Baturité.',
@@ -27,7 +27,7 @@ const config = {
       label: 'Experiências',
       titulo: 'Natureza e Cultura na Serra',
       texto: 'A Serra de Baturité oferece uma combinação única de ecoturismo, gastronomia e cultura caipira cearense.',
-      imagem: '/images/geral/CearaInicio.jpg',
+      imagem: '/images/geral/serra.jpg',
       alt: 'Cachoeira na Serra de Baturité',
       subsecoes: [
         { titulo: 'Cachoeiras e Trilhas', texto: 'A região abriga diversas cachoeiras, como a Cachoeira do Pinga e a Cachoeira do Urubu. As trilhas ecológicas percorrem a Mata Atlântica serrana, com rica biodiversidade.' },
@@ -39,7 +39,7 @@ const config = {
       label: 'Visite',
       titulo: 'Como Visitar a Serra de Baturité',
       texto: 'A Serra de Baturité é um destino de fim de semana perfeito para quem está em Fortaleza.',
-      imagem: '/images/geral/ceara.webp',
+      imagem: '/images/geral/serra.jpg',
       alt: 'Estrada da Serra de Baturité',
       subsecoes: [
         { titulo: 'Como Chegar', texto: 'De Fortaleza, siga pela BR-222 até Pacatuba, depois pela CE-065 até Baturité (aprox. 1h30). Há ônibus regulares saindo da Rodoviária de Fortaleza.' },

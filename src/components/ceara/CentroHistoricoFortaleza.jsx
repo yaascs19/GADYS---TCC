@@ -4,18 +4,18 @@ import CearaPontoBase from '../CearaPontoBase';
 const config = {
   titulo: 'Centro Histórico de Fortaleza',
   subtitulo: 'Mercado Central, Catedral e o Theatro José de Alencar.',
-  carouselImages: ['/images/geral/ceara.webp', '/images/geral/CearaInicio.jpg'],
+  carouselImages: ['/images/geral/centro.jpeg', '/images/geral/centro.jpeg'],
   galeriaImages: [
-    { src: '/images/geral/ceara.webp', alt: 'Centro Histórico de Fortaleza' },
-    { src: '/images/geral/CearaInicio.jpg', alt: 'Theatro José de Alencar' },
-    { src: '/images/geral/Ceara3.jpg', alt: 'Fortaleza centro' },
+    { src: '/images/geral/centro.jpeg', alt: 'Centro Histórico de Fortaleza' },
+    { src: '/images/geral/centro.jpeg', alt: 'Theatro José de Alencar' },
+    { src: '/images/geral/centro.jpeg', alt: 'Fortaleza centro' },
   ],
   secoes: {
     sobre: {
       label: 'Sobre',
       titulo: 'A Alma Histórica de Fortaleza',
       texto: 'O Centro Histórico de Fortaleza é o berço da capital cearense. Com ruas que guardam séculos de história, o bairro concentra os principais monumentos, igrejas e mercados da cidade. Do imponente Theatro José de Alencar ao movimentado Mercado Central, cada esquina conta uma história da formação cultural e econômica do Ceará.',
-      imagem: '/images/geral/ceara.webp',
+      imagem: '/images/geral/centro.jpeg',
       alt: 'Vista do Centro Histórico de Fortaleza',
       lista: [
         'Localização: Centro de Fortaleza, capital do Ceará.',
@@ -27,7 +27,7 @@ const config = {
       label: 'Experiências',
       titulo: 'O Que Explorar no Centro',
       texto: 'O Centro Histórico de Fortaleza é um roteiro cultural completo, com monumentos, museus, gastronomia e artesanato.',
-      imagem: '/images/geral/CearaInicio.jpg',
+      imagem: '/images/geral/centro.jpeg',
       alt: 'Theatro José de Alencar',
       subsecoes: [
         { titulo: 'Theatro José de Alencar', texto: 'Inaugurado em 1910, o Theatro José de Alencar é uma obra-prima do Art Nouveau com elementos neoclássicos. Sua estrutura metálica importada da Escócia e os vitrais coloridos fazem dele um dos teatros mais belos do Brasil.' },
@@ -39,7 +39,7 @@ const config = {
       label: 'Visite',
       titulo: 'Como Explorar o Centro Histórico',
       texto: 'O Centro Histórico de Fortaleza é melhor explorado a pé, com um roteiro que conecta os principais pontos turísticos.',
-      imagem: '/images/geral/Ceara3.jpg',
+      imagem: '/images/geral/centro.jpeg',
       alt: 'Ruas do Centro de Fortaleza',
       subsecoes: [
         { titulo: 'Roteiro Sugerido', texto: 'Comece pela Praça do Ferreira, o coração do centro. Visite o Theatro José de Alencar, a Catedral Metropolitana e o Mercado Central. Termine no Centro Dragão do Mar, na Praia de Iracema.' },
