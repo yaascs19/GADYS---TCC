@@ -108,8 +108,15 @@ const CearaPontoBase = ({ config }) => {
     if (!bdLocal?.informacoesAdicionais) return;
     try {
       const parsed = JSON.parse(bdLocal.informacoesAdicionais);
-      if (parsed.secoes) setSecoes({ ...config.secoes, ...parsed.secoes });
-      if (parsed.carouselImages) setCarouselImages(parsed.carouselImages);
+      if (parsed.secoes) {
+        const secoesComImagens = Object.fromEntries(
+          Object.entries(parsed.secoes).map(([k, v]) => [
+            k,
+            { ...v, imagem: config.secoes[k]?.imagem || v.imagem }
+          ])
+        );
+        setSecoes({ ...config.secoes, ...secoesComImagens });
+      }
     } catch { /* usa config estático */ }
   }, [bdLocal]);
 
