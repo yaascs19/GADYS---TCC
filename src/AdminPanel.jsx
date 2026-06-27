@@ -356,7 +356,7 @@ function AdminPanel() {
   const categoriasDisponiveis = useTodasCategorias()
   const [categoriasCustomCriadas, setCategoriasCustomCriadas] = useState([])
 
-  const isCategoriaCustom = (sub) => sub && !CATEGORIAS_FIXAS.includes(sub) && !categoriasCustomCriadas.includes(sub)
+  const isCategoriaCustom = (sub) => sub && !categoriasDisponiveis.includes(sub)
 
   const handleCriarCategoria = async (nome, estado) => {
     try {
