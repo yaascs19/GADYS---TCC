@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import NavbarShared from './NavbarShared'
+import { useCategorias } from '../hooks/useCategorias'
 import './AdicionarLocal.css'
 
 function AdicionarLocal() {
@@ -18,6 +19,8 @@ function AdicionarLocal() {
 
   const CLOUD_NAME = 'dybpie9aa'
   const UPLOAD_PRESET = 'gadys_tcc'
+  const categorias = useCategorias(formData.estado || null)
+
   const sanitize = (str) => (str || '').replace(/<[^>]*>/g, '').trim()
 
   const handleInputChange = (e) => {
@@ -117,10 +120,9 @@ function AdicionarLocal() {
                 <label className="form-label">Categoria *</label>
                 <select name="subcategoria" value={formData.subcategoria} onChange={handleInputChange} required className="form-select">
                   <option value="">Selecione</option>
-                  <option value="Monumentos">Monumento</option>
-                  <option value="Lugar Paradísíaco">Lugar Paradisíaco</option>
-                  <option value="Restaurantes">Restaurante</option>
-                  <option value="Costume Cultural">Costume Cultural</option>
+                  {categorias.map(cat => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
                   <option value="Outros">Outros</option>
                 </select>
               </div>
