@@ -9,13 +9,32 @@ export function useCategorias(siglaEstado) {
 
   useEffect(() => {
     Promise.all([
-      fetch(`${API_URL}/api/categorias/globais`).then(r => r.ok ? r.json() : []).catch(() => []),
-      siglaEstado ? fetch(`${API_URL}/api/categorias/estado/${siglaEstado}`).then(r => r.ok ? r.json() : []).catch(() => []) : Promise.resolve([])
-    ]).then(([globais, locais]) => {
-      const extras = [...new Set([...globais, ...locais].map(c => c.nome))].filter(n => !FIXAS.includes(n));
+      fetch(`${API_URL}/api/categorias`).then(r => r.ok ? r.json() : []).catch(() => [])
+    ]).then(([todas]) => {
+      let filtradas = todas;
+      if (siglaEstado) {
+        filtradas = todas.filter(c => c.global || (c.estados && c.estados.includes(siglaEstado)));
+      }
+      const nomes = [...new Set(filtradas.map(c => c.nome))];
+      const extras = nomes.filter(n => !FIXAS.includes(n));
       setCategorias([...FIXAS, ...extras]);
     });
   }, [siglaEstado]);
+
+  return categorias;
+}
+
+export function useTodasCategorias() {
+  const [categorias, setCategorias] = useState(FIXAS);
+
+  useEffect(() => {
+    fetch(`${API_URL}/api/categorias`).then(r => r.ok ? r.json() : []).catch(() => [])
+      .then(todas => {
+        const nomes = [...new Set(todas.map(c => c.nome))];
+        const extras = nomes.filter(n => !FIXAS.includes(n));
+        setCategorias([...FIXAS, ...extras]);
+      });
+  }, []);
 
   return categorias;
 }
