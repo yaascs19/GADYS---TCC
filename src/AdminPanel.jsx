@@ -594,8 +594,8 @@ function AdminPanel() {
           endereco: investigarModal.endereco,
           subcategoria: investigarModal.subcategoria || 'Lugar Paradisiaco',
           categoria: 'lugares-visitar',
-          horarioFuncionamento: investigarConteudo.horario,
-          preco: investigarConteudo.preco,
+          horarioFuncionamento: investigarConteudo.horario?.slice(0, 255) || null,
+          preco: investigarConteudo.preco?.slice(0, 100) || null,
           informacoesAdicionais,
           imagemUrl: [
             investigarModal.imagemUrlHero || '',
