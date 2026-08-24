@@ -25,6 +25,8 @@ const RioDeJaneiro = lazy(() => import('./components/RioDeJaneiro'));
 const RJPontos = lazy(() => import('./components/RJPontos'));
 const SaoPaulo = lazy(() => import('./components/SaoPaulo'));
 const SPPontos = lazy(() => import('./components/SPPontos'));
+const Alagoas = lazy(() => import('./components/Alagoas'));
+const AlagoapontosPontos = lazy(() => import('./components/AlagoapontosPontos'));
 const Ceara = lazy(() => import('./components/Ceara'));
 const CearaPontos = lazy(() => import('./components/CearaPontos'));
 const Amazonas = lazy(() => import('./components/Amazonas'));
@@ -159,6 +161,8 @@ function Router() {
           <Route path="/rj-pontos" element={<Suspense fallback={<PageLoader />}><RJPontos /></Suspense>} />
           <Route path="/sao-paulo" element={<Suspense fallback={<PageLoader />}><SaoPaulo /></Suspense>} />
           <Route path="/sp-pontos" element={<Suspense fallback={<PageLoader />}><SPPontos /></Suspense>} />
+          <Route path="/alagoas" element={<Suspense fallback={<PageLoader />}><Alagoas /></Suspense>} />
+          <Route path="/alagoas-pontos" element={<Suspense fallback={<PageLoader />}><AlagoapontosPontos /></Suspense>} />
           <Route path="/ceara" element={<Suspense fallback={<PageLoader />}><Ceara /></Suspense>} />
           <Route path="/ceara-pontos" element={<Suspense fallback={<PageLoader />}><CearaPontos /></Suspense>} />
           <Route path="/amazonas" element={<Suspense fallback={<PageLoader />}><Amazonas /></Suspense>} />

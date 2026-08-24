@@ -1165,12 +1165,9 @@ function AdminPanel() {
             <div className="card-actions">
               <button
                 className="expand-btn"
-                onClick={() => {
-                  const deUsuario = location.enviadoPor && !['Admin', 'GADYS', 'admin'].includes(location.enviadoPor);
-                  navigate(deUsuario ? `/local/${location.id}` : `/admin/editar-local/${location.id}`);
-                }}
+                onClick={() => navigate(`/admin/editar-local/${location.id}`)}
               >
-                {location.enviadoPor && !['Admin', 'GADYS', 'admin'].includes(location.enviadoPor) ? 'Ver' : 'Editar'}
+                Editar
               </button>
               <button 
                 className={location.status === 'INATIVO' ? 'approve-btn' : 'reject-btn'}
