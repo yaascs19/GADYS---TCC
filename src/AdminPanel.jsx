@@ -1344,7 +1344,6 @@ function AdminPanel() {
                 )}
                 {s.rascunhoConteudo ? 'Continuar Edição' : 'Investigar com IA'}
               </button>
-              <button className="approve-btn" onClick={() => handlePostarSugestao(s)}>Postar</button>
               <button className="reject-btn" onClick={() => handleDescartarSugestao(s.id)}>Descartar</button>
             </div>
           </div>
