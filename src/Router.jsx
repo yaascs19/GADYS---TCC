@@ -18,6 +18,8 @@ const AdicionarLocal = lazy(() => import('./components/AdicionarLocal'));
 const AdminPanel = lazy(() => import('./AdminPanel'));
 const LocalDetalhe = lazy(() => import('./components/LocalDetalhe'));
 const EditarLocal = lazy(() => import('./components/EditarLocal'));
+const BuscarPage = lazy(() => import('./components/BuscarPage'));
+const NotFoundPage = lazy(() => import('./components/NotFoundPage'));
 
 const Para = lazy(() => import('./components/Para'));
 const DestinosPara = lazy(() => import('./components/DestinosPara'));
@@ -210,7 +212,8 @@ function Router() {
           <Route path="/espirito-santo" element={<Suspense fallback={<PageLoader />}><EspiritoSanto /></Suspense>} />
           <Route path="/es-pontos" element={<Suspense fallback={<PageLoader />}><ESPontos /></Suspense>} />
           <Route path="/es/pedra-azul" element={<Suspense fallback={<PageLoader />}><PedraAzulES /></Suspense>} />
-          <Route path="/es/guarapari" element={<Suspense fallback={<PageLoader />}><Guarapari /></Suspense>} />
+          <Route path="/buscar" element={<Suspense fallback={<PageLoader />}><BuscarPage /></Suspense>} />
+          <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFoundPage /></Suspense>} />
         </Routes>
       </BrowserRouter>
     </LanguageProvider>

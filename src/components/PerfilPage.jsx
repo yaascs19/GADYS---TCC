@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import NavbarShared from './NavbarShared'
+import { useSEO } from '../hooks/useSEO'
 import './PerfilPage.css'
 
 const CLOUD_NAME = 'dybpie9aa'
@@ -11,6 +12,7 @@ const ICONS = { success: '✓', error: '✕', info: 'ℹ' }
 function PerfilPage() {
   const navigate = useNavigate()
   const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
+  useSEO({ title: 'Meu Perfil', description: 'Gerencie seu perfil no GADYS.' })
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
   const [toast, setToast] = useState(null)
 
@@ -50,6 +52,8 @@ function PerfilPage() {
   const [meusLocais, setMeusLocais] = useState([])
   const [mensagensRespondidas, setMensagensRespondidas] = useState([])
   const [mostrarTodosLocais, setMostrarTodosLocais] = useState(false)
+  const [minhasAvaliacoes, setMinhasAvaliacoes] = useState([])
+  const [showAvaliacoes, setShowAvaliacoes] = useState(false)
 
   const saveProfile = (data) => {
     const usuarioId = localStorage.getItem('usuarioId')
@@ -108,7 +112,10 @@ function PerfilPage() {
     if (usuarioId) {
       fetch(`${API_URL}/api/avaliacoes/usuario/${usuarioId}`)
         .then(r => r.json())
-        .then(avaliacoes => setUserStats(prev => ({ ...prev, avaliacoes: avaliacoes.length })))
+        .then(avaliacoes => {
+          setUserStats(prev => ({ ...prev, avaliacoes: avaliacoes.length }))
+          setMinhasAvaliacoes(Array.isArray(avaliacoes) ? avaliacoes : [])
+        })
         .catch(() => {})
 
       fetch(`${API_URL}/api/comentarios/usuario/${usuarioId}`)
@@ -258,7 +265,7 @@ function PerfilPage() {
             <h3 className="card-header">Ações Rápidas</h3>
             <div className="actions-grid">
               <Link to="/adicionar-local" className="action-button add-place-button">Dê sugestões</Link>
-              <Link to="#" className="action-button my-reviews-button">Minhas Avaliações</Link>
+              <button onClick={() => setShowAvaliacoes(!showAvaliacoes)} className="action-button my-reviews-button">Minhas Avaliações</button>
               <Link to="/" className="action-button home-page-button">Página Inicial</Link>
             </div>
           </div>
@@ -286,6 +293,24 @@ function PerfilPage() {
                   {mostrarTodosLocais ? 'Ver menos' : `Ver mais (${meusLocais.length - 5})`}
                 </button>
               )}
+            </div>
+          )}
+
+          {showAvaliacoes && (
+            <div className="stats-card">
+              <h3 className="card-header">Minhas Avaliações</h3>
+              {minhasAvaliacoes.length === 0
+                ? <p style={{ opacity: 0.6, padding: '1rem 0' }}>Você ainda não fez nenhuma avaliação.</p>
+                : <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                    {minhasAvaliacoes.map((av, i) => (
+                      <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0.75rem 1rem', background: 'rgba(56,189,248,0.06)', borderRadius: '8px', cursor: 'pointer' }}
+                        onClick={() => navigate(`/local/${av.localizacaoId || av.localId || av.localizacao_id}`)}>
+                        <span>{av.nomeLocal || av.nome || `Local #${av.localizacaoId || av.localId}`}</span>
+                        <span style={{ color: '#f59e0b', fontWeight: 700 }}>{'★'.repeat(av.nota || av.Nota)}{'☆'.repeat(5 - (av.nota || av.Nota))}</span>
+                      </div>
+                    ))}
+                  </div>
+              }
             </div>
           )}
 

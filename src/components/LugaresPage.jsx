@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import NavbarShared from './NavbarShared'
+import { useSEO } from '../hooks/useSEO'
 import './LugaresPage.css';
 
 const lugaresEstaticos = [
@@ -16,6 +17,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 
 function LugaresPage() {
   const navigate = useNavigate();
+  useSEO({ title: 'Destinos em Destaque', description: 'Explore os lugares mais visitados e admirados do Brasil no GADYS.' })
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [locaisBanco, setLocaisBanco] = useState([]);
 

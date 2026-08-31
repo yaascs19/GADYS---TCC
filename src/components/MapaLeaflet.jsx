@@ -7,6 +7,7 @@ function MapaLeaflet() {
   const navigate = useNavigate()
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true')
   const [categoria, setCategoria] = useState('todas')
+  const [estado, setEstado] = useState('todos')
   const [preco, setPreco] = useState('todos')
   const [distancia, setDistancia] = useState(5000)
   const [userLocation, setUserLocation] = useState(null)
@@ -193,9 +194,13 @@ function MapaLeaflet() {
   }, [])
 
   const aplicarFiltrosComLocalizacao = (lat, lng) => {
-    let filtrados = lugares
+    let filtrados = [...lugares, ...locaisBanco.map(l => {
+      const [la, ln] = l.coordenadas.split(',').map(parseFloat)
+      return { nome: l.nome, lat: la, lng: ln, cor: '#667eea', cidade: l.estado || '', categoria: l.subcategoria || 'Lugar Paradísíaco', preco: l.preco?.toLowerCase().includes('gratu') ? 'gratuito' : 'pago' }
+    }).filter(l => !isNaN(l.lat) && !isNaN(l.lng))]
     if (categoria !== 'todas') filtrados = filtrados.filter(l => l.categoria === categoria)
     if (preco !== 'todos') filtrados = filtrados.filter(l => l.preco === preco)
+    if (estado !== 'todos') filtrados = filtrados.filter(l => l.cidade?.includes(estado))
     if (lat !== null && lng !== null) {
       filtrados = filtrados.filter(l => calcularDistancia(lat, lng, l.lat, l.lng) <= distancia)
       if (window.currentMap) {
@@ -251,6 +256,16 @@ function MapaLeaflet() {
       <main className="contato-main">
 
         <div className="contato-info-grid" style={{ marginBottom: '2rem' }}>
+          <div className="contato-info-card" style={{ textAlign: 'left' }}>
+            <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>Estado</label>
+            <select value={estado} onChange={e => setEstado(e.target.value)}
+              style={{ width: '100%', padding: '0.7rem', borderRadius: '6px', border: '1px solid var(--modern-border)', background: darkMode ? '#2d3748' : '#f7f7f7', color: darkMode ? '#e2e8f0' : '#333', fontSize: '0.95rem' }}>
+              <option value="todos">Todos</option>
+              {['AM','PA','RJ','SP','CE','AC','AP','RO','RR','TO','MG','ES'].map(uf => (
+                <option key={uf} value={uf}>{uf}</option>
+              ))}
+            </select>
+          </div>
           <div className="contato-info-card" style={{ textAlign: 'left' }}>
             <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 600 }}>Categoria</label>
             <select value={categoria} onChange={e => setCategoria(e.target.value)}

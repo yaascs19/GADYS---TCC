@@ -9,6 +9,20 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+// Rate limiting simples sem dependencia externa
+const _rl = new Map();
+const rateLimit = (max, windowMs) => (req, res, next) => {
+    const key = req.ip; const now = Date.now();
+    const e = _rl.get(key) || { c: 0, t: now };
+    if (now - e.t > windowMs) { e.c = 0; e.t = now; }
+    e.c++; _rl.set(key, e);
+    if (e.c > max) return res.status(429).json({ error: 'Muitas requisicoes. Aguarde.' });
+    next();
+};
+app.use('/api/login', rateLimit(10, 60000));
+app.use('/api/sugestoes', rateLimit(20, 60000));
+app.use('/api/contato', rateLimit(5, 60000));
+
 const config = {
     server: process.env.DB_SERVER || 'localhost',
     database: process.env.DB_NAME || 'GADYS_DB',

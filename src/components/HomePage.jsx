@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import NavbarShared from './NavbarShared'
+import { useSEO } from '../hooks/useSEO'
 
 function HomePage() {
   const navigate = useNavigate()
+  useSEO({ title: 'Explore o Brasil', description: 'Descubra lugares incríveis pelo Brasil com o GADYS — guia de destinos turísticos brasileiros.', image: '/images/geral/amazonas1.avif' })
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem('darkMode') === 'true'
   })
