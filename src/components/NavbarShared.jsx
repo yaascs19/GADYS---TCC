@@ -45,7 +45,17 @@ export default function NavbarShared({ darkMode, toggleDarkMode, paginaAtual }) 
   const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
   const [estadosOpen, setEstadosOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [searchQuery, setSearchQuery] = useState('')
   const isAdmin = (localStorage.getItem('userType') || '').toUpperCase() === 'ADM'
+
+  const handleSearch = (e) => {
+    e.preventDefault()
+    if (!searchQuery.trim()) return
+    setSearchOpen(false)
+    setSearchQuery('')
+    navigate(`/buscar?q=${encodeURIComponent(searchQuery.trim())}`)
+  }
 
   const bg = darkMode ? 'rgba(15,12,41,0.95)' : '#1a237e'
 
@@ -53,6 +63,24 @@ export default function NavbarShared({ darkMode, toggleDarkMode, paginaAtual }) 
     <header style={{ background: bg, padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, zIndex: 100, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
       <img onClick={() => navigate('/')} style={{ cursor: 'pointer', height: '40px', background: 'linear-gradient(135deg,#667eea,#764ba2)', borderRadius: '50%', padding: '8px' }} src="/images/logos/logo.png" alt="GADYS" />
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        {searchOpen
+          ? <form onSubmit={handleSearch} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+              <input
+                autoFocus
+                value={searchQuery}
+                onChange={e => setSearchQuery(e.target.value)}
+                onKeyDown={e => e.key === 'Escape' && setSearchOpen(false)}
+                placeholder="Buscar destino..."
+                style={{
+                  padding: '0.4rem 0.9rem', borderRadius: '50px', border: '1px solid rgba(56,189,248,0.5)',
+                  background: 'rgba(255,255,255,0.1)', color: 'white', fontSize: '0.9rem', outline: 'none', width: '180px'
+                }}
+              />
+              <button type="submit" style={{ background: 'none', border: 'none', color: '#38BDF8', fontSize: '1.2rem', cursor: 'pointer' }}>🔍</button>
+              <button type="button" onClick={() => setSearchOpen(false)} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1rem', cursor: 'pointer' }}>✕</button>
+            </form>
+          : <button onClick={() => setSearchOpen(true)} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.3rem', cursor: 'pointer' }}>🔍</button>
+        }
         {toggleDarkMode && (
           <button onClick={toggleDarkMode} style={{ background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer' }}>
             {darkMode ? '☀️' : '🌙'}
