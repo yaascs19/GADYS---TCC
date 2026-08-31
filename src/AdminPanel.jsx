@@ -499,10 +499,9 @@ function AdminPanel() {
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqKey}` },
         body: JSON.stringify({
           model: 'llama3-70b-8192',
-          response_format: { type: 'json_object' },
           messages: [
-            { role: 'system', content: 'Voce e um especialista em turismo brasileiro. Responda APENAS com um JSON valido, sem texto fora do JSON, sem markdown, sem emojis, sem asteriscos, sem bullets. Use acentuacao correta em portugues brasileiro em todos os campos de texto.' },
-            { role: 'user', content: `Pesquise sobre o local turistico "${sugestao.nome}" em ${sugestao.estado}, Brasil. Retorne um JSON com exatamente estas chaves: titulo, cidade (nome correto da cidade com acentuacao em portugues, ex: "São Paulo", "Manaus"), descricao, historia, curiosidades, horario, preco, coordenadas (formato "lat,lng" com coordenadas reais do local), hosteis (array com 3 objetos, cada um com: nome, nota (numero de 4.0 a 5.0), contato (telefone brasileiro), site (url real)).` }
+            { role: 'system', content: 'Voce e um especialista em turismo brasileiro. Responda APENAS com um JSON valido e nada mais. Sem texto antes ou depois. Sem markdown. Sem ```json. Use acentuacao correta em portugues brasileiro.' },
+            { role: 'user', content: `Retorne um JSON sobre o local turistico "${sugestao.nome}" em ${sugestao.estado}, Brasil. Chaves obrigatorias: titulo, cidade, descricao, historia, curiosidades, horario, preco, coordenadas ("lat,lng"), hosteis (array com 3 objetos com: nome, nota, contato, site).` }
           ]
         })
       })
@@ -521,7 +520,8 @@ function AdminPanel() {
       const data = await res.json()
       const text = data?.choices?.[0]?.message?.content || ''
       try {
-        const parsed = JSON.parse(text)
+        const clean = text.replace(/```json|```/g, '').trim()
+        const parsed = JSON.parse(clean)
         const hosteis = parsed.hosteis || parsed.hostels || parsed.hoteis || parsed.hotels || parsed.hospedagem || []
         setInvestigarConteudo({ ...parsed, hosteis })
       } catch {
