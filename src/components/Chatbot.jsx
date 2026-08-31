@@ -182,7 +182,7 @@ export default function Chatbot({ darkMode }) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
+          model: 'openai/gpt-oss-20b',
           messages: [
             { role: 'system', content: SYSTEM_CONTEXT },
             ...messages.filter(m => m.role !== 'bot' || messages.indexOf(m) > 0).map(m => ({
