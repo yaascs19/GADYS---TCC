@@ -194,6 +194,20 @@ app.get('/api/avaliacoes/:localId', async (req, res) => {
     } catch (err) { res.status(500).json({ error: err.message }); }
 });
 
+app.get('/api/avaliacoes/usuario/:usuarioId', async (req, res) => {
+    try {
+        const usuarioId = parseInt(req.params.usuarioId);
+        const result = await sql.query`
+            SELECT a.id, a.nota, a.localizacao_id AS localizacaoId, l.nome AS nomeLocal
+            FROM Avaliacao a
+            LEFT JOIN Localizacao l ON a.localizacao_id = l.id
+            WHERE a.usuario_id = ${usuarioId}
+            ORDER BY a.id DESC
+        `;
+        res.json(result.recordset);
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
 app.post('/api/avaliacoes', async (req, res) => {
     try {
         const { localId, usuarioId, nota } = req.body;
@@ -222,6 +236,21 @@ app.get('/api/comentarios/:localId', async (req, res) => {
             FROM Comentario c
             JOIN Usuario u ON c.usuario_id = u.id
             WHERE c.localizacao_id = ${localId}
+            ORDER BY c.data_comentario DESC
+        `;
+        res.json(result.recordset);
+    } catch (err) { res.status(500).json({ error: err.message }); }
+});
+
+app.get('/api/comentarios/usuario/:usuarioId', async (req, res) => {
+    try {
+        const usuarioId = parseInt(req.params.usuarioId);
+        const result = await sql.query`
+            SELECT c.id, c.texto, c.data_comentario AS dataComentario,
+                   c.localizacao_id AS localizacaoId, l.nome AS nomeLocal
+            FROM Comentario c
+            LEFT JOIN Localizacao l ON c.localizacao_id = l.id
+            WHERE c.usuario_id = ${usuarioId}
             ORDER BY c.data_comentario DESC
         `;
         res.json(result.recordset);
