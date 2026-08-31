@@ -485,10 +485,18 @@ function AdminPanel() {
 
     setInvestigarConteudo(null)
     setInvestigarLoading(true)
+
+    const groqKey = import.meta.env.VITE_GROQ_KEY
+    if (!groqKey) {
+      setInvestigarConteudo({ erro: '⚠️ Serviço de IA temporariamente indisponível. Configure a chave VITE_GROQ_KEY no arquivo .env para usar esta funcionalidade.' })
+      setInvestigarLoading(false)
+      return
+    }
+
     try {
       const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${import.meta.env.VITE_GROQ_KEY}` },
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqKey}` },
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
           response_format: { type: 'json_object' },
@@ -500,23 +508,27 @@ function AdminPanel() {
       })
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}))
-        console.error('Groq error:', res.status, errData)
-        setInvestigarConteudo({ erro: `Erro da IA: ${errData?.error?.message || res.status}` })
+        const status = res.status
+        if (status === 401) {
+          setInvestigarConteudo({ erro: '⚠️ Chave da IA inválida ou expirada. Verifique a variável VITE_GROQ_KEY no arquivo .env.' })
+        } else if (status === 429) {
+          setInvestigarConteudo({ erro: '⚠️ Limite de requisições da IA atingido. Aguarde alguns instantes e tente novamente.' })
+        } else {
+          setInvestigarConteudo({ erro: `⚠️ Serviço de IA indisponível (erro ${status}). Tente novamente mais tarde.` })
+        }
         return
       }
       const data = await res.json()
       const text = data?.choices?.[0]?.message?.content || ''
       try {
         const parsed = JSON.parse(text)
-        // normaliza chave hosteis (Groq pode retornar hostels, hoteis, hotels, etc)
         const hosteis = parsed.hosteis || parsed.hostels || parsed.hoteis || parsed.hotels || parsed.hospedagem || []
         setInvestigarConteudo({ ...parsed, hosteis })
       } catch {
-        setInvestigarConteudo({ erro: 'Resposta da IA em formato invalido. Tente novamente.' })
+        setInvestigarConteudo({ erro: '⚠️ Resposta da IA em formato inválido. Tente novamente.' })
       }
     } catch (e) {
-      console.error('Erro ao chamar Groq:', e)
-      setInvestigarConteudo({ erro: 'Erro ao conectar com a IA: ' + e.message })
+      setInvestigarConteudo({ erro: '⚠️ Sem conexão com o serviço de IA. Verifique sua internet e tente novamente.' })
     } finally {
       setInvestigarLoading(false)
     }
