@@ -112,9 +112,21 @@ function PerfilPage() {
     if (usuarioId) {
       fetch(`${API_URL}/api/avaliacoes/usuario/${usuarioId}`)
         .then(r => r.json())
-        .then(avaliacoes => {
+        .then(async avaliacoes => {
+          if (!Array.isArray(avaliacoes)) return
           setUserStats(prev => ({ ...prev, avaliacoes: avaliacoes.length }))
-          setMinhasAvaliacoes(Array.isArray(avaliacoes) ? avaliacoes : [])
+          const enriquecidas = await Promise.all(
+            avaliacoes.map(async av => {
+              const id = av.localId || av.localizacaoId || av.localizacao_id
+              if (!id || av.nomeLocal) return av
+              try {
+                const res = await fetch(`${API_URL}/api/locais/${id}`)
+                const local = await res.json()
+                return { ...av, nomeLocal: local.nome }
+              } catch { return av }
+            })
+          )
+          setMinhasAvaliacoes(enriquecidas)
         })
         .catch(() => {})
 
