@@ -650,6 +650,37 @@ function AdminPanel() {
     } catch { showToast('Erro de conexão.') }
   }
 
+  const handlePostarSugestao = async (s) => {
+    showConfirm(`Publicar "${s.nome}" diretamente?`, async () => {
+      try {
+        const response = await fetch(`${API_URL}/api/locais`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            nome: s.nome,
+            descricao: s.descricao,
+            cidade: '',
+            estado: s.estado,
+            endereco: s.endereco,
+            subcategoria: s.subcategoria || 'Lugar Paradisiaco',
+            categoria: 'lugares-visitar',
+            imagemUrl: s.imagemUrl || null,
+            coordenadas: s.coordenadas || null,
+            enviadoPor: s.enviadoPor || 'GADYS'
+          })
+        })
+        if (response.ok) {
+          const local = await response.json()
+          await fetch(`${API_URL}/api/locais/aprovar/${local.id}`, { method: 'POST' })
+          await fetch(`${API_URL}/api/sugestoes/${s.id}/analisar`, { method: 'POST' })
+          showToast('Local publicado com sucesso!', 'success')
+          loadSugestoes()
+          loadSiteLocations()
+        } else showToast('Erro ao publicar local.')
+      } catch { showToast('Erro de conexão.') }
+    })
+  }
+
   const handleDescartarSugestao = (id) => {
     showConfirm('Descartar esta sugestão?', async () => {
       try {
@@ -1313,6 +1344,7 @@ function AdminPanel() {
                 )}
                 {s.rascunhoConteudo ? 'Continuar Edição' : 'Investigar com IA'}
               </button>
+              <button className="approve-btn" onClick={() => handlePostarSugestao(s)}>Postar</button>
               <button className="reject-btn" onClick={() => handleDescartarSugestao(s.id)}>Descartar</button>
             </div>
           </div>
