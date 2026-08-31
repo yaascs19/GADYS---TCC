@@ -33,7 +33,17 @@ function BuscarPage() {
           l.subcategoria?.toLowerCase().includes(lower)
         )
       )
-      setResultados(filtrados)
+      const enriquecidos = await Promise.all(
+        filtrados.map(async l => {
+          if (l.imagemUrl) return l
+          try {
+            const r = await fetch(`${API_URL}/api/locais/${l.id}`)
+            const detalhe = await r.json()
+            return { ...l, imagemUrl: detalhe.imagemUrl || detalhe.imagem_url || null }
+          } catch { return l }
+        })
+      )
+      setResultados(enriquecidos)
     } catch { setResultados([]) }
     finally { setLoading(false) }
   }
@@ -86,7 +96,7 @@ function BuscarPage() {
             <p style={{ opacity: 0.6, marginBottom: '1.5rem' }}>{resultados.length} resultado(s) para "<strong>{query}</strong>"</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {resultados.map(local => (
-                <div key={local.id} onClick={() => navigate(`/local/${local.id}`)} style={{
+                <div key={local.id} onClick={() => navigate(local.rotaFrontend || `/local/${local.id}`)} style={{
                   display: 'flex', gap: '1rem', alignItems: 'center',
                   background: darkMode ? 'rgba(255,255,255,0.05)' : 'white',
                   borderRadius: '12px', padding: '1rem', cursor: 'pointer',
