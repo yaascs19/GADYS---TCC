@@ -498,7 +498,7 @@ function AdminPanel() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqKey}` },
         body: JSON.stringify({
-          model: 'llama3-70b-8192',
+          model: 'openai/gpt-oss-20b',
           messages: [
             { role: 'system', content: 'Voce e um especialista em turismo brasileiro. Responda APENAS com um JSON valido e nada mais. Sem texto antes ou depois. Sem markdown. Sem ```json. Use acentuacao correta em portugues brasileiro.' },
             { role: 'user', content: `Retorne um JSON sobre o local turistico "${sugestao.nome}" em ${sugestao.estado}, Brasil. Chaves obrigatorias: titulo, cidade, descricao, historia, curiosidades, horario, preco, coordenadas ("lat,lng"), hosteis (array com 3 objetos com: nome, nota, contato, site).` }
