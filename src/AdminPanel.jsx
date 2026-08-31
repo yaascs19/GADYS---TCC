@@ -498,7 +498,7 @@ function AdminPanel() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${groqKey}` },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
+          model: 'llama3-70b-8192',
           response_format: { type: 'json_object' },
           messages: [
             { role: 'system', content: 'Voce e um especialista em turismo brasileiro. Responda APENAS com um JSON valido, sem texto fora do JSON, sem markdown, sem emojis, sem asteriscos, sem bullets. Use acentuacao correta em portugues brasileiro em todos os campos de texto.' },
