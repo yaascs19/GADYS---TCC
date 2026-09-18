@@ -125,7 +125,7 @@ const CearaPontoBase = ({ config }) => {
 
   return (
     <div className="ce-ponto-container">
-      <HeaderCarousel images={carouselImages} titulo={titulo} subtitulo={subtitulo} onVoltar={() => navigate('/ceara-pontos')} />
+      <HeaderCarousel images={carouselImages} titulo={titulo} subtitulo={subtitulo} onVoltar={() => navigate(-1)} />
       <div className="ce-ponto-content-wrapper">
         <nav className="ce-ponto-nav">
           {Object.keys(secoes).map((key) => (

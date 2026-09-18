@@ -126,7 +126,7 @@ const RJPontos = () => {
     <div className="rj-pontos-page">
       <header className="rj-pontos-header">
         <button 
-          onClick={() => navigate('/rio-de-janeiro')} 
+          onClick={() => navigate(-1)} 
           className="rj-pontos-button"
           style={{ position: 'absolute', top: '2rem', left: '2rem', backgroundColor: 'rgba(255,255,255,0.2)', borderColor: 'white' }}
         >

@@ -25,7 +25,7 @@ const NortePontosBase = ({ config }) => {
   return (
     <div className="norte-pontos-page">
       <header className="norte-pontos-header" style={{ background: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('${config.headerImage}')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <button onClick={() => navigate(config.voltarRota)} className="norte-pontos-button"
+        <button onClick={() => navigate(-1)} className="norte-pontos-button"
           style={{ position: 'absolute', top: '2rem', left: '2rem', backgroundColor: 'rgba(255,255,255,0.2)', borderColor: 'white' }}>
           ← Voltar
         </button>

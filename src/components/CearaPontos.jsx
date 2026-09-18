@@ -101,7 +101,7 @@ const CearaPontos = () => {
     <div className="ce-pontos-page">
       <header className="ce-pontos-header">
         <button
-          onClick={() => navigate('/ceara')}
+          onClick={() => navigate(-1)}
           className="ce-pontos-button"
           style={{ position: 'absolute', top: '2rem', left: '2rem', backgroundColor: 'rgba(255,255,255,0.2)', borderColor: 'white' }}
         >

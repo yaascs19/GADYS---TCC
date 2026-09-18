@@ -113,7 +113,7 @@ const SudestePontoDetalheBase = ({ config }) => {
 
   return (
     <div className="sudeste-ponto-container">
-      <HeaderCarousel images={carouselImages} titulo={titulo} subtitulo={subtitulo} onVoltar={() => navigate(config.voltarRota)} />
+      <HeaderCarousel images={carouselImages} titulo={titulo} subtitulo={subtitulo} onVoltar={() => navigate(-1)} />
       <div className="sudeste-ponto-content-wrapper">
         <nav className="sudeste-ponto-nav">
           {Object.keys(secoes).map(key => (

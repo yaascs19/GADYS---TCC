@@ -99,7 +99,7 @@ const AlagoapontosPontos = () => {
     <div className="al-pontos-page">
       <header className="al-pontos-header">
         <button
-          onClick={() => navigate('/alagoas')}
+          onClick={() => navigate(-1)}
           className="al-pontos-button"
           style={{ position: 'absolute', top: '2rem', left: '2rem', backgroundColor: 'rgba(255,255,255,0.2)', borderColor: 'white' }}
         >

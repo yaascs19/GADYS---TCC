@@ -221,7 +221,7 @@ const Bumbodromo = () => {
           </div>
         </header>
         <button
-          onClick={() => navigate('/destinos-amazonas')}
+          onClick={() => navigate(-1)}
           style={{
             position: 'absolute', top: '2rem', left: '2rem', zIndex: 10,
             background: 'rgba(255,255,255,0.2)', border: '2px solid white',

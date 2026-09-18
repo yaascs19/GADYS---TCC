@@ -168,7 +168,7 @@ const EncontroDasAguas = () => {
       <div style={{ position: 'relative' }}>
         <HeaderCarousel images={carouselImages} bdPronto={bdPronto} titulo={bdLocal?.nome} subtitulo={bdLocal?.descricao} />
         <button
-          onClick={() => navigate('/destinos-amazonas')}
+          onClick={() => navigate(-1)}
           style={{
             position: 'absolute', top: '2rem', left: '2rem', zIndex: 10,
             background: 'rgba(255,255,255,0.2)', border: '2px solid white',

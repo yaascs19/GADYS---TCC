@@ -38,7 +38,7 @@ const MGPontos = () => {
   return (
     <div className="sudeste-pontos-page">
       <header className="sudeste-pontos-header" style={{ background: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/images/monumentos/ouro.jpeg')`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
-        <button onClick={() => navigate('/minas-gerais')} className="sudeste-pontos-button"
+        <button onClick={() => navigate(-1)} className="sudeste-pontos-button"
           style={{ position: 'absolute', top: '2rem', left: '2rem', backgroundColor: 'rgba(255,255,255,0.2)', borderColor: 'white' }}>
           ← Voltar
         </button>

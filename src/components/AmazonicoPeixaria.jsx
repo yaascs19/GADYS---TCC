@@ -226,7 +226,7 @@ const AmazonicoPeixaria = () => {
             <p style={{ textAlign: 'center', margin: '0 auto' }}>{subtitulo}</p>
           </div>
         </header>
-        <button onClick={() => navigate('/destinos-amazonas')} style={{ position: 'absolute', top: '2rem', left: '2rem', zIndex: 10, background: 'rgba(255,255,255,0.2)', border: '2px solid white', color: 'white', padding: '0.7rem 1.5rem', borderRadius: '50px', cursor: 'pointer', fontWeight: '600', fontSize: '0.95rem' }}>
+        <button onClick={() => navigate(-1)} style={{ position: 'absolute', top: '2rem', left: '2rem', zIndex: 10, background: 'rgba(255,255,255,0.2)', border: '2px solid white', color: 'white', padding: '0.7rem 1.5rem', borderRadius: '50px', cursor: 'pointer', fontWeight: '600', fontSize: '0.95rem' }}>
           ← Voltar
         </button>
       </div>
