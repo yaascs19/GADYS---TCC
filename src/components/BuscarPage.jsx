@@ -33,16 +33,14 @@ function BuscarPage() {
           l.subcategoria?.toLowerCase().includes(lower)
         )
       )
-      const enriquecidos = await Promise.all(
-        filtrados.map(async l => {
-          if (l.imagemUrl?.trim()) return l
-          try {
-            const r = await fetch(`${API_URL}/api/locais/${l.id}`)
-            const detalhe = await r.json()
-            return { ...l, imagemUrl: detalhe.imagemUrl?.trim() || detalhe.imagem_url?.trim() || null }
-          } catch { return l }
-        })
-      )
+      const getImagem = (l) => {
+        if (l.imagemUrl?.trim()) return l.imagemUrl.split(',')[0].trim()
+        try {
+          const info = JSON.parse(l.informacoesAdicionais || '{}')
+          return info.carouselImages?.[0] || info.galleryImages?.[0]?.src || null
+        } catch { return null }
+      }
+      const enriquecidos = filtrados.map(l => ({ ...l, _imagem: getImagem(l) }))
       setResultados(enriquecidos)
     } catch { setResultados([]) }
     finally { setLoading(false) }
@@ -106,8 +104,8 @@ function BuscarPage() {
                   onMouseEnter={e => e.currentTarget.style.borderColor = 'rgba(56,189,248,0.5)'}
                   onMouseLeave={e => e.currentTarget.style.borderColor = 'rgba(56,189,248,0.15)'}
                 >
-                  {local.imagemUrl
-                    ? <img src={local.imagemUrl.split(',')[0]} alt={local.nome} style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '8px', flexShrink: 0 }} />
+                  {local._imagem
+                    ? <img src={local._imagem} alt={local.nome} style={{ width: '80px', height: '60px', objectFit: 'cover', borderRadius: '8px', flexShrink: 0 }} />
                     : <div style={{ width: '80px', height: '60px', borderRadius: '8px', background: 'linear-gradient(135deg,#667eea,#764ba2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.5rem', flexShrink: 0 }}>🗺️</div>
                   }
                   <div style={{ flex: 1, minWidth: 0 }}>
