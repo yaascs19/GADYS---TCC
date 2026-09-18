@@ -1190,8 +1190,8 @@ function AdminPanel() {
         ) : siteLocations
           .filter(location => {
             if (!locationFilter) return true;
-            const categoria = location.subcategoria || location.category;
-            return categoria === locationFilter;
+            const categoria = (location.subcategoria || location.category || '').toLowerCase();
+            return categoria === locationFilter.toLowerCase();
           })
           .map((location, index) => (
           <div key={location.id || index} className="admin-card">
@@ -1451,10 +1451,9 @@ function AdminPanel() {
                   value={editingLocation.subcategoria || ''} 
                   onChange={(e) => setEditingLocation({...editingLocation, subcategoria: e.target.value})}
                 >
-                  <option value="Monumentos">Monumentos</option>
-                  <option value="Lugar Paradísíaco">Lugar Paradísíaco</option>
-                  <option value="Restaurantes">Restaurantes</option>
-                  <option value="Costume Cultural">Costume Cultural</option>
+                  {categoriasDisponiveis.map(cat => (
+                    <option key={cat} value={cat}>{cat}</option>
+                  ))}
                 </select>
               </div>
               <div className="form-group">
