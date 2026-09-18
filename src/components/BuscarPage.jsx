@@ -35,11 +35,11 @@ function BuscarPage() {
       )
       const enriquecidos = await Promise.all(
         filtrados.map(async l => {
-          if (l.imagemUrl) return l
+          if (l.imagemUrl?.trim()) return l
           try {
             const r = await fetch(`${API_URL}/api/locais/${l.id}`)
             const detalhe = await r.json()
-            return { ...l, imagemUrl: detalhe.imagemUrl || detalhe.imagem_url || null }
+            return { ...l, imagemUrl: detalhe.imagemUrl?.trim() || detalhe.imagem_url?.trim() || null }
           } catch { return l }
         })
       )
