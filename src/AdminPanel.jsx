@@ -1136,7 +1136,7 @@ function AdminPanel() {
             className="filter-select"
           >
             <option value="">Todas as categorias</option>
-            {categoriasDisponiveis.map(cat => (
+            {categoriasDisponiveis.filter(c => c !== 'Todos').map(cat => (
               <option key={cat} value={cat}>{cat}</option>
             ))}
           </select>
