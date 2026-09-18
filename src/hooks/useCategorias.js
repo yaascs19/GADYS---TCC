@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '');
 
-const FIXAS = ['Monumentos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural'];
+const FIXAS = ['Monumentos', 'Lugar Paradísíaco', 'Restaurantes'];
 
 export function useCategorias(siglaEstado) {
   const [categorias, setCategorias] = useState(FIXAS);
