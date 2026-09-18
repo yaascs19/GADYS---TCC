@@ -56,7 +56,7 @@ const pontosTuristicos = [
     id: 'quilombo-palmares',
     nome: 'Serra da Barriga',
     cidade: 'União dos Palmares - AL',
-    categoria: 'Costume Cultural',
+    categoria: 'Monumentos',
     descricao: 'Palco do maior quilombo das Américas, o Quilombo dos Palmares, liderado por Zumbi. A Serra da Barriga é hoje Patrimônio Histórico Nacional e símbolo da resistência negra, com trilhas e um museu a céu aberto.',
     imagem: '/images/geral/al-palmares.jpg',
   },
@@ -79,7 +79,7 @@ const AlagoapontosPontos = () => {
   const [filteredPontos, setFilteredPontos] = useState([]);
   const pontosAtivos = useLocaisAtivos('AL', pontosTuristicos);
 
-  const categories = ['Todos', 'Lugar Paradísíaco', 'Monumentos', 'Costume Cultural', 'Restaurantes'];
+  const categories = ['Todos', 'Lugar Paradísíaco', 'Monumentos', 'Restaurantes'];
 
   useEffect(() => {
     let result = pontosAtivos;

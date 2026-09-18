@@ -9,13 +9,13 @@ const pontos = [
   { id: 'guarapari', nome: 'Guarapari', cidade: 'Guarapari - ES', categoria: 'Lugar Paradísíaco', descricao: 'A "Cidade Saúde" do Brasil, famosa pelas areias monazíticas com propriedades terapêuticas e praias de águas mornas e cristalinas.', imagem: '/images/geral/praiaEx.jpg', rota: '/es/guarapari' },
   { id: 'convento-vitoria', nome: 'Convento da Penha', cidade: 'Vila Velha - ES', categoria: 'Monumentos', descricao: 'Um dos santuários mais antigos do Brasil, construído no século XVI sobre um penhasco de 154 metros, com vista panorâmica da Grande Vitória.', imagem: '/images/monumentos/independencia.webp', rota: null },
   { id: 'regencia', nome: 'Regência Augusta', cidade: 'Linhares - ES', categoria: 'Lugar Paradísíaco', descricao: 'Vila de pescadores na foz do Rio Doce, famosa pela desova de tartarugas marinhas e pelas praias selvagens preservadas.', imagem: '/images/natureza/bonito.jpeg', rota: null },
-  { id: 'domingos-martins', nome: 'Domingos Martins', cidade: 'Domingos Martins - ES', categoria: 'Costume Cultural', descricao: 'Cidade serrana com forte influência alemã e italiana, famosa pelo Oktoberfest capixaba, pela arquitetura europeia e pelos vinhos artesanais da região.', imagem: '/images/natureza/veadeiros.jpeg', rota: null },
+  { id: 'domingos-martins', nome: 'Domingos Martins', cidade: 'Domingos Martins - ES', categoria: 'Lugar Paradísíaco', descricao: 'Cidade serrana com forte influência alemã e italiana, famosa pelo Oktoberfest capixaba, pela arquitetura europeia e pelos vinhos artesanais da região.', imagem: '/images/natureza/veadeiros.jpeg', rota: null },
   { id: 'moqueca-capixaba', nome: 'Restaurante Lareira Portuguesa', cidade: 'Vitória - ES', categoria: 'Restaurantes', descricao: 'Um dos restaurantes mais tradicionais de Vitória, especializado na autêntica moqueca capixaba feita em panela de barro, sem leite de coco, com peixe fresco do litoral.', imagem: '/images/gastronomia/moqueca.jpeg', rota: null },
-  { id: 'santa-teresa', nome: 'Santa Teresa', cidade: 'Santa Teresa - ES', categoria: 'Costume Cultural', descricao: 'Cidade serrana com forte herança italiana, famosa pelo Museu de Biologia Mello Leitão, pelas vinícolas artesanais e pelo Festival de Inverno que atrai artistas de todo o Brasil.', imagem: '/images/natureza/chapada.jpeg', rota: null },
+  { id: 'santa-teresa', nome: 'Santa Teresa', cidade: 'Santa Teresa - ES', categoria: 'Lugar Paradísíaco', descricao: 'Cidade serrana com forte herança italiana, famosa pelo Museu de Biologia Mello Leitão, pelas vinícolas artesanais e pelo Festival de Inverno que atrai artistas de todo o Brasil.', imagem: '/images/natureza/chapada.jpeg', rota: null },
   { id: 'anchieta', nome: 'Anchieta', cidade: 'Anchieta - ES', categoria: 'Monumentos', descricao: 'Cidade histórica com o Santuário Nacional de São José de Anchieta, construído no século XVI pelo padre jesuíta José de Anchieta, padroeiro do Brasil.', imagem: '/images/monumentos/pala.jpeg', rota: null },
 ];
 
-const CATEGORIES = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
+const CATEGORIES = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Monumentos'];
 
 const ESPontos = () => {
   const navigate = useNavigate();

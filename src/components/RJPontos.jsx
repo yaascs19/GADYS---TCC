@@ -23,14 +23,14 @@ const pontosTuristicos = [
         id: 'theatro-municipal',
         nome: 'Theatro Municipal',
         cidade: 'Rio de Janeiro - RJ',
-        categoria: 'Costume Cultural',
+        categoria: 'Monumentos',
         imagem: '/theatro-rj.avif',
       },
       {
         id: 'escadaria-selaron',
         nome: 'Escadaria Selarón',
         cidade: 'Rio de Janeiro - RJ',
-        categoria: 'Costume Cultural',
+        categoria: 'Monumentos',
         imagem: '/escadaria-rj.webp',
       },
         {
@@ -44,7 +44,7 @@ const pontosTuristicos = [
         id: 'museu-do-amanha',
         nome: 'Museu do Amanhã',
         cidade: 'Rio de Janeiro - RJ',
-        categoria: 'Costume Cultural',
+        categoria: 'Monumentos',
         imagem: '/museu-rj.jpg',
       },
       {

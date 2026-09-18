@@ -6,16 +6,15 @@ import { useCategorias } from '../hooks/useCategorias';
 
 const pontos = [
   { id: 'ouro-preto', nome: 'Ouro Preto', cidade: 'Ouro Preto - MG', categoria: 'Monumentos', descricao: 'Patrimônio Mundial da UNESCO, a cidade mais bem preservada do barroco brasileiro, com igrejas douradas, museus e a história da Inconfidência Mineira.', imagem: '/images/monumentos/ouro.jpeg', rota: '/mg/ouro-preto' },
-  { id: 'inhotim', nome: 'Instituto Inhotim', cidade: 'Brumadinho - MG', categoria: 'Costume Cultural', descricao: 'O maior museu de arte contemporânea a céu aberto do mundo, com obras de artistas internacionais integradas a um jardim botânico de 140 hectares.', imagem: '/images/monumentos/independencia.webp', rota: '/mg/inhotim' },
+  { id: 'inhotim', nome: 'Instituto Inhotim', cidade: 'Brumadinho - MG', categoria: 'Monumentos', descricao: 'O maior museu de arte contemporânea a céu aberto do mundo, com obras de artistas internacionais integradas a um jardim botânico de 140 hectares.', imagem: '/images/monumentos/independencia.webp', rota: '/mg/inhotim' },
   { id: 'tiradentes', nome: 'Tiradentes', cidade: 'Tiradentes - MG', categoria: 'Monumentos', descricao: 'Cidade colonial perfeitamente preservada, com casarões do século XVIII, igrejas barrocas e um charme histórico que transporta os visitantes ao período colonial.', imagem: '/images/monumentos/pala.jpeg', rota: null },
   { id: 'diamantina', nome: 'Diamantina', cidade: 'Diamantina - MG', categoria: 'Monumentos', descricao: 'Patrimônio Mundial da UNESCO e cidade natal de Juscelino Kubitschek, com arquitetura colonial única e a tradição das serestas que encantam as noites da cidade.', imagem: '/images/monumentos/ouro.jpeg', rota: null },
   { id: 'pedra-azul-mg', nome: 'Parque Estadual da Pedra Azul', cidade: 'Domingos Martins - MG', categoria: 'Lugar Paradísíaco', descricao: 'Uma formação rochosa de granito de 1.822 metros que muda de cor ao longo do dia, cercada por Mata Atlântica e trilhas ecológicas deslumbrantes.', imagem: '/images/natureza/chapada.jpeg', rota: null },
   { id: 'restaurante-mineiro', nome: 'Restaurante Xapuri', cidade: 'Belo Horizonte - MG', categoria: 'Restaurantes', descricao: 'Um dos restaurantes mais tradicionais de BH, famoso pela autêntica culinária mineira: frango com quiabo, feijão tropeiro, tutu de feijão e pão de queijo fresquinho.', imagem: '/images/gastronomia/feijoada.jpeg', rota: null },
   { id: 'congonhas', nome: 'Santuário do Bom Jesus de Matosinhos', cidade: 'Congonhas - MG', categoria: 'Monumentos', descricao: 'Patrimônio Mundial da UNESCO com os famosos Profetas de Aleijadinho, esculturas em pedra-sabão consideradas a obra-prima do barroco nas Américas.', imagem: '/images/monumentos/independencia.webp', rota: null },
-  { id: 'carnaval-bh', nome: 'Carnaval de Belo Horizonte', cidade: 'Belo Horizonte - MG', categoria: 'Costume Cultural', descricao: 'Um dos carnavais mais animados do Brasil, com blocos de rua que tomam a capital mineira. O Bloco da Saudade e o Então Brilha são alguns dos mais tradicionais.', imagem: '/images/cultura/carnaval.jpeg', rota: null },
 ];
 
-const CATEGORIES = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
+const CATEGORIES = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Monumentos'];
 
 const MGPontos = () => {
   const navigate = useNavigate();

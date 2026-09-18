@@ -23,7 +23,7 @@ const pontosTuristicos = [
     id: 'dragao-do-mar',
     nome: 'Centro Dragão do Mar',
     cidade: 'Fortaleza - CE',
-    categoria: 'Costume Cultural',
+    categoria: 'Monumentos',
     imagem: '/images/geral/teatro-dragao-do-mar.jpg',
   },
   {
@@ -81,7 +81,7 @@ const CearaPontos = () => {
   const [filteredPontos, setFilteredPontos] = useState([]);
   const pontosAtivos = useLocaisAtivos('CE', pontosTuristicos);
 
-  const categories = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
+  const categories = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Monumentos'];
 
   useEffect(() => {
     let result = pontosAtivos;

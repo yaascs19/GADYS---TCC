@@ -4,7 +4,7 @@ import './SudestePontos.css';
 import { useLocaisAtivos } from '../../hooks/useLocaisAtivos';
 import { useCategorias } from '../../hooks/useCategorias';
 
-const CATEGORIES = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Costume Cultural', 'Monumentos'];
+const CATEGORIES = ['Todos', 'Lugar Paradísíaco', 'Restaurantes', 'Monumentos'];
 
 const SudestePontosBase = ({ config }) => {
   const navigate = useNavigate();

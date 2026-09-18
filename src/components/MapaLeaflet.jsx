@@ -60,34 +60,34 @@ function MapaLeaflet() {
     { nome: 'Encontro das Águas', lat: -3.1190, lng: -60.0167, cor: '#8bc34a', cidade: 'Manaus - AM', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Arquipélago de Anavilhanas', lat: -2.6833, lng: -60.9500, cor: '#2e7d32', cidade: 'Novo Airão - AM', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Amazônico Peixaria Regional', lat: -3.1316, lng: -60.0233, cor: '#ff9800', cidade: 'Manaus - AM', categoria: 'Restaurantes', preco: 'pago' },
-    { nome: 'Bumbódromo', lat: -2.6278, lng: -56.7358, cor: '#e91e63', cidade: 'Parintins - AM', categoria: 'Costume Cultural', preco: 'pago' },
+    { nome: 'Bumbódromo', lat: -2.6278, lng: -56.7358, cor: '#e91e63', cidade: 'Parintins - AM', categoria: 'Monumentos', preco: 'pago' },
     { nome: 'Cachoeira do Santuário', lat: -1.9833, lng: -60.0333, cor: '#00bcd4', cidade: 'Presidente Figueiredo - AM', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Coreto Peixaria', lat: -3.1290, lng: -60.0220, cor: '#ff5722', cidade: 'Manaus - AM', categoria: 'Restaurantes', preco: 'pago' },
     { nome: 'Ponte Rio Negro', lat: -3.2167, lng: -60.0500, cor: '#607d8b', cidade: 'Manaus - AM', categoria: 'Monumentos', preco: 'gratuito' },
     { nome: 'Cristo Redentor', lat: -22.9519, lng: -43.2105, cor: '#e74c3c', cidade: 'Rio de Janeiro - RJ', categoria: 'Monumentos', preco: 'pago' },
     { nome: 'Pão de Açúcar', lat: -22.9487, lng: -43.1566, cor: '#3498db', cidade: 'Rio de Janeiro - RJ', categoria: 'Lugar Paradísíaco', preco: 'pago' },
     { nome: 'Theatro Municipal RJ', lat: -22.9103, lng: -43.1761, cor: '#9c27b0', cidade: 'Rio de Janeiro - RJ', categoria: 'Monumentos', preco: 'pago' },
-    { nome: 'Escadaria Selarón', lat: -22.9147, lng: -43.1794, cor: '#f39c12', cidade: 'Rio de Janeiro - RJ', categoria: 'Costume Cultural', preco: 'gratuito' },
+    { nome: 'Escadaria Selarón', lat: -22.9147, lng: -43.1794, cor: '#f39c12', cidade: 'Rio de Janeiro - RJ', categoria: 'Monumentos', preco: 'gratuito' },
     { nome: 'Arcos da Lapa', lat: -22.9122, lng: -43.1800, cor: '#795548', cidade: 'Rio de Janeiro - RJ', categoria: 'Monumentos', preco: 'gratuito' },
-    { nome: 'Museu do Amanhã', lat: -22.8944, lng: -43.1731, cor: '#00bcd4', cidade: 'Rio de Janeiro - RJ', categoria: 'Costume Cultural', preco: 'pago' },
+    { nome: 'Museu do Amanhã', lat: -22.8944, lng: -43.1731, cor: '#00bcd4', cidade: 'Rio de Janeiro - RJ', categoria: 'Monumentos', preco: 'pago' },
     { nome: 'Praia de Copacabana', lat: -22.9711, lng: -43.1822, cor: '#1976d2', cidade: 'Rio de Janeiro - RJ', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Praia de Ipanema', lat: -22.9868, lng: -43.2044, cor: '#0288d1', cidade: 'Rio de Janeiro - RJ', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
-    { nome: 'MASP', lat: -23.5614, lng: -46.6558, cor: '#e74c3c', cidade: 'São Paulo - SP', categoria: 'Costume Cultural', preco: 'pago' },
+    { nome: 'MASP', lat: -23.5614, lng: -46.6558, cor: '#e74c3c', cidade: 'São Paulo - SP', categoria: 'Monumentos', preco: 'pago' },
     { nome: 'Teatro Municipal SP', lat: -23.5454, lng: -46.6388, cor: '#9c27b0', cidade: 'São Paulo - SP', categoria: 'Monumentos', preco: 'pago' },
     { nome: 'Mercadão', lat: -23.5418, lng: -46.6292, cor: '#ff9800', cidade: 'São Paulo - SP', categoria: 'Restaurantes', preco: 'pago' },
     { nome: 'Edifício Copan', lat: -23.5455, lng: -46.6437, cor: '#607d8b', cidade: 'São Paulo - SP', categoria: 'Monumentos', preco: 'pago' },
     { nome: 'Parque Ibirapuera', lat: -23.5874, lng: -46.6576, cor: '#4caf50', cidade: 'São Paulo - SP', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
-    { nome: 'Beco do Batman', lat: -23.5558, lng: -46.6897, cor: '#f39c12', cidade: 'São Paulo - SP', categoria: 'Costume Cultural', preco: 'gratuito' },
+    { nome: 'Beco do Batman', lat: -23.5558, lng: -46.6897, cor: '#f39c12', cidade: 'São Paulo - SP', categoria: 'Monumentos', preco: 'gratuito' },
     { nome: 'Jericoacoara', lat: -2.7975, lng: -40.5137, cor: '#00bcd4', cidade: 'Jijoca - CE', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Canoa Quebrada', lat: -4.5167, lng: -37.6667, cor: '#ff9800', cidade: 'Aracati - CE', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
-    { nome: 'Centro Dragão do Mar', lat: -3.7197, lng: -38.5069, cor: '#e91e63', cidade: 'Fortaleza - CE', categoria: 'Costume Cultural', preco: 'pago' },
+    { nome: 'Centro Dragão do Mar', lat: -3.7197, lng: -38.5069, cor: '#e91e63', cidade: 'Fortaleza - CE', categoria: 'Monumentos', preco: 'pago' },
     { nome: 'Beach Park', lat: -3.8333, lng: -38.3833, cor: '#1976d2', cidade: 'Aquiraz - CE', categoria: 'Lugar Paradísíaco', preco: 'pago' },
     { nome: 'Praia do Futuro', lat: -3.7667, lng: -38.4500, cor: '#0288d1', cidade: 'Fortaleza - CE', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Serra de Baturité', lat: -4.3333, lng: -38.8833, cor: '#4caf50', cidade: 'Baturité - CE', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Chapada do Araripe', lat: -7.2167, lng: -39.4167, cor: '#8bc34a', cidade: 'Crato - CE', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Centro Histórico de Fortaleza', lat: -3.7275, lng: -38.5275, cor: '#795548', cidade: 'Fortaleza - CE', categoria: 'Monumentos', preco: 'gratuito' },
     { nome: 'Alter do Chão', lat: -2.5167, lng: -54.9500, cor: '#00bcd4', cidade: 'Santarém - PA', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
-    { nome: 'Mercado Ver-o-Peso', lat: -1.4558, lng: -48.5044, cor: '#ff9800', cidade: 'Belém - PA', categoria: 'Costume Cultural', preco: 'gratuito' },
+    { nome: 'Mercado Ver-o-Peso', lat: -1.4558, lng: -48.5044, cor: '#ff9800', cidade: 'Belém - PA', categoria: 'Restaurantes', preco: 'gratuito' },
     { nome: 'Feliz Lusitânia', lat: -1.4561, lng: -48.5022, cor: '#795548', cidade: 'Belém - PA', categoria: 'Monumentos', preco: 'gratuito' },
     { nome: 'Ilha de Marajó', lat: -0.6500, lng: -49.5000, cor: '#4caf50', cidade: 'Marajó - PA', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
     { nome: 'Mangal das Garças', lat: -1.4667, lng: -48.5000, cor: '#8bc34a', cidade: 'Belém - PA', categoria: 'Lugar Paradísíaco', preco: 'pago' },
@@ -98,7 +98,7 @@ function MapaLeaflet() {
     { nome: 'Monte Roraima', lat: 5.1439, lng: -61.0000, cor: '#9c27b0', cidade: 'Uiramutã - RR', categoria: 'Lugar Paradísíaco', preco: 'pago' },
     { nome: 'Jalapão', lat: -10.3500, lng: -46.6167, cor: '#f39c12', cidade: 'Mateiros - TO', categoria: 'Lugar Paradísíaco', preco: 'pago' },
     { nome: 'Ouro Preto', lat: -20.3856, lng: -43.5036, cor: '#795548', cidade: 'Ouro Preto - MG', categoria: 'Monumentos', preco: 'gratuito' },
-    { nome: 'Instituto Inhotim', lat: -20.1281, lng: -44.1986, cor: '#4caf50', cidade: 'Brumadinho - MG', categoria: 'Costume Cultural', preco: 'pago' },
+    { nome: 'Instituto Inhotim', lat: -20.1281, lng: -44.1986, cor: '#4caf50', cidade: 'Brumadinho - MG', categoria: 'Monumentos', preco: 'pago' },
     { nome: 'Pedra Azul', lat: -20.4167, lng: -41.0167, cor: '#1976d2', cidade: 'Domingos Martins - ES', categoria: 'Lugar Paradísíaco', preco: 'pago' },
     { nome: 'Guarapari', lat: -20.6719, lng: -40.4994, cor: '#00bcd4', cidade: 'Guarapari - ES', categoria: 'Lugar Paradísíaco', preco: 'gratuito' },
   ]
@@ -274,7 +274,6 @@ function MapaLeaflet() {
               <option value="Monumentos">Monumentos</option>
               <option value="Lugar Paradísíaco">Lugar Paradísíaco</option>
               <option value="Restaurantes">Restaurantes</option>
-              <option value="Costume Cultural">Costume Cultural</option>
             </select>
           </div>
           <div className="contato-info-card" style={{ textAlign: 'left' }}>
