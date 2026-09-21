@@ -77,6 +77,9 @@ const OuroPreto = lazy(() => import('./components/sudeste/mg/OuroPreto'));
 const Inhotim = lazy(() => import('./components/sudeste/mg/Inhotim'));
 const PedraAzulES = lazy(() => import('./components/sudeste/es/PedraAzulES'));
 const Guarapari = lazy(() => import('./components/sudeste/es/Guarapari'));
+const Sergipe = lazy(() => import('./components/Sergipe'));
+const SergipePontos = lazy(() => import('./components/SergipePontos'));
+const CanionXingo = lazy(() => import('./components/sergipe/CanionXingo'));
 
 const ROUTE_IMAGES = {
   '/': ['/images/geral/amazonas1.avif', '/sp.jpg', '/rj.jpeg'],
@@ -212,6 +215,9 @@ function Router() {
           <Route path="/espirito-santo" element={<Suspense fallback={<PageLoader />}><EspiritoSanto /></Suspense>} />
           <Route path="/es-pontos" element={<Suspense fallback={<PageLoader />}><ESPontos /></Suspense>} />
           <Route path="/es/pedra-azul" element={<Suspense fallback={<PageLoader />}><PedraAzulES /></Suspense>} />
+          <Route path="/sergipe" element={<Suspense fallback={<PageLoader />}><Sergipe /></Suspense>} />
+          <Route path="/sergipe-pontos" element={<Suspense fallback={<PageLoader />}><SergipePontos /></Suspense>} />
+          <Route path="/sergipe/canion-xingo" element={<Suspense fallback={<PageLoader />}><CanionXingo /></Suspense>} />
           <Route path="/buscar" element={<Suspense fallback={<PageLoader />}><BuscarPage /></Suspense>} />
           <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFoundPage /></Suspense>} />
         </Routes>
