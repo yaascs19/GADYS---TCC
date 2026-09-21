@@ -84,6 +84,15 @@ const Sergipe = lazy(() => import('./components/Sergipe'));
 const SergipePontos = lazy(() => import('./components/SergipePontos'));
 const CanionXingo = lazy(() => import('./components/sergipe/CanionXingo'));
 
+const RioGrandeDoNorte = lazy(() => import('./components/RioGrandeDoNorte'));
+const RioGrandeDoNortePontos = lazy(() => import('./components/RioGrandeDoNortePontos'));
+const Genipabu = lazy(() => import('./components/rn/Genipabu'));
+const Pipa = lazy(() => import('./components/rn/Pipa'));
+const Maracajau = lazy(() => import('./components/rn/Maracajau'));
+const ParqueDasDunas = lazy(() => import('./components/rn/ParqueDasDunas'));
+const ForteReisMagos = lazy(() => import('./components/rn/ForteReisMagos'));
+const BaiaFormosa = lazy(() => import('./components/rn/BaiaFormosa'));
+
 const RioGrandeDoSul = lazy(() => import('./components/RioGrandeDoSul'));
 const RioGrandeSulPontos = lazy(() => import('./components/RioGrandeSulPontos'));
 const Gramado = lazy(() => import('./components/rs/Gramado'));
@@ -242,6 +251,15 @@ function Router() {
           <Route path="/sergipe" element={<Suspense fallback={<PageLoader />}><Sergipe /></Suspense>} />
           <Route path="/sergipe-pontos" element={<Suspense fallback={<PageLoader />}><SergipePontos /></Suspense>} />
           <Route path="/sergipe/canion-xingo" element={<Suspense fallback={<PageLoader />}><CanionXingo /></Suspense>} />
+
+          <Route path="/rio-grande-do-norte" element={<Suspense fallback={<PageLoader />}><RioGrandeDoNorte /></Suspense>} />
+          <Route path="/rn-pontos" element={<Suspense fallback={<PageLoader />}><RioGrandeDoNortePontos /></Suspense>} />
+          <Route path="/rn/genipabu" element={<Suspense fallback={<PageLoader />}><Genipabu /></Suspense>} />
+          <Route path="/rn/pipa" element={<Suspense fallback={<PageLoader />}><Pipa /></Suspense>} />
+          <Route path="/rn/maracajau" element={<Suspense fallback={<PageLoader />}><Maracajau /></Suspense>} />
+          <Route path="/rn/parque-das-dunas" element={<Suspense fallback={<PageLoader />}><ParqueDasDunas /></Suspense>} />
+          <Route path="/rn/forte-dos-reis-magos" element={<Suspense fallback={<PageLoader />}><ForteReisMagos /></Suspense>} />
+          <Route path="/rn/baia-formosa" element={<Suspense fallback={<PageLoader />}><BaiaFormosa /></Suspense>} />
 
           <Route path="/rio-grande-do-sul" element={<Suspense fallback={<PageLoader />}><RioGrandeDoSul /></Suspense>} />
           <Route path="/rs-pontos" element={<Suspense fallback={<PageLoader />}><RioGrandeSulPontos /></Suspense>} />
