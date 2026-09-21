@@ -7,44 +7,28 @@
 const API_URL = 'https://gadys-backend.onrender.com'
 
 const LOCAL = {
-  nome: 'Nome do Local',
-  descricao: 'Descrição curta do local.',
+  nome: 'Parque Zoobotânico de Rio Branco',
+  descricao: 'Um dos maiores parques urbanos da Amazônia, com zoológico, trilhas ecológicas e jardim botânico no campus da UFAC.',
   categoria: 'lugares-visitar',
-  subcategoria: 'monumentos', // monumentos | lugares-paradisiacos | restaurantes
-  cidade: 'Cidade',
-  estado: 'UF',
-  endereco: 'Endereço completo',
-  coordenadas: '-00.0000,-00.0000',
-  horarioFuncionamento: 'Seg a Dom, 8h às 18h',
-  preco: 'Gratuito',
-  imagemUrl: '/images/geral/foto1.jpg',
-  rotaFrontend: '/rota-do-componente', // deve bater exatamente com a rota no Router.jsx
+  subcategoria: 'lugares-paradisiacos',
+  cidade: 'Rio Branco',
+  estado: 'AC',
+  endereco: 'Rodovia BR-364, km 04, Campus UFAC, Rio Branco - AC',
+  coordenadas: '-9.9574,-67.8731',
+  horarioFuncionamento: 'Ter a Dom, 8h às 17h',
+  preco: 'Entrada gratuita para estudantes e crianças até 12 anos',
+  imagemUrl: '/images/geral/ac-parquezoo.jpg',
+  rotaFrontend: '/acre/parque-zoobotanico',
   status: 'ATIVO',
   enviadoPor: 'GADYS',
   informacoesAdicionais: JSON.stringify({
-    carouselImages: ['/images/geral/foto1.jpg', '/images/geral/foto2.jpg'],
+    carouselImages: ['/images/geral/ac-parquezoo.jpg', '/images/geral/amazonas1.avif'],
     galleryImages: [
-      { src: '/images/geral/foto3.jpg' },
-      { src: '/images/geral/foto4.jpg' },
+      { src: '/images/geral/ac-parquezoo.jpg' },
+      { src: '/images/geral/amazonas1.avif' },
+      { src: '/images/geral/amazonas2.jpg' },
+      { src: '/images/geral/amazonas3.1.jpg' },
     ],
-    secoes: {
-      sobre: {
-        label: 'Sobre',
-        titulo: 'Título da seção sobre',
-        texto: 'Texto descritivo do local...',
-        imagem: '/images/geral/foto1.jpg',
-      },
-      visite: {
-        label: 'Visite',
-        titulo: 'Informações Práticas',
-        texto: '',
-        subsecoes: [
-          { titulo: 'Como Chegar', texto: 'Instruções de como chegar...' },
-        ],
-      },
-      fotos: { label: 'Fotos' },
-      avaliacoes: { label: 'Avaliações' },
-    },
   }),
 }
 
