@@ -7,27 +7,27 @@
 const API_URL = 'https://gadys-backend.onrender.com'
 
 const LOCAL = {
-  nome: 'Memorial Chico Mendes',
-  descricao: 'Casa preservada onde viveu e foi assassinado o seringueiro e ambientalista Chico Mendes em 1988, símbolo mundial da luta pela Amazônia.',
+  nome: 'Reserva Extrativista Chico Mendes',
+  descricao: 'Criada em 1990, a reserva protege cerca de 970 mil hectares de floresta amazônica e comunidades tradicionais de seringueiros no sudoeste do Acre.',
   categoria: 'lugares-visitar',
-  subcategoria: 'monumentos',
+  subcategoria: 'lugares-paradisiacos',
   cidade: 'Xapuri',
   estado: 'AC',
-  endereco: 'Rua Euclides Fernandes, s/n, Xapuri - AC',
-  coordenadas: '-10.6519,-68.5022',
-  horarioFuncionamento: 'Seg a Sex, 8h às 12h e 14h às 17h',
+  endereco: 'Sede: Rua Euclides Fernandes, Xapuri - AC',
+  coordenadas: '-10.4833,-68.5000',
+  horarioFuncionamento: 'Visitas mediante agendamento prévio',
   preco: 'Entrada gratuita',
-  imagemUrl: '/images/geral/ac-memorial.jpg',
-  rotaFrontend: '/acre/memorial-chico-mendes',
+  imagemUrl: '/images/geral/ac-reserva.jpg',
+  rotaFrontend: '/acre/reserva-extrativista-chico-mendes',
   status: 'ATIVO',
   enviadoPor: 'GADYS',
   informacoesAdicionais: JSON.stringify({
-    carouselImages: ['/images/geral/ac-memorial.jpg', '/images/geral/ac-reserva.jpg'],
+    carouselImages: ['/images/geral/ac-reserva.jpg', '/images/geral/ac-chan1.jpg'],
     galleryImages: [
-      { src: '/images/geral/ac-memorial.jpg' },
       { src: '/images/geral/ac-reserva.jpg' },
-      { src: '/images/geral/amazonas1.avif' },
       { src: '/images/geral/ac-chan1.jpg' },
+      { src: '/images/geral/amazonas1.avif' },
+      { src: '/images/geral/ac-memorial.jpg' },
     ],
   }),
 }

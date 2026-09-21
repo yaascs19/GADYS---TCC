@@ -57,6 +57,7 @@ const ParqueChandless = lazy(() => import('./components/norte/acre/ParqueChandle
 const CentroHistoricoRioBranco = lazy(() => import('./components/norte/acre/CentroHistoricoRioBranco'));
 const ParqueZoobotanico = lazy(() => import('./components/norte/acre/ParqueZoobotanico'));
 const MemorialChicoMendes = lazy(() => import('./components/norte/acre/MemorialChicoMendes'));
+const ReservaExtrativistaChicoMendes = lazy(() => import('./components/norte/acre/ReservaExtrativistaChicoMendes'));
 const FortalezaSaoJoseMacapa = lazy(() => import('./components/norte/amapa/FortalezaSaoJoseMacapa'));
 const FerroviaMadeiraMamore = lazy(() => import('./components/norte/rondonia/FerroviaMadeiraMamore'));
 const MonteRoraima = lazy(() => import('./components/norte/roraima/MonteRoraima'));
@@ -217,6 +218,7 @@ function Router() {
           <Route path="/acre/centro-historico" element={<Suspense fallback={<PageLoader />}><CentroHistoricoRioBranco /></Suspense>} />
           <Route path="/acre/parque-zoobotanico" element={<Suspense fallback={<PageLoader />}><ParqueZoobotanico /></Suspense>} />
           <Route path="/acre/memorial-chico-mendes" element={<Suspense fallback={<PageLoader />}><MemorialChicoMendes /></Suspense>} />
+          <Route path="/acre/reserva-extrativista-chico-mendes" element={<Suspense fallback={<PageLoader />}><ReservaExtrativistaChicoMendes /></Suspense>} />
           <Route path="/amapa" element={<Suspense fallback={<PageLoader />}><Amapa /></Suspense>} />
           <Route path="/amapa-pontos" element={<Suspense fallback={<PageLoader />}><AmapaPontos /></Suspense>} />
           <Route path="/amapa/fortaleza-sao-jose" element={<Suspense fallback={<PageLoader />}><FortalezaSaoJoseMacapa /></Suspense>} />
