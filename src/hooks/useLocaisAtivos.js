@@ -18,6 +18,11 @@ export function useLocaisAtivos(siglaEstado, pontosTuristicos) {
           return !inativosBD.has(nomePonto);
         });
         const nomesEstaticos = new Set(estaticosAtivos.map(p => (p.nome || p.name || '').toLowerCase().trim()));
+        const subcategoriaParaCategoria = {
+          'monumentos': 'Monumentos',
+          'lugares-paradisiacos': 'Lugar Paradísíaco',
+          'restaurantes': 'Restaurantes',
+        };
         const novosDoBD = ativos
           .filter(l => !nomesEstaticos.has(l.nome.toLowerCase().trim()))
           .map(l => ({
@@ -25,7 +30,7 @@ export function useLocaisAtivos(siglaEstado, pontosTuristicos) {
             bdId: l.rotaFrontend ? null : l.id,
             nome: l.nome,
             cidade: l.cidade,
-            categoria: l.subcategoria,
+            categoria: subcategoriaParaCategoria[l.subcategoria] || l.categoria || l.subcategoria,
             descricao: l.descricao,
             imagem: l.imagemUrl ? l.imagemUrl.split(',')[0].trim() : null,
             rota: l.rotaFrontend || null,

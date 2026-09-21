@@ -56,6 +56,7 @@ const TocantinsPontos = lazy(() => import('./components/TocantinsPontos'));
 const ParqueChandless = lazy(() => import('./components/norte/acre/ParqueChandless'));
 const CentroHistoricoRioBranco = lazy(() => import('./components/norte/acre/CentroHistoricoRioBranco'));
 const ParqueZoobotanico = lazy(() => import('./components/norte/acre/ParqueZoobotanico'));
+const MemorialChicoMendes = lazy(() => import('./components/norte/acre/MemorialChicoMendes'));
 const FortalezaSaoJoseMacapa = lazy(() => import('./components/norte/amapa/FortalezaSaoJoseMacapa'));
 const FerroviaMadeiraMamore = lazy(() => import('./components/norte/rondonia/FerroviaMadeiraMamore'));
 const MonteRoraima = lazy(() => import('./components/norte/roraima/MonteRoraima'));
@@ -81,6 +82,24 @@ const Guarapari = lazy(() => import('./components/sudeste/es/Guarapari'));
 const Sergipe = lazy(() => import('./components/Sergipe'));
 const SergipePontos = lazy(() => import('./components/SergipePontos'));
 const CanionXingo = lazy(() => import('./components/sergipe/CanionXingo'));
+
+const RioGrandeDoSul = lazy(() => import('./components/RioGrandeDoSul'));
+const RioGrandeSulPontos = lazy(() => import('./components/RioGrandeSulPontos'));
+const Gramado = lazy(() => import('./components/rs/Gramado'));
+const CanionItaimbezinho = lazy(() => import('./components/rs/CanionItaimbezinho'));
+const BentoGoncalves = lazy(() => import('./components/rs/BentoGoncalves'));
+const PortoAlegre = lazy(() => import('./components/rs/PortoAlegre'));
+const Torres = lazy(() => import('./components/rs/Torres'));
+const SaoMiguelDasMissoes = lazy(() => import('./components/rs/SaoMiguelDasMissoes'));
+
+const SantaCatarina = lazy(() => import('./components/SantaCatarina'));
+const SantaCatarinaPontos = lazy(() => import('./components/SantaCatarinaPontos'));
+const Florianopolis = lazy(() => import('./components/sc/Florianopolis'));
+const BalnearioCamboriu = lazy(() => import('./components/sc/BalnearioCamboriu'));
+const Bombinhas = lazy(() => import('./components/sc/Bombinhas'));
+const Blumenau = lazy(() => import('./components/sc/Blumenau'));
+const SaoJoaquim = lazy(() => import('./components/sc/SaoJoaquim'));
+const Joinville = lazy(() => import('./components/sc/Joinville'));
 
 const ROUTE_IMAGES = {
   '/': ['/images/geral/amazonas1.avif', '/sp.jpg', '/rj.jpeg'],
@@ -197,6 +216,7 @@ function Router() {
           <Route path="/acre/parque-chandless" element={<Suspense fallback={<PageLoader />}><ParqueChandless /></Suspense>} />
           <Route path="/acre/centro-historico" element={<Suspense fallback={<PageLoader />}><CentroHistoricoRioBranco /></Suspense>} />
           <Route path="/acre/parque-zoobotanico" element={<Suspense fallback={<PageLoader />}><ParqueZoobotanico /></Suspense>} />
+          <Route path="/acre/memorial-chico-mendes" element={<Suspense fallback={<PageLoader />}><MemorialChicoMendes /></Suspense>} />
           <Route path="/amapa" element={<Suspense fallback={<PageLoader />}><Amapa /></Suspense>} />
           <Route path="/amapa-pontos" element={<Suspense fallback={<PageLoader />}><AmapaPontos /></Suspense>} />
           <Route path="/amapa/fortaleza-sao-jose" element={<Suspense fallback={<PageLoader />}><FortalezaSaoJoseMacapa /></Suspense>} />
@@ -220,6 +240,24 @@ function Router() {
           <Route path="/sergipe" element={<Suspense fallback={<PageLoader />}><Sergipe /></Suspense>} />
           <Route path="/sergipe-pontos" element={<Suspense fallback={<PageLoader />}><SergipePontos /></Suspense>} />
           <Route path="/sergipe/canion-xingo" element={<Suspense fallback={<PageLoader />}><CanionXingo /></Suspense>} />
+
+          <Route path="/rio-grande-do-sul" element={<Suspense fallback={<PageLoader />}><RioGrandeDoSul /></Suspense>} />
+          <Route path="/rs-pontos" element={<Suspense fallback={<PageLoader />}><RioGrandeSulPontos /></Suspense>} />
+          <Route path="/rs/gramado" element={<Suspense fallback={<PageLoader />}><Gramado /></Suspense>} />
+          <Route path="/rs/canion-itaimbezinho" element={<Suspense fallback={<PageLoader />}><CanionItaimbezinho /></Suspense>} />
+          <Route path="/rs/bento-goncalves" element={<Suspense fallback={<PageLoader />}><BentoGoncalves /></Suspense>} />
+          <Route path="/rs/porto-alegre" element={<Suspense fallback={<PageLoader />}><PortoAlegre /></Suspense>} />
+          <Route path="/rs/torres" element={<Suspense fallback={<PageLoader />}><Torres /></Suspense>} />
+          <Route path="/rs/sao-miguel-das-missoes" element={<Suspense fallback={<PageLoader />}><SaoMiguelDasMissoes /></Suspense>} />
+
+          <Route path="/santa-catarina" element={<Suspense fallback={<PageLoader />}><SantaCatarina /></Suspense>} />
+          <Route path="/sc-pontos" element={<Suspense fallback={<PageLoader />}><SantaCatarinaPontos /></Suspense>} />
+          <Route path="/sc/florianopolis" element={<Suspense fallback={<PageLoader />}><Florianopolis /></Suspense>} />
+          <Route path="/sc/balneario-camboriu" element={<Suspense fallback={<PageLoader />}><BalnearioCamboriu /></Suspense>} />
+          <Route path="/sc/bombinhas" element={<Suspense fallback={<PageLoader />}><Bombinhas /></Suspense>} />
+          <Route path="/sc/blumenau" element={<Suspense fallback={<PageLoader />}><Blumenau /></Suspense>} />
+          <Route path="/sc/sao-joaquim" element={<Suspense fallback={<PageLoader />}><SaoJoaquim /></Suspense>} />
+          <Route path="/sc/joinville" element={<Suspense fallback={<PageLoader />}><Joinville /></Suspense>} />
           <Route path="/buscar" element={<Suspense fallback={<PageLoader />}><BuscarPage /></Suspense>} />
           <Route path="*" element={<Suspense fallback={<PageLoader />}><NotFoundPage /></Suspense>} />
         </Routes>
