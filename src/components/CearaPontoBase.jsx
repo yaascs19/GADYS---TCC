@@ -19,7 +19,7 @@ const HeaderCarousel = ({ images, titulo, subtitulo, onVoltar }) => {
       <button
         onClick={onVoltar}
         className="ce-pontos-button"
-        style={{ position: 'absolute', top: '2rem', left: '2rem', backgroundColor: 'rgba(255,255,255,0.2)', borderColor: 'white', zIndex: 4 }}
+        style={{ position: 'absolute', top: '2rem', left: '2rem', zIndex: 10, background: 'rgba(255,255,255,0.2)', border: '2px solid white', color: 'white', padding: '0.7rem 1.5rem', borderRadius: '50px', cursor: 'pointer', fontWeight: '600', fontSize: '0.95rem' }}
       >
         ← Voltar
       </button>
