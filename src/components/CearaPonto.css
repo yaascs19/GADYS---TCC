@@ -241,7 +241,7 @@
   background: linear-gradient(135deg, #7a4500, #4a2800);
   color: #FFE082;
   text-align: center;
-  padding: 2rem;
+  padding: 4rem 2rem 2rem;
 }
 
 @media (max-width: 768px) {
