@@ -8,8 +8,8 @@ const config = {
   carouselImages: ['/images/geral/pao-rj.jpg', '/images/geral/cr-rj.webp'],
   galeriaImages: [
     { src: '/images/geral/pao-rj.jpg', alt: 'Pão de Açúcar' },
-    { src: '/images/geral/cr-rj.webp', alt: 'Vista do Rio de Janeiro' },
-    { src: '/rj.jpeg', alt: 'Rio de Janeiro' },
+    { src: '/pao1.png', alt: 'Pão de Açúcar' },
+    { src: '/pao2.jpg', alt: 'Pão de Açúcar' },
   ],
   secoes: {
     sobre: {
@@ -28,7 +28,7 @@ const config = {
       label: 'Experiências',
       titulo: 'O Que Fazer no Pão de Açúcar',
       texto: 'Além da subida de teleférico, o complexo oferece trilhas, shows ao pôr do sol e uma vista noturna do Rio que é simplesmente inesquecível.',
-      imagem: '/images/geral/cr-rj.webp',
+      imagem: '/pao1.png',
       alt: 'Vista do Pão de Açúcar',
       subsecoes: [
         { titulo: 'Teleférico Histórico', texto: 'O teleférico faz duas paradas: no Morro da Urca (215 m) e no Pão de Açúcar (396 m). Cada parada oferece mirantes com vistas únicas da cidade e da baía.' },
@@ -40,7 +40,7 @@ const config = {
       label: 'Visite',
       titulo: 'Como Chegar e Dicas',
       texto: 'O Pão de Açúcar fica na Praia Vermelha, no bairro da Urca. O acesso é fácil por metrô, ônibus ou táxi.',
-      imagem: '/images/geral/pao-rj.jpg',
+      imagem: '/pao2.jpg',
       alt: 'Teleférico do Pão de Açúcar',
       subsecoes: [
         { titulo: 'Como Chegar', texto: 'De metrô, desça na estação Botafogo e pegue um táxi ou ônibus até a Praia Vermelha. De carro, siga pela Av. Pasteur até o terminal do teleférico.' },

@@ -2,14 +2,14 @@ import React from 'react';
 import CearaPontoBase from './CearaPontoBase';
 
 const config = {
-  tema: { bg: '#003d4a', texto: '#e0f7fa', card: '#005a6a', acento: '#00bcd4', footerBg: 'linear-gradient(135deg, #005a6a, #001a20)', footerTexto: '#e0f7fa' },
+  tema: { bg: '#003d4a', texto: '#e0f7fa', card: '#005a6a', acento: '#00bcd4', recCard: '#005a6a', recNome: '#e0f7fa', recContato: '#e0f7fa', recContatoBg: '#003d4a', footerBg: 'linear-gradient(135deg, #005a6a, #001a20)', footerTexto: '#e0f7fa' },
   titulo: 'Fernando de Noronha',
   subtitulo: 'O arquipélago mais paradisíaco do Brasil.',
-  carouselImages: ['/images/geral/fe-pe.jpg', '/images/natureza/noronha.jpeg'],
+  carouselImages: ['/images/geral/fe-pe.jpg', '/fer1.jpg'],
   galeriaImages: [
     { src: '/images/geral/fe-pe.jpg', alt: 'Fernando de Noronha' },
-    { src: '/images/natureza/noronha.jpeg', alt: 'Praia do Sancho' },
-    { src: '/images/geral/fe-pe.jpg', alt: 'Baía dos Porcos' },
+    { src: '/fer2.jpeg', alt: 'Fernando de Noronha' },
+    { src: '/fer3.jpg', alt: 'Fernando de Noronha' },
   ],
   secoes: {
     sobre: {
@@ -28,7 +28,7 @@ const config = {
       label: 'Experiências',
       titulo: 'Mergulhe no Paraíso',
       texto: 'Noronha oferece experiências únicas de contato com a natureza. O mergulho e o snorkeling revelam um mundo subaquático de rara beleza, com golfinhos, tartarugas e tubarões-limoneiro.',
-      imagem: '/images/natureza/noronha.jpeg',
+      imagem: '/fer2.jpeg',
       alt: 'Mergulho em Fernando de Noronha',
       subsecoes: [
         { titulo: 'Baía dos Golfinhos', texto: 'Todos os dias ao amanhecer, centenas de golfinhos-rotadores entram na baía para descansar. O espetáculo pode ser visto do Mirante dos Golfinhos.' },
@@ -40,7 +40,7 @@ const config = {
       label: 'Visite',
       titulo: 'Como Chegar e Dicas Práticas',
       texto: 'O acesso a Fernando de Noronha é feito exclusivamente por via aérea, com voos a partir de Recife e Natal. A ilha cobra uma Taxa de Preservação Ambiental (TPA) diária.',
-      imagem: '/images/geral/fe-pe.jpg',
+      imagem: '/fer3.jpg',
       alt: 'Fernando de Noronha',
       subsecoes: [
         { titulo: 'Como Chegar', texto: 'Voos diários saem de Recife (1h20) e Natal (1h). As companhias Azul e LATAM operam a rota.' },

@@ -2,14 +2,14 @@ import React from 'react';
 import CearaPontoBase from './CearaPontoBase';
 
 const config = {
-  tema: { bg: '#2a3a1a', texto: '#f0f5e8', card: '#3a5a20', acento: '#8bc34a', footerBg: 'linear-gradient(135deg, #3a5a20, #1a2a0a)', footerTexto: '#f0f5e8' },
+  tema: { bg: '#2a3a1a', texto: '#f0f5e8', card: '#3a5a20', acento: '#8bc34a', recCard: '#3a5a20', recNome: '#f0f5e8', recContato: '#f0f5e8', recContatoBg: '#1a2a0a', footerBg: 'linear-gradient(135deg, #3a5a20, #1a2a0a)', footerTexto: '#f0f5e8' },
   titulo: 'Pantanal',
   subtitulo: 'Maior planície inundável do planeta e santuário de biodiversidade.',
-  carouselImages: ['/images/geral/pant-xx.webp', '/images/natureza/pantanal.jpeg'],
+  carouselImages: ['/images/geral/pant-xx.webp', '/pan1.webp'],
   galeriaImages: [
     { src: '/images/geral/pant-xx.webp', alt: 'Pantanal' },
-    { src: '/images/natureza/pantanal.jpeg', alt: 'Fauna do Pantanal' },
-    { src: '/images/geral/pi-natureza.jpg', alt: 'Natureza do Pantanal' },
+    { src: '/pan2.png', alt: 'Pantanal' },
+    { src: '/pan3.webp', alt: 'Pantanal' },
   ],
   secoes: {
     sobre: {
@@ -28,7 +28,7 @@ const config = {
       label: 'Experiências',
       titulo: 'Viva o Pantanal',
       texto: 'O Pantanal oferece experiências únicas de ecoturismo, com safáris fotográficos, passeios de barco, pesca esportiva e observação de fauna em seu habitat natural.',
-      imagem: '/images/natureza/pantanal.jpeg',
+      imagem: '/pan3.webp',
       alt: 'Safari no Pantanal',
       subsecoes: [
         { titulo: 'Safári Fotográfico', texto: 'O Pantanal é o melhor lugar do mundo para fotografar onças-pintadas em liberdade. Guias especializados levam os visitantes pelos melhores pontos de observação.' },
@@ -40,7 +40,7 @@ const config = {
       label: 'Visite',
       titulo: 'Como Chegar e Dicas',
       texto: 'O Pantanal é acessado principalmente por Campo Grande (MS) ou Cuiabá (MT). A Transpantaneira é a estrada mais famosa para explorar o bioma.',
-      imagem: '/images/geral/pant-xx.webp',
+      imagem: '/pan2.png',
       alt: 'Transpantaneira',
       subsecoes: [
         { titulo: 'Como Chegar', texto: 'De Campo Grande, há voos de São Paulo (1h30) e outras capitais. De lá, agências de ecoturismo organizam transfers e pacotes para as fazendas-hotel.' },

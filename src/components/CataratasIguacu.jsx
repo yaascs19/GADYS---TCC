@@ -5,11 +5,11 @@ const config = {
   tema: { bg: '#1a3a1a', texto: '#e8f5e8', card: '#2a5a2a', acento: '#7ec850', footerBg: 'linear-gradient(135deg, #2a5a2a, #0a1a0a)', footerTexto: '#e8f5e8' },
   titulo: 'Cataratas do Iguaçu',
   subtitulo: 'Uma das maiores maravilhas naturais do planeta.',
-  carouselImages: ['/images/geral/cata-xx.jpg', '/images/geral/cata.jpg'],
+  carouselImages: ['/images/geral/cata-xx.jpg', '/cata1.jpg'],
   galeriaImages: [
     { src: '/images/geral/cata-xx.jpg', alt: 'Cataratas do Iguaçu' },
-    { src: '/images/geral/cata.jpg', alt: 'Garganta do Diabo' },
-    { src: '/images/natureza/cataratas.jpeg', alt: 'Parque Nacional do Iguaçu' },
+    { src: '/cata1.jpg', alt: 'Cataratas do Iguaçu' },
+    { src: '/cata2.jpg', alt: 'Cataratas do Iguaçu' },
   ],
   secoes: {
     sobre: {
@@ -28,7 +28,7 @@ const config = {
       label: 'Experiências',
       titulo: 'Viva as Cataratas',
       texto: 'O Parque Nacional do Iguaçu oferece trilhas, passeios de barco e mirantes que permitem contemplar as cataratas de diferentes ângulos, cada um mais impressionante que o anterior.',
-      imagem: '/images/geral/cata.jpg',
+      imagem: '/cata1.jpg',
       alt: 'Garganta do Diabo',
       subsecoes: [
         { titulo: 'Garganta do Diabo', texto: 'O ponto mais impressionante das cataratas, onde a água despenca com força avassaladora. A passarela sobre a Garganta do Diabo é uma das experiências mais emocionantes do Brasil.' },
@@ -40,7 +40,7 @@ const config = {
       label: 'Visite',
       titulo: 'Como Chegar e Dicas Práticas',
       texto: 'O Parque Nacional do Iguaçu fica a 20 km do centro de Foz do Iguaçu. O acesso interno é feito de ônibus elétrico.',
-      imagem: '/images/geral/cata-xx.jpg',
+      imagem: '/cata2.jpg',
       alt: 'Entrada do Parque Nacional do Iguaçu',
       subsecoes: [
         { titulo: 'Como Chegar', texto: 'De Curitiba, há voos diários para Foz do Iguaçu (1h) ou ônibus (10h). Do aeroporto, táxis e ônibus chegam ao parque em 30 minutos.' },

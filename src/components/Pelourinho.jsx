@@ -5,11 +5,11 @@ const config = {
   tema: { bg: '#4a2000', texto: '#fdf0e0', card: '#6a3000', acento: '#f0a030', footerBg: 'linear-gradient(135deg, #6a3000, #2a1000)', footerTexto: '#fdf0e0' },
   titulo: 'Pelourinho',
   subtitulo: 'Centro histórico de Salvador, berço da cultura afro-brasileira.',
-  carouselImages: ['/images/geral/pelo-xx.jpg', '/images/geral/pelo.jpg'],
+  carouselImages: ['/images/geral/pelo-xx.jpg', '/pelou1.jpg'],
   galeriaImages: [
     { src: '/images/geral/pelo-xx.jpg', alt: 'Pelourinho' },
-    { src: '/images/geral/pelo.jpg', alt: 'Casarões do Pelourinho' },
-    { src: '/images/monumentos/pelourinho.jpg', alt: 'Salvador' },
+    { src: '/pelou2.jpg', alt: 'Pelourinho' },
+    { src: '/pelou3.jpg', alt: 'Pelourinho' },
   ],
   secoes: {
     sobre: {
@@ -28,7 +28,7 @@ const config = {
       label: 'Experiências',
       titulo: 'Viva o Pelourinho',
       texto: 'O Pelourinho é um bairro vivo, onde cada rua conta uma história. Música ao vivo, rodas de capoeira, culinária baiana e arte se misturam em uma experiência cultural única.',
-      imagem: '/images/geral/pelo.jpg',
+      imagem: '/pelou2.jpg',
       alt: 'Ruas do Pelourinho',
       subsecoes: [
         { titulo: 'Igreja de São Francisco', texto: 'Considerada a mais rica em ouro do Brasil, a Igreja de São Francisco impressiona pelo interior coberto de ouro e pelos azulejos portugueses do século XVIII.' },
@@ -40,7 +40,7 @@ const config = {
       label: 'Visite',
       titulo: 'Como Chegar e Explorar',
       texto: 'O Pelourinho fica no centro histórico de Salvador, acessível de metrô, ônibus ou táxi. O bairro é melhor explorado a pé.',
-      imagem: '/images/geral/pelo-xx.jpg',
+      imagem: '/pelou3.jpg',
       alt: 'Pelourinho à noite',
       subsecoes: [
         { titulo: 'Como Chegar', texto: 'De metrô, desça na estação Lapa e suba a pé ou de elevador Lacerda. De ônibus, várias linhas passam pelo centro histórico.' },
