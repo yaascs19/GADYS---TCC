@@ -1,0 +1,169 @@
+@keyframes df-card-load-in {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.df-pontos-page {
+  --df-surface: #ffffff;
+  --df-shadow: rgba(26, 82, 118, 0.2);
+  font-family: 'Nunito Sans', sans-serif;
+  background: linear-gradient(160deg, #eaf4fb 0%, #d6eaf8 100%);
+  color: #1a3a5c;
+  min-height: 100vh;
+}
+
+.df-pontos-header {
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/images/monumentos/jus.jpeg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 6rem 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.df-pontos-h1 {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(3rem, 7vw, 5rem);
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.df-pontos-subheader {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 300;
+  margin-top: 1rem;
+}
+
+.df-pontos-controls {
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #1a5276, #154360);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.df-pontos-search-bar {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem 1.5rem;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 50px;
+  font-size: 1.1rem;
+  margin: 0 auto;
+  display: block;
+  background-color: rgba(255,255,255,0.95);
+  color: #1a3a5c;
+}
+
+.df-pontos-search-bar::placeholder { color: rgba(26,58,92,0.5); }
+
+.df-pontos-filter-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.df-pontos-button {
+  background-color: rgba(255,255,255,0.2);
+  border: 2px solid white;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.df-pontos-button.active {
+  background-color: white;
+  color: #1a5276;
+  font-weight: 700;
+}
+
+.df-pontos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 3rem;
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.df-pontos-card {
+  background-color: var(--df-surface);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px var(--df-shadow);
+  overflow: hidden;
+  animation: df-card-load-in 0.5s backwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  border-top: 4px solid transparent;
+  border-image: linear-gradient(90deg, #1a5276, #2980b9) 1;
+}
+
+.df-pontos-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 30px rgba(26,82,118,0.3);
+}
+
+.df-pontos-card-image-container { height: 220px; overflow: hidden; }
+.df-pontos-card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.df-pontos-card-image-container:hover .df-pontos-card-image { transform: scale(1.05); }
+
+.df-pontos-card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.df-pontos-card-title {
+  font-family: 'Merriweather', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #1a5276, #2980b9);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.df-pontos-card-category {
+  font-weight: 700;
+  color: #1a5276;
+  margin-bottom: 1rem;
+}
+
+.df-pontos-card-description {
+  line-height: 1.6;
+  flex-grow: 1;
+  color: #444;
+  margin-bottom: 0.5rem;
+}
+
+.df-pontos-card .df-pontos-button {
+  margin-top: 1.5rem;
+  background: linear-gradient(135deg, #1a5276, #154360);
+  border: none;
+  color: white;
+  align-self: flex-start;
+}
+
+.df-pontos-footer {
+  background: linear-gradient(135deg, #1a3a5c, #0d1f3c);
+  color: #aed6f1;
+  text-align: center;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .df-pontos-header { padding: 3rem 1rem; }
+  .df-pontos-controls { padding: 1.5rem 1rem; }
+  .df-pontos-grid { grid-template-columns: 1fr; padding: 2rem 1rem; gap: 1.5rem; }
+  .df-pontos-filter-buttons { gap: 0.5rem; }
+  .df-pontos-button { padding: 0.5rem 1rem; font-size: 0.85rem; }
+  .df-pontos-card-title { font-size: 1.3rem; }
+}

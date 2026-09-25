@@ -16,6 +16,10 @@ export function useLocaisAtivos(siglaEstado, pontosTuristicos) {
         const estaticosAtivos = pontosTuristicos.filter(p => {
           const nomePonto = (p.nome || p.name || '').toLowerCase().trim();
           return !inativosBD.has(nomePonto);
+        }).map(p => {
+          if (p.imagem) return p;
+          const match = ativos.find(l => l.nome.toLowerCase().trim() === (p.nome || p.name || '').toLowerCase().trim());
+          return match?.imagemUrl ? { ...p, imagem: match.imagemUrl.split(',')[0].trim() } : p;
         });
         const nomesEstaticos = new Set(estaticosAtivos.map(p => (p.nome || p.name || '').toLowerCase().trim()));
         const subcategoriaParaCategoria = {
