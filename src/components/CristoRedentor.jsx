@@ -5,7 +5,7 @@ const config = {
   tema: { bg: '#e8f4fd', texto: '#0a2a4a', card: '#b8d9f0', acento: '#0a2a4a', navTexto: '#1a4a7a', navAtivo: '#0a2a4a', navBorda: '#0a2a4a', tituloTexto: '#0a2a4a', recCard: '#b8d9f0', recCardHover: '#90c4e8', recNome: '#0a2a4a', recContato: '#e8f4fd', recContatoBg: '#0a2a4a', footerBg: 'linear-gradient(135deg, #4a90c4, #0a2a4a)', footerTexto: '#e8f4fd' },
   titulo: 'Cristo Redentor',
   subtitulo: 'Uma das Sete Maravilhas do Mundo Moderno, símbolo eterno do Brasil.',
-  carouselImages: ['/images/geral/cr-rj.webp', '/cristo1.jpg', '/rj.jpeg'],
+  carouselImages: ['/images/geral/cr-rj.webp', '/images/geral/cristo1.jpg', '/rj.jpeg'],
   galeriaImages: [
     { src: '/images/geral/cr-rj.webp', alt: 'Cristo Redentor' },
     { src: '/images/monumentos/cristo.webp', alt: 'Cristo Redentor de perto' },
