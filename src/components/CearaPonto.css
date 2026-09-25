@@ -103,7 +103,7 @@
   flex-wrap: wrap;
 }
 
-.ce-ponto-text { flex: 1.5; min-width: 300px; text-align: center; }
+.ce-ponto-text { flex: 1.5; min-width: 300px; }
 
 .ce-ponto-section h2 {
   font-size: 1.8rem;
@@ -117,7 +117,6 @@
   font-size: 1rem;
   font-weight: 300;
   margin-bottom: 1.5rem;
-  text-align: center;
 }
 
 /* --- Lista de Fatos --- */
