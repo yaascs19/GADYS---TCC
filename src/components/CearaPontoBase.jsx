@@ -131,11 +131,15 @@ const CearaPontoBase = ({ config }) => {
       <div className="ce-ponto-content-wrapper">
         <nav className="ce-ponto-nav">
           {Object.keys(secoes).map((key) => (
-            <button key={key} onClick={() => setAbaAtiva(key)} className={abaAtiva === key ? 'active' : ''}>
+            <button key={key} onClick={() => setAbaAtiva(key)}
+              className={abaAtiva === key ? 'active' : ''}
+              style={tema.navTexto ? { color: abaAtiva === key ? tema.navAtivo : tema.navTexto, borderBottomColor: abaAtiva === key ? tema.navBorda : 'transparent' } : {}}>
               {secoes[key].label}
             </button>
           ))}
-          <button onClick={() => setAbaAtiva('avaliacoes')} className={abaAtiva === 'avaliacoes' ? 'active' : ''}>
+          <button onClick={() => setAbaAtiva('avaliacoes')}
+            className={abaAtiva === 'avaliacoes' ? 'active' : ''}
+            style={tema.navTexto ? { color: abaAtiva === 'avaliacoes' ? tema.navAtivo : tema.navTexto, borderBottomColor: abaAtiva === 'avaliacoes' ? tema.navBorda : 'transparent' } : {}}>
             Avaliações
           </button>
         </nav>

@@ -2,7 +2,7 @@ import React from 'react';
 import CearaPontoBase from './CearaPontoBase';
 
 const config = {
-  tema: { bg: '#e8f4fd', texto: '#0a2a4a', card: '#b8d9f0', acento: '#0a2a4a', footerBg: 'linear-gradient(135deg, #4a90c4, #0a2a4a)', footerTexto: '#e8f4fd' },
+  tema: { bg: '#e8f4fd', texto: '#0a2a4a', card: '#b8d9f0', acento: '#0a2a4a', navTexto: '#1a4a7a', navAtivo: '#0a2a4a', navBorda: '#0a2a4a', footerBg: 'linear-gradient(135deg, #4a90c4, #0a2a4a)', footerTexto: '#e8f4fd' },
   titulo: 'Cristo Redentor',
   subtitulo: 'Uma das Sete Maravilhas do Mundo Moderno, símbolo eterno do Brasil.',
   carouselImages: ['/images/geral/cr-rj.webp', '/images/monumentos/cristo.webp', '/rj.jpeg'],
