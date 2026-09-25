@@ -35,7 +35,7 @@ const ConteudoAba = ({ secao, tema }) => (
   <section className="ce-ponto-section">
     <div className="ce-ponto-split">
       <div className="ce-ponto-text">
-        <h2>{secao.titulo}</h2>
+        <h2 style={tema.tituloTexto ? { color: tema.tituloTexto } : {}}>{secao.titulo}</h2>
         <p>{secao.texto}</p>
         {secao.lista && (
           <ul className="ce-ponto-facts">
@@ -48,7 +48,7 @@ const ConteudoAba = ({ secao, tema }) => (
           <div className="ce-ponto-subsecoes">
             {secao.subsecoes.map((sub, i) => (
               <div key={i} className="ce-ponto-subsecao" style={{ backgroundColor: tema.card, borderLeftColor: tema.acento }}>
-                <h3>{sub.titulo}</h3>
+            <h3 style={tema.tituloTexto ? { color: tema.tituloTexto } : {}}>{sub.titulo}</h3>
                 <p>{sub.texto}</p>
               </div>
             ))}
@@ -64,7 +64,7 @@ const ConteudoAba = ({ secao, tema }) => (
       <div className="ce-ponto-rec-container">
         {secao.recomendacoes.map((rec, i) => (
           <div key={i} className="ce-ponto-rec-categoria">
-            <h3>{rec.titulo}</h3>
+            <h3 style={tema.tituloTexto ? { color: tema.tituloTexto } : {}}>{rec.titulo}</h3>
             <div className="ce-ponto-rec-cards">
               {rec.itens.map((item, j) => (
                 <div key={j} className="ce-ponto-rec-card">
@@ -83,9 +83,9 @@ const ConteudoAba = ({ secao, tema }) => (
   </section>
 );
 
-const Galeria = ({ images }) => (
+const Galeria = ({ images, tema = {} }) => (
   <section className="ce-ponto-galeria">
-    <h2>Fotos</h2>
+    <h2 style={tema.tituloTexto ? { color: tema.tituloTexto } : {}}>Fotos</h2>
     <div className="ce-ponto-galeria-grid">
       {images.map((img, i) => (
         <div key={i} className="ce-ponto-galeria-item">
@@ -145,7 +145,7 @@ const CearaPontoBase = ({ config }) => {
         </nav>
         <main className="ce-ponto-main">
           {abaAtiva === 'fotos'
-            ? <Galeria images={config.galeriaImages} />
+            ? <Galeria images={config.galeriaImages} tema={tema} />
             : abaAtiva === 'avaliacoes'
             ? <AvaliacoesComentarios localId={bdId} />
             : <ConteudoAba secao={secoes[abaAtiva]} tema={tema} />
