@@ -40,7 +40,9 @@ const config = {
       label: 'Visite',
       titulo: 'Como Chegar e Explorar',
       texto: 'O Pelourinho fica no centro histórico de Salvador, acessível de metrô, ônibus ou táxi. O bairro é melhor explorado a pé.',
-      imagem: '/images/geral/pelo3.jpg', [
+      imagem: '/images/geral/pelo3.jpg',
+      alt: 'Pelourinho',
+      subsecoes: [
         { titulo: 'Como Chegar', texto: 'De metrô, desça na estação Lapa e suba a pé ou de elevador Lacerda. De ônibus, várias linhas passam pelo centro histórico.' },
         { titulo: 'Melhor Época', texto: 'O Carnaval de Salvador (fevereiro/março) é a época mais animada. Para turismo tranquilo, qualquer mês é ótimo, com clima quente o ano todo.' },
       ],
