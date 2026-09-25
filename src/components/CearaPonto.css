@@ -103,7 +103,7 @@
   flex-wrap: wrap;
 }
 
-.ce-ponto-text { flex: 1.5; min-width: 300px; }
+.ce-ponto-text { flex: 1.5; min-width: 300px; text-align: center; }
 
 .ce-ponto-section h2 {
   font-size: 1.8rem;
