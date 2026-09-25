@@ -21,6 +21,12 @@ const EditarLocal = lazy(() => import('./components/EditarLocal'));
 const BuscarPage = lazy(() => import('./components/BuscarPage'));
 const NotFoundPage = lazy(() => import('./components/NotFoundPage'));
 
+const PaoDeAcucar = lazy(() => import('./components/PaoDeAcucar'));
+const CataratasIguacu = lazy(() => import('./components/CataratasIguacu'));
+const Pelourinho = lazy(() => import('./components/Pelourinho'));
+const FernandoNoronha = lazy(() => import('./components/FernandoNoronha'));
+const Pantanal = lazy(() => import('./components/Pantanal'));
+
 const Para = lazy(() => import('./components/Para'));
 const DestinosPara = lazy(() => import('./components/DestinosPara'));
 const RioDeJaneiro = lazy(() => import('./components/RioDeJaneiro'));
@@ -84,6 +90,15 @@ const Sergipe = lazy(() => import('./components/Sergipe'));
 const SergipePontos = lazy(() => import('./components/SergipePontos'));
 const CanionXingo = lazy(() => import('./components/sergipe/CanionXingo'));
 
+const Piaui = lazy(() => import('./components/Piaui'));
+const PiauiPontos = lazy(() => import('./components/PiauiPontos'));
+const SerradaCapivara = lazy(() => import('./components/pi/SerradaCapivara'));
+const DeltaDoParnaiba = lazy(() => import('./components/pi/DeltaDoParnaiba'));
+const SeteCidades = lazy(() => import('./components/pi/SeteCidades'));
+const LuisCorreia = lazy(() => import('./components/pi/LuisCorreia'));
+const PedradoCastelo = lazy(() => import('./components/pi/PedradoCastelo'));
+const TeresinaHistorico = lazy(() => import('./components/pi/TeresinaHistorico'));
+
 const RioGrandeDoNorte = lazy(() => import('./components/RioGrandeDoNorte'));
 const RioGrandeDoNortePontos = lazy(() => import('./components/RioGrandeDoNortePontos'));
 const Genipabu = lazy(() => import('./components/rn/Genipabu'));
@@ -101,6 +116,33 @@ const BentoGoncalves = lazy(() => import('./components/rs/BentoGoncalves'));
 const PortoAlegre = lazy(() => import('./components/rs/PortoAlegre'));
 const Torres = lazy(() => import('./components/rs/Torres'));
 const SaoMiguelDasMissoes = lazy(() => import('./components/rs/SaoMiguelDasMissoes'));
+
+const Paraiba = lazy(() => import('./components/Paraiba'));
+const ParaibaPontos = lazy(() => import('./components/ParaibaPontos'));
+const CaboBranco = lazy(() => import('./components/pb/CaboBranco'));
+const PraiaDeTambaba = lazy(() => import('./components/pb/PraiaDeTambaba'));
+const PraiaDeCoqueirinho = lazy(() => import('./components/pb/PraiaDeCoqueirinho'));
+const CentroHistoricoJoaoPessoa = lazy(() => import('./components/pb/CentroHistoricoJoaoPessoa'));
+const LagoadGuaribas = lazy(() => import('./components/pb/LagoadGuaribas'));
+const AreiaBrejo = lazy(() => import('./components/pb/AreiaBrejo'));
+
+const Parana = lazy(() => import('./components/Parana'));
+const ParanaPontos = lazy(() => import('./components/ParanaPontos'));
+const CataratasDoIguacu = lazy(() => import('./components/pr/CataratasDoIguacu'));
+const CuritibaHistorico = lazy(() => import('./components/pr/CuritibaHistorico'));
+const IlhaDoMel = lazy(() => import('./components/pr/IlhaDoMel'));
+const VilaVelha = lazy(() => import('./components/pr/VilaVelha'));
+const FozDoIguacu = lazy(() => import('./components/pr/FozDoIguacu'));
+const Guaratuba = lazy(() => import('./components/pr/Guaratuba'));
+
+const Pernambuco = lazy(() => import('./components/Pernambuco'));
+const PernambucoPontos = lazy(() => import('./components/PernambucoPontos'));
+const FernandoDeNoronha = lazy(() => import('./components/pe/FernandoDeNoronha'));
+const PortoDeGalinhas = lazy(() => import('./components/pe/PortoDeGalinhas'));
+const RecifeAntigo = lazy(() => import('./components/pe/RecifeAntigo'));
+const Olinda = lazy(() => import('./components/pe/Olinda'));
+const ValeDoCatimbau = lazy(() => import('./components/pe/ValeDoCatimbau'));
+const Caruaru = lazy(() => import('./components/pe/Caruaru'));
 
 const SantaCatarina = lazy(() => import('./components/SantaCatarina'));
 const SantaCatarinaPontos = lazy(() => import('./components/SantaCatarinaPontos'));
@@ -190,6 +232,12 @@ function Router() {
           <Route path="/admin/editar-local/:id" element={<AdminRoute><Suspense fallback={<PageLoader />}><EditarLocal /></Suspense></AdminRoute>} />
           <Route path="/local/:id" element={<Suspense fallback={<PageLoader />}><LocalDetalhe /></Suspense>} />
 
+          <Route path="/pao-de-acucar" element={<Suspense fallback={<PageLoader />}><PaoDeAcucar /></Suspense>} />
+          <Route path="/cataratas-iguacu" element={<Suspense fallback={<PageLoader />}><CataratasIguacu /></Suspense>} />
+          <Route path="/pelourinho" element={<Suspense fallback={<PageLoader />}><Pelourinho /></Suspense>} />
+          <Route path="/fernando-noronha" element={<Suspense fallback={<PageLoader />}><FernandoNoronha /></Suspense>} />
+          <Route path="/pantanal" element={<Suspense fallback={<PageLoader />}><Pantanal /></Suspense>} />
+
           <Route path="/para" element={<Suspense fallback={<PageLoader />}><Para /></Suspense>} />
           <Route path="/destinos-para" element={<Suspense fallback={<PageLoader />}><DestinosPara /></Suspense>} />
           <Route path="/rio-de-janeiro" element={<Suspense fallback={<PageLoader />}><RioDeJaneiro /></Suspense>} />
@@ -252,6 +300,15 @@ function Router() {
           <Route path="/sergipe-pontos" element={<Suspense fallback={<PageLoader />}><SergipePontos /></Suspense>} />
           <Route path="/sergipe/canion-xingo" element={<Suspense fallback={<PageLoader />}><CanionXingo /></Suspense>} />
 
+          <Route path="/piaui" element={<Suspense fallback={<PageLoader />}><Piaui /></Suspense>} />
+          <Route path="/pi-pontos" element={<Suspense fallback={<PageLoader />}><PiauiPontos /></Suspense>} />
+          <Route path="/pi/serra-da-capivara" element={<Suspense fallback={<PageLoader />}><SerradaCapivara /></Suspense>} />
+          <Route path="/pi/delta-do-parnaiba" element={<Suspense fallback={<PageLoader />}><DeltaDoParnaiba /></Suspense>} />
+          <Route path="/pi/sete-cidades" element={<Suspense fallback={<PageLoader />}><SeteCidades /></Suspense>} />
+          <Route path="/pi/luis-correia" element={<Suspense fallback={<PageLoader />}><LuisCorreia /></Suspense>} />
+          <Route path="/pi/pedra-do-castelo" element={<Suspense fallback={<PageLoader />}><PedradoCastelo /></Suspense>} />
+          <Route path="/pi/teresina-centro" element={<Suspense fallback={<PageLoader />}><TeresinaHistorico /></Suspense>} />
+
           <Route path="/rio-grande-do-norte" element={<Suspense fallback={<PageLoader />}><RioGrandeDoNorte /></Suspense>} />
           <Route path="/rn-pontos" element={<Suspense fallback={<PageLoader />}><RioGrandeDoNortePontos /></Suspense>} />
           <Route path="/rn/genipabu" element={<Suspense fallback={<PageLoader />}><Genipabu /></Suspense>} />
@@ -269,6 +326,33 @@ function Router() {
           <Route path="/rs/porto-alegre" element={<Suspense fallback={<PageLoader />}><PortoAlegre /></Suspense>} />
           <Route path="/rs/torres" element={<Suspense fallback={<PageLoader />}><Torres /></Suspense>} />
           <Route path="/rs/sao-miguel-das-missoes" element={<Suspense fallback={<PageLoader />}><SaoMiguelDasMissoes /></Suspense>} />
+
+          <Route path="/paraiba" element={<Suspense fallback={<PageLoader />}><Paraiba /></Suspense>} />
+          <Route path="/pb-pontos" element={<Suspense fallback={<PageLoader />}><ParaibaPontos /></Suspense>} />
+          <Route path="/pb/cabo-branco" element={<Suspense fallback={<PageLoader />}><CaboBranco /></Suspense>} />
+          <Route path="/pb/praia-de-tambaba" element={<Suspense fallback={<PageLoader />}><PraiaDeTambaba /></Suspense>} />
+          <Route path="/pb/praia-de-coqueirinho" element={<Suspense fallback={<PageLoader />}><PraiaDeCoqueirinho /></Suspense>} />
+          <Route path="/pb/centro-historico-joao-pessoa" element={<Suspense fallback={<PageLoader />}><CentroHistoricoJoaoPessoa /></Suspense>} />
+          <Route path="/pb/lagoa-de-guaribas" element={<Suspense fallback={<PageLoader />}><LagoadGuaribas /></Suspense>} />
+          <Route path="/pb/areia-centro" element={<Suspense fallback={<PageLoader />}><AreiaBrejo /></Suspense>} />
+
+          <Route path="/parana" element={<Suspense fallback={<PageLoader />}><Parana /></Suspense>} />
+          <Route path="/pr-pontos" element={<Suspense fallback={<PageLoader />}><ParanaPontos /></Suspense>} />
+          <Route path="/pr/cataratas-do-iguacu" element={<Suspense fallback={<PageLoader />}><CataratasDoIguacu /></Suspense>} />
+          <Route path="/pr/curitiba-centro" element={<Suspense fallback={<PageLoader />}><CuritibaHistorico /></Suspense>} />
+          <Route path="/pr/ilha-do-mel" element={<Suspense fallback={<PageLoader />}><IlhaDoMel /></Suspense>} />
+          <Route path="/pr/vila-velha" element={<Suspense fallback={<PageLoader />}><VilaVelha /></Suspense>} />
+          <Route path="/pr/foz-do-iguacu" element={<Suspense fallback={<PageLoader />}><FozDoIguacu /></Suspense>} />
+          <Route path="/pr/guaratuba" element={<Suspense fallback={<PageLoader />}><Guaratuba /></Suspense>} />
+
+          <Route path="/pernambuco" element={<Suspense fallback={<PageLoader />}><Pernambuco /></Suspense>} />
+          <Route path="/pe-pontos" element={<Suspense fallback={<PageLoader />}><PernambucoPontos /></Suspense>} />
+          <Route path="/pe/fernando-de-noronha" element={<Suspense fallback={<PageLoader />}><FernandoDeNoronha /></Suspense>} />
+          <Route path="/pe/porto-de-galinhas" element={<Suspense fallback={<PageLoader />}><PortoDeGalinhas /></Suspense>} />
+          <Route path="/pe/recife-antigo" element={<Suspense fallback={<PageLoader />}><RecifeAntigo /></Suspense>} />
+          <Route path="/pe/olinda" element={<Suspense fallback={<PageLoader />}><Olinda /></Suspense>} />
+          <Route path="/pe/vale-do-catimbau" element={<Suspense fallback={<PageLoader />}><ValeDoCatimbau /></Suspense>} />
+          <Route path="/pe/caruaru" element={<Suspense fallback={<PageLoader />}><Caruaru /></Suspense>} />
 
           <Route path="/santa-catarina" element={<Suspense fallback={<PageLoader />}><SantaCatarina /></Suspense>} />
           <Route path="/sc-pontos" element={<Suspense fallback={<PageLoader />}><SantaCatarinaPontos /></Suspense>} />

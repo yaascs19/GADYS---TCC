@@ -13,6 +13,15 @@ const lugaresEstaticos = [
   { id: 'pantanal', nome: 'Pantanal', cidade: 'Mato Grosso - MT', categoria: 'Natureza', descricao: 'Maior planície inundável do planeta e santuário de biodiversidade reconhecido mundialmente.', imagem: '/images/geral/pant-xx.webp' },
 ];
 
+const rotas = {
+  'cristo-redentor': '/cristo-redentor',
+  'pao-de-acucar': '/pao-de-acucar',
+  'cataratas-iguacu': '/cataratas-iguacu',
+  'pelourinho': '/pelourinho',
+  'fernando-noronha': '/fernando-noronha',
+  'pantanal': '/pantanal',
+};
+
 const API_URL = import.meta.env.VITE_API_URL;
 
 function LugaresPage() {
@@ -61,7 +70,7 @@ function LugaresPage() {
               <h2 className="lp-card-title">{lugar.nome}</h2>
               <p className="lp-card-category">{lugar.categoria} • {lugar.cidade}</p>
               <p className="lp-card-description">{lugar.descricao}</p>
-              <button className="lp-btn" onClick={() => navigate(`/${lugar.id}`)}>Saiba mais</button>
+              <button className="lp-btn" onClick={() => navigate(rotas[lugar.id] || `/${lugar.id}`)}>Saiba mais</button>
             </div>
           </div>
         ))}

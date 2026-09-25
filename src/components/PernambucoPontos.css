@@ -1,0 +1,166 @@
+@keyframes pe-card-load-in {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.pe-pontos-page {
+  font-family: 'Nunito Sans', sans-serif;
+  background: linear-gradient(160deg, #fff5f5 0%, #ffe0e0 100%);
+  color: #6b0000;
+  min-height: 100vh;
+}
+
+.pe-pontos-header {
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/images/geral/fe-pe.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 6rem 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.pe-pontos-h1 {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(3rem, 7vw, 5rem);
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.pe-pontos-subheader {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 300;
+  margin-top: 1rem;
+}
+
+.pe-pontos-controls {
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #c0392b, #e74c3c);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.pe-pontos-search-bar {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem 1.5rem;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 50px;
+  font-size: 1.1rem;
+  margin: 0 auto;
+  display: block;
+  background-color: rgba(255,255,255,0.95);
+  color: #6b0000;
+}
+
+.pe-pontos-search-bar::placeholder { color: rgba(107,0,0,0.5); }
+
+.pe-pontos-filter-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pe-pontos-button {
+  background-color: rgba(255,255,255,0.2);
+  border: 2px solid white;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.pe-pontos-button.active {
+  background-color: white;
+  color: #c0392b;
+  font-weight: 700;
+}
+
+.pe-pontos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 3rem;
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.pe-pontos-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(192,57,43,0.15);
+  overflow: hidden;
+  animation: pe-card-load-in 0.5s backwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  border-top: 4px solid transparent;
+  border-image: linear-gradient(90deg, #c0392b, #e67e22) 1;
+}
+
+.pe-pontos-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 30px rgba(192,57,43,0.3);
+}
+
+.pe-pontos-card-image-container { height: 220px; overflow: hidden; }
+.pe-pontos-card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.pe-pontos-card-image-container:hover .pe-pontos-card-image { transform: scale(1.05); }
+
+.pe-pontos-card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.pe-pontos-card-title {
+  font-family: 'Merriweather', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #c0392b, #e67e22);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.pe-pontos-card-category {
+  font-weight: 700;
+  color: #c0392b;
+  margin-bottom: 1rem;
+}
+
+.pe-pontos-card-description {
+  line-height: 1.6;
+  flex-grow: 1;
+  color: #6b0000;
+}
+
+.pe-pontos-card .pe-pontos-button {
+  margin-top: 1.5rem;
+  background: linear-gradient(135deg, #c0392b, #e67e22);
+  border: none;
+  color: white;
+  align-self: flex-start;
+}
+
+.pe-pontos-footer {
+  background: linear-gradient(135deg, #6b0000, #3d0000);
+  color: #ffcccc;
+  text-align: center;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .pe-pontos-header { padding: 3rem 1rem; }
+  .pe-pontos-controls { padding: 1.5rem 1rem; }
+  .pe-pontos-grid { grid-template-columns: 1fr; padding: 2rem 1rem; gap: 1.5rem; }
+  .pe-pontos-filter-buttons { gap: 0.5rem; }
+  .pe-pontos-button { padding: 0.5rem 1rem; font-size: 0.85rem; }
+  .pe-pontos-card-title { font-size: 1.3rem; }
+}

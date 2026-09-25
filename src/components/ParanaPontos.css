@@ -1,0 +1,166 @@
+@keyframes pr-card-load-in {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.pr-pontos-page {
+  font-family: 'Nunito Sans', sans-serif;
+  background: linear-gradient(160deg, #f0f7f0 0%, #d4ecd4 100%);
+  color: #1a3d1a;
+  min-height: 100vh;
+}
+
+.pr-pontos-header {
+  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/images/geral/cata-xx.jpg');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 6rem 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.pr-pontos-h1 {
+  font-family: 'Merriweather', serif;
+  font-size: clamp(3rem, 7vw, 5rem);
+  font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.pr-pontos-subheader {
+  font-size: clamp(1.2rem, 3vw, 1.6rem);
+  font-weight: 300;
+  margin-top: 1rem;
+}
+
+.pr-pontos-controls {
+  padding: 3rem 2rem;
+  background: linear-gradient(135deg, #2e7d32, #1b5e20);
+  color: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+.pr-pontos-search-bar {
+  width: 100%;
+  max-width: 600px;
+  padding: 1rem 1.5rem;
+  border: 2px solid rgba(255,255,255,0.4);
+  border-radius: 50px;
+  font-size: 1.1rem;
+  margin: 0 auto;
+  display: block;
+  background-color: rgba(255,255,255,0.95);
+  color: #1a3d1a;
+}
+
+.pr-pontos-search-bar::placeholder { color: rgba(26,61,26,0.5); }
+
+.pr-pontos-filter-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.pr-pontos-button {
+  background-color: rgba(255,255,255,0.2);
+  border: 2px solid white;
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.pr-pontos-button.active {
+  background-color: white;
+  color: #2e7d32;
+  font-weight: 700;
+}
+
+.pr-pontos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 3rem;
+  padding: 4rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.pr-pontos-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(46,125,50,0.15);
+  overflow: hidden;
+  animation: pr-card-load-in 0.5s backwards;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  border-top: 4px solid transparent;
+  border-image: linear-gradient(90deg, #2e7d32, #1565c0) 1;
+}
+
+.pr-pontos-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 30px rgba(46,125,50,0.3);
+}
+
+.pr-pontos-card-image-container { height: 220px; overflow: hidden; }
+.pr-pontos-card-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.pr-pontos-card-image-container:hover .pr-pontos-card-image { transform: scale(1.05); }
+
+.pr-pontos-card-content {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.pr-pontos-card-title {
+  font-family: 'Merriweather', serif;
+  font-size: 1.7rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #2e7d32, #1565c0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.pr-pontos-card-category {
+  font-weight: 700;
+  color: #2e7d32;
+  margin-bottom: 1rem;
+}
+
+.pr-pontos-card-description {
+  line-height: 1.6;
+  flex-grow: 1;
+  color: #1a3d1a;
+}
+
+.pr-pontos-card .pr-pontos-button {
+  margin-top: 1.5rem;
+  background: linear-gradient(135deg, #2e7d32, #1565c0);
+  border: none;
+  color: white;
+  align-self: flex-start;
+}
+
+.pr-pontos-footer {
+  background: linear-gradient(135deg, #1a3d1a, #0d1f0d);
+  color: #a5d6a7;
+  text-align: center;
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  .pr-pontos-header { padding: 3rem 1rem; }
+  .pr-pontos-controls { padding: 1.5rem 1rem; }
+  .pr-pontos-grid { grid-template-columns: 1fr; padding: 2rem 1rem; gap: 1.5rem; }
+  .pr-pontos-filter-buttons { gap: 0.5rem; }
+  .pr-pontos-button { padding: 0.5rem 1rem; font-size: 0.85rem; }
+  .pr-pontos-card-title { font-size: 1.3rem; }
+}
