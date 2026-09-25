@@ -67,12 +67,12 @@ const ConteudoAba = ({ secao, tema }) => (
             <h3 style={tema.tituloTexto ? { color: tema.tituloTexto } : {}}>{rec.titulo}</h3>
             <div className="ce-ponto-rec-cards">
               {rec.itens.map((item, j) => (
-                <div key={j} className="ce-ponto-rec-card">
+                <div key={j} className="ce-ponto-rec-card" style={tema.recCard ? { backgroundColor: tema.recCard } : {}}>
                   <div className="ce-ponto-rec-card-header">
-                    <a href={item.site} target="_blank" rel="noopener noreferrer" className="ce-ponto-rec-nome">{item.nome}</a>
+                    <a href={item.site} target="_blank" rel="noopener noreferrer" className="ce-ponto-rec-nome" style={tema.recNome ? { color: tema.recNome } : {}}>{item.nome}</a>
                     <span className="ce-ponto-rec-nota">{item.nota} ★</span>
                   </div>
-                  <span className="ce-ponto-rec-contato">{item.contato}</span>
+                  <span className="ce-ponto-rec-contato" style={tema.recContato ? { color: tema.recContato, backgroundColor: tema.recContatoBg } : {}}>{item.contato}</span>
                 </div>
               ))}
             </div>
