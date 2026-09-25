@@ -2,6 +2,7 @@ import React from 'react';
 import CearaPontoBase from './CearaPontoBase';
 
 const config = {
+  tema: { bg: '#1a3a1a', texto: '#e8f5e8' },
   titulo: 'Cataratas do Iguaçu',
   subtitulo: 'Uma das maiores maravilhas naturais do planeta.',
   carouselImages: ['/images/geral/cata-xx.jpg', '/images/geral/cata.jpg'],

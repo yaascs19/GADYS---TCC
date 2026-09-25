@@ -4,7 +4,7 @@ import './CearaPonto.css';
 import { useLocalByRota } from '../hooks/useLocalByRota';
 import AvaliacoesComentarios from './AvaliacoesComentarios';
 
-const HeaderCarousel = ({ images, titulo, subtitulo, onVoltar }) => {
+const HeaderCarousel = ({ images, titulo, subtitulo, onVoltar, voltarEstilo }) => {
   const [ativo, setAtivo] = useState(0);
   useEffect(() => {
     const t = setTimeout(() => setAtivo((p) => (p + 1) % images.length), 5000);
@@ -19,7 +19,7 @@ const HeaderCarousel = ({ images, titulo, subtitulo, onVoltar }) => {
       <button
         onClick={onVoltar}
         className="ce-pontos-button"
-        style={{ position: 'absolute', top: '2rem', left: '2rem', zIndex: 10, background: 'rgba(255,255,255,0.2)', border: '2px solid white', color: 'white', padding: '0.7rem 1.5rem', borderRadius: '50px', cursor: 'pointer', fontWeight: '600', fontSize: '0.95rem' }}
+        style={{ position: 'absolute', top: '2rem', left: '2rem', zIndex: 10, background: 'rgba(255,255,255,0.2)', border: '2px solid white', color: 'white', padding: '0.7rem 1.5rem', borderRadius: '50px', cursor: 'pointer', fontWeight: '600', fontSize: '0.95rem', ...voltarEstilo }}
       >
         ← Voltar
       </button>
@@ -123,9 +123,11 @@ const CearaPontoBase = ({ config }) => {
   const titulo = bdLocal?.nome || config.titulo;
   const subtitulo = bdLocal?.descricao || config.subtitulo;
 
+  const tema = config.tema || {};
+
   return (
-    <div className="ce-ponto-container">
-      <HeaderCarousel images={carouselImages} titulo={titulo} subtitulo={subtitulo} onVoltar={() => navigate(-1)} />
+    <div className="ce-ponto-container" style={{ backgroundColor: tema.bg, color: tema.texto }}>
+      <HeaderCarousel images={carouselImages} titulo={titulo} subtitulo={subtitulo} onVoltar={() => navigate(-1)} voltarEstilo={config.voltarEstilo} />
       <div className="ce-ponto-content-wrapper">
         <nav className="ce-ponto-nav">
           {Object.keys(secoes).map((key) => (

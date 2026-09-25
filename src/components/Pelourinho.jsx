@@ -2,6 +2,7 @@ import React from 'react';
 import CearaPontoBase from './CearaPontoBase';
 
 const config = {
+  tema: { bg: '#4a2000', texto: '#fdf0e0' },
   titulo: 'Pelourinho',
   subtitulo: 'Centro histórico de Salvador, berço da cultura afro-brasileira.',
   carouselImages: ['/images/geral/pelo-xx.jpg', '/images/geral/pelo.jpg'],

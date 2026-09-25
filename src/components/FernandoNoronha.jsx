@@ -2,6 +2,7 @@ import React from 'react';
 import CearaPontoBase from './CearaPontoBase';
 
 const config = {
+  tema: { bg: '#003d4a', texto: '#e0f7fa' },
   titulo: 'Fernando de Noronha',
   subtitulo: 'O arquipélago mais paradisíaco do Brasil.',
   carouselImages: ['/images/geral/fe-pe.jpg', '/images/natureza/noronha.jpeg'],
