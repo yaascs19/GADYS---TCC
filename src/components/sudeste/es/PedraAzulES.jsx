@@ -5,18 +5,20 @@ const config = {
   titulo: 'Pedra Azul',
   subtitulo: 'A formação rochosa que muda de cor — cartão-postal do Espírito Santo.',
   voltarRota: '/es-pontos',
-  carouselImages: ['/images/natureza/veadeiros.jpeg', '/images/natureza/bonito.jpeg'],
+  carouselImages: ['/images/geral/Pedra-Azul.jpg', '/images/geral/Pedra-Azul.1.jpg'],
   galeriaImages: [
-    { src: '/images/natureza/veadeiros.jpeg', alt: 'Pedra Azul ao amanhecer' },
-    { src: '/images/natureza/bonito.jpeg', alt: 'Trilha da Pedra Azul' },
-    { src: '/images/natureza/chapada.jpeg', alt: 'Vista da Serra Capixaba' },
+    { src: '/images/geral/Pedra-Azul.jpg', alt: 'Pedra Azul' },
+    { src: '/images/geral/Pedra-Azul.1.jpg', alt: 'Pedra Azul vista' },
+    { src: '/images/geral/Pedra-Azul.2.webp', alt: 'Pedra Azul sobre' },
+    { src: '/images/geral/Pedra-Azul.3.webp', alt: 'Pedra Azul experiências' },
+    { src: '/images/geral/Pedra-Azul.4.jpg', alt: 'Pedra Azul visite' },
   ],
   secoes: {
     sobre: {
       label: 'Sobre',
       titulo: 'A Pedra que Muda de Cor',
       texto: 'A Pedra Azul é uma formação rochosa de granito com 1.822 metros de altitude, localizada no Parque Estadual da Pedra Azul, em Domingos Martins. Seu nome vem da coloração azulada que a rocha adquire ao amanhecer e ao entardecer, quando a luz do sol reflete em sua superfície polida. É um dos cartões-postais mais icônicos do Espírito Santo.',
-      imagem: '/images/natureza/veadeiros.jpeg',
+      imagem: '/images/geral/Pedra-Azul.2.webp',
       alt: 'Pedra Azul com coloração azulada',
       lista: [
         'Altitude: 1.822 metros acima do nível do mar.',
@@ -28,7 +30,7 @@ const config = {
       label: 'Experiências',
       titulo: 'Aventura na Serra Capixaba',
       texto: 'O Parque Estadual da Pedra Azul oferece trilhas, piscinas naturais e vistas panorâmicas da Serra Capixaba.',
-      imagem: '/images/natureza/bonito.jpeg',
+      imagem: '/images/geral/Pedra-Azul.3.webp',
       alt: 'Trilha ecológica na Pedra Azul',
       subsecoes: [
         { titulo: 'Trilha da Pedra Azul', texto: 'A trilha principal percorre 2,5 km até o mirante da Pedra Azul, com desnível de 400 metros. O percurso passa por Mata Atlântica preservada, piscinas naturais e formações rochosas únicas.' },
@@ -40,7 +42,7 @@ const config = {
       label: 'Visite',
       titulo: 'Como Visitar a Pedra Azul',
       texto: 'O Parque Estadual da Pedra Azul fica em Domingos Martins, a 90 km de Vitória, com fácil acesso pela BR-262.',
-      imagem: '/images/natureza/chapada.jpeg',
+      imagem: '/images/geral/Pedra-Azul.4.jpg',
       alt: 'Entrada do Parque Estadual da Pedra Azul',
       subsecoes: [
         { titulo: 'Horários e Ingressos', texto: 'O parque funciona de terça a domingo, das 8h às 17h. Ingresso: R$ 20 (adulto) e R$ 10 (meia). A trilha principal requer agendamento prévio e guia credenciado.' },

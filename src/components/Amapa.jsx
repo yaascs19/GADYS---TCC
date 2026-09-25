@@ -94,7 +94,7 @@ const Amapa = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/amazonas1.avif" alt="Natureza do Amapá" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/amapa5.jpg" alt="Natureza do Amapá" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Biodiversidade Extraordinária</h2>
@@ -104,7 +104,7 @@ const Amapa = () => {
 
         <section style={{...styles.featureSection, flexDirection: 'row-reverse'}} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/amazonas3.1.jpg" alt="Cultura do Amapá" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/amapa6.webp" alt="Cultura do Amapá" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Cultura das Águas</h2>
@@ -114,7 +114,7 @@ const Amapa = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/oam.jpg" alt="Macapá e o Marco Zero do Equador" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/amapa7.webp" alt="Macapá e o Marco Zero do Equador" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Macapá e o Equador</h2>

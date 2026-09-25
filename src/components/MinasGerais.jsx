@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import NavbarShared from './NavbarShared'
+import { useNavigate } from 'react-router-dom';
+import NavbarShared from './NavbarShared';
 
 const MinasGerais = () => {
   const navigate = useNavigate();
@@ -8,12 +8,7 @@ const MinasGerais = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const images = [
-    '/images/monumentos/ouro.jpeg',
-    '/images/monumentos/independencia.webp',
-    '/images/natureza/chapada.jpeg',
-    '/images/monumentos/pala.jpeg',
-  ];
+  const images = ['/images/geral/mg.webp', '/images/geral/mg1.jpg'];
 
   const toggleDarkMode = () => {
     const newDarkMode = !darkMode;
@@ -37,7 +32,6 @@ const MinasGerais = () => {
   useEffect(() => {
     if (isLoading) return;
     const styleSheet = document.createElement('style');
-    styleSheet.type = 'text/css';
     styleSheet.innerText = `
       .feature-section-animate { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease-out, transform 0.8s ease-out; }
       .feature-section-animate.is-visible { opacity: 1; transform: translateY(0); }
@@ -46,12 +40,9 @@ const MinasGerais = () => {
       .feature-image-container:hover .feature-image { transform: scale(1.05); }
     `;
     document.head.appendChild(styleSheet);
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
-    }, { threshold: 0.2 });
-    const sections = document.querySelectorAll('.feature-section-animate');
-    sections.forEach(s => observer.observe(s));
-    return () => { document.head.removeChild(styleSheet); sections.forEach(s => observer.unobserve(s)); };
+    const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-visible'); observer.unobserve(e.target); } }), { threshold: 0.2 });
+    document.querySelectorAll('.feature-section-animate').forEach(s => observer.observe(s));
+    return () => { document.head.removeChild(styleSheet); };
   }, [isLoading]);
 
   const styles = {
@@ -66,74 +57,68 @@ const MinasGerais = () => {
     featureSection: { display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', maxWidth: '1200px', margin: '6rem auto', padding: '0 2rem', gap: '4rem' },
     featureImageContainer: { flex: '1 1 400px', minWidth: '300px', borderRadius: '15px', boxShadow: darkMode ? '0 10px 30px rgba(0,0,0,0.4)' : '0 10px 30px rgba(0,0,0,0.1)', overflow: 'hidden' },
     featureImage: { width: '100%', height: 'auto', display: 'block', objectFit: 'cover', transition: 'transform 0.4s ease' },
-    featureText: { flex: '1 1 400px', position: 'relative' },
-    h2: { fontFamily: `'Georgia', serif`, fontSize: 'clamp(2rem, 4vw, 2.8rem)', color: darkMode ? '#c69f68' : '#b5651d', marginBottom: '1.5rem', fontWeight: 400 },
-    pWithBorder: { fontSize: 'clamp(1rem, 2vw, 1.15rem)', lineHeight: 1.8, color: darkMode ? '#adb5bd' : '#495057', paddingLeft: '1.5rem', borderLeft: `3px solid ${darkMode ? '#FF8C00' : '#E65100'}` },
+    featureText: { flex: '1 1 400px' },
+    h2: { fontFamily: `'Georgia', serif`, fontSize: 'clamp(2rem, 4vw, 2.8rem)', color: darkMode ? '#d4a84b' : '#7a4a00', marginBottom: '1.5rem', fontWeight: 400 },
+    pWithBorder: { fontSize: 'clamp(1rem, 2vw, 1.15rem)', lineHeight: 1.8, color: darkMode ? '#adb5bd' : '#495057', paddingLeft: '1.5rem', borderLeft: `3px solid ${darkMode ? '#c8860a' : '#7a4a00'}` },
     ctaContainer: { textAlign: 'center', background: darkMode ? '#161b22' : '#f8f9fa', padding: '6rem 2rem' },
-    ctaButton: { background: 'linear-gradient(45deg, #E65100, #FF8C00)', color: 'white', border: 'none', padding: '1.2rem 3.5rem', borderRadius: '50px', cursor: 'pointer', fontSize: '1.25rem', fontWeight: 'bold', transition: 'transform 0.3s ease, box-shadow 0.3s ease', boxShadow: '0 5px 20px rgba(230,81,0,0.4)', display: 'inline-block' },
+    ctaButton: { background: 'linear-gradient(45deg, #7a4a00, #c8860a)', color: 'white', border: 'none', padding: '1.2rem 3.5rem', borderRadius: '50px', cursor: 'pointer', fontSize: '1.25rem', fontWeight: 'bold', transition: 'transform 0.3s ease, box-shadow 0.3s ease', boxShadow: '0 5px 20px rgba(122,74,0,0.4)', display: 'inline-block' },
     footer: { background: '#0d1117', color: '#8b949e', textAlign: 'center', padding: '2.5rem' },
   };
 
-  const nl = (c) => ({ color: c, textDecoration: 'none', padding: '0.5rem 1rem', display: 'block' });
-
-  if (isLoading) return <div style={{...styles.page, ...styles.loadingContainer}}>Carregando...</div>;
+  if (isLoading) return <div style={{ ...styles.page, ...styles.loadingContainer }}>Carregando...</div>;
 
   return (
     <div style={styles.page}>
-            <NavbarShared darkMode={darkMode} toggleDarkMode={toggleDarkMode} paginaAtual={window.location.pathname} />
-
-            <main>
+      <NavbarShared darkMode={darkMode} toggleDarkMode={toggleDarkMode} paginaAtual={window.location.pathname} />
+      <main>
         <section style={styles.hero}>
-          {images.map((img, index) => (<div key={index} style={{ ...styles.heroSlide, backgroundImage: `url(${img})`, opacity: index === currentImageIndex ? 1 : 0 }} />))}
-          <div style={styles.gradientOverlay}></div>
+          {images.map((img, i) => <div key={i} style={{ ...styles.heroSlide, backgroundImage: `url(${img})`, opacity: i === currentImageIndex ? 1 : 0 }} />)}
+          <div style={styles.gradientOverlay} />
           <div style={styles.heroContent}>
-            <h1 style={styles.h1}>Minas Gerais: Coração do Brasil</h1>
-            <p style={styles.heroP}>O estado das montanhas, do barroco, do queijo e do café. Uma terra de história, cultura e sabores que encantam o mundo.</p>
+            <h1 style={styles.h1}>Minas Gerais: Ouro, Pedra e Sabor</h1>
+            <p style={styles.heroP}>Terra do barroco, do queijo artesanal e do pão de queijo. Minas Gerais guarda cidades históricas tombadas pela UNESCO, cachoeiras escondidas e uma hospitalidade que aquece qualquer viajante.</p>
           </div>
         </section>
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/monumentos/ouro.jpeg" alt="Ouro Preto - patrimônio histórico" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/mg2.jpg" alt="Ouro Preto MG" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
-            <h2 style={styles.h2}>Herança Barroca</h2>
-            <p style={styles.pWithBorder}>Minas Gerais é o maior tesouro do barroco brasileiro. Ouro Preto, Diamantina, Tiradentes e Congonhas guardam igrejas, esculturas e casarões coloniais que contam a história do ciclo do ouro e da Inconfidência Mineira, movimentos que moldaram o Brasil.</p>
+            <h2 style={styles.h2}>Cidades Históricas do Ouro</h2>
+            <p style={styles.pWithBorder}>Ouro Preto, Tiradentes, Diamantina e Mariana formam um roteiro único de arquitetura barroca, igrejas douradas e ruas de pedra que contam a história do ciclo do ouro no Brasil. Ouro Preto é Patrimônio Mundial da UNESCO desde 1980.</p>
           </div>
         </section>
 
-        <section style={{...styles.featureSection, flexDirection: 'row-reverse'}} className="feature-section-animate">
+        <section style={{ ...styles.featureSection, flexDirection: 'row-reverse' }} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/gastronomia/feijoada.jpeg" alt="Gastronomia mineira" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/mg3.jpg" alt="Natureza de Minas Gerais" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
-            <h2 style={styles.h2}>Sabores de Minas</h2>
-            <p style={styles.pWithBorder}>A culinária mineira é uma das mais amadas do Brasil. Do pão de queijo ao feijão tropeiro, do frango com quiabo ao doce de leite, cada prato é uma celebração da hospitalidade e da tradição de um povo que transforma ingredientes simples em arte gastronômica.</p>
+            <h2 style={styles.h2}>Natureza das Gerais</h2>
+            <p style={styles.pWithBorder}>A Serra do Cipó, o Parque Nacional da Canastra e a Chapada Diamantina mineira guardam cachoeiras, trilhas e uma biodiversidade extraordinária. As nascentes do Rio São Francisco ficam na Serra da Canastra, a 500 km de Belo Horizonte.</p>
           </div>
         </section>
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/natureza/chapada.jpeg" alt="Natureza de Minas Gerais" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/mg-comida.jpg" alt="Gastronomia mineira" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
-            <h2 style={styles.h2}>Natureza Exuberante</h2>
-            <p style={styles.pWithBorder}>Das serras do Espinhaço às cachoeiras da Chapada Diamantina, das águas termais de Caxambu às grutas de Maquiné, Minas Gerais oferece uma natureza diversa e deslumbrante que convida à aventura e ao descanso em meio a paisagens únicas.</p>
+            <h2 style={styles.h2}>A Melhor Cozinha do Brasil</h2>
+            <p style={styles.pWithBorder}>O feijão tropeiro, o frango com quiabo, o tutu à mineira, o pão de queijo e o queijo artesanal da Serra da Canastra fazem da culinária mineira uma das mais amadas do Brasil. Comer em Minas é um ritual de afeto e tradição.</p>
           </div>
         </section>
 
         <section style={styles.ctaContainer}>
           <button style={styles.ctaButton} onClick={() => navigate('/mg-pontos')}
-            onMouseOver={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; e.currentTarget.style.boxShadow = '0 8px 25px rgba(230,81,0,0.6)'; }}
-            onMouseOut={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.boxShadow = '0 5px 20px rgba(230,81,0,0.4)'; }}>
+            onMouseOver={e => { e.currentTarget.style.transform = 'scale(1.05)'; }}
+            onMouseOut={e => { e.currentTarget.style.transform = 'scale(1)'; }}>
             Explore Minas Gerais
           </button>
         </section>
       </main>
-
-      <footer style={styles.footer}>
-        <p>&copy; 2025 GADYS. Descubra Minas Gerais.</p>
-      </footer>
+      <footer style={styles.footer}><p>&copy; 2025 GADYS. Descubra Minas Gerais.</p></footer>
     </div>
   );
 };

@@ -9,7 +9,7 @@ const pontosTuristicos = [
     nome: 'Congresso Nacional',
     cidade: 'Brasília - DF',
     categoria: 'Monumentos',
-    imagem: '/images/monumentos/jus.jpeg',
+    imagem: '/images/geral/congresso.jpg',
     descricao: 'Símbolo máximo da democracia brasileira, projetado por Oscar Niemeyer. As duas cúpulas — uma côncava (Senado) e uma convexa (Câmara) — são ícones do modernismo mundial.',
   },
   {
@@ -17,7 +17,7 @@ const pontosTuristicos = [
     nome: 'Catedral Metropolitana',
     cidade: 'Brasília - DF',
     categoria: 'Monumentos',
-    imagem: '/images/monumentos/zero.jpeg',
+    imagem: '/images/geral/cate.jpg',
     descricao: 'Obra-prima de Oscar Niemeyer inaugurada em 1970. Suas 16 colunas de concreto em forma de mãos erguidas ao céu criam um interior inundado de luz natural e vitrais coloridos.',
   },
   {
@@ -25,7 +25,7 @@ const pontosTuristicos = [
     nome: 'Palácio do Planalto',
     cidade: 'Brasília - DF',
     categoria: 'Monumentos',
-    imagem: '/images/monumentos/pala.jpeg',
+    imagem: '/images/geral/pal.jpg',
     descricao: 'Sede do governo federal, projetado por Niemeyer com as elegantes colunas em curva características do modernismo brasileiro. Aberto à visitação aos domingos.',
   },
   {
@@ -33,7 +33,7 @@ const pontosTuristicos = [
     nome: 'Chapada dos Veadeiros',
     cidade: 'Alto Paraíso - GO',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/natureza/veadeiros.jpeg',
+    imagem: '/images/geral/chap_vea.webp',
     descricao: 'Patrimônio Natural da Humanidade pela UNESCO, a 230 km de Brasília. Cachoeiras monumentais, trilhas no cerrado e uma energia mística que atrai visitantes do mundo inteiro.',
   },
   {
@@ -41,17 +41,13 @@ const pontosTuristicos = [
     nome: 'Lago Paranoá',
     cidade: 'Brasília - DF',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/natureza/rioamz.jpeg',
+    imagem: '/images/geral/Lago Paranoá.jpg',
     descricao: 'Lago artificial de 40 km² criado para amenizar o clima seco de Brasília. Hoje é o coração da vida social da capital, com clubes, restaurantes e esportes náuticos.',
   },
 ];
 
 const rotas = {
   'congresso-nacional': '/df/congresso-nacional',
-  'catedral-brasilia': '/df/catedral-de-brasilia',
-  'palacio-planalto': '/df/palacio-planalto',
-  'chapada-veadeiros': '/df/chapada-dos-veadeiros',
-  'lago-paranoa': '/df/lago-paranoa',
 };
 
 const DistritoFederalPontos = () => {
@@ -79,14 +75,14 @@ const DistritoFederalPontos = () => {
         <button onClick={() => navigate(-1)} className="df-pontos-button" style={{ position: 'absolute', top: '2rem', left: '2rem', backgroundColor: 'rgba(255,255,255,0.2)', borderColor: 'white' }}>
           ← Voltar
         </button>
-        <h1 className="df-pontos-h1">Tesouros de Brasília</h1>
+        <h1 className="df-pontos-h1">Tesouros do Distrito Federal</h1>
         <p className="df-pontos-subheader">Do Congresso Nacional à Chapada dos Veadeiros.</p>
       </header>
 
       <div className="df-pontos-controls">
         <input
           type="text"
-          placeholder="O que você quer descobrir em Brasília?"
+          placeholder="O que você quer descobrir no Distrito Federal?"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="df-pontos-search-bar"
@@ -126,7 +122,7 @@ const DistritoFederalPontos = () => {
       </main>
 
       <footer className="df-pontos-footer">
-        <p>&copy; 2025 GADYS. Feito com a modernidade de Brasília.</p>
+        <p>&copy; 2025 GADYS. Feito com a modernidade do Distrito Federal.</p>
       </footer>
     </div>
   );

@@ -15,10 +15,8 @@ const Piaui = () => {
   };
 
   const images = [
-    '/images/geral/pi1.jpg',
-    '/images/geral/pi2.jpg',
-    '/images/geral/pi3.jpg',
-    '/images/geral/pi4.jpg',
+    '/images/geral/piaui.jpeg',
+    '/images/geral/piaui1.jpg',
   ];
 
   useEffect(() => {
@@ -194,7 +192,7 @@ const Piaui = () => {
 
         <section style={s.section} className="pi-feature-animate">
           <div style={s.imgWrap} className="pi-feature-img-wrap">
-            <img src="/images/geral/pi-cultura.jpg" alt="Cultura piauiense" style={s.img} />
+            <img src="/images/geral/piaui2.jpg" alt="Cultura piauiense" style={s.img} />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Raízes Milenares</h2>
@@ -209,7 +207,7 @@ const Piaui = () => {
 
         <section style={{ ...s.section, flexDirection: 'row-reverse' }} className="pi-feature-animate">
           <div style={s.imgWrap} className="pi-feature-img-wrap">
-            <img src="/images/geral/pi-gastronomia.jpg" alt="Gastronomia piauiense" style={s.img} />
+            <img src="/images/geral/piaui4 (comida).webp" alt="Gastronomia piauiense" style={s.img} />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Sabores do Cerrado e do Sertão</h2>
@@ -224,7 +222,7 @@ const Piaui = () => {
 
         <section style={s.section} className="pi-feature-animate">
           <div style={s.imgWrap} className="pi-feature-img-wrap">
-            <img src="/images/geral/pi-natureza.jpg" alt="Natureza do Piauí" style={s.img} />
+            <img src="/images/geral/piaui3.jpg" alt="Natureza do Piauí" style={s.img} />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Natureza Surpreendente</h2>

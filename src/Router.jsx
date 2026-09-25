@@ -30,6 +30,7 @@ const Pantanal = lazy(() => import('./components/Pantanal'));
 
 const Para = lazy(() => import('./components/Para'));
 const DestinosPara = lazy(() => import('./components/DestinosPara'));
+const AlterDoChao = lazy(() => import('./components/para/AlterDoChao'));
 const RioDeJaneiro = lazy(() => import('./components/RioDeJaneiro'));
 const RJPontos = lazy(() => import('./components/RJPontos'));
 const SaoPaulo = lazy(() => import('./components/SaoPaulo'));
@@ -155,6 +156,18 @@ const ElevadorLacerda = lazy(() => import('./components/ba/ElevadorLacerda'));
 const LencoisBA = lazy(() => import('./components/ba/LencoisBA'));
 
 const DistritoFederal = lazy(() => import('./components/DistritoFederal'));
+const Goias = lazy(() => import('./components/Goias'));
+const GoiasPontos = lazy(() => import('./components/GoiasPontos'));
+const ChapadaVeadeirosGO = lazy(() => import('./components/go/ChapadaVeadeirosGO'));
+const ParqueNacionalChapadaGuimaraes = lazy(() => import('./components/go/ParqueNacionalChapadaGuimaraes'));
+const Maranhao = lazy(() => import('./components/Maranhao'));
+const MaranhaoPontos = lazy(() => import('./components/MaranhaoPontos'));
+const LencoisMaranhenses = lazy(() => import('./components/ma/LencoisMaranhenses'));
+const MatoGrosso = lazy(() => import('./components/MatoGrosso'));
+const MatoGrossoPontos = lazy(() => import('./components/MatoGrossoPontos'));
+const MatoGrossoDoSul = lazy(() => import('./components/MatoGrossoDoSul'));
+const MatoGrossoDoSulPontos = lazy(() => import('./components/MatoGrossoDoSulPontos'));
+const RioDaPrata = lazy(() => import('./components/ms/RioDaPrata'));
 const DistritoFederalPontos = lazy(() => import('./components/DistritoFederalPontos'));
 const CongressoNacional = lazy(() => import('./components/df/CongressoNacional'));
 const CatedralBrasilia = lazy(() => import('./components/df/CatedralBrasilia'));
@@ -259,6 +272,7 @@ function Router() {
 
           <Route path="/para" element={<Suspense fallback={<PageLoader />}><Para /></Suspense>} />
           <Route path="/destinos-para" element={<Suspense fallback={<PageLoader />}><DestinosPara /></Suspense>} />
+          <Route path="/para/alter-do-chao" element={<Suspense fallback={<PageLoader />}><AlterDoChao /></Suspense>} />
           <Route path="/rio-de-janeiro" element={<Suspense fallback={<PageLoader />}><RioDeJaneiro /></Suspense>} />
           <Route path="/rj-pontos" element={<Suspense fallback={<PageLoader />}><RJPontos /></Suspense>} />
           <Route path="/sao-paulo" element={<Suspense fallback={<PageLoader />}><SaoPaulo /></Suspense>} />
@@ -384,6 +398,19 @@ function Router() {
           <Route path="/ba/lencois" element={<Suspense fallback={<PageLoader />}><LencoisBA /></Suspense>} />
 
           <Route path="/distrito-federal" element={<Suspense fallback={<PageLoader />}><DistritoFederal /></Suspense>} />
+          <Route path="/goias" element={<Suspense fallback={<PageLoader />}><Goias /></Suspense>} />
+          <Route path="/goias-pontos" element={<Suspense fallback={<PageLoader />}><GoiasPontos /></Suspense>} />
+          <Route path="/goias/chapada-dos-veadeiros" element={<Suspense fallback={<PageLoader />}><ChapadaVeadeirosGO /></Suspense>} />
+          <Route path="/mato-grosso/parque-chapada-guimaraes" element={<Suspense fallback={<PageLoader />}><ParqueNacionalChapadaGuimaraes /></Suspense>} />
+          <Route path="/maranhao" element={<Suspense fallback={<PageLoader />}><Maranhao /></Suspense>} />
+          <Route path="/maranhao-pontos" element={<Suspense fallback={<PageLoader />}><MaranhaoPontos /></Suspense>} />
+          <Route path="/maranhao/lencois-maranhenses" element={<Suspense fallback={<PageLoader />}><LencoisMaranhenses /></Suspense>} />
+          <Route path="/mato-grosso" element={<Suspense fallback={<PageLoader />}><MatoGrosso /></Suspense>} />
+          <Route path="/mato-grosso-pontos" element={<Suspense fallback={<PageLoader />}><MatoGrossoPontos /></Suspense>} />
+          <Route path="/mato-grosso-do-sul" element={<Suspense fallback={<PageLoader />}><MatoGrossoDoSul /></Suspense>} />
+          <Route path="/ms-pontos" element={<Suspense fallback={<PageLoader />}><MatoGrossoDoSulPontos /></Suspense>} />
+          <Route path="/ms/rio-da-prata" element={<Suspense fallback={<PageLoader />}><RioDaPrata /></Suspense>} />
+          <Route path="/minas-gerais" element={<Suspense fallback={<PageLoader />}><MinasGerais /></Suspense>} />
           <Route path="/df-pontos" element={<Suspense fallback={<PageLoader />}><DistritoFederalPontos /></Suspense>} />
           <Route path="/df/congresso-nacional" element={<Suspense fallback={<PageLoader />}><CongressoNacional /></Suspense>} />
           <Route path="/df/catedral-de-brasilia" element={<Suspense fallback={<PageLoader />}><CatedralBrasilia /></Suspense>} />

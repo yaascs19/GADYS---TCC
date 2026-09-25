@@ -4,18 +4,18 @@ import CearaPontoBase from '../../CearaPontoBase';
 const config = {
   titulo: 'Parque Estadual do Jalapão',
   subtitulo: 'O deserto dourado do coração do Brasil.',
-  carouselImages: ['/images/geral/amazonas3.1.jpg', '/images/geral/oam.jpg'],
+  carouselImages: ['/images/geral/EstadualTO.jpg', '/images/geral/oam.jpg'],
   galeriaImages: [
-    { src: '/images/geral/amazonas3.1.jpg', alt: 'Dunas do Jalapão' },
-    { src: '/images/geral/oam.jpg', alt: 'Fervedouro do Jalapão' },
-    { src: '/images/geral/amazonas1.avif', alt: 'Cachoeira do Jalapão' },
+    { src: '/images/geral/JalapaoTO.jpg', alt: 'Dunas do Jalapão' },
+    { src: '/images/geral/JalapaoTO2.webp', alt: 'Fervedouro do Jalapão' },
+    { src: '/images/geral/JalapaoTO3.jpg', alt: 'Cachoeira do Jalapão' },
   ],
   secoes: {
     sobre: {
       label: 'Sobre',
       titulo: 'O Deserto Dourado do Cerrado',
       texto: 'O Parque Estadual do Jalapão é um dos destinos ecoturísticos mais deslumbrantes do Brasil. Com dunas de areia dourada que chegam a 40 metros de altura, fervedouros de água cristalina, cachoeiras e serras, o parque oferece uma experiência única de contato com a natureza selvagem do Cerrado tocantinense. O capim dourado, fibra exclusiva da região, é a matéria-prima do artesanato mais famoso do Tocantins.',
-      imagem: '/images/geral/amazonas3.1.jpg',
+      imagem: '/images/geral/JalapaoTO.jpg',
       alt: 'Dunas douradas do Jalapão',
       lista: [
         'Área: 158.885 hectares de Cerrado preservado.',
@@ -27,7 +27,7 @@ const config = {
       label: 'Experiências',
       titulo: 'Aventura no Coração do Cerrado',
       texto: 'O Jalapão oferece experiências únicas para os amantes da natureza e do ecoturismo.',
-      imagem: '/images/geral/oam.jpg',
+      imagem: '/images/geral/JalapaoTO2.webp',
       alt: 'Fervedouro do Jalapão',
       subsecoes: [
         { titulo: 'Fervedouros', texto: 'Os fervedouros são nascentes de água subterrânea que emergem com tanta pressão que parecem "ferver". A água cristalina e a pressão natural criam uma sensação única de flutuação, tornando o banho uma experiência inesquecível.' },
@@ -39,7 +39,7 @@ const config = {
       label: 'Visite',
       titulo: 'Como Visitar o Jalapão',
       texto: 'O Jalapão exige veículo 4x4 e guia credenciado. O acesso é feito a partir de Palmas ou de Barreiras (BA).',
-      imagem: '/images/geral/amazonas1.avif',
+      imagem: '/images/geral/JalapaoTO3.jpg',
       alt: 'Acesso ao Jalapão',
       subsecoes: [
         { titulo: 'Como Chegar', texto: 'De Palmas, siga pela TO-010 até Mateiros (320 km, sendo 200 km de estrada de terra). Veículo 4x4 é obrigatório. Agências de turismo em Palmas oferecem pacotes completos com transporte e guia.' },

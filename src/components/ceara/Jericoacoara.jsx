@@ -4,18 +4,35 @@ import CearaPontoBase from '../CearaPontoBase';
 const config = {
   titulo: 'Jericoacoara',
   subtitulo: 'O paraíso das dunas e lagoas do Ceará.',
-  carouselImages: ['/images/geral/jericoacoara.jpg', '/images/geral/jericoacoara.jpg'],
+  tema: {
+    bg: '#0d2b3e',
+    texto: '#e8f4f8',
+    card: '#1a4a5e',
+    acento: '#38b2c8',
+    navTexto: '#7ecfdf',
+    navAtivo: '#f5d76e',
+    navBorda: '#f5d76e',
+    tituloTexto: '#f5d76e',
+    recCard: '#1a4a5e',
+    recNome: '#e8f4f8',
+    recContato: '#0d2b3e',
+    recContatoBg: '#38b2c8',
+    footerBg: 'linear-gradient(135deg, #1a4a5e, #061520)',
+    footerTexto: '#f5d76e',
+  },
+  carouselImages: ['/images/geral/Jariquaquara.3.jpg', '/images/geral/Jariquaquara.1.jpg'],
   galeriaImages: [
-    { src: '/images/geral/jericoacoara.jpg', alt: 'Jericoacoara' },
-    { src: '/images/geral/jericoacoara.jpg', alt: 'Jericoacoara dunas' },
-    { src: '/images/geral/jericoacoara.jpg', alt: 'Jericoacoara pôr do sol' },
+    { src: '/images/geral/Jariquaquara.3.jpg', alt: 'Jericoacoara' },
+    { src: '/images/geral/Jariquaquara.1.jpg', alt: 'Jericoacoara dunas' },
+    { src: '/images/geral/Jariquaquara.2.avif', alt: 'Jericoacoara experiências' },
+    { src: '/images/geral/jariquaquara.4.avif', alt: 'Jericoacoara visite' },
   ],
   secoes: {
     sobre: {
       label: 'Sobre',
       titulo: 'O Paraíso Escondido do Brasil',
       texto: 'Jericoacoara, carinhosamente chamada de "Jeri", é uma vila paradisíaca encravada entre dunas, lagoas e o mar. Considerada uma das praias mais bonitas do mundo pela revista Condé Nast Traveler, o lugar encanta pela combinação única de paisagens selvagens, ventos constantes e um pôr do sol que para o tempo.',
-      imagem: '/images/geral/jericoacoara.jpg',
+      imagem: '/images/geral/JeriCE.jpg',
       alt: 'Vista aérea de Jericoacoara',
       lista: [
         'Localização: Jijoca de Jericoacoara, a 300 km de Fortaleza.',
@@ -27,7 +44,7 @@ const config = {
       label: 'Experiências',
       titulo: 'Viva Jeri ao Máximo',
       texto: 'Jericoacoara oferece experiências únicas para todos os perfis de viajante. Das lagoas de água doce às dunas que parecem desertos, cada canto guarda uma surpresa.',
-      imagem: '/images/geral/jericoacoara.jpg',
+      imagem: '/images/geral/Jariquaquara.2.avif',
       alt: 'Lagoa de Jericoacoara',
       subsecoes: [
         { titulo: 'Lagoa do Paraíso e Lagoa Azul', texto: 'As lagoas de água doce cristalina são o cartão-postal de Jeri. A Lagoa do Paraíso, com suas águas esverdeadas e transparentes, é perfeita para um mergulho refrescante.' },
@@ -39,7 +56,7 @@ const config = {
       label: 'Visite',
       titulo: 'Como Chegar e Se Hospedar',
       texto: 'Chegar a Jericoacoara faz parte da aventura. O acesso é feito por veículos 4x4 ou buggys, atravessando dunas e praias a partir de Jijoca de Jericoacoara.',
-      imagem: '/images/geral/jericoacoara.jpg',
+      imagem: '/images/geral/jariquaquara.4.avif',
       alt: 'Acesso a Jericoacoara',
       subsecoes: [
         { titulo: 'Como Chegar', texto: 'De Fortaleza, pegue um ônibus ou van até Jijoca (aprox. 4h). De lá, 4x4s fazem o trajeto pelas dunas até a vila (30 min).' },

@@ -14,10 +14,10 @@ const Alagoas = () => {
   };
 
   const images = [
-    '/images/geral/alagoas1.jpg',
-    '/images/geral/alagoas2.jpg',
-    '/images/geral/alagoas3.jpg',
-    '/images/geral/alagoas4.jpg',
+    '/Alagoas1.webp',
+    '/images/geral/Alagoas2.jpg',
+    '/images/geral/Alagoas3.jpg',
+    '/images/geral/Alagoas4.jpg',
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -222,7 +222,7 @@ const Alagoas = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/alagoasInicio.jpg" alt="Alagoas" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/Alagoas2.jpg" alt="Alagoas" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Cultura que Pulsa</h2>
@@ -232,7 +232,7 @@ const Alagoas = () => {
 
         <section style={{ ...styles.featureSection, flexDirection: 'row-reverse' }} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/alagoasComida.jpg" alt="Culinária alagoana" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/Alagoas3.jpg" alt="Culinária alagoana" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Sabores do Nordeste</h2>
@@ -242,7 +242,7 @@ const Alagoas = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/alagoasNatureza.jpg" alt="Natureza de Alagoas" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/Alagoas4.jpg" alt="Natureza de Alagoas" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Maravilhas Naturais</h2>

@@ -10,7 +10,7 @@ const pontosTuristicos = [
     cidade: 'Maragogi - AL',
     categoria: 'Lugar Paradísíaco',
     descricao: 'Conhecida como o "Caribe Brasileiro", Maragogi encanta com suas piscinas naturais de águas cristalinas e esverdeadas, recifes de corais e praias de areia branca que figuram entre as mais belas do Brasil.',
-    imagem: '/images/geral/al-maragogi.jpg',
+    imagem: '/images/geral/ALMaragogi.png',
   },
   {
     id: 'pajucara',
@@ -18,7 +18,7 @@ const pontosTuristicos = [
     cidade: 'Maceió - AL',
     categoria: 'Lugar Paradísíaco',
     descricao: 'A praia mais famosa de Maceió, com suas piscinas naturais formadas pelos recifes de corais a 2 km da orla. Jangadas levam turistas até as piscinas, onde é possível mergulhar em águas mornas e transparentes.',
-    imagem: '/images/geral/al-pajucara.jpg',
+    imagem: '/images/geral/ALPajuçara.jpg',
   },
   {
     id: 'lagoa-mundau',
@@ -26,7 +26,7 @@ const pontosTuristicos = [
     cidade: 'Maceió - AL',
     categoria: 'Lugar Paradísíaco',
     descricao: 'Uma das maiores lagoas do Nordeste, com 27 km² de extensão. Seus canais e ilhotas formam um labirinto natural onde passeios de barco revelam paisagens únicas, restaurantes flutuantes e o pôr do sol mais bonito de Maceió.',
-    imagem: '/images/geral/al-mundau.jpg',
+    imagem: '/images/geral/ALmundaú.jpg',
   },
   {
     id: 'penedo',
@@ -34,7 +34,7 @@ const pontosTuristicos = [
     cidade: 'Penedo - AL',
     categoria: 'Monumentos',
     descricao: 'A cidade mais antiga de Alagoas, fundada em 1637, guarda um dos conjuntos arquitetônicos coloniais mais preservados do Nordeste. Igrejas barrocas, casarões históricos e a orla do Rio São Francisco compõem um cenário de rara beleza.',
-    imagem: '/images/geral/al-penedo.jpg',
+    imagem: '/images/geral/ALPenedo.jpg',
   },
   {
     id: 'sao-miguel-milagres',
@@ -42,7 +42,7 @@ const pontosTuristicos = [
     cidade: 'São Miguel dos Milagres - AL',
     categoria: 'Lugar Paradísíaco',
     descricao: 'Um dos destinos mais exclusivos do Brasil, com praias praticamente desertas, piscinas naturais rasas e águas de cor turquesa. Parte da Costa dos Corais, é refúgio de peixe-boi e tartarugas marinhas.',
-    imagem: '/images/geral/al-sao-miguel.jpg',
+    imagem: '/images/geral/ALmilagres.webp',
   },
   {
     id: 'barra-sao-miguel',
@@ -50,7 +50,7 @@ const pontosTuristicos = [
     cidade: 'Barra de São Miguel - AL',
     categoria: 'Lugar Paradísíaco',
     descricao: 'Onde o Rio São Miguel encontra o mar, formando uma barra de areia branca com águas calmas e mornas. Ideal para famílias, com piscinas naturais rasas e uma vila charmosa com frutos do mar frescos.',
-    imagem: '/images/geral/al-barra.jpg',
+    imagem: '/images/geral/ALBarra.webp',
   },
   {
     id: 'quilombo-palmares',
@@ -58,7 +58,7 @@ const pontosTuristicos = [
     cidade: 'União dos Palmares - AL',
     categoria: 'Monumentos',
     descricao: 'Palco do maior quilombo das Américas, o Quilombo dos Palmares, liderado por Zumbi. A Serra da Barriga é hoje Patrimônio Histórico Nacional e símbolo da resistência negra, com trilhas e um museu a céu aberto.',
-    imagem: '/images/geral/al-palmares.jpg',
+    imagem: '/images/geral/ALBarriga.jpeg',
   },
   {
     id: 'sururu-maceio',
@@ -66,7 +66,7 @@ const pontosTuristicos = [
     cidade: 'Maceió - AL',
     categoria: 'Restaurantes',
     descricao: 'O coração gastronômico e cultural de Maceió, onde o sururu de capote, a moqueca de sururu e o arroz com leite de coco são servidos em barracas típicas. Uma experiência autêntica da culinária alagoana à beira da Lagoa Mundaú.',
-    imagem: '/images/geral/al-mercado.jpg',
+    imagem: '/images/geral/ALArtesanato.webp',
   },
 ];
 

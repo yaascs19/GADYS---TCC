@@ -27,24 +27,24 @@ const HeaderCarousel = ({ images, titulo, subtitulo, onVoltar }) => {
   );
 };
 
-const ConteudoAba = ({ secao }) => (
+const ConteudoAba = ({ secao, tema }) => (
   <section className="sudeste-ponto-section">
     <div className="sudeste-ponto-split">
       <div className="sudeste-ponto-text">
-        <h2>{secao.titulo}</h2>
+        <h2 style={tema.tituloTexto ? { color: tema.tituloTexto } : {}}>{secao.titulo}</h2>
         <p>{secao.texto}</p>
         {secao.lista && (
           <ul className="sudeste-ponto-facts">
             {secao.lista.map((item, i) => (
-              <li key={i}><strong>{item.split(':')[0]}:</strong>{item.split(':').slice(1).join(':')}</li>
+              <li key={i} style={{ backgroundColor: tema.card, borderLeftColor: tema.acento }}><strong>{item.split(':')[0]}:</strong>{item.split(':').slice(1).join(':')}</li>
             ))}
           </ul>
         )}
         {secao.subsecoes && (
           <div className="sudeste-ponto-subsecoes">
             {secao.subsecoes.map((sub, i) => (
-              <div key={i} className="sudeste-ponto-subsecao">
-                <h3>{sub.titulo}</h3>
+              <div key={i} className="sudeste-ponto-subsecao" style={{ backgroundColor: tema.card, borderLeftColor: tema.acento }}>
+                <h3 style={tema.tituloTexto ? { color: tema.tituloTexto } : {}}>{sub.titulo}</h3>
                 <p>{sub.texto}</p>
               </div>
             ))}
@@ -59,15 +59,15 @@ const ConteudoAba = ({ secao }) => (
       <div className="sudeste-ponto-rec-container">
         {secao.recomendacoes.map((rec, i) => (
           <div key={i} className="sudeste-ponto-rec-categoria">
-            <h3>{rec.titulo}</h3>
+            <h3 style={tema.tituloTexto ? { color: tema.tituloTexto } : {}}>{rec.titulo}</h3>
             <div className="sudeste-ponto-rec-cards">
               {rec.itens.map((item, j) => (
-                <div key={j} className="sudeste-ponto-rec-card">
+                <div key={j} className="sudeste-ponto-rec-card" style={tema.recCard ? { backgroundColor: tema.recCard } : {}}>
                   <div className="sudeste-ponto-rec-card-header">
-                    <a href={item.site} target="_blank" rel="noopener noreferrer" className="sudeste-ponto-rec-nome">{item.nome}</a>
+                    <a href={item.site} target="_blank" rel="noopener noreferrer" className="sudeste-ponto-rec-nome" style={tema.recNome ? { color: tema.recNome } : {}}>{item.nome}</a>
                     <span className="sudeste-ponto-rec-nota">{item.nota} ★</span>
                   </div>
-                  <span className="sudeste-ponto-rec-contato">{item.contato}</span>
+                  <span className="sudeste-ponto-rec-contato" style={tema.recContato ? { color: tema.recContato, backgroundColor: tema.recContatoBg } : {}}>{item.contato}</span>
                 </div>
               ))}
             </div>
@@ -78,9 +78,9 @@ const ConteudoAba = ({ secao }) => (
   </section>
 );
 
-const Galeria = ({ images }) => (
+const Galeria = ({ images, tema = {} }) => (
   <section className="sudeste-ponto-galeria">
-    <h2>Fotos</h2>
+    <h2 style={tema.tituloTexto ? { color: tema.tituloTexto } : {}}>Fotos</h2>
     <div className="sudeste-ponto-galeria-grid">
       {images.map((img, i) => (
         <div key={i} className="sudeste-ponto-galeria-item">
@@ -110,26 +110,29 @@ const SudestePontoDetalheBase = ({ config }) => {
 
   const titulo = bdLocal?.nome || config.titulo;
   const subtitulo = bdLocal?.descricao || config.subtitulo;
+  const tema = config.tema || {};
 
   return (
-    <div className="sudeste-ponto-container">
+    <div className="sudeste-ponto-container" style={{ backgroundColor: tema.bg, color: tema.texto }}>
       <HeaderCarousel images={carouselImages} titulo={titulo} subtitulo={subtitulo} onVoltar={() => navigate(-1)} />
       <div className="sudeste-ponto-content-wrapper">
         <nav className="sudeste-ponto-nav">
           {Object.keys(secoes).map(key => (
-            <button key={key} onClick={() => setAbaAtiva(key)} className={abaAtiva === key ? 'active' : ''}>
+            <button key={key} onClick={() => setAbaAtiva(key)} className={abaAtiva === key ? 'active' : ''}
+              style={tema.navTexto ? { color: abaAtiva === key ? tema.navAtivo : tema.navTexto, borderBottomColor: abaAtiva === key ? tema.navBorda : 'transparent' } : {}}>
               {secoes[key].label}
             </button>
           ))}
-          <button onClick={() => setAbaAtiva('avaliacoes')} className={abaAtiva === 'avaliacoes' ? 'active' : ''}>
+          <button onClick={() => setAbaAtiva('avaliacoes')} className={abaAtiva === 'avaliacoes' ? 'active' : ''}
+            style={tema.navTexto ? { color: abaAtiva === 'avaliacoes' ? tema.navAtivo : tema.navTexto, borderBottomColor: abaAtiva === 'avaliacoes' ? tema.navBorda : 'transparent' } : {}}>
             Avaliações
           </button>
         </nav>
         <main className="sudeste-ponto-main">
-          {abaAtiva === 'fotos' ? <Galeria images={config.galeriaImages} /> : abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> : <ConteudoAba secao={secoes[abaAtiva]} />}
+          {abaAtiva === 'fotos' ? <Galeria images={config.galeriaImages} tema={tema} /> : abaAtiva === 'avaliacoes' ? <AvaliacoesComentarios localId={bdId} /> : <ConteudoAba secao={secoes[abaAtiva]} tema={tema} />}
         </main>
       </div>
-      <footer className="sudeste-ponto-footer">
+      <footer className="sudeste-ponto-footer" style={tema.footerBg ? { background: tema.footerBg, color: tema.footerTexto } : {}}>
         <p>GADYS © 2025 — {titulo}</p>
       </footer>
     </div>

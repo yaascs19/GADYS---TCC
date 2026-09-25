@@ -9,10 +9,8 @@ const EspiritoSanto = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const images = [
-    '/images/natureza/bonito.jpeg',
-    '/images/geral/praiaEx.jpg',
-    '/images/natureza/veadeiros.jpeg',
-    '/images/monumentos/independencia.webp',
+    '/images/geral/espirito-santo.jpg',
+    '/images/geral/espirito-santo.1.jpg',
   ];
 
   const toggleDarkMode = () => {
@@ -94,7 +92,7 @@ const EspiritoSanto = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/praiaEx.jpg" alt="Praias do Espírito Santo" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/espirito-santo.2.jpg" alt="Praias do Espírito Santo" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Praias Paradisíacas</h2>
@@ -104,7 +102,7 @@ const EspiritoSanto = () => {
 
         <section style={{...styles.featureSection, flexDirection: 'row-reverse'}} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/natureza/veadeiros.jpeg" alt="Montanhas do Espírito Santo" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/espirito-santo.3.jpg" alt="Montanhas do Espírito Santo" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Montanhas e Cultura</h2>
@@ -114,7 +112,7 @@ const EspiritoSanto = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/natureza/bonito.jpeg" alt="Natureza do Espírito Santo" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/espirito-santo.4.jpg" alt="Sabores Capixabas" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Sabores Capixabas</h2>

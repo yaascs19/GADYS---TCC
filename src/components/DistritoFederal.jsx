@@ -14,10 +14,8 @@ const DistritoFederal = () => {
   };
 
   const images = [
-    '/images/monumentos/jus.jpeg',
-    '/images/monumentos/pala.jpeg',
-    '/images/monumentos/zero.jpeg',
-    '/images/natureza/veadeiros.jpeg',
+    '/images/geral/DF.jpeg',
+    '/images/geral/DF.3.jpg',
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -91,24 +89,24 @@ const DistritoFederal = () => {
           ))}
           <div style={styles.gradientOverlay} />
           <div style={styles.heroContent}>
-            <h1 style={styles.h1}>Brasília: Capital do Futuro</h1>
-            <p style={styles.heroP}>Construída do zero em apenas 41 meses, Brasília é um monumento vivo ao modernismo brasileiro. Patrimônio Mundial da UNESCO e coração político do Brasil.</p>
+            <h1 style={styles.h1}>Distrito Federal</h1>
+            <p style={styles.heroP}>Construída do zero em apenas 41 meses, o Distrito Federal é um monumento vivo ao modernismo brasileiro. Patrimônio Mundial da UNESCO e coração político do Brasil.</p>
           </div>
         </section>
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/monumentos/jus.jpeg" alt="Palácio da Justiça" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/DF.2.jpg" alt="Arquitetura que Inspira" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Arquitetura que Inspira</h2>
-            <p style={styles.pWithBorder}>Brasília é um museu a céu aberto. As obras de Oscar Niemeyer e Lúcio Costa criaram uma cidade onde cada edifício é uma escultura. O Congresso Nacional, o Palácio do Planalto e a Catedral Metropolitana são ícones do modernismo mundial.</p>
+            <p style={styles.pWithBorder}>O Distrito Federal é um museu a céu aberto. As obras de Oscar Niemeyer e Lúcio Costa criaram uma cidade onde cada edifício é uma escultura. O Congresso Nacional, o Palácio do Planalto e a Catedral Metropolitana são ícones do modernismo mundial.</p>
           </div>
         </section>
 
         <section style={{ ...styles.featureSection, flexDirection: 'row-reverse' }} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/natureza/veadeiros.jpeg" alt="Chapada dos Veadeiros" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/DF.1.jpg" alt="Natureza do Cerrado" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Natureza do Cerrado</h2>
@@ -118,11 +116,11 @@ const DistritoFederal = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/monumentos/pala.jpeg" alt="Palácio do Planalto" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/Centro do Poder.webp" alt="Centro do Poder" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Centro do Poder</h2>
-            <p style={styles.pWithBorder}>Brasília concentra os três poderes da República em uma área planejada. A Esplanada dos Ministérios, o Congresso Nacional, o STF e o Palácio do Planalto formam um conjunto arquitetônico único no mundo, aberto à visitação pública.</p>
+            <p style={styles.pWithBorder}>O Distrito Federal concentra os três poderes da República em uma área planejada. A Esplanada dos Ministérios, o Congresso Nacional, o STF e o Palácio do Planalto formam um conjunto arquitetônico único no mundo, aberto à visitação pública.</p>
           </div>
         </section>
 
@@ -138,7 +136,7 @@ const DistritoFederal = () => {
         </section>
       </main>
       <footer style={styles.footer}>
-        <p>&copy; 2025 GADYS. Feito com a modernidade de Brasília.</p>
+        <p>&copy; 2025 GADYS. Feito com a modernidade do Distrito Federal.</p>
       </footer>
     </div>
   );

@@ -9,10 +9,10 @@ const Sergipe = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const images = [
-    '/images/geral/se-xingo.jpg',
-    '/images/geral/se-aracaju.jpg',
-    '/images/geral/se-laranjeiras.jpg',
-    '/images/geral/se-mangue.jpg',
+    '/images/geral/Sergipe.jpg',
+    '/images/geral/Sergipe2.jpg',
+    '/images/geral/Sergipe3.jpg',
+    '/images/geral/Sergipe4.jpg',
   ];
 
   const toggleDarkMode = () => {
@@ -89,7 +89,7 @@ const Sergipe = () => {
 
         <section style={s.section} className="fsa">
           <div style={s.imgBox} className="fic">
-            <img src="/images/geral/se-xingo.jpg" alt="Cânion do Xingó" style={s.img} className="fi" />
+            <img src="/images/geral/Sergipe2.jpg" alt="Cânion do Xingó" style={s.img} className="fi" />
           </div>
           <div style={s.textBox}>
             <h2 style={s.h2}>Maravilhas Naturais</h2>
@@ -99,7 +99,7 @@ const Sergipe = () => {
 
         <section style={{ ...s.section, flexDirection: 'row-reverse' }} className="fsa">
           <div style={s.imgBox} className="fic">
-            <img src="/images/geral/se-laranjeiras.jpg" alt="Laranjeiras" style={s.img} className="fi" />
+            <img src="/images/geral/Sergipe3.jpg" alt="Laranjeiras" style={s.img} className="fi" />
           </div>
           <div style={s.textBox}>
             <h2 style={s.h2}>História e Tradição</h2>
@@ -109,7 +109,7 @@ const Sergipe = () => {
 
         <section style={s.section} className="fsa">
           <div style={s.imgBox} className="fic">
-            <img src="/images/geral/se-aracaju.jpg" alt="Aracaju" style={s.img} className="fi" />
+            <img src="/images/geral/Sergipe4.jpg" alt="Aracaju" style={s.img} className="fi" />
           </div>
           <div style={s.textBox}>
             <h2 style={s.h2}>Praias e Sabores</h2>

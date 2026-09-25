@@ -43,13 +43,14 @@
   z-index: 2;
 }
 
-.sudeste-ponto-header-text { position: relative; z-index: 3; }
+.sudeste-ponto-header-text { position: relative; z-index: 3; text-align: center; }
 
 .sudeste-ponto-header-text h1 {
   font-size: 3.5rem;
   font-weight: 700;
   text-shadow: 0 2px 10px rgba(0,0,0,0.6);
   margin-bottom: 0.75rem;
+  text-align: center;
 }
 
 .sudeste-ponto-header-text p {
@@ -57,6 +58,8 @@
   font-weight: 300;
   text-shadow: 0 1px 8px rgba(0,0,0,0.5);
   max-width: 500px;
+  text-align: center;
+  margin: 0 auto;
 }
 
 .sudeste-ponto-nav {

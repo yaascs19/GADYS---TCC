@@ -55,7 +55,7 @@ const pontosTuristicos = [
 ];
 
 const rotas = {
-  'pelourinho': '/ba/pelourinho',
+  'pelourinho': '/pelourinho',
   'chapada-diamantina': '/ba/chapada-diamantina',
   'porto-seguro': '/ba/porto-seguro',
   'morro-sao-paulo': '/ba/morro-sao-paulo',

@@ -17,7 +17,7 @@ const pontosTuristicos = [
     nome: 'Porto de Galinhas',
     cidade: 'Ipojuca - PE',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/fe-pe.jpg',
+    imagem: '/images/geral/Porto de Galinhas.webp',
     descricao: 'Piscinas naturais entre recifes de corais com peixes coloridos, eleita a praia mais bonita do Brasil.',
   },
   {
@@ -25,7 +25,7 @@ const pontosTuristicos = [
     nome: 'Recife Antigo',
     cidade: 'Recife - PE',
     categoria: 'Monumentos',
-    imagem: '/images/geral/pelo.jpg',
+    imagem: '/images/geral/Recife Antigo.jpg',
     descricao: 'O coração histórico da Veneza Brasileira, com o Marco Zero e a vibrante cena cultural do Recife.',
   },
   {
@@ -33,7 +33,7 @@ const pontosTuristicos = [
     nome: 'Olinda',
     cidade: 'Olinda - PE',
     categoria: 'Monumentos',
-    imagem: '/images/geral/pelo-xx.jpg',
+    imagem: '/images/geral/Olinda.jpg',
     descricao: 'Patrimônio Cultural da Humanidade pela UNESCO, com igrejas barrocas e o Carnaval mais autêntico do Brasil.',
   },
   {
@@ -41,7 +41,7 @@ const pontosTuristicos = [
     nome: 'Vale do Catimbau',
     cidade: 'Buíque - PE',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/pi-capivara.jpg',
+    imagem: '/images/geral/Vale do Catimbau.jpg',
     descricao: 'Parque nacional com mais de 2.000 sítios arqueológicos e pinturas rupestres de até 6.000 anos.',
   },
   {
@@ -49,18 +49,13 @@ const pontosTuristicos = [
     nome: 'Caruaru',
     cidade: 'Caruaru - PE',
     categoria: 'Monumentos',
-    imagem: '/images/geral/pi-cultura.jpg',
+    imagem: '/images/geral/Caruaru.jpeg',
     descricao: 'Capital do forró e sede do maior São João do mundo, com o famoso Alto do Moura e a Feira de Caruaru.',
   },
 ];
 
 const rotas = {
-  'fernando-de-noronha': '/pe/fernando-de-noronha',
-  'porto-de-galinhas': '/pe/porto-de-galinhas',
-  'recife-antigo': '/pe/recife-antigo',
-  'olinda': '/pe/olinda',
-  'vale-do-catimbau': '/pe/vale-do-catimbau',
-  'caruaru': '/pe/caruaru',
+  'fernando-de-noronha': '/fernando-noronha',
 };
 
 const PernambucoPontos = () => {

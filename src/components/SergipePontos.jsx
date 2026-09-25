@@ -11,7 +11,7 @@ const pontosTuristicos = [
     cidade: 'Canindé de São Francisco - SE',
     categoria: 'Lugar Paradísíaco',
     descricao: 'Um dos espetáculos naturais mais impressionantes do Nordeste, com paredes rochosas de até 150 metros e as águas esverdeadas do Rio São Francisco.',
-    imagem: '/images/geral/se-xingo.jpg',
+    imagem: '/images/geral/Canion.jpg',
     rota: '/sergipe/canion-xingo',
   },
   {
@@ -20,7 +20,7 @@ const pontosTuristicos = [
     cidade: 'Aracaju - SE',
     categoria: 'Lugar Paradísíaco',
     descricao: 'A orla mais famosa de Aracaju, com praias de águas mornas, ciclovia, quiosques e o famoso Passarinho, símbolo da cidade.',
-    imagem: '/images/geral/se-aracaju.jpg',
+    imagem: '/images/geral/orla.jpg',
     rota: null,
   },
   {
@@ -29,7 +29,7 @@ const pontosTuristicos = [
     cidade: 'Laranjeiras - SE',
     categoria: 'Monumentos',
     descricao: 'Cidade histórica tombada pelo IPHAN com igrejas barrocas, casarões coloniais e o maior festival de cultura popular do Nordeste.',
-    imagem: '/images/geral/se-laranjeiras.jpg',
+    imagem: '/images/geral/Laranjeiras.jpg',
     rota: null,
   },
   {
@@ -38,7 +38,7 @@ const pontosTuristicos = [
     cidade: 'Indiaroba - SE',
     categoria: 'Lugar Paradísíaco',
     descricao: 'Cenário do romance Tieta do Agreste de Jorge Amado, com dunas brancas, coqueirais e o encontro do Rio Real com o mar.',
-    imagem: '/images/geral/se-mangue.jpg',
+    imagem: '/images/geral/mangue.jpg',
     rota: null,
   },
   {
@@ -47,7 +47,7 @@ const pontosTuristicos = [
     cidade: 'São Cristóvão - SE',
     categoria: 'Monumentos',
     descricao: 'A quarta cidade mais antiga do Brasil e Patrimônio Mundial da UNESCO, com uma das praças coloniais mais bem preservadas do país.',
-    imagem: '/images/geral/se-saocristovao.jpg',
+    imagem: '/images/geral/Cristóvão.jpg',
     rota: null,
   },
   {
@@ -56,7 +56,7 @@ const pontosTuristicos = [
     cidade: 'Aracaju - SE',
     categoria: 'Restaurantes',
     descricao: 'O coração gastronômico de Sergipe, famoso pelo caranguejo com pirão, sururu de capote e os doces típicos sergipanos.',
-    imagem: '/images/geral/se-mercado.jpg',
+    imagem: '/images/geral/Aracaju.jpg',
     rota: null,
   },
   {
@@ -65,7 +65,7 @@ const pontosTuristicos = [
     cidade: 'Estância - SE',
     categoria: 'Lugar Paradísíaco',
     descricao: 'Uma das praias mais preservadas de Sergipe, com águas cristalinas, coqueirais e ambiente tranquilo ideal para descanso.',
-    imagem: '/images/geral/se-saco.jpg',
+    imagem: '/images/geral/saco.jpg',
     rota: null,
   },
   {
@@ -74,7 +74,7 @@ const pontosTuristicos = [
     cidade: 'São Cristóvão - SE',
     categoria: 'Monumentos',
     descricao: 'Instalado no antigo Palácio do Governo, o museu guarda um dos mais importantes acervos históricos e artísticos do Nordeste.',
-    imagem: '/images/geral/se-museu.jpg',
+    imagem: '/images/geral/museu.jpg',
     rota: null,
   },
 ];

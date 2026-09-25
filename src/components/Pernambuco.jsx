@@ -14,10 +14,8 @@ const Pernambuco = () => {
   };
 
   const images = [
-    '/images/geral/fe-pe.jpg',
-    '/images/geral/pelo.jpg',
-    '/images/geral/pelo-xx.jpg',
-    '/maracatu.jpg',
+    '/images/geral/pernambuco.webp',
+    '/images/geral/pernambuco1.jpg',
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -99,7 +97,7 @@ const Pernambuco = () => {
 
         <section style={s.section} className="pe-feature-animate">
           <div style={s.imgWrap} className="pe-feature-img-wrap">
-            <img src="/images/geral/pelo.jpg" alt="Olinda" style={s.img} className="pe-feature-img" />
+            <img src="/images/geral/pernambuco2.webp" alt="Olinda" style={s.img} className="pe-feature-img" />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Cultura que Vibra</h2>
@@ -109,7 +107,7 @@ const Pernambuco = () => {
 
         <section style={{ ...s.section, flexDirection: 'row-reverse' }} className="pe-feature-animate">
           <div style={s.imgWrap} className="pe-feature-img-wrap">
-            <img src="/images/geral/fe-pe.jpg" alt="Fernando de Noronha" style={s.img} className="pe-feature-img" />
+            <img src="/images/geral/pernambuco3.webp" alt="Fernando de Noronha" style={s.img} className="pe-feature-img" />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Paraísos Naturais</h2>
@@ -119,7 +117,7 @@ const Pernambuco = () => {
 
         <section style={s.section} className="pe-feature-animate">
           <div style={s.imgWrap} className="pe-feature-img-wrap">
-            <img src="/images/geral/pi-cultura.jpg" alt="Caruaru" style={s.img} className="pe-feature-img" />
+            <img src="/images/geral/pernambuco-comidas.jpg" alt="Caruaru" style={s.img} className="pe-feature-img" />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Sabores do Agreste</h2>

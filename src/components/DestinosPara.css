@@ -25,6 +25,7 @@
 
 /* --- Cabeçalho --- */
 .para-destinos-header {
+  position: relative;
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/geral/para1.jpg');
   background-size: cover;
   background-position: center;
@@ -169,4 +170,24 @@
   .para-destinos-filter-buttons { gap: 0.5rem; }
   .para-destinos-button { padding: 0.5rem 1rem; font-size: 0.85rem; }
   .para-destinos-card-title { font-size: 1.3rem; }
+}
+
+.para-destinos-saibamais {
+  margin-top: 1.5rem;
+  align-self: flex-start;
+  background: linear-gradient(45deg, #E65100, #FF8C00);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 12px rgba(230,81,0,0.3);
+}
+
+.para-destinos-saibamais:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(230,81,0,0.5);
 }

@@ -14,10 +14,8 @@ const Bahia = () => {
   };
 
   const images = [
-    '/images/geral/pelo-xx.jpg',
-    '/images/geral/pelo.jpg',
-    '/images/geral/pelou1.jpg',
-    '/images/geral/pelou2.jpg',
+    '/images/geral/Bahia.1.webp',
+    '/images/geral/bahia.6.jpg',
   ];
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -98,7 +96,7 @@ const Bahia = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/pelo3.jpg" alt="Pelourinho" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/Bahia.3.avif" alt="Alma Afro-Brasileira" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Alma Afro-Brasileira</h2>
@@ -108,7 +106,7 @@ const Bahia = () => {
 
         <section style={{ ...styles.featureSection, flexDirection: 'row-reverse' }} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/gastronomia/acaraje.jpeg" alt="Acarajé" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/Bahia.4.jpg" alt="Sabores que Encantam" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Sabores que Encantam</h2>
@@ -118,7 +116,7 @@ const Bahia = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/natureza/lencois.jpeg" alt="Lençóis Maranhenses" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/Bahia.5.jpg" alt="Natureza Exuberante" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Natureza Exuberante</h2>
@@ -129,7 +127,7 @@ const Bahia = () => {
         <section style={styles.ctaContainer}>
           <button
             style={styles.ctaButton}
-            onClick={() => navigate('/bahia-pontos')}
+            onClick={() => navigate('/ba-pontos')}
             onMouseOver={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; }}
             onMouseOut={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
           >
