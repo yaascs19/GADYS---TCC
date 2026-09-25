@@ -4,18 +4,20 @@ import CearaPontoBase from '../../CearaPontoBase';
 const config = {
   titulo: 'Parque Estadual Chandless',
   subtitulo: 'A floresta amazônica em seu estado mais puro.',
-  carouselImages: ['/images/geral/amazonas1.avif', '/images/geral/amazonas2.jpg'],
+  carouselImages: ['/images/geral/ac-pqch5.jpg', '/images/geral/ac-pqch6.jpg'],
   galeriaImages: [
-    { src: '/images/geral/amazonas1.avif', alt: 'Parque Chandless' },
-    { src: '/images/geral/amazonas2.jpg', alt: 'Floresta do Chandless' },
-    { src: '/images/geral/amazonas3.1.jpg', alt: 'Rio no Chandless' },
+    { src: '/images/geral/ac-pqch3.jpg', alt: 'Parque Chandless' },
+    { src: '/images/geral/ac-pqch4.jpeg', alt: 'Floresta do Chandless' },
+    { src: '/images/geral/ac-pqch5.jpg', alt: 'Rio no Chandless' },
+    { src: '/images/geral/ac-pqch6.jpg', alt: 'Parque Chandless' },
+    { src: '/images/geral/ac-pqch7.jpg', alt: 'Acesso ao Chandless' },
   ],
   secoes: {
     sobre: {
       label: 'Sobre',
       titulo: 'O Último Paraíso Intocado do Acre',
       texto: 'O Parque Estadual Chandless é um dos maiores parques estaduais do Brasil, com mais de 695.000 hectares de floresta amazônica primária. Localizado no extremo sul do Acre, na fronteira com o Peru, o parque é um dos ecossistemas mais preservados do planeta, com rios cristalinos, lagos e uma biodiversidade extraordinária.',
-      imagem: '/images/geral/amazonas1.avif',
+      imagem: '/images/geral/ac-pqch3.jpg',
       alt: 'Vista aérea do Parque Chandless',
       lista: [
         'Área: 695.303 hectares de floresta primária.',
@@ -27,7 +29,7 @@ const config = {
       label: 'Experiências',
       titulo: 'Aventura na Floresta Primária',
       texto: 'O Parque Chandless oferece experiências únicas de ecoturismo em uma das florestas mais remotas do Brasil.',
-      imagem: '/images/geral/amazonas2.jpg',
+      imagem: '/images/geral/ac-pqch4.jpeg',
       alt: 'Trilha no Parque Chandless',
       subsecoes: [
         { titulo: 'Observação de Fauna', texto: 'O parque abriga onças-pintadas, antas, queixadas, ariranhas e centenas de espécies de aves. A observação de fauna é uma das principais atrações para pesquisadores e ecoturistas.' },
@@ -39,7 +41,7 @@ const config = {
       label: 'Visite',
       titulo: 'Como Visitar o Parque Chandless',
       texto: 'O acesso ao Parque Chandless é feito por via fluvial a partir de Rio Branco, com apoio de operadoras de ecoturismo especializadas.',
-      imagem: '/images/geral/amazonas3.1.jpg',
+      imagem: '/images/geral/ac-pqch7.jpg',
       alt: 'Acesso ao Parque Chandless',
       subsecoes: [
         { titulo: 'Como Chegar', texto: 'De Rio Branco, voos fretados ou barcos pelo Rio Purus chegam a Santa Rosa do Purus. De lá, barcos regionais acessam o parque. O trajeto pode levar de 2 a 5 dias por via fluvial.' },

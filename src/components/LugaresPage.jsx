@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import NavbarShared from './NavbarShared'
 import { useSEO } from '../hooks/useSEO'
@@ -24,11 +24,29 @@ const rotas = {
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+const heroImages = [
+  '/images/geral/cr-rj.webp',
+  '/images/geral/pao-rj.jpg',
+  '/images/geral/cata-xx.jpg',
+  '/images/geral/pelo-xx.jpg',
+  '/images/geral/fe-pe.jpg',
+  '/images/geral/pant-xx.webp',
+];
+
 function LugaresPage() {
   const navigate = useNavigate();
   useSEO({ title: 'Destinos em Destaque', description: 'Explore os lugares mais visitados e admirados do Brasil no GADYS.' })
   const [darkMode, setDarkMode] = useState(() => localStorage.getItem('darkMode') === 'true');
   const [locaisBanco, setLocaisBanco] = useState([]);
+  const [heroIndex, setHeroIndex] = useState(0);
+  const heroTimer = useRef(null);
+
+  useEffect(() => {
+    heroTimer.current = setInterval(() => {
+      setHeroIndex(i => (i + 1) % heroImages.length);
+    }, 4000);
+    return () => clearInterval(heroTimer.current);
+  }, []);
 
   useEffect(() => {
     fetch(`${API_URL}/api/locais`)
@@ -55,8 +73,27 @@ function LugaresPage() {
 
       {/* ── HERO ── */}
       <header className="lp-header">
-        <h1>Destinos em Destaque</h1>
-        <p>Os lugares mais visitados e admirados do Brasil pelos usuários do GADYS.</p>
+        {heroImages.map((src, i) => (
+          <div
+            key={src}
+            className={`lp-hero-slide${i === heroIndex ? ' lp-hero-slide--active' : ''}`}
+            style={{ backgroundImage: `url(${src})` }}
+          />
+        ))}
+        <div className="lp-header-overlay" />
+        <div className="lp-header-content">
+          <h1>Destinos em Destaque</h1>
+          <p>Os lugares mais visitados e admirados do Brasil pelos usuários do GADYS.</p>
+          <div className="lp-hero-dots">
+            {heroImages.map((_, i) => (
+              <button
+                key={i}
+                className={`lp-hero-dot${i === heroIndex ? ' lp-hero-dot--active' : ''}`}
+                onClick={() => { setHeroIndex(i); clearInterval(heroTimer.current); heroTimer.current = setInterval(() => setHeroIndex(j => (j + 1) % heroImages.length), 4000); }}
+              />
+            ))}
+          </div>
+        </div>
       </header>
 
       {/* ── GRID ── */}

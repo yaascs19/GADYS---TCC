@@ -37,12 +37,42 @@
 
 /* --- Hero Header --- */
 .lp-header {
-  background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('/images/geral/mapa-br.jpg');
+  position: relative;
+  color: white;
+  padding: 0;
+  text-align: center;
+  height: 420px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lp-hero-slide {
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center;
-  color: white;
-  padding: 6rem 2rem;
-  text-align: center;
+  opacity: 0;
+  transition: opacity 1s ease;
+  z-index: 0;
+}
+
+.lp-hero-slide--active {
+  opacity: 1;
+}
+
+.lp-header-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.lp-header-content {
+  position: relative;
+  z-index: 2;
+  padding: 2rem;
 }
 
 .lp-header h1 {
@@ -57,6 +87,28 @@
   font-size: clamp(1.2rem, 3vw, 1.6rem);
   font-weight: 300;
   margin-top: 1rem;
+}
+
+.lp-hero-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+}
+
+.lp-hero-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255,255,255,0.5);
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.3s;
+}
+
+.lp-hero-dot--active {
+  background: white;
 }
 
 /* --- Botão padrão --- */
@@ -173,7 +225,7 @@
     gap: 1.5rem;
   }
   .lp-header {
-    padding: 3rem 1rem;
+    height: 280px;
   }
   .lp-card-title { font-size: 1.3rem; }
   .lp-card-image-container { height: 180px; }
