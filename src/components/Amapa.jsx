@@ -10,9 +10,9 @@ const Amapa = () => {
 
   const images = [
     '/images/geral/amazonas1.avif',
-    '/images/geral/amazonas3.1.jpg',
-    '/images/geral/oam.jpg',
-    '/images/geral/amazonas2.jpg',
+    '/images/geral/amapa2.webp',
+    '/images/geral/amapa3.jpg',
+    '/images/geral/amapa4.jpeg',
   ];
 
   const toggleDarkMode = () => {

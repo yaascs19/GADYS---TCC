@@ -145,6 +145,23 @@ const Olinda = lazy(() => import('./components/pe/Olinda'));
 const ValeDoCatimbau = lazy(() => import('./components/pe/ValeDoCatimbau'));
 const Caruaru = lazy(() => import('./components/pe/Caruaru'));
 
+const Bahia = lazy(() => import('./components/Bahia'));
+const BahiaPontos = lazy(() => import('./components/BahiaPontos'));
+const PelourinhoBA = lazy(() => import('./components/ba/PelourinhoBA'));
+const ChapadaDiamantina = lazy(() => import('./components/ba/ChapadaDiamantina'));
+const PortoSeguro = lazy(() => import('./components/ba/PortoSeguro'));
+const MorroSaoPaulo = lazy(() => import('./components/ba/MorroSaoPaulo'));
+const ElevadorLacerda = lazy(() => import('./components/ba/ElevadorLacerda'));
+const LencoisBA = lazy(() => import('./components/ba/LencoisBA'));
+
+const DistritoFederal = lazy(() => import('./components/DistritoFederal'));
+const DistritoFederalPontos = lazy(() => import('./components/DistritoFederalPontos'));
+const CongressoNacional = lazy(() => import('./components/df/CongressoNacional'));
+const CatedralBrasilia = lazy(() => import('./components/df/CatedralBrasilia'));
+const PalacioPlanalto = lazy(() => import('./components/df/PalacioPlanalto'));
+const ChapadaVeadeiros = lazy(() => import('./components/df/ChapadaVeadeiros'));
+const LagoParanoa = lazy(() => import('./components/df/LagoParanoa'));
+
 const SantaCatarina = lazy(() => import('./components/SantaCatarina'));
 const SantaCatarinaPontos = lazy(() => import('./components/SantaCatarinaPontos'));
 const Florianopolis = lazy(() => import('./components/sc/Florianopolis'));
@@ -298,6 +315,7 @@ function Router() {
           <Route path="/espirito-santo" element={<Suspense fallback={<PageLoader />}><EspiritoSanto /></Suspense>} />
           <Route path="/es-pontos" element={<Suspense fallback={<PageLoader />}><ESPontos /></Suspense>} />
           <Route path="/es/pedra-azul" element={<Suspense fallback={<PageLoader />}><PedraAzulES /></Suspense>} />
+          <Route path="/es/guarapari" element={<Suspense fallback={<PageLoader />}><Guarapari /></Suspense>} />
           <Route path="/sergipe" element={<Suspense fallback={<PageLoader />}><Sergipe /></Suspense>} />
           <Route path="/sergipe-pontos" element={<Suspense fallback={<PageLoader />}><SergipePontos /></Suspense>} />
           <Route path="/sergipe/canion-xingo" element={<Suspense fallback={<PageLoader />}><CanionXingo /></Suspense>} />
@@ -355,6 +373,23 @@ function Router() {
           <Route path="/pe/olinda" element={<Suspense fallback={<PageLoader />}><Olinda /></Suspense>} />
           <Route path="/pe/vale-do-catimbau" element={<Suspense fallback={<PageLoader />}><ValeDoCatimbau /></Suspense>} />
           <Route path="/pe/caruaru" element={<Suspense fallback={<PageLoader />}><Caruaru /></Suspense>} />
+
+          <Route path="/bahia" element={<Suspense fallback={<PageLoader />}><Bahia /></Suspense>} />
+          <Route path="/ba-pontos" element={<Suspense fallback={<PageLoader />}><BahiaPontos /></Suspense>} />
+          <Route path="/ba/pelourinho" element={<Suspense fallback={<PageLoader />}><PelourinhoBA /></Suspense>} />
+          <Route path="/ba/chapada-diamantina" element={<Suspense fallback={<PageLoader />}><ChapadaDiamantina /></Suspense>} />
+          <Route path="/ba/porto-seguro" element={<Suspense fallback={<PageLoader />}><PortoSeguro /></Suspense>} />
+          <Route path="/ba/morro-de-sao-paulo" element={<Suspense fallback={<PageLoader />}><MorroSaoPaulo /></Suspense>} />
+          <Route path="/ba/elevador-lacerda" element={<Suspense fallback={<PageLoader />}><ElevadorLacerda /></Suspense>} />
+          <Route path="/ba/lencois" element={<Suspense fallback={<PageLoader />}><LencoisBA /></Suspense>} />
+
+          <Route path="/distrito-federal" element={<Suspense fallback={<PageLoader />}><DistritoFederal /></Suspense>} />
+          <Route path="/df-pontos" element={<Suspense fallback={<PageLoader />}><DistritoFederalPontos /></Suspense>} />
+          <Route path="/df/congresso-nacional" element={<Suspense fallback={<PageLoader />}><CongressoNacional /></Suspense>} />
+          <Route path="/df/catedral-de-brasilia" element={<Suspense fallback={<PageLoader />}><CatedralBrasilia /></Suspense>} />
+          <Route path="/df/palacio-do-planalto" element={<Suspense fallback={<PageLoader />}><PalacioPlanalto /></Suspense>} />
+          <Route path="/df/chapada-dos-veadeiros" element={<Suspense fallback={<PageLoader />}><ChapadaVeadeiros /></Suspense>} />
+          <Route path="/df/lago-paranoa" element={<Suspense fallback={<PageLoader />}><LagoParanoa /></Suspense>} />
 
           <Route path="/santa-catarina" element={<Suspense fallback={<PageLoader />}><SantaCatarina /></Suspense>} />
           <Route path="/sc-pontos" element={<Suspense fallback={<PageLoader />}><SantaCatarinaPontos /></Suspense>} />

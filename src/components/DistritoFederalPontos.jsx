@@ -48,7 +48,7 @@ const pontosTuristicos = [
 
 const rotas = {
   'congresso-nacional': '/df/congresso-nacional',
-  'catedral-brasilia': '/df/catedral-metropolitana',
+  'catedral-brasilia': '/df/catedral-de-brasilia',
   'palacio-planalto': '/df/palacio-planalto',
   'chapada-veadeiros': '/df/chapada-dos-veadeiros',
   'lago-paranoa': '/df/lago-paranoa',
