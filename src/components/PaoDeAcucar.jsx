@@ -2,7 +2,7 @@ import React from 'react';
 import CearaPontoBase from './CearaPontoBase';
 
 const config = {
-  tema: { bg: '#0a2a4a', texto: '#e8f4fd' },
+  tema: { bg: '#0a2a4a', texto: '#e8f4fd', card: '#0d3a6a', acento: '#4a90c4', footerBg: 'linear-gradient(135deg, #0d3a6a, #051525)', footerTexto: '#e8f4fd' },
   titulo: 'Pão de Açúcar',
   subtitulo: 'Vista panorâmica deslumbrante acessada por teleférico histórico.',
   carouselImages: ['/images/geral/pao-rj.jpg', '/images/geral/cr-rj.webp'],

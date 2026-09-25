@@ -2,7 +2,7 @@ import React from 'react';
 import CearaPontoBase from './CearaPontoBase';
 
 const config = {
-  tema: { bg: '#2a3a1a', texto: '#f0f5e8' },
+  tema: { bg: '#2a3a1a', texto: '#f0f5e8', card: '#3a5a20', acento: '#8bc34a', footerBg: 'linear-gradient(135deg, #3a5a20, #1a2a0a)', footerTexto: '#f0f5e8' },
   titulo: 'Pantanal',
   subtitulo: 'Maior planície inundável do planeta e santuário de biodiversidade.',
   carouselImages: ['/images/geral/pant-xx.webp', '/images/natureza/pantanal.jpeg'],

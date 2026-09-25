@@ -31,7 +31,7 @@ const HeaderCarousel = ({ images, titulo, subtitulo, onVoltar, voltarEstilo }) =
   );
 };
 
-const ConteudoAba = ({ secao }) => (
+const ConteudoAba = ({ secao, tema }) => (
   <section className="ce-ponto-section">
     <div className="ce-ponto-split">
       <div className="ce-ponto-text">
@@ -40,14 +40,14 @@ const ConteudoAba = ({ secao }) => (
         {secao.lista && (
           <ul className="ce-ponto-facts">
             {secao.lista.map((item, i) => (
-              <li key={i}><strong>{item.split(':')[0]}:</strong>{item.split(':').slice(1).join(':')}</li>
+              <li key={i} style={{ backgroundColor: tema.card, borderLeftColor: tema.acento }}><strong>{item.split(':')[0]}:</strong>{item.split(':').slice(1).join(':')}</li>
             ))}
           </ul>
         )}
         {secao.subsecoes && (
           <div className="ce-ponto-subsecoes">
             {secao.subsecoes.map((sub, i) => (
-              <div key={i} className="ce-ponto-subsecao">
+              <div key={i} className="ce-ponto-subsecao" style={{ backgroundColor: tema.card, borderLeftColor: tema.acento }}>
                 <h3>{sub.titulo}</h3>
                 <p>{sub.texto}</p>
               </div>
@@ -144,11 +144,11 @@ const CearaPontoBase = ({ config }) => {
             ? <Galeria images={config.galeriaImages} />
             : abaAtiva === 'avaliacoes'
             ? <AvaliacoesComentarios localId={bdId} />
-            : <ConteudoAba secao={secoes[abaAtiva]} />
+            : <ConteudoAba secao={secoes[abaAtiva]} tema={tema} />
           }
         </main>
       </div>
-      <footer className="ce-ponto-footer">
+      <footer className="ce-ponto-footer" style={tema.footerBg ? { background: tema.footerBg, color: tema.footerTexto } : {}}>
         <p>GADYS © 2025 — {titulo}</p>
       </footer>
     </div>
