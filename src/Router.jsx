@@ -22,6 +22,7 @@ const BuscarPage = lazy(() => import('./components/BuscarPage'));
 const NotFoundPage = lazy(() => import('./components/NotFoundPage'));
 
 const PaoDeAcucar = lazy(() => import('./components/PaoDeAcucar'));
+const CristoRedentor = lazy(() => import('./components/CristoRedentor'));
 const CataratasIguacu = lazy(() => import('./components/CataratasIguacu'));
 const Pelourinho = lazy(() => import('./components/Pelourinho'));
 const FernandoNoronha = lazy(() => import('./components/FernandoNoronha'));
@@ -233,6 +234,7 @@ function Router() {
           <Route path="/local/:id" element={<Suspense fallback={<PageLoader />}><LocalDetalhe /></Suspense>} />
 
           <Route path="/pao-de-acucar" element={<Suspense fallback={<PageLoader />}><PaoDeAcucar /></Suspense>} />
+          <Route path="/cristo-redentor" element={<Suspense fallback={<PageLoader />}><CristoRedentor /></Suspense>} />
           <Route path="/cataratas-iguacu" element={<Suspense fallback={<PageLoader />}><CataratasIguacu /></Suspense>} />
           <Route path="/pelourinho" element={<Suspense fallback={<PageLoader />}><Pelourinho /></Suspense>} />
           <Route path="/fernando-noronha" element={<Suspense fallback={<PageLoader />}><FernandoNoronha /></Suspense>} />
