@@ -9,10 +9,8 @@ const Tocantins = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const images = [
-    '/images/geral/amazonas3.1.jpg',
-    '/images/geral/oam.jpg',
-    '/images/geral/amazonas1.avif',
-    '/images/geral/amazonas2.jpg',
+    '/images/geral/tocantins.webp',
+    '/images/geral/tocantins1.jpg',
   ];
 
   const toggleDarkMode = () => {
@@ -94,7 +92,7 @@ const Tocantins = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/amazonas3.1.jpg" alt="Jalapão no Tocantins" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/tocantins2.jpg" alt="Jalapão no Tocantins" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Jalapão: O Deserto Brasileiro</h2>
@@ -104,7 +102,7 @@ const Tocantins = () => {
 
         <section style={{...styles.featureSection, flexDirection: 'row-reverse'}} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/oam.jpg" alt="Rio Tocantins e praias fluviais" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/tocantins3.jpg" alt="Rio Tocantins e praias fluviais" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Rio Tocantins e Praias Fluviais</h2>
@@ -114,7 +112,7 @@ const Tocantins = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/amazonas1.avif" alt="Cultura do Tocantins" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/tocantins4.jpg" alt="Cultura do Tocantins" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Cultura e Tradições</h2>
