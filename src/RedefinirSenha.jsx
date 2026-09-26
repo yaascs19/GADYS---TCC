@@ -76,7 +76,7 @@ function RedefinirSenha() {
       )}
 
       <div className="login-form">
-        <img src="/images/geral/logo-gadys.jpeg" alt="GADYS" className="login-logo" />
+        <img src="/images/logos/logo.png" alt="GADYS" className="login-logo" />
         <h2>Nova Senha</h2>
 
         {!token ? (

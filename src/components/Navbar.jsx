@@ -24,9 +24,14 @@ function Navbar({ darkMode, toggleTheme, userType, setCurrentPage }) {
         alignItems: 'center'
       }}>
         <img 
-          src="/images/geral/logo-gadys.jpeg" 
+          src="/images/logos/logo.png" 
           alt="GADYS" 
-          style={{ height: '40px' }}
+          style={{
+            height: '40px',
+            background: 'lightblue',
+            borderRadius: '50%',
+            padding: '8px'
+          }}
         />
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>

@@ -61,7 +61,7 @@ export default function NavbarShared({ darkMode, toggleDarkMode, paginaAtual }) 
 
   return (
     <header style={{ background: bg, padding: '1rem 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'sticky', top: 0, zIndex: 100, borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-      <img onClick={() => navigate('/')} style={{ cursor: 'pointer', height: '40px' }} src="/images/geral/logo-gadys.jpeg" alt="GADYS" />
+      <img onClick={() => navigate('/')} style={{ cursor: 'pointer', height: '40px', background: 'linear-gradient(135deg,#667eea,#764ba2)', borderRadius: '50%', padding: '8px' }} src="/images/logos/logo.png" alt="GADYS" />
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         {searchOpen
           ? <form onSubmit={handleSearch} style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>

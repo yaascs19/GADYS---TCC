@@ -166,7 +166,7 @@ function Login({ onLogin }) {
       <div className="login-form">
 
         <div className="login-header">
-          <img src="/images/geral/logo-gadys.jpeg" alt="GADYS" className="login-logo" />
+          <img src="/images/logos/logo.png" alt="GADYS" className="login-logo" />
           <h2>{isRegister ? 'Criar conta' : 'Bem-vindo'}</h2>
           <p className="login-subtitle">{isRegister ? 'Preencha os dados abaixo' : 'Entre na sua conta GADYS'}</p>
         </div>
@@ -214,11 +214,18 @@ function Login({ onLogin }) {
           </div>
 
           {isRegister && password && (
-            <div className="password-strength">
-              <div className="password-strength-bar">
-                <div style={{ width: passwordStrength.width, background: passwordStrength.color }} />
-              </div>
-              <span style={{ color: passwordStrength.color }}>{passwordStrength.label}</span>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', margin: '4px 0 8px', fontSize: '0.8rem' }}>
+              {[
+                { ok: password.length >= 8,           label: 'Mínimo 8 caracteres' },
+                { ok: /[A-Z]/.test(password),          label: 'Letra maiúscula' },
+                { ok: /[a-z]/.test(password),          label: 'Letra minúscula' },
+                { ok: /[0-9]/.test(password),          label: 'Número' },
+                { ok: /[^A-Za-z0-9]/.test(password),  label: 'Caractere especial (!@#$...)' },
+              ].map(({ ok, label }) => (
+                <span key={label} style={{ color: ok ? '#10b981' : '#94a3b8', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  {ok ? '✓' : '○'} {label}
+                </span>
+              ))}
             </div>
           )}
 

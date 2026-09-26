@@ -10,7 +10,7 @@ function AdminNavbar() {
   return (
     <header style={{background: '#1a237e', color: 'white', padding: '1rem 0'}}>
       <nav style={{maxWidth: '1200px', margin: '0 auto', padding: '0 2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-        <img src="/images/geral/logo-gadys.jpeg" alt="GADYS" style={{height: '40px'}} />
+        <img src="/images/logos/logo.png" alt="GADYS" style={{height: '40px', background: 'lightblue', borderRadius: '50%', padding: '8px'}} />
 
         
         <div style={{display: 'flex', alignItems: 'center', gap: '1rem'}}>
