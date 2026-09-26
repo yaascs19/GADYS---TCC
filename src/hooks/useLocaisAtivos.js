@@ -41,7 +41,7 @@ export function useLocaisAtivos(siglaEstado, pontosTuristicos) {
             bdId: l.rotaFrontend ? null : l.id,
             nome: l.nome,
             cidade: l.cidade,
-            categoria: subcategoriaParaCategoria[l.subcategoria] || l.categoria || l.subcategoria,
+            categoria: subcategoriaParaCategoria[l.subcategoria?.toLowerCase()] || l.categoria || l.subcategoria,
             descricao: l.descricao,
             imagem: l.imagemUrl ? l.imagemUrl.split(',')[0].trim() : null,
             rota: l.rotaFrontend || null,
