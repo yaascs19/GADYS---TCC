@@ -17,15 +17,22 @@ export function useLocaisAtivos(siglaEstado, pontosTuristicos) {
           const nomePonto = (p.nome || p.name || '').toLowerCase().trim();
           return !inativosBD.has(nomePonto);
         }).map(p => {
-          if (p.imagem) return p;
           const match = ativos.find(l => l.nome.toLowerCase().trim() === (p.nome || p.name || '').toLowerCase().trim());
-          return match?.imagemUrl ? { ...p, imagem: match.imagemUrl.split(',')[0].trim() } : p;
+          const comImagem = (p.imagem || !match?.imagemUrl) ? p : { ...p, imagem: match.imagemUrl.split(',')[0].trim() };
+          if (match && !match.rotaFrontend) return { ...comImagem, bdId: match.id };
+          return comImagem;
         });
         const nomesEstaticos = new Set(estaticosAtivos.map(p => (p.nome || p.name || '').toLowerCase().trim()));
         const subcategoriaParaCategoria = {
           'monumentos': 'Monumentos',
           'lugares-paradisiacos': 'Lugar Paradísíaco',
+          'lugares-visitar': 'Lugar Paradísíaco',
           'restaurantes': 'Restaurantes',
+          'parques': 'Lugar Paradísíaco',
+          'praias': 'Lugar Paradísíaco',
+          'museus': 'Monumentos',
+          'igrejas': 'Monumentos',
+          'gastronomia': 'Restaurantes',
         };
         const novosDoBD = ativos
           .filter(l => !nomesEstaticos.has(l.nome.toLowerCase().trim()))
