@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const API_URL = import.meta.env.VITE_API_URL?.replace(/\/$/, '');
+const API_URL = (import.meta.env.VITE_API_URL || 'https://gadys-backend.onrender.com').replace(/\/$/, '');
 
 export function useLocaisAtivos(siglaEstado, pontosTuristicos) {
   const [pontosAtivos, setPontosAtivos] = useState(pontosTuristicos);
