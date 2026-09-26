@@ -1335,7 +1335,9 @@ function AdminPanel() {
               <p><strong>Descrição:</strong> {s.descricao}</p>
             </div>
             {s.imagemUrl && (
-              <img src={s.imagemUrl} alt={s.nome} style={{ width: '100%', borderRadius: '8px', marginTop: '0.75rem', maxHeight: '180px', objectFit: 'cover' }} />
+              <div style={{ width: '100%', height: '180px', borderRadius: '8px', marginTop: '0.75rem', overflow: 'hidden' }}>
+                <img src={s.imagemUrl} alt={s.nome} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }} />
+              </div>
             )}
             <div className="card-actions">
               <button className="expand-btn" onClick={() => handleInvestigar(s)} style={{ position: 'relative' }}>
