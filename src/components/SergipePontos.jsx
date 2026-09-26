@@ -56,7 +56,7 @@ const pontosTuristicos = [
     cidade: 'Aracaju - SE',
     categoria: 'Restaurantes',
     descricao: 'O coração gastronômico de Sergipe, famoso pelo caranguejo com pirão, sururu de capote e os doces típicos sergipanos.',
-    imagem: '/images/geral/Aracaju.jpg',
+    imagem: '/images/geral/ser1.jpg',
     rota: null,
   },
   {

@@ -16,8 +16,6 @@ const RioGrandeDoNorte = () => {
 
   const images = [
     '/images/geral/rn1.jpg',
-    '/images/geral/rn2.jpg',
-    '/images/geral/rn3.jpg',
     '/images/geral/rn4.jpg',
   ];
 
@@ -193,7 +191,7 @@ const RioGrandeDoNorte = () => {
 
         <section style={s.section} className="rn-feature-animate">
           <div style={s.imgWrap} className="rn-feature-img-wrap">
-            <img src="/images/geral/rn-cultura.jpg" alt="Cultura potiguar" style={s.img} />
+            <img src="/images/geral/rnr1.jpg" alt="Cultura potiguar" style={s.img} />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Cultura Potiguar</h2>
@@ -207,7 +205,7 @@ const RioGrandeDoNorte = () => {
 
         <section style={{ ...s.section, flexDirection: 'row-reverse' }} className="rn-feature-animate">
           <div style={s.imgWrap} className="rn-feature-img-wrap">
-            <img src="/images/geral/rn-gastronomia.jpg" alt="Gastronomia potiguar" style={s.img} />
+            <img src="/images/geral/rnr2.jpg" alt="Gastronomia potiguar" style={s.img} />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Sabores do Nordeste</h2>
@@ -221,7 +219,7 @@ const RioGrandeDoNorte = () => {
 
         <section style={s.section} className="rn-feature-animate">
           <div style={s.imgWrap} className="rn-feature-img-wrap">
-            <img src="/images/geral/rn-natureza.jpg" alt="Natureza do RN" style={s.img} />
+            <img src="/images/geral/rnr3.jpg" alt="Natureza do RN" style={s.img} />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Natureza Deslumbrante</h2>

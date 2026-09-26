@@ -15,10 +15,8 @@ const RioGrandeDoSul = () => {
   };
 
   const images = [
-    '/images/geral/rs1.jpg',
-    '/images/geral/rs2.jpg',
-    '/images/geral/rs3.jpg',
-    '/images/geral/rs4.jpg',
+    '/images/geral/rss1.webp',
+    '/images/geral/rss2.jpg',
   ];
 
   useEffect(() => {
@@ -196,7 +194,7 @@ const RioGrandeDoSul = () => {
 
         <section style={s.section} className="rs-feature-animate">
           <div style={s.imgWrap} className="rs-feature-img-wrap">
-            <img src="/images/geral/rs-cultura.jpg" alt="Cultura gaúcha" style={s.img} />
+            <img src="/images/geral/rss3.jpg" alt="Cultura gaúcha" style={s.img} />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Tradição que Pulsa</h2>
@@ -210,7 +208,7 @@ const RioGrandeDoSul = () => {
 
         <section style={{ ...s.section, flexDirection: 'row-reverse' }} className="rs-feature-animate">
           <div style={s.imgWrap} className="rs-feature-img-wrap">
-            <img src="/images/geral/rs-gastronomia.jpg" alt="Gastronomia gaúcha" style={s.img} />
+            <img src="/images/geral/rss5.webp" alt="Gastronomia gaúcha" style={s.img} />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Sabores do Pampa</h2>
@@ -224,7 +222,7 @@ const RioGrandeDoSul = () => {
 
         <section style={s.section} className="rs-feature-animate">
           <div style={s.imgWrap} className="rs-feature-img-wrap">
-            <img src="/images/geral/rs-natureza.jpg" alt="Natureza do Rio Grande do Sul" style={s.img} />
+            <img src="/images/geral/rss4.jpg" alt="Natureza do Rio Grande do Sul" style={s.img} />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Natureza Sem Igual</h2>

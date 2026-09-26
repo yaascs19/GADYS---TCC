@@ -9,10 +9,8 @@ const Rondonia = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const images = [
-    '/images/geral/amazonas2.jpg',
-    '/images/geral/amazonas1.avif',
-    '/images/geral/oam.jpg',
-    '/images/geral/amazonas3.1.jpg',
+    '/images/geral/ron1.jpeg',
+    '/images/geral/ron2.jpeg',
   ];
 
   const toggleDarkMode = () => {
@@ -94,7 +92,7 @@ const Rondonia = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/amazonas2.jpg" alt="Natureza de Rondônia" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/ron nat.jpg" alt="Natureza de Rondônia" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Natureza de Fronteira</h2>
@@ -104,7 +102,7 @@ const Rondonia = () => {
 
         <section style={{...styles.featureSection, flexDirection: 'row-reverse'}} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/amazonas1.avif" alt="Cultura indígena de Rondônia" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/ron4.jpeg" alt="Cultura indígena de Rondônia" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Povos e Culturas</h2>
@@ -114,7 +112,7 @@ const Rondonia = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/oam.jpg" alt="Rio Madeira em Porto Velho" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/rio de md.JPG" alt="Rio Madeira em Porto Velho" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Rio Madeira e Porto Velho</h2>

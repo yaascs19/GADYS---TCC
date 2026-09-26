@@ -9,42 +9,48 @@ const pontosTuristicos = [
     nome: 'Gramado',
     cidade: 'Gramado - RS',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/rs-gramado.jpg',
+    imagem: '/images/geral/Gramado.webp',
+    descricao: 'A cidade mais encantadora do Brasil: arquitetura europeia, chocolate artesanal premiado, o Natal Luz e temperaturas negativas na Serra Gaúcha a 825 m de altitude.',
   },
   {
     id: 'canion-itaimbezinho',
     nome: 'Cânion Itaimbezinho',
     cidade: 'Cambará do Sul - RS',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/rs-canion.jpg',
+    imagem: '/images/geral/Cânion Itaimbezinho.jpg',
+    descricao: 'Um dos maiores cânions do mundo, com paredes de arenito de até 720 m de altura e 5,8 km de extensão no Parque Nacional dos Aparados da Serra.',
   },
   {
     id: 'bento-goncalves',
     nome: 'Bento Gonçalves',
     cidade: 'Bento Gonçalves - RS',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/rs-bento.jpg',
+    imagem: '/images/geral/Bento Gonçalves.jpg',
+    descricao: 'Capital brasileira do vinho, Bento Gonçalves encanta com vinhedos centenários, adegas premiadas, a Maria Fumaça e a culinária italiana herdada dos imigrantes.',
   },
   {
     id: 'porto-alegre',
     nome: 'Porto Alegre',
     cidade: 'Porto Alegre - RS',
     categoria: 'Monumentos',
-    imagem: '/images/geral/rs-poa.jpg',
+    imagem: '/images/geral/Porto Alegre.webp',
+    descricao: 'Capital gaúcha às margens do Guaíba, com o pôr do sol mais bonito do Brasil, o Mercado Público histórico, o Bairro Moinhos de Vento e uma cena cultural vibrante.',
   },
   {
     id: 'torres',
     nome: 'Torres',
     cidade: 'Torres - RS',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/rs-torres.jpg',
+    imagem: '/images/geral/Torres.jpg',
+    descricao: 'Praias com falésias basálticas únicas no Brasil, grutas, ilhas e o Parque Estadual de Torres formam um dos litorâis mais dramáticos e belos do sul do país.',
   },
   {
     id: 'sao-miguel-das-missoes',
     nome: 'São Miguel das Missões',
     cidade: 'São Miguel das Missões - RS',
     categoria: 'Monumentos',
-    imagem: '/images/geral/rs-missoes.jpg',
+    imagem: '/images/geral/São Miguel das Missões.jpg',
+    descricao: 'Ruínas jesuíticas do século XVII e Patrimônio Mundial da UNESCO. O espetáculo de som e luz noturno sobre as ruínas é uma das experiências mais marcantes do Brasil.',
   },
 ];
 
@@ -142,14 +148,15 @@ const RioGrandeSulPontos = () => {
               <button
                 className="ce-pontos-button"
                 onClick={() => {
+                  if (ponto.id !== 'gramado') return;
                   if (ponto.bdId != null) navigate(`/local/${ponto.bdId}`);
                   else if (rotas[ponto.id]) navigate(rotas[ponto.id]);
                 }}
                 style={{
                   background: 'linear-gradient(135deg, #8b0000, #c0392b)',
                   border: 'none',
-                  opacity: ponto.bdId != null || rotas[ponto.id] ? 1 : 0.4,
-                  cursor: ponto.bdId != null || rotas[ponto.id] ? 'pointer' : 'not-allowed',
+                  opacity: ponto.id === 'gramado' ? 1 : 0.4,
+                  cursor: ponto.id === 'gramado' ? 'pointer' : 'not-allowed',
                 }}
               >
                 Saiba mais

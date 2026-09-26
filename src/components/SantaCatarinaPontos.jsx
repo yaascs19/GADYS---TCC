@@ -9,42 +9,48 @@ const pontosTuristicos = [
     nome: 'Florianópolis',
     cidade: 'Florianópolis - SC',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/sc-floripa.jpg',
+    imagem: '/images/geral/floripa1.jpg',
+    descricao: 'A Ilha da Magia: mais de 100 praias, lagoas de água doce, dunas e uma rica herança açoriana que fazem de Florianópolis um dos destinos mais encantadores do Brasil.',
   },
   {
     id: 'balneario-camboriu',
     nome: 'Balneário Camboriú',
     cidade: 'Balneário Camboriú - SC',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/sc-bc.jpg',
+    imagem: '/images/geral/Balneário Camboriú.webp',
+    descricao: 'A cidade com o segundo maior arranha-céu do mundo, praias de águas calmas, o Bondês do Morro e uma vida noturna que a tornaram a "Dubai brasileira".',
   },
   {
     id: 'bombinhas',
     nome: 'Bombinhas',
     cidade: 'Bombinhas - SC',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/sc-bombinhas.jpg',
+    imagem: '/images/geral/Bombinhas.jpeg',
+    descricao: 'Considerada a cidade com as águas mais transparentes do Brasil, Bombinhas reúne praias paradisíacas, mergulho com golfinhos e a Reserva Biológica Marinha do Arvoredo.',
   },
   {
     id: 'blumenau',
     nome: 'Blumenau e Oktoberfest',
     cidade: 'Blumenau - SC',
     categoria: 'Monumentos',
-    imagem: '/images/geral/sc-blumenau.jpg',
+    imagem: '/images/geral/Blumenau e Oktoberfest.webp',
+    descricao: 'A capital catarinense da cultura alemã realiza a segunda maior Oktoberfest do mundo, com cerveja artesanal, arquitetura enxaimel e tradições que atravessam gerações.',
   },
   {
     id: 'sao-joaquim',
     nome: 'São Joaquim',
     cidade: 'São Joaquim - SC',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/sc-saojoaquim.jpg',
+    imagem: '/images/geral/São Joaquim.jpg',
+    descricao: 'A cidade mais fria do Brasil, famosa pela neve no inverno, maçãs premiadas, vinhos de altitude e paisagens de tirar o fôlego na Serra Catarinense.',
   },
   {
     id: 'joinville',
     nome: 'Joinville',
     cidade: 'Joinville - SC',
     categoria: 'Monumentos',
-    imagem: '/images/geral/sc-joinville.jpg',
+    imagem: '/images/geral/Joinville.jpg',
+    descricao: 'A maior cidade de Santa Catarina e capital do Festival de Dança, o maior evento de dança do mundo, com herança alemã, museus e uma cena cultural vibrante.',
   },
 ];
 
@@ -78,7 +84,7 @@ const SantaCatarinaPontos = () => {
 
   return (
     <div className="ce-pontos-page" style={{ background: 'linear-gradient(160deg, #e3f0ff 0%, #b3d4f5 100%)', color: '#0d3b6e' }}>
-      <header className="ce-pontos-header" style={{ backgroundImage: "linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('/images/geral/sc1.jpg')" }}>
+      <header className="ce-pontos-header" style={{ backgroundImage: "linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url('/images/geral/scs.jpg')" }}>
         <button onClick={() => navigate(-1)} className="ce-pontos-button" style={{ position: 'absolute', top: '2rem', left: '2rem', backgroundColor: 'rgba(255,255,255,0.2)', borderColor: 'white' }}>
           ← Voltar
         </button>
@@ -118,8 +124,12 @@ const SantaCatarinaPontos = () => {
               <p className="ce-pontos-card-description" style={{ color: '#0d3b6e' }}>{ponto.descricao}</p>
               <button
                 className="ce-pontos-button"
-                onClick={() => { if (ponto.bdId != null) navigate(`/local/${ponto.bdId}`); else if (rotas[ponto.id]) navigate(rotas[ponto.id]); }}
-                style={{ background: 'linear-gradient(135deg, #1565c0, #42a5f5)', border: 'none', opacity: ponto.bdId != null || rotas[ponto.id] ? 1 : 0.4, cursor: ponto.bdId != null || rotas[ponto.id] ? 'pointer' : 'not-allowed' }}
+                onClick={() => {
+                  if (ponto.id !== 'florianopolis') return;
+                  if (ponto.bdId != null) navigate(`/local/${ponto.bdId}`);
+                  else if (rotas[ponto.id]) navigate(rotas[ponto.id]);
+                }}
+                style={{ background: 'linear-gradient(135deg, #1565c0, #42a5f5)', border: 'none', opacity: ponto.id === 'florianopolis' ? 1 : 0.4, cursor: ponto.id === 'florianopolis' ? 'pointer' : 'not-allowed' }}
               >
                 Saiba mais
               </button>

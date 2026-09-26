@@ -9,42 +9,48 @@ const pontosTuristicos = [
     nome: 'Dunas de Genipabu',
     cidade: 'Extremoz - RN',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/rn-genipabu.jpg',
+    imagem: '/images/geral/duna1.jpg',
+    descricao: 'Um deserto dourado à beira-mar: dunas gigantes, lagoas de água doce e o famoso passeio de buggy e dromedário a apenas 25 km de Natal.',
   },
   {
     id: 'pipa',
     nome: 'Praia de Pipa',
     cidade: 'Tibau do Sul - RN',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/rn-pipa.jpg',
+    imagem: '/images/geral/pipa.webp',
+    descricao: 'Falêsias avermelhadas, águas cristalinas e golfinhos na Baía dos Golfinhos fazem de Pipa um dos destinos mais charmosos e badalados do litoral nordestino.',
   },
   {
     id: 'maracajau',
     nome: 'Maracajaú',
     cidade: 'Maxaranguape - RN',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/rn-maracajau.jpg',
+    imagem: '/images/geral/Maracajaú.jpg',
+    descricao: 'Considerado o maior aquário natural do Brasil, Maracajaú reúne piscinas naturais com águas mornas e transparentes, repletas de peixes coloridos e corais vivos.',
   },
   {
     id: 'parque-das-dunas',
     nome: 'Parque das Dunas',
     cidade: 'Natal - RN',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/rn-parquedunas.jpg',
+    imagem: '/images/geral/Parque das Dunas.avif',
+    descricao: 'A maior área de proteção de dunas urbanas do mundo, com 1.172 hectares de Mata Atlântica no coração de Natal, trilhas ecológicas e fauna nativa preservada.',
   },
   {
     id: 'forte-dos-reis-magos',
     nome: 'Forte dos Reis Magos',
     cidade: 'Natal - RN',
     categoria: 'Monumentos',
-    imagem: '/images/geral/rn-forte.jpg',
+    imagem: '/images/geral/Forte dos Reis Magos.webp',
+    descricao: 'Construído pelos portugueses em 1598 em formato de estrela, o Forte dos Reis Magos é o marco zero de Natal e um dos fortes coloniais mais bem preservados do Brasil.',
   },
   {
     id: 'baia-formosa',
     nome: 'Baía Formosa',
     cidade: 'Baía Formosa - RN',
     categoria: 'Lugar Paradísíaco',
-    imagem: '/images/geral/rn-baiaformosa.jpg',
+    imagem: '/images/geral/Baía Formosa.jpg',
+    descricao: 'Praias desertas, falêsias, manguezais e águas esverdeadas formam um dos litorâis mais selvagens e preservados do Rio Grande do Norte, longe do turismo de massa.',
   },
 ];
 
@@ -135,14 +141,15 @@ const RioGrandeDoNortePontos = () => {
               <button
                 className="ce-pontos-button"
                 onClick={() => {
+                  if (ponto.id !== 'genipabu') return;
                   if (ponto.bdId != null) navigate(`/local/${ponto.bdId}`);
                   else if (rotas[ponto.id]) navigate(rotas[ponto.id]);
                 }}
                 style={{
                   background: 'linear-gradient(135deg, #c47a00, #f5a623)',
                   border: 'none',
-                  opacity: ponto.bdId != null || rotas[ponto.id] ? 1 : 0.4,
-                  cursor: ponto.bdId != null || rotas[ponto.id] ? 'pointer' : 'not-allowed',
+                  opacity: ponto.id === 'genipabu' ? 1 : 0.4,
+                  cursor: ponto.id === 'genipabu' ? 'pointer' : 'not-allowed',
                 }}
               >
                 Saiba mais

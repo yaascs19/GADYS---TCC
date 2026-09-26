@@ -11,6 +11,7 @@ const pontosTuristicos = [
         cidade: 'Rio de Janeiro - RJ',
         categoria: 'Monumentos',
         imagem: '/Cristo-rj.jpg',
+        descricao: 'Uma das Sete Maravilhas do Mundo Moderno, o Cristo Redentor domina o Corcovado a 710 m de altitude com os braços abertos sobre a Cidade Maravilhosa.',
       },
       {
         id: 'pao-de-acucar',
@@ -18,13 +19,15 @@ const pontosTuristicos = [
         cidade: 'Rio de Janeiro - RJ',
         categoria: 'Lugar Paradísíaco',
         imagem: '/pao-rj.jpg',
+        descricao: 'Cartão-postal do Rio, o Pão de Açúcar oferece uma das vistas mais deslumbrantes do mundo, acessível por teleférico com duas paradas sobre a Baía de Guanabara.',
       },
-        {
+      {
         id: 'theatro-municipal',
         nome: 'Theatro Municipal',
         cidade: 'Rio de Janeiro - RJ',
         categoria: 'Monumentos',
         imagem: '/theatro-rj.avif',
+        descricao: 'Inaugurado em 1909 e inspirado na Ópera de Paris, o Theatro Municipal é o principal palco de ópera, balé e música clássica do Brasil, com uma arquitetura deslumbrante.',
       },
       {
         id: 'escadaria-selaron',
@@ -32,13 +35,15 @@ const pontosTuristicos = [
         cidade: 'Rio de Janeiro - RJ',
         categoria: 'Monumentos',
         imagem: '/escadaria-rj.webp',
+        descricao: 'Obra do artista chileno Jorge Selarón, a escadaria é revestida por mais de 2.000 azulejos coloridos de todo o mundo e se tornou um dos símbolos culturais do Rio.',
       },
-        {
+      {
         id: 'arcos-da-lapa',
         nome: 'Arcos da Lapa',
         cidade: 'Rio de Janeiro - RJ',
         categoria: 'Monumentos',
         imagem: '/lapa-rj.webp',
+        descricao: 'Aqueduto colonial do século XVIII que hoje serve de viaduto para o bonde de Santa Teresa. À noite, o entorno da Lapa se transforma no maior polo de samba e boemia do Rio.',
       },
       {
         id: 'museu-do-amanha',
@@ -46,6 +51,7 @@ const pontosTuristicos = [
         cidade: 'Rio de Janeiro - RJ',
         categoria: 'Monumentos',
         imagem: '/museu-rj.jpg',
+        descricao: 'Projetado por Santiago Calatrava, o Museu do Amanhã é um museu de ciências futurista na Praça Mauá que explora os desafios e possibilidades do planeta nas próximas décadas.',
       },
       {
         id: 'praia-de-copacabana',
@@ -53,6 +59,7 @@ const pontosTuristicos = [
         cidade: 'Rio de Janeiro - RJ',
         categoria: 'Lugar Paradísíaco',
         imagem: '/copa2.webp',
+        descricao: 'A praia mais famosa do mundo, com 4 km de areia branca, calçadão com mosaico português e uma energia única que mistura cariocas, turistas, esportes e cultura.',
       },
       {
         id: 'praia-de-ipanema',
@@ -60,20 +67,23 @@ const pontosTuristicos = [
         cidade: 'Rio de Janeiro - RJ',
         categoria: 'Lugar Paradísíaco',
         imagem: '/ipa.webp',
+        descricao: 'Imortalizada pela bossa nova, Ipanema é sinônimo de beleza e estilo carioca. Com vista para o Morro Dois Irmãos, é considerada uma das praias mais bonitas do mundo.',
       },
-        {
+      {
         id: 'floresta-da-tijuca',
         nome: 'Floresta da Tijuca',
         cidade: 'Rio de Janeiro - RJ',
         categoria: 'Lugar Paradísíaco',
         imagem: '/tiju.jpg',
+        descricao: 'A maior floresta urbana do mundo, com 3.200 hectares de Mata Atlântica no coração do Rio. Abriga cachoeiras, trilhas, o Cristo Redentor e uma biodiversidade exuberante.',
       },
-        {
+      {
         id: 'lagoa-rodrigo-de-freitas',
         nome: 'Lagoa Rodrigo de Freitas',
         cidade: 'Rio de Janeiro - RJ',
         categoria: 'Lugar Paradísíaco',
         imagem: '/lagoa.webp',
+        descricao: 'Lagoa natural cercada pelo Jardim Botânico, Ipanema e o Corcovado. Seu calçadão de 7,5 km é palco de caminhadas, pedaladas e o famoso réveillon com a árvore de Natal flutuante.',
       },
       {
         id: 'jardim-botanico',
@@ -81,6 +91,7 @@ const pontosTuristicos = [
         cidade: 'Rio de Janeiro - RJ',
         categoria: 'Lugar Paradísíaco',
         imagem: '/bota.jpg',
+        descricao: 'Fundado em 1808 por Dom João VI, o Jardim Botânico abriga mais de 6.500 espécies de plantas em 54 hectares, incluindo a famosa alameda de palmeiras imperiais.',
       },
       {
         id: 'parque-lage',
@@ -88,6 +99,7 @@ const pontosTuristicos = [
         cidade: 'Rio de Janeiro - RJ',
         categoria: 'Lugar Paradísíaco',
         imagem: '/parque.jpg',
+        descricao: 'Parque histórico aos pés do Corcovado com um palacete neoclássico que abriga a Escola de Artes Visuais. Trilhas pela Mata Atlântica e piscinas naturais completam o charme do lugar.',
       },
 ];
 
@@ -108,7 +120,7 @@ const RJPontos = () => {
     if (searchTerm) {
       result = result.filter(item => 
         item.nome.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        item.descricao.toLowerCase().includes(searchTerm.toLowerCase())
+        (item.descricao || '').toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     setFilteredPontos(result);

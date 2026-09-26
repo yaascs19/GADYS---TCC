@@ -9,10 +9,8 @@ const Roraima = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const images = [
-    '/images/geral/oam.jpg',
-    '/images/geral/amazonas1.avif',
-    '/images/geral/amazonas2.jpg',
-    '/images/geral/amazonas3.1.jpg',
+    '/images/geral/roraima1.jpg',
+    '/images/geral/roraima2.jpg',
   ];
 
   const toggleDarkMode = () => {
@@ -94,7 +92,7 @@ const Roraima = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/oam.jpg" alt="Monte Roraima e tepuis" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/roraima3.jpg" alt="Monte Roraima e tepuis" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Os Tepuis e o Monte Roraima</h2>
@@ -104,7 +102,7 @@ const Roraima = () => {
 
         <section style={{...styles.featureSection, flexDirection: 'row-reverse'}} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/amazonas1.avif" alt="Lavrado de Roraima" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/roraima4.jpg" alt="Lavrado de Roraima" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Lavrado: A Savana Amazônica</h2>
@@ -114,7 +112,7 @@ const Roraima = () => {
 
         <section style={styles.featureSection} className="feature-section-animate">
           <div style={styles.featureImageContainer} className="feature-image-container">
-            <img src="/images/geral/amazonas2.jpg" alt="Boa Vista e cultura indígena de Roraima" style={styles.featureImage} className="feature-image" />
+            <img src="/images/geral/roraima5.jpg" alt="Boa Vista e cultura indígena de Roraima" style={styles.featureImage} className="feature-image" />
           </div>
           <div style={styles.featureText}>
             <h2 style={styles.h2}>Povos Indígenas e Boa Vista</h2>

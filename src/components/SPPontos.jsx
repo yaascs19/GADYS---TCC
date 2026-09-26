@@ -12,6 +12,7 @@ const pontosTuristicos = [
     categoria: 'Monumentos',
     descricao: 'O Museu de Arte de São Paulo é um dos mais importantes da América Latina, com um acervo de mais de 11 mil obras entre pinturas, esculturas e fotografias.',
     imagem: '/images/geral/masp.jpg',
+    rota: '/sp/masp',
   },
   {
     id: 'teatro-municipal',

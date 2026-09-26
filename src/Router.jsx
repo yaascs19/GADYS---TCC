@@ -28,6 +28,8 @@ const Pelourinho = lazy(() => import('./components/Pelourinho'));
 const FernandoNoronha = lazy(() => import('./components/FernandoNoronha'));
 const Pantanal = lazy(() => import('./components/Pantanal'));
 
+const Masp = lazy(() => import('./components/sp/Masp'));
+
 const Para = lazy(() => import('./components/Para'));
 const DestinosPara = lazy(() => import('./components/DestinosPara'));
 const AlterDoChao = lazy(() => import('./components/para/AlterDoChao'));
@@ -269,6 +271,8 @@ function Router() {
           <Route path="/pelourinho" element={<Suspense fallback={<PageLoader />}><Pelourinho /></Suspense>} />
           <Route path="/fernando-noronha" element={<Suspense fallback={<PageLoader />}><FernandoNoronha /></Suspense>} />
           <Route path="/pantanal" element={<Suspense fallback={<PageLoader />}><Pantanal /></Suspense>} />
+
+          <Route path="/sp/masp" element={<Suspense fallback={<PageLoader />}><Masp /></Suspense>} />
 
           <Route path="/para" element={<Suspense fallback={<PageLoader />}><Para /></Suspense>} />
           <Route path="/destinos-para" element={<Suspense fallback={<PageLoader />}><DestinosPara /></Suspense>} />

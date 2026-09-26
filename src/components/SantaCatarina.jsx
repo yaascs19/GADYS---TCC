@@ -15,10 +15,8 @@ const SantaCatarina = () => {
   };
 
   const images = [
-    '/images/geral/sc1.jpg',
-    '/images/geral/sc2.jpg',
-    '/images/geral/sc3.jpg',
-    '/images/geral/sc4.jpg',
+    '/images/geral/scs.jpg',
+    '/images/geral/scs1.jpg',
   ];
 
   useEffect(() => {
@@ -96,7 +94,7 @@ const SantaCatarina = () => {
 
         <section style={s.section} className="sc-feature-animate">
           <div style={s.imgWrap} className="sc-feature-img-wrap">
-            <img src="/images/geral/sc-floripa.jpg" alt="Florianópolis" style={s.img} />
+            <img src="/images/geral/scs2.jpg" alt="Florianópolis" style={s.img} />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Diversidade Cultural</h2>
@@ -106,7 +104,7 @@ const SantaCatarina = () => {
 
         <section style={{ ...s.section, flexDirection: 'row-reverse' }} className="sc-feature-animate">
           <div style={s.imgWrap} className="sc-feature-img-wrap">
-            <img src="/images/geral/sc-gastronomia.jpg" alt="Gastronomia catarinense" style={s.img} />
+            <img src="/images/geral/scs3.jpg" alt="Gastronomia catarinense" style={s.img} />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Sabores do Sul</h2>
@@ -116,7 +114,7 @@ const SantaCatarina = () => {
 
         <section style={s.section} className="sc-feature-animate">
           <div style={s.imgWrap} className="sc-feature-img-wrap">
-            <img src="/images/geral/sc-natureza.jpg" alt="Natureza de Santa Catarina" style={s.img} />
+            <img src="/images/geral/scs4.webp" alt="Natureza de Santa Catarina" style={s.img} />
           </div>
           <div style={s.text}>
             <h2 style={s.h2}>Natureza Exuberante</h2>

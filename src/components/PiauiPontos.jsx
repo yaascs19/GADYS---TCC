@@ -49,7 +49,7 @@ const pontosTuristicos = [
     nome: 'Centro Histórico de Teresina',
     cidade: 'Teresina - PI',
     categoria: 'Monumentos',
-    imagem: '/images/geral/pi-teresina.jpg',
+    imagem: '/images/geral/Theatro-4-de-Setembro.jpg',
     descricao: 'A única capital brasileira fundada às margens de dois rios, com o Museu do Piauí, o Palacete Piauiense e a Praça da Liberdade contando a história do estado.',
   },
 ];
@@ -141,14 +141,15 @@ const PiauiPontos = () => {
               <button
                 className="ce-pontos-button"
                 onClick={() => {
+                  if (ponto.id !== 'serra-da-capivara') return;
                   if (ponto.bdId != null) navigate(`/local/${ponto.bdId}`);
                   else if (rotas[ponto.id]) navigate(rotas[ponto.id]);
                 }}
                 style={{
                   background: 'linear-gradient(135deg, #2e7d32, #66bb6a)',
                   border: 'none',
-                  opacity: ponto.bdId != null || rotas[ponto.id] ? 1 : 0.4,
-                  cursor: ponto.bdId != null || rotas[ponto.id] ? 'pointer' : 'not-allowed',
+                  opacity: ponto.id === 'serra-da-capivara' ? 1 : 0.4,
+                  cursor: ponto.id === 'serra-da-capivara' ? 'pointer' : 'not-allowed',
                 }}
               >
                 Saiba mais
