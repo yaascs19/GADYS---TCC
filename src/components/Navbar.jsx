@@ -26,11 +26,7 @@ function Navbar({ darkMode, toggleTheme, userType, setCurrentPage }) {
         <img 
           src="/images/geral/logo-gadys.jpeg" 
           alt="GADYS" 
-          style={{
-            height: '40px',
-            borderRadius: '50%',
-            padding: '8px'
-          }}
+          style={{ height: '40px' }}
         />
         
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
