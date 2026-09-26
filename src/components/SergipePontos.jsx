@@ -155,8 +155,8 @@ const SergipePontos = () => {
               <p className="se-pontos-card-description">{ponto.descricao}</p>
               <button
                 className="se-pontos-button"
-                onClick={() => { if (ponto.bdId != null) navigate(`/local/${ponto.bdId}`); else if (rotas[ponto.id]) navigate(rotas[ponto.id]); }}
-                style={{ opacity: ponto.bdId != null || rotas[ponto.id] ? 1 : 0.4, cursor: ponto.bdId != null || rotas[ponto.id] ? 'pointer' : 'not-allowed' }}
+                onClick={() => { if (ponto.bdId != null) navigate(`/local/${ponto.bdId}`); else if (ponto.rota || rotas[ponto.id]) navigate(ponto.rota || rotas[ponto.id]); }}
+                style={{ opacity: ponto.bdId != null || ponto.rota || rotas[ponto.id] ? 1 : 0.4, cursor: ponto.bdId != null || ponto.rota || rotas[ponto.id] ? 'pointer' : 'not-allowed' }}
               >
                 Saiba mais
               </button>

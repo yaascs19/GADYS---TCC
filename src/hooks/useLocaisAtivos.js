@@ -30,6 +30,7 @@ export function useLocaisAtivos(siglaEstado, pontosTuristicos) {
           'restaurantes': 'Restaurantes',
           'parques': 'Lugar Paradísíaco',
           'praias': 'Lugar Paradísíaco',
+          'praia': 'Lugar Paradísíaco',
           'museus': 'Monumentos',
           'igrejas': 'Monumentos',
           'gastronomia': 'Restaurantes',
