@@ -230,7 +230,7 @@ export default function Chatbot({ darkMode }) {
         }}>
           <div style={{ background: headerBg, padding: '1rem 1.2rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 2px 12px rgba(102,126,234,0.3)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <img src="/images/logos/logo.png" alt="GADYS" style={{ height: '28px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)', padding: '4px' }} />
+              <img src="/images/geral/logo-gadys.jpeg" alt="GADYS" style={{ height: '28px', borderRadius: '50%', padding: '4px' }} />
               <div>
                 <div style={{ color: 'white', fontWeight: '700', fontSize: '0.95rem', letterSpacing: '0.3px' }}>Assistente GADYS</div>
                 <div style={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.72rem', marginTop: '1px' }}>● Online agora</div>

@@ -1036,7 +1036,7 @@ function AdminPanel() {
         borderBottom: '1px solid rgba(255,255,255,0.1)'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <img onClick={() => navigate('/')} style={{cursor:'pointer', height:'40px', background:'linear-gradient(135deg,#667eea,#764ba2)', borderRadius:'50%', padding:'8px'}} src="/images/logos/logo.png" alt="GADYS" />
+          <img onClick={() => navigate('/')} style={{cursor:'pointer', height:'40px', borderRadius:'50%', padding:'8px'}} src="/images/geral/logo-gadys.jpeg" alt="GADYS" />
           <span style={{ fontSize: '1.5rem', fontWeight: '700', color: 'white' }}>GADYS</span>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
