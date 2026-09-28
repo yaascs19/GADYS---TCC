@@ -605,7 +605,7 @@ function AdminPanel() {
           estado: investigarModal.estado,
           endereco: investigarModal.endereco,
           subcategoria: investigarModal.subcategoria || 'Lugar Paradisiaco',
-          categoria: 'lugares-visitar',
+          categoria: investigarModal.categoria || 'lugares-visitar',
           horarioFuncionamento: investigarConteudo.horario?.slice(0, 255) || null,
           preco: investigarConteudo.preco?.slice(0, 100) || null,
           informacoesAdicionais,
@@ -663,7 +663,7 @@ function AdminPanel() {
             estado: s.estado,
             endereco: s.endereco,
             subcategoria: s.subcategoria || 'Lugar Paradisiaco',
-            categoria: 'lugares-visitar',
+            categoria: s.categoria || 'lugares-visitar',
             imagemUrl: s.imagemUrl || null,
             coordenadas: s.coordenadas || null,
             enviadoPor: s.enviadoPor || 'GADYS'
