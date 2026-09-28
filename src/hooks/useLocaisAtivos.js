@@ -2,6 +2,26 @@ import { useState, useEffect } from 'react';
 
 const API_URL = (import.meta.env.VITE_API_URL || 'https://gadys-backend.onrender.com').replace(/\/$/, '');
 
+const subcategoriaParaCategoria = {
+  'monumentos': 'Monumentos',
+  'lugares-paradisiacos': 'Lugar Paradísíaco',
+  'lugares-visitar': 'Lugar Paradísíaco',
+  'restaurantes': 'Restaurantes',
+  'parques': 'Lugar Paradísíaco',
+  'praias': 'Lugar Paradísíaco',
+  'praia': 'Lugar Paradísíaco',
+  'museus': 'Monumentos',
+  'igrejas': 'Monumentos',
+  'gastronomia': 'Restaurantes',
+};
+
+const resolverCategoria = (l) => {
+  const mapped = subcategoriaParaCategoria[l.subcategoria?.toLowerCase()];
+  if (mapped) return mapped;
+  if (l.subcategoria) return l.subcategoria;
+  return l.categoria || 'Lugar Paradísíaco';
+};
+
 export function useLocaisAtivos(siglaEstado, pontosTuristicos) {
   const [pontosAtivos, setPontosAtivos] = useState(pontosTuristicos);
 
@@ -18,29 +38,18 @@ export function useLocaisAtivos(siglaEstado, pontosTuristicos) {
           return !inativosBD.has(nomePonto);
         }).map(p => {
           const match = ativos.find(l => l.nome.toLowerCase().trim() === (p.nome || p.name || '').toLowerCase().trim());
-          const comImagem = (p.imagem || !match?.imagemUrl) ? p : { ...p, imagem: match.imagemUrl.split(',')[0].trim() };
-          if (match && !match.rotaFrontend) return { ...comImagem, bdId: match.id };
-          return comImagem;
+          if (match) {
+            const imagem = p.imagem || (match.imagemUrl ? match.imagemUrl.split(',')[0].trim() : null);
+            return {
+              ...p,
+              imagem,
+              categoria: resolverCategoria(match),
+              ...(!match.rotaFrontend ? { bdId: match.id } : {}),
+            };
+          }
+          return p;
         });
         const nomesEstaticos = new Set(estaticosAtivos.map(p => (p.nome || p.name || '').toLowerCase().trim()));
-        const subcategoriaParaCategoria = {
-          'monumentos': 'Monumentos',
-          'lugares-paradisiacos': 'Lugar Paradísíaco',
-          'lugares-visitar': 'Lugar Paradísíaco',
-          'restaurantes': 'Restaurantes',
-          'parques': 'Lugar Paradísíaco',
-          'praias': 'Lugar Paradísíaco',
-          'praia': 'Lugar Paradísíaco',
-          'museus': 'Monumentos',
-          'igrejas': 'Monumentos',
-          'gastronomia': 'Restaurantes',
-        };
-        const resolverCategoria = (l) => {
-          const mapped = subcategoriaParaCategoria[l.subcategoria?.toLowerCase()];
-          if (mapped) return mapped;
-          if (l.subcategoria) return l.subcategoria;
-          return l.categoria || 'Lugar Paradísíaco';
-        };
         const novosDoBD = ativos
           .filter(l => !nomesEstaticos.has(l.nome.toLowerCase().trim()))
           .map(l => ({
