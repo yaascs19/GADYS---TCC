@@ -500,8 +500,11 @@ function AdminPanel() {
         body: JSON.stringify({
           model: 'openai/gpt-oss-20b',
           messages: [
-            { role: 'system', content: 'Voce e um especialista em turismo brasileiro. Responda APENAS com um JSON valido e nada mais. Sem texto antes ou depois. Sem markdown. Sem ```json. Use acentuacao correta em portugues brasileiro.' },
-            { role: 'user', content: `Retorne um JSON sobre o local turistico "${sugestao.nome}" em ${sugestao.estado}, Brasil. Chaves obrigatorias: titulo, cidade, descricao, historia, curiosidades, horario, preco, coordenadas ("lat,lng"), hosteis (array com 3 objetos com: nome, nota, contato, site).` }
+            { role: 'system', content: 'Voce e um especialista em turismo brasileiro. Responda APENAS com um JSON valido e nada mais. Sem texto antes ou depois. Sem markdown. Sem ```json. Use acentuacao correta em portugues brasileiro. Use APENAS as informacoes fornecidas como base. Nao invente dados nao informados.' },
+            { role: 'user', content: `Retorne um JSON sobre o local turistico com as seguintes informacoes fornecidas:
+Nome: "${sugestao.nome}"
+Estado: ${sugestao.estado}, Brasil
+${sugestao.cidade ? 'Cidade: ' + sugestao.cidade + '\n' : ''}${sugestao.endereco ? 'Endereco/Bairro: ' + sugestao.endereco + '\n' : ''}${sugestao.descricao ? 'Descricao do usuario: ' + sugestao.descricao + '\n' : ''}${sugestao.subcategoria ? 'Categoria: ' + sugestao.subcategoria + '\n' : ''}Use essas informacoes como base e complemente apenas com dados publicos verificaveis. Nao invente telefones ou sites. Chaves obrigatorias: titulo, cidade, descricao, historia, curiosidades, horario, preco, coordenadas ("lat,lng"), hosteis (array com 3 objetos com: nome, nota, contato, site).` }
           ]
         })
       })
