@@ -35,6 +35,12 @@ export function useLocaisAtivos(siglaEstado, pontosTuristicos) {
           'igrejas': 'Monumentos',
           'gastronomia': 'Restaurantes',
         };
+        const resolverCategoria = (l) => {
+          const mapped = subcategoriaParaCategoria[l.subcategoria?.toLowerCase()];
+          if (mapped) return mapped;
+          if (l.subcategoria) return l.subcategoria;
+          return l.categoria || 'Lugar Paradísíaco';
+        };
         const novosDoBD = ativos
           .filter(l => !nomesEstaticos.has(l.nome.toLowerCase().trim()))
           .map(l => ({
@@ -42,7 +48,7 @@ export function useLocaisAtivos(siglaEstado, pontosTuristicos) {
             bdId: l.rotaFrontend ? null : l.id,
             nome: l.nome,
             cidade: l.cidade,
-            categoria: subcategoriaParaCategoria[l.subcategoria?.toLowerCase()] || l.categoria || l.subcategoria,
+            categoria: resolverCategoria(l),
             descricao: l.descricao,
             imagem: l.imagemUrl ? l.imagemUrl.split(',')[0].trim() : null,
             rota: l.rotaFrontend || null,
